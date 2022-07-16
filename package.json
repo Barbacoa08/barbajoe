@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "pnpm -C src/apps/blog build",
-    "start": "pnpm -C src/apps/blog start",
-    "start:blog": "pnpm -C src/apps/blog start",
+    "build": "pnpm --dir src/apps/blog build",
+    "start": "pnpm --dir src/apps/blog start",
+    "start:blog": "pnpm --dir src/apps/blog start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
