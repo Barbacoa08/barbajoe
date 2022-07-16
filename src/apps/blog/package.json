@@ -1,5 +1,5 @@
 {
-  "name": "@example/basics",
+  "name": "@barbajoe/blog",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -9,6 +9,11 @@
     "preview": "astro preview"
   },
   "devDependencies": {
-    "astro": "^1.0.0-beta.72"
+    "@astrojs/react": "^0.4.1",
+    "@astrojs/svelte": "^0.4.0",
+    "astro": "^1.0.0-beta.72",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "svelte": "^3.46.4"
   }
 }
