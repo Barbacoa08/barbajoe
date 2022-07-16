@@ -1,5 +1,2 @@
 [build.environment]
 NPM_FLAGS = "--version"
-
-[build]
-command = "pnpm run build || ( npm install pnpm && pnpm run build )"
