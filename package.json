@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "prebuild": "test \"$CI\" = true && npx pnpm install -r --store=node_modules/.pnpm-store || echo skipping pnpm install",
     "build": "pnpm --dir src/apps/blog build",
     "start": "pnpm --dir src/apps/blog start",
     "start:blog": "pnpm --dir src/apps/blog start",
