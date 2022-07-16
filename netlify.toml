@@ -1,0 +1,5 @@
+[build.environment]
+NPM_FLAGS = "--version"
+
+[build]
+command = "(pnpm i && pnpm run build) || (npm install pnpm && pnpm i && pnpm run build)"
