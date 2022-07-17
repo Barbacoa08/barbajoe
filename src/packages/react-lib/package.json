@@ -5,13 +5,13 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/my-lib.umd.js",
-  "module": "./dist/my-lib.es.js",
+  "main": "./dist/react-lib.umd.js",
+  "module": "./dist/react-lib.es.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/my-lib.es.js",
-      "require": "./dist/my-lib.umd.js"
+      "import": "./dist/react-lib.es.js",
+      "require": "./dist/react-lib.umd.js"
     }
   },
   "scripts": {
