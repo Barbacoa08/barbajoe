@@ -4,9 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "pnpm --dir src/apps/blog build",
-    "start": "pnpm --dir src/apps/blog start",
+    "build": "pnpm build:react-lib && pnpm build:blog",
+    "build:blog": "pnpm --dir src/apps/blog build",
+    "build:react-lib": "pnpm --dir src/packages/react-lib build",
+    "start": "pnpm start:react-lib & pnpm start:blog",
     "start:blog": "pnpm --dir src/apps/blog start",
+    "start:react-lib": "pnpm --dir src/apps/blog start",
     "test": "echo \"Error: no test specified\" && exit 1",
     "blog": "pnpm --dir src/apps/blog",
     "react-lib": "pnpm --dir src/packages/react-lib"
