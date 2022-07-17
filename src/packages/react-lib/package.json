@@ -6,12 +6,12 @@
     "dist"
   ],
   "main": "./dist/react-lib.umd.js",
-  "module": "./dist/react-lib.es.js",
+  "module": "./dist/react-lib.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/react-lib.es.js",
-      "require": "./dist/react-lib.umd.js"
+      "import": "./dist/react-lib.js",
+      "require": "./dist/react-lib.umd.cjs"
     }
   },
   "scripts": {
