@@ -16,7 +16,7 @@
   },
   "scripts": {
     "clean": "rm -rf dist",
-    "dev": "vite",
+    "dev": "vite build --watch",
     "build": "pnpm clean && tsc && vite build",
     "preview": "vite preview"
   },
