@@ -1,3 +1,5 @@
+import "./MyButton.module.css";
+
 export const MyButton = () => {
-  return <button>MyButton</button>;
+  return <button className="fancy-btn">MyButton</button>;
 };
