@@ -23,6 +23,10 @@ export default defineConfig({
           react: "React",
           "react-dom": "ReactDOM",
         },
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name == "style.css") return "react-lib.css";
+          return assetInfo.name;
+        },
       },
     },
   },
