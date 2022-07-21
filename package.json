@@ -16,5 +16,8 @@
   },
   "keywords": [],
   "author": "Joe S",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "prettier-plugin-astro": "^0.1.1"
+  }
 }
