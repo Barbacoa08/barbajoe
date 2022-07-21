@@ -13,7 +13,6 @@
     "@astrojs/svelte": "^0.4.1",
     "astro": "^1.0.0-beta.73",
     "prettier": "^2.7.1",
-    "prettier-plugin-astro": "^0.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "svelte": "^3.49.0"
