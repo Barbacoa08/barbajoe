@@ -5,14 +5,14 @@
   "main": "index.js",
   "scripts": {
     "build": "pnpm build:react-lib && pnpm build:blog",
-    "build:blog": "pnpm --dir src/apps/blog build",
-    "build:react-lib": "pnpm --dir src/packages/react-lib build",
+    "build:blog": "pnpm -F blog build",
+    "build:react-lib": "pnpm -F react-lib build",
     "start": "pnpm start:react-lib & pnpm start:blog",
-    "start:blog": "pnpm --dir src/apps/blog start",
-    "start:react-lib": "pnpm --dir src/packages/react-lib dev",
+    "start:blog": "pnpm -F blog start",
+    "start:react-lib": "pnpm -F react-lib dev",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "blog": "pnpm --dir src/apps/blog",
-    "react-lib": "pnpm --dir src/packages/react-lib"
+    "blog": "pnpm -F blog",
+    "react-lib": "pnpm -F react-lib"
   },
   "keywords": [],
   "author": "Joe S",
