@@ -1,0 +1,36 @@
+{
+  "name": "svelte-lib",
+  "version": "0.1.0",
+  "bugs": "https://github.com/Barbacoa08/barbajoe/issues",
+  "type": "module",
+  "main": "./dist/svelte-lib.umd.js",
+  "module": "./dist/svelte-lib.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    "./svelte-lib.css": "./dist/svelte-lib.css",
+    ".": {
+      "import": "./dist/svelte-lib.js",
+      "require": "./dist/svelte-lib.umd.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist",
+    "dev": "vite build --watch",
+    "build": "pnpm clean && vite build",
+    "preview": "vite preview",
+    "check": "svelte-check --tsconfig ./tsconfig.json"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^1.0.1",
+    "@tsconfig/svelte": "^3.0.0",
+    "svelte": "^3.49.0",
+    "svelte-check": "^2.8.0",
+    "svelte-preprocess": "^4.10.7",
+    "tslib": "^2.4.0",
+    "typescript": "^4.6.4",
+    "vite": "^3.0.0"
+  }
+}
