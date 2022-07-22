@@ -1,22 +1,37 @@
 {
   "name": "barbajoe",
   "version": "0.1.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "build": "pnpm build:react-lib && pnpm build:blog",
-    "build:blog": "pnpm -F blog build",
-    "build:react-lib": "pnpm -F react-lib build",
-    "start": "pnpm start:react-lib & pnpm start:blog",
-    "start:blog": "pnpm -F blog start",
-    "start:react-lib": "pnpm -F react-lib dev",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "blog": "pnpm -F blog",
-    "react-lib": "pnpm -F react-lib"
-  },
-  "keywords": [],
+  "description": "A PNPM Workspace that untilizes Astro as an app and a React and Svelte component library.",
   "author": "Joe S",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Barbacoa08/barbajoe/"
+  },
+  "keywords": [
+    "astro",
+    "pnpm",
+    "react",
+    "svelte",
+    "monorepo",
+    "workspace",
+    "workspaces",
+    "component-library"
+  ],
+  "scripts": {
+    "build": "pnpm build:react-lib && pnpm build:svelte-lib && pnpm build:blog",
+    "build:blog": "pnpm -F blog build",
+    "build:react-lib": "pnpm -F react-lib build",
+    "build:svelte-lib": "pnpm -F svelte-lib build",
+    "start": "pnpm start:react-lib & pnpm start:svelte-lib & pnpm start:blog",
+    "start:blog": "pnpm -F blog start",
+    "start:react-lib": "pnpm -F react-lib dev",
+    "start:svelte-lib": "pnpm -F svelte-lib dev",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "blog": "pnpm -F blog",
+    "react-lib": "pnpm -F react-lib",
+    "svelte-lib": "pnpm -F svelte-lib"
+  },
   "devDependencies": {
     "prettier-plugin-astro": "^0.1.2"
   },
