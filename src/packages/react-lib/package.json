@@ -9,6 +9,7 @@
   "module": "./dist/react-lib.js",
   "types": "./dist/index.d.ts",
   "exports": {
+    "./react-lib.css": "./dist/react-lib.css",
     ".": {
       "import": "./dist/react-lib.js",
       "require": "./dist/react-lib.umd.cjs"
