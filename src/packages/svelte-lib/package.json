@@ -20,7 +20,6 @@
     "clean": "rm -rf dist",
     "dev": "vite build --watch",
     "build": "pnpm clean && vite build",
-    "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json"
   },
   "devDependencies": {
