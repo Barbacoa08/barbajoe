@@ -33,7 +33,9 @@
     "svelte-lib": "pnpm -F svelte-lib"
   },
   "devDependencies": {
-    "prettier-plugin-astro": "^0.1.2"
+    "prettier": "^2.7.1",
+    "prettier-plugin-astro": "^0.1.2",
+    "prettier-plugin-svelte": "^2.7.0"
   },
   "resolutions": {
     "vite": "^3.0.0"
