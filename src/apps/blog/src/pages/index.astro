@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { Card } from "../components";
+import { Card, LinkCardGrid, MyButton } from "../components";
 ---
 
 <Layout title="Welcome to Astro.">
@@ -14,7 +14,13 @@ import { Card } from "../components";
       <strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
     </p>
 
-    <ul role="list" class="link-card-grid">
+    <LinkCardGrid>
+      <Card
+        href="example-page"
+        title="Example Page"
+        body="Used for testing purposes only"
+      />
+
       <Card
         href="https://docs.astro.build/"
         title="Documentation"
@@ -38,7 +44,7 @@ import { Card } from "../components";
         title="Chat"
         body="Come say hi to our amazing Discord community. ❤️"
       />
-    </ul>
+    </LinkCardGrid>
   </main>
 </Layout>
 
@@ -93,12 +99,5 @@ import { Card } from "../components";
     border: 0.1em solid var(--color-border);
     border-radius: 4px;
     padding: 0.15em 0.25em;
-  }
-
-  .link-card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
-    gap: 1rem;
-    padding: 0;
   }
 </style>
