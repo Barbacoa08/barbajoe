@@ -1,2 +1,3 @@
-import Card from "./Card.astro";
-export { Card };
+export * from "./astro";
+export * from "./react";
+export * from "./svelte";
