@@ -19,6 +19,7 @@
     "component-library"
   ],
   "scripts": {
+    "all": "pnpm i && pnpm build",
     "build": "pnpm build:react-lib && pnpm build:svelte-lib && pnpm build:blog",
     "build:blog": "pnpm -F blog build",
     "build:react-lib": "pnpm -F react-lib build",
@@ -34,7 +35,7 @@
   },
   "devDependencies": {
     "prettier": "^2.7.1",
-    "prettier-plugin-astro": "^0.1.2",
+    "prettier-plugin-astro": "^0.2.0",
     "prettier-plugin-svelte": "^2.7.0"
   }
 }
