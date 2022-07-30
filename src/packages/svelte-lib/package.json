@@ -1,5 +1,6 @@
 {
   "name": "svelte-lib",
+  "description": "NOT WORKING: getting a build error when I try to import an exported component into the astro app (blog)",
   "version": "0.1.0",
   "bugs": "https://github.com/Barbacoa08/barbajoe/issues",
   "type": "module",
