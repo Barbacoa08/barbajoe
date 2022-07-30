@@ -1,16 +1,12 @@
 ---
 import Layout from "../layouts/LayoutMinimal.astro";
-import { Card, LinkCardGrid, MyButton } from "../components";
+import { Card, LinkCardGrid, MyButton, Counter } from "../components";
 ---
 
 <Layout title="Welcome to Astro.">
   <main>
     <LinkCardGrid>
-      <Card
-        href="/"
-        title="Home Page"
-        body="Site root"
-      />
+      <Card href="/" title="Home Page" body="Site root" />
 
       <Card
         href="https://docs.astro.build/"
@@ -38,5 +34,6 @@ import { Card, LinkCardGrid, MyButton } from "../components";
     </LinkCardGrid>
 
     <MyButton />
+    <Counter />
   </main>
 </Layout>
