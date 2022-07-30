@@ -1,5 +1,6 @@
 {
   "name": "svelte-lib",
+  "description": "NOT WORKING: getting a build error when I try to import an exported component into the astro app (blog)",
   "version": "0.1.0",
   "bugs": "https://github.com/Barbacoa08/barbajoe/issues",
   "type": "module",
@@ -30,6 +31,6 @@
     "svelte-preprocess": "^4.10.7",
     "tslib": "^2.4.0",
     "typescript": "^4.7.4",
-    "vite": "^3.0.2"
+    "vite": "^3.0.4"
   }
 }
