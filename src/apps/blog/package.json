@@ -17,6 +17,7 @@
     "svelte": "^3.49.0"
   },
   "dependencies": {
+    "@astrojs/netlify": "^0.5.0",
     "react-lib": "workspace:*",
     "svelte-lib": "workspace:*"
   }
