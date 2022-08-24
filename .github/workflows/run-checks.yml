@@ -2,7 +2,8 @@ name: CI (lint+build+tests)
 on:
   - push
 jobs:
-  cache-and-install:
+  build:
+    name: install PNPM and then run `pnpm github`
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -33,14 +34,5 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - name: Install dependencies
-        run: pnpm install
-  build:
-    name: run `pnpm github`
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v2
-        with:
-          node-version: "16"
-      - run: pnpm github
+      - name: run `pnpm github`
+        run: pnpm github
