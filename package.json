@@ -18,10 +18,10 @@
     "workspaces",
     "component-library"
   ],
-  "packageManager": "pnpm@7.9.5",
   "scripts": {
-    "all": "ponpm clean && pnpm lint && pnpm i && pnpm build",
+    "all": "pnpm i && pnpm clean && pnpm format && pnpm build",
     "github": "pnpm i && pnpm build",
+    "clean": "rm -rf coverage badges dist",
     "format": "yarn prettier --write ./src --loglevel warn",
     "build": "pnpm build:react-lib && pnpm build:svelte-lib && pnpm build:blog",
     "build:blog": "pnpm -F blog build",
