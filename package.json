@@ -19,10 +19,11 @@
     "component-library"
   ],
   "scripts": {
-    "all": "pnpm i && pnpm clean && pnpm format && pnpm build",
-    "github": "pnpm i && pnpm build",
+    "all": "pnpm i && pnpm clean && pnpm format && pnpm lint && pnpm build",
+    "github": "pnpm i && pnpm lint && pnpm build",
     "clean": "rm -rf coverage badges dist",
     "format": "yarn prettier --write ./src --loglevel warn",
+    "lint": "eslint src",
     "build": "pnpm build:react-lib && pnpm build:svelte-lib && pnpm build:blog",
     "build:blog": "pnpm -F blog build",
     "build:react-lib": "pnpm -F react-lib build",
