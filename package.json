@@ -23,7 +23,7 @@
     "github": "pnpm i && pnpm lint && pnpm build",
     "clean": "rm -rf coverage badges dist",
     "format": "yarn prettier --write ./src --loglevel warn",
-    "lint": "eslint src",
+    "lint": "eslint src -c ./.eslintrc.json5",
     "build": "pnpm build:react-lib && pnpm build:svelte-lib && pnpm build:blog",
     "build:blog": "pnpm -F blog build",
     "build:react-lib": "pnpm -F react-lib build",
@@ -38,6 +38,12 @@
     "svelte-lib": "pnpm -F svelte-lib"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.35.1",
+    "@typescript-eslint/parser": "^5.35.1",
+    "eslint": "^8.22.0",
+    "eslint-plugin-astro": "^0.17.1",
+    "eslint-plugin-jsx-a11y": "^6.6.1",
+    "eslint-plugin-react": "^7.30.1",
     "prettier": "^2.7.1",
     "prettier-plugin-astro": "^0.5.3",
     "prettier-plugin-svelte": "^2.7.0"
