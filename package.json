@@ -22,6 +22,7 @@
   "scripts": {
     "all": "ponpm clean && pnpm lint && pnpm i && pnpm build",
     "github": "pnpm i && pnpm build",
+    "format": "yarn prettier --write ./src --loglevel warn",
     "build": "pnpm build:react-lib && pnpm build:svelte-lib && pnpm build:blog",
     "build:blog": "pnpm -F blog build",
     "build:react-lib": "pnpm -F react-lib build",
