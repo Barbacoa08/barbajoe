@@ -1,0 +1,73 @@
+{
+  env: {
+    browser: true,
+    es2021: true,
+  },
+  extends: [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:astro/recommended",
+    "plugin:jsx-a11y/strict",
+  ],
+  parser: "@typescript-eslint/parser",
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    },
+    ecmaVersion: "latest",
+    sourceType: "module",
+  },
+  plugins: ["jsx-a11y", "@typescript-eslint"],
+  overrides: [
+    {
+      files: ["*.astro"],
+      plugins: ["astro"],
+      env: {
+        node: true,
+        "astro/astro": true,
+        es2020: true,
+      },
+      parser: "astro-eslint-parser",
+      parserOptions: {
+        parser: "@typescript-eslint/parser",
+        extraFileExtensions: [".astro"],
+        sourceType: "module",
+      },
+      rules: {
+        "astro/no-conflict-set-directives": "error",
+        "astro/no-unused-define-vars-in-style": "error",
+      },
+    },
+    {
+      // Define the configuration for `<script>` tag.
+      // Script in `<script>` is assigned a virtual file name with the `.js` extension.
+      files: ["**/*.astro/*.js", "*.astro/*.js"],
+      env: {
+        browser: true,
+        es2020: true,
+      },
+      parserOptions: {
+        sourceType: "module",
+      },
+      rules: {
+        "no-unused-vars": "error",
+        // If you are using "prettier/prettier" rule,
+        // you don't need to format inside <script> as it will be formatted as a `.astro` file.
+        "prettier/prettier": "off",
+      },
+    },
+    {
+      files: ["*.tsx", "*.jsx"],
+      plugins: ["react", "jsx-a11y", "@typescript-eslint"],
+      settings: {
+        react: {
+          version: "18",
+        },
+      },
+    },
+  ],
+  rules: {
+    "no-var": "error",
+  },
+  ignorePatterns: ["**/dist/**"],
+}
