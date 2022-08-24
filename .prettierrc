@@ -1,5 +1,4 @@
 {
   "tabWidth": 2,
-  "bracketSpacing": true,
-  "svelteSortOrder": "options-scripts-markup-styles"
+  "bracketSpacing": true
 }
