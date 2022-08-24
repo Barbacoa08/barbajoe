@@ -18,8 +18,10 @@
     "workspaces",
     "component-library"
   ],
+  "packageManager": "pnpm@7.9.5",
   "scripts": {
-    "all": "pnpm i && pnpm build",
+    "all": "ponpm clean && pnpm lint && pnpm i && pnpm build",
+    "github": "pnpm i && pnpm build",
     "build": "pnpm build:react-lib && pnpm build:svelte-lib && pnpm build:blog",
     "build:blog": "pnpm -F blog build",
     "build:react-lib": "pnpm -F react-lib build",
