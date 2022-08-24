@@ -8,16 +8,16 @@
     "preview": "astro preview"
   },
   "devDependencies": {
-    "@astrojs/react": "^0.4.2",
-    "@astrojs/svelte": "^0.5.1",
-    "astro": "^1.0.0-rc.3",
+    "@astrojs/react": "^1.0.0",
+    "@astrojs/svelte": "^1.0.0",
+    "astro": "^1.0.8",
     "prettier": "^2.7.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "svelte": "^3.49.0"
   },
   "dependencies": {
-    "@astrojs/netlify": "^0.5.0",
+    "@astrojs/netlify": "^1.0.1",
     "react-lib": "workspace:*",
     "svelte-lib": "workspace:*"
   }
