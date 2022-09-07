@@ -2,4 +2,7 @@
 NPM_FLAGS = "--version"
 
 [build]
-command = "(pnpm i && pnpm run build) || (npm install pnpm && pnpm i && pnpm run build)"
+command = "pnpm i && pnpm run build"
+
+[[plugins]]
+package = "./plugins/pnpm-preinstaller"
