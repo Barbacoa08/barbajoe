@@ -4,6 +4,7 @@ import svelte from "@astrojs/svelte";
 import { defineConfig } from "astro/config";
 
 export default defineConfig({
+  site: 'https://barbajoe.tech/',
   adapter: netlify(),
   integrations: [react(), svelte()],
   vite: {
