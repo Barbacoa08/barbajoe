@@ -1,5 +1,5 @@
-# TODO: add homepage/landing-page
+# barbajoe home/landing page
 
-Will be used as a (very) minimal "portfolio" (ick) site.
+Scafolded via [Astro](https://astro.build/), hosted via [Netlify](https://www.netlify.com/), QR Code via [QR Code Monkey](https://www.qrcode-monkey.com/)
 
-The primary purpose of it is simply to link off to my github accounts (joe-avaya, barbacoa08), and my apps (barbie-meals, cat-emotions, blog).
+![QR Code](./barbajoe-homepage.svg)
