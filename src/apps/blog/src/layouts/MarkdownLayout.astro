@@ -1,5 +1,5 @@
 ---
-import type { MarkdownLayoutProps } from 'astro';
+import type { MarkdownLayoutProps } from "astro";
 
 type Props = MarkdownLayoutProps<{
   // Define frontmatter props here
@@ -13,7 +13,7 @@ type Props = MarkdownLayoutProps<{
 const { frontmatter } = Astro.props as Props;
 ---
 
-<html>
+<html lang="en">
   <head>
     <title>{frontmatter.title}</title>
   </head>
