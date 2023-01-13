@@ -8,4 +8,4 @@ Domain Registered via [namecheap](https://www.namecheap.com/)
 
 QR Code via [QR Code Monkey](https://www.qrcode-monkey.com/)
 
-<img src="./barbajoe-blog.svg" width="200" />
+<img alt="QR Code" src="./barbajoe-blog.svg" width="200" />
