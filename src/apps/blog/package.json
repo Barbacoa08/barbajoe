@@ -10,11 +10,11 @@
   "devDependencies": {
     "@astrojs/react": "^1.2.2",
     "@astrojs/svelte": "^1.0.2",
-    "astro": "^1.9.1",
-    "prettier": "^2.8.2",
+    "astro": "^1.9.2",
+    "prettier": "^2.8.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "svelte": "^3.55.0"
+    "svelte": "^3.55.1"
   },
   "dependencies": {
     "react-lib": "workspace:*",
