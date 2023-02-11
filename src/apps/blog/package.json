@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "@astrojs/react": "^2.0.2",
-    "@astrojs/svelte": "^1.0.2",
+    "@astrojs/svelte": "^2.0.1",
     "astro": "^1.9.2",
     "prettier": "^2.8.4",
     "react": "^18.2.0",
