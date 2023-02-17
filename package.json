@@ -1,6 +1,6 @@
 {
   "name": "barbajoe",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "A PNPM Workspace that untilizes Astro as an app and a React and Svelte component library.",
   "author": "Joe S",
   "license": "MIT",
