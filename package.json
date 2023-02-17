@@ -1,6 +1,6 @@
 {
   "name": "barbajoe",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "A PNPM Workspace that untilizes Astro as an app and a React and Svelte component library.",
   "author": "Joe S",
   "license": "MIT",
@@ -41,8 +41,8 @@
     "svelte-lib": "pnpm -F svelte-lib"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.51.0",
-    "@typescript-eslint/parser": "^5.51.0",
+    "@typescript-eslint/eslint-plugin": "^5.52.0",
+    "@typescript-eslint/parser": "^5.52.0",
     "eslint": "^8.34.0",
     "eslint-plugin-astro": "^0.23.0",
     "eslint-plugin-jsx-a11y": "^6.7.1",
