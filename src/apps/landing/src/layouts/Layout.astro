@@ -13,7 +13,13 @@ const { title } = Astro.props;
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="description" content="barbajoe's tech list" />
     <title>{title}</title>
+
+    <script>
+      import * as Cronitor from "@cronitorio/cronitor-rum-js";
+      Cronitor.load("e3566b5817a68c36ff18aba67d0759d4");
+    </script>
   </head>
   <body>
     <header>
