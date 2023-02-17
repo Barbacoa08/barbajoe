@@ -11,6 +11,6 @@
   "dependencies": {
     "@astrojs/markdown-component": "^1.0.2",
     "@cronitorio/cronitor-rum-js": "^0.1.0",
-    "astro": "^1.9.2"
+    "astro": "^2.0.14"
   }
 }
