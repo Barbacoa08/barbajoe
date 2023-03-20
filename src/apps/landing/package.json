@@ -9,8 +9,8 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "@astrojs/markdown-component": "1.0.2",
+    "@astrojs/markdown-component": "1.0.3",
     "@cronitorio/cronitor-rum-js": "0.2.0",
-    "astro": "2.0.17"
+    "astro": "2.1.3"
   }
 }
