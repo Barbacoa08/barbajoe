@@ -22,7 +22,7 @@
     "all": "pnpm i && pnpm clean && pnpm format && pnpm lint && pnpm build",
     "github": "pnpm i && pnpm lint && pnpm build",
     "clean": "rm -rf coverage badges dist",
-    "format": "yarn prettier --write ./src --loglevel warn",
+    "format": "pnpm prettier --write ./src --loglevel warn",
     "lint": "eslint src -c ./.eslintrc.json5",
     "build": "pnpm build:react-lib && pnpm build:svelte-lib && pnpm build:blog && pnpm build:landing",
     "build:blog": "pnpm -F blog build",
