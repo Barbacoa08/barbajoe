@@ -1,7 +1,6 @@
 {
   "name": "@barbajoe/landing",
   "version": "1.0.0",
-  "private": true,
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -11,6 +10,6 @@
   "dependencies": {
     "@astrojs/markdown-component": "1.0.5",
     "@cronitorio/cronitor-rum-js": "0.3.0",
-    "astro": "2.6.3"
+    "astro": "2.6.4"
   }
 }

@@ -1,0 +1,17 @@
+{
+  "name": "@barbajoe/lib-staging",
+  "type": "module",
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "astro": "2.6.4",
+    "css-lib": "workspace:*",
+    "react-lib": "workspace:*",
+    "svelte-lib": "workspace:*"
+  }
+}
