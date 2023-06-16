@@ -5,7 +5,10 @@
     "dist/style.css"
   ],
   "scripts": {
-    "build": "mkdir -p ./dist && lightningcss --minify --bundle --sourcemap --targets '>= 0.25%' lib/main.css -o dist/barbiecss.css"
+    "all": "pnpm clean && pnpm build",
+    "clean": "rm -rf dist",
+    "build": "mkdir -p dist && pnpm build:prod",
+    "build:prod": "lightningcss --minify --bundle --sourcemap --targets '>= 0.25%' lib/main.css -o dist/barbiecss.css"
   },
   "devDependencies": {
     "lightningcss-cli": "1.21.0"
