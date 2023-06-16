@@ -1,0 +1,42 @@
+html,
+dialog {
+  font-family: system-ui, sans-serif;
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
+
+h1 {
+  font-size: var(--font-size-xl);
+}
+
+h1:first-child {
+  margin-top: 0;
+}
+
+h2 {
+  font-size: var(--font-size-lg);
+  margin-top: 3rem;
+  border-bottom: 1px solid var(--border-color-gray);
+}
+
+ul {
+  list-style-type: "- ";
+  padding: 0 12px; /* counter balances the default offset so that the dash lines up with the left content */
+}
+
+code {
+  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
+    Bitstream Vera Sans Mono, Courier New, monospace;
+}
+
+a,
+a:visited {
+  display: inline-block;
+  color: var(--color-link-text);
+}
+a[aria-disabled="true"] {
+  pointer-events: none;
+  opacity: 0.5;
+  text-decoration: none;
+}

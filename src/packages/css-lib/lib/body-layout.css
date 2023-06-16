@@ -1,0 +1,14 @@
+body {
+  margin: 0;
+}
+
+body div:first-child {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+body main {
+  margin: 1rem auto;
+  width: clamp(400px, 80%, 60ch);
+}
