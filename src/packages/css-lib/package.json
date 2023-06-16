@@ -1,0 +1,16 @@
+{
+  "name": "css-lib",
+  "version": "0.1.0",
+  "files": [
+    "dist/style.css"
+  ],
+  "scripts": {
+    "all": "pnpm clean && pnpm build",
+    "clean": "rm -rf dist",
+    "build": "mkdir -p dist && pnpm build:prod",
+    "build:prod": "lightningcss --minify --bundle --sourcemap --targets '>= 0.25%' lib/main.css -o dist/barbiecss.css"
+  },
+  "devDependencies": {
+    "lightningcss-cli": "1.21.0"
+  }
+}
