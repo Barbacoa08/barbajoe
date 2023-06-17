@@ -1,0 +1,17 @@
+.scaleup-on-hover {
+  transition: transform 0.15s cubic-bezier(0, 0.2, 0.5, 3) 0s;
+}
+.scaleup-on-hover:hover,
+.scaleup-on-hover:focus-within {
+  transform: scale(1.02);
+}
+
+.scaleup-on-hover.disabled {
+  transform: none;
+}
+li a[aria-disabled="true"],
+li.disabled a {
+  pointer-events: none;
+  opacity: 0.5;
+  transition: none;
+}

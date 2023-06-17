@@ -6,11 +6,13 @@
   ],
   "scripts": {
     "all": "pnpm clean && pnpm build",
+    "dev": "pnpm parcel watch lib/barbiecss.css --dist-dir dist",
     "clean": "rm -rf dist",
     "build": "mkdir -p dist && pnpm build:prod",
-    "build:prod": "lightningcss --minify --bundle --sourcemap --targets '>= 0.25%' lib/main.css -o dist/barbiecss.css"
+    "build:prod": "lightningcss --minify --bundle --sourcemap --targets '>= 0.25%' lib/barbiecss.css -o dist/barbiecss.css"
   },
   "devDependencies": {
-    "lightningcss-cli": "1.21.0"
+    "lightningcss-cli": "1.21.0",
+    "parcel": "2.9.2"
   }
 }
