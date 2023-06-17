@@ -1,3 +1,5 @@
+/* NOTE: this needs to be tested with `lib-staging` and `fighter-advice/src/routes/+page.svelte` */
+
 .scaleup-on-hover {
   transition: transform 0.15s cubic-bezier(0, 0.2, 0.5, 3) 0s;
 }
