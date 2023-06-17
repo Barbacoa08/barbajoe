@@ -5,10 +5,10 @@ This repo contains the scaffolding (WIP) for three app and two libraries.
 Apps:
 
 - App 1 `src/apps/landing` ([repo](https://github.com/Barbacoa08/barbajoe/tree/main/src/apps/landing), [live site](https://barbajoe.tech/)): an overview of my creations
-- App 2 `src/apps/blog` ([repo](https://github.com/Barbacoa08/barbajoe/tree/main/src/apps/blog), [live site](https://blog.barbajoe.tech/)): WIP, scaffolded blog starter. I keep bouncing between frameworks (Next/Remix/SvelteKit/11ty/ect) and never getting a blog to a good enough place. More to come here (eventually... hopefully...)
-- App 3 `src/apps/docs` ([repo](https://github.com/Barbacoa08/barbajoe/tree/main/src/apps/docs)): WIP, non-functional, I think I want to turn this into a larger static site for explaining deeper into how/why this mono-repo works
+- App 2 `src/apps/lib-staging` ([repo](https://github.com/Barbacoa08/barbajoe/tree/main/src/apps/lib-staging), [live site](https://lib-staging.barbajoe.tech/)): WIP, a staging environment for the libraries for testing and example usage.
 
 Libraries:
 
+- CSS Lib `src/packages/css-lib` ([repo](https://github.com/Barbacoa08/barbajoe/tree/main/src/packages/css-lib)): minimal css library that I've created so that I can stop copy-pasting my styling all over. Implemented in the barbajoe site, with plans to implement in the fighter-advice site.
 - React Lib `src/packages/react-lib` ([repo](https://github.com/Barbacoa08/barbajoe/tree/main/src/packages/react-lib)): WIP, functional but not particularly useful or published to NPM/Deno
 - Svelte Lib `src/packages/svelte-lib` ([repo](https://github.com/Barbacoa08/barbajoe/tree/main/src/packages/svelte-lib)): WIP, functional but not particularly useful or published to NPM/Deno
