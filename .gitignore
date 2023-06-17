@@ -1,6 +1,7 @@
 # build output
 dist/
 .output/
+.parcel-cache/
 
 # dependencies
 node_modules/
