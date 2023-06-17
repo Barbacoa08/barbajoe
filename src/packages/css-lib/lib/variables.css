@@ -12,6 +12,7 @@
 
   --card-background-color: #222222;
   --card-link-color: white;
+  --card-link-color-hover: #b3b3ff;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -25,5 +26,6 @@
 
     --card-background-color: #d2d2d2;
     --card-link-color: #222222;
+    --card-link-color-hover: #0000d6;
   }
 }
