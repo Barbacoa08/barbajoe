@@ -4,6 +4,17 @@
 
 A staging environment for my libraries.
 
-## hosted via Netlify
+## tech ish
 
-[See it in action here](https://lib-staging.barbajoe.tech/)
+Scafolded via [Astro](https://astro.build/)
+
+Hosted via [Netlify](https://www.netlify.com/), [see it in action here](https://lib-staging.barbajoe.tech/)
+
+Domain Registered via [namecheap](https://www.namecheap.com/)
+
+QR Code via [QR Code Monkey](https://www.qrcode-monkey.com/)
+
+<img alt="QR Code" src="./barbajoe-lib-staging-homepage.svg" width="200" />
+
+
+
