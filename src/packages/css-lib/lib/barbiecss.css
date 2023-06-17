@@ -3,3 +3,6 @@
 @import "./text-gradient.css";
 @import "./transform-scale-up.css";
 @import "./variables.css";
+
+@import "./components/header.css";
+@import "./components/footer.css";
