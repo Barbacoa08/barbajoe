@@ -1,3 +1,20 @@
+---
+const route = Astro.url.pathname;
+
+const routes = {
+  home: "/",
+  css: "/css-lib/",
+  svelte: "/svelte-lib/",
+  react: "/react-lib/",
+};
+const routeMatches = {
+  home: route === routes.home,
+  css: route.startsWith(routes.css),
+  svelte: route.startsWith(routes.svelte),
+  react: route.startsWith(routes.react),
+};
+---
+
 <header>
   <a class="skip-link" href="#main-content">Skip to main content</a>
 
@@ -10,12 +27,20 @@
   </a>
 
   <ul>
-    <li class="active"><a href="/">Home</a></li>
+    <li class:list={[{ active: routeMatches.home }]}>
+      <a href={routes.home}>Home</a>
+    </li>
 
-    <li><a href="/css-lib">CSS</a></li>
+    <li class:list={[{ active: routeMatches.css }]}>
+      <a href={routes.css}>CSS</a>
+    </li>
 
-    <li><a href="/svelte-lib">Svelte</a></li>
+    <li class:list={[{ active: routeMatches.svelte }]}>
+      <a href={routes.svelte}>Svelte</a>
+    </li>
 
-    <li><a href="/react-lib">React</a></li>
+    <li class:list={[{ active: routeMatches.react }]}>
+      <a href={routes.react}>React</a>
+    </li>
   </ul>
 </header>
