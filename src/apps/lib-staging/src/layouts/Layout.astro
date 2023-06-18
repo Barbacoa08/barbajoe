@@ -1,4 +1,7 @@
 ---
+import Header from "./Header.astro";
+import Footer from "./Footer.astro";
+
 export interface Props {
   title: string;
 }
@@ -20,13 +23,13 @@ import "css-lib/dist/barbiecss.css";
   </head>
   <body>
     <div>
-      <header>header</header>
+      <Header />
 
-      <main>
+      <main id="main-content">
         <slot />
       </main>
 
-      <footer>footer</footer>
+      <Footer />
     </div>
   </body>
 </html>

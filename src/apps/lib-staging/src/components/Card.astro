@@ -18,12 +18,22 @@ const { href, title } = Astro.props;
 
 <style>
   .link-card {
+    --transition-delay: 0.15s;
+  }
+  .scaleup-on-hover {
+    /*
+      HACK: the span arrow is "jumping" up 1px if I have it go at the same
+      time as the scaleup transition, but if I have it do it's transition
+      first, then the scaleup transition, it all looks fluid
+    */
+    transition-delay: var(--transition-delay);
+  }
+
+  .link-card {
     list-style: none;
     display: flex;
     background-color: var(--card-background-color);
     border-radius: 0.6rem;
-
-    transition: background-position 0.6s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .link-card > a {
@@ -37,15 +47,19 @@ const { href, title } = Astro.props;
     display: flex;
     align-items: center;
   }
+  .link-card > a:focus-visible {
+    outline: 3px solid var(--card-link-color-hover);
+    outline-offset: 0px;
+    border-radius: 0.6rem;
+  }
 
   h2 {
     width: 100%; /* full width text makes the underline look better, required due to use of flex-grid */
     margin: 0; /* remove the typical margin to that we can center the text */
-    transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1); /* span arrow color transition */
   }
   h2 span {
     display: inline-block;
-    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1); /* span arrow movement transition */
+    transition: transform var(--transition-delay) cubic-bezier(0.22, 1, 0.36, 1); /* span arrow movement transition */
   }
 
   .link-card:is(:hover, :focus-within) h2 {
