@@ -1,3 +1,5 @@
+/* TODO: consider moving `--color-link-text-active-hover`+`--color-link-text-active` to `variabless.css` */
+
 header {
   --header-background-color: #ffffff;
   --color-link-text-active: #0000ee;
