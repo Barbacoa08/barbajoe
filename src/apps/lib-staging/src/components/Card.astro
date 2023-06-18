@@ -17,13 +17,16 @@ const { href, title } = Astro.props;
 </li>
 
 <style>
+  .link-card {
+    --transition-delay: 0.15s;
+  }
   .scaleup-on-hover {
     /*
       HACK: the span arrow is "jumping" up 1px if I have it go at the same
       time as the scaleup transition, but if I have it do it's transition
       first, then the scaleup transition, it all looks fluid
     */
-    transition-delay: 0.15s;
+    transition-delay: var(--transition-delay);
   }
 
   .link-card {
@@ -56,7 +59,7 @@ const { href, title } = Astro.props;
   }
   h2 span {
     display: inline-block;
-    transition: transform 0.15s cubic-bezier(0.22, 1, 0.36, 1); /* span arrow movement transition */
+    transition: transform var(--transition-delay) cubic-bezier(0.22, 1, 0.36, 1); /* span arrow movement transition */
   }
 
   .link-card:is(:hover, :focus-within) h2 {
