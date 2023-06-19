@@ -20,7 +20,7 @@
     "clean": "rm -rf coverage dist .svelte-kit",
     "dev": "vite build --watch",
     "dev:sveltekit": "vite dev",
-    "build": "pnpm clean && pnpm run package && vite build",
+    "build": "pnpm clean && pnpm run package && vite build && pnpm test",
     "build:watch": "vite build --watch",
     "preview": "vite preview",
     "package": "svelte-kit sync && svelte-package && publint",
