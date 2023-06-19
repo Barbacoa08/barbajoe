@@ -11,11 +11,14 @@
   "keywords": [
     "astro",
     "pnpm",
+    "css",
     "react",
     "svelte",
+    "sveltekit`",
     "monorepo",
     "workspace",
     "workspaces",
+    "library",
     "component-library"
   ],
   "scripts": {
