@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { Layout } from "$lib/components/Layout";
-  import { Link } from "$lib/components/Link";
+  import { Layout, Link } from "../lib";
 </script>
 
 <Layout>
