@@ -1,9 +1,17 @@
 ---
 import Layout from "../layouts/Layout.astro";
+
+import { Link } from "svelte-lib";
 ---
 
 <Layout title="barbajoe svelte lib">
   <h1>Svelte Library</h1>
+  <p>Minimal example page for the Svelte Library</p>
 
-  <p>TODO</p>
+  <h2>Link Examples</h2>
+
+  <section>
+    <p>internal <code>Link</code> to Homepage</p>
+    <Link href="/">Home</Link>
+  </section>
 </Layout>
