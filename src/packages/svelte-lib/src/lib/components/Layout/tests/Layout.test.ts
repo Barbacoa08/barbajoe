@@ -1,4 +1,3 @@
-import "@testing-library/jest-dom"; // TODO: need to update `build` command to ignore test files
 import { render, screen } from "@testing-library/svelte";
 
 import LayoutWithHeaderAndFooter from "./LayoutWithHeaderAndFooter.svelte";
