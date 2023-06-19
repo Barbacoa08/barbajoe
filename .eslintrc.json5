@@ -7,6 +7,7 @@
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:astro/recommended",
+    "plugin:svelte/recommended",
     "plugin:jsx-a11y/strict",
   ],
   parser: "@typescript-eslint/parser",
@@ -16,6 +17,7 @@
     },
     ecmaVersion: "latest",
     sourceType: "module",
+    extraFileExtensions: [".svelte"],
   },
   plugins: ["jsx-a11y", "@typescript-eslint"],
   overrides: [
@@ -63,6 +65,13 @@
         react: {
           version: "18",
         },
+      },
+    },
+    {
+      files: ["*.svelte"],
+      parser: "svelte-eslint-parser",
+      parserOptions: {
+        parser: "@typescript-eslint/parser",
       },
     },
   ],
