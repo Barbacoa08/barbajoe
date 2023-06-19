@@ -15,6 +15,3 @@ Domain Registered via [namecheap](https://www.namecheap.com/)
 QR Code via [QR Code Monkey](https://www.qrcode-monkey.com/)
 
 <img alt="QR Code" src="./barbajoe-lib-staging-homepage.svg" width="200" />
-
-
-
