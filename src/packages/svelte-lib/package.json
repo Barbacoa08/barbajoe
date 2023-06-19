@@ -33,18 +33,24 @@
     "format": "prettier --plugin-search-dir . --write ."
   },
   "peerDependencies": {
-    "svelte": "3.54.0",
-    "css-lib": "workspace:*"
+    "css-lib": "workspace:*",
+    "svelte": "3.54.0"
   },
   "devDependencies": {
     "@sveltejs/adapter-auto": "2.1.0",
     "@sveltejs/kit": "1.20.4",
     "@sveltejs/package": "2.0.2",
-    "@typescript-eslint/eslint-plugin": "5.59.11",
-    "@typescript-eslint/parser": "5.59.11",
+    "@sveltejs/vite-plugin-svelte": "2.4.1",
+    "@testing-library/jest-dom": "5.16.5",
+    "@testing-library/svelte": "3.2.2",
+    "@types/jest-axe": "3.5.5",
+    "@typescript-eslint/eslint-plugin": "5.60.0",
+    "@typescript-eslint/parser": "5.60.0",
     "eslint": "8.43.0",
     "eslint-config-prettier": "8.8.0",
     "eslint-plugin-svelte": "2.31.0",
+    "jest-axe": "7.0.1",
+    "jsdom": "22.1.0",
     "prettier": "2.8.8",
     "prettier-plugin-svelte": "2.10.1",
     "publint": "0.1.12",
