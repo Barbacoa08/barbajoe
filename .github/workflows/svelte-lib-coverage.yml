@@ -40,7 +40,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - name: "Test"
+      - name: pnpm github
+        run: pnpm github
+
+      - name: pnpm test:coverage
         run: pnpm svelte-lib test:coverage
 
       - name: "Report Coverage"
