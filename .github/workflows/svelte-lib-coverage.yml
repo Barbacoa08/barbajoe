@@ -3,7 +3,7 @@ on:
   pull_request:
 
 jobs:
-  test:
+  create-coverage-comment-in-pull-request:
     runs-on: ubuntu-latest
 
     permissions:
