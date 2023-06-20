@@ -1,4 +1,4 @@
-name: svelte-lib-coverage
+name: create coverage comment in pull request
 on:
   pull_request:
 
@@ -7,10 +7,8 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      # Required to checkout the code
-      contents: read
-      # Required to put a comment into the pull-request
-      pull-requests: write
+      contents: read # Required to checkout the code
+      pull-requests: write # Required to put a comment into the pull-request
 
     steps:
       - name: Checkout
@@ -41,13 +39,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - name: pnpm github
-        run: pnpm github
+      - name: build svelte-lib package
+        run: pnpm svelte-lib build
 
-      - name: pnpm test:coverage
+      - name: generate coverage report
         run: pnpm svelte-lib test:coverage
 
-      - name: Jest Coverage Comment
+      - name: add coverage comment
         uses: MishaKav/jest-coverage-comment@main
         with:
           coverage-summary-path: ./src/packages/svelte-lib/coverage/coverage-summary.json

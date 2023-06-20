@@ -1,6 +1,7 @@
 name: CI (lint+build+tests)
 on:
   - push
+
 jobs:
   build:
     name: install PNPM and then run `pnpm github`
