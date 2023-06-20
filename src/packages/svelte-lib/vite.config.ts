@@ -9,8 +9,8 @@ export default defineConfig({
     setupFiles: "./src/test/setup.ts",
     include: ["src/**/*.{test,spec}.{js,ts}"],
 
-    reporter: ["text", "json-summary", "json"],
     coverage: {
+      reporter: ["text", "json-summary", "json"],
       lines: 90,
       branches: 90,
       functions: 90,
