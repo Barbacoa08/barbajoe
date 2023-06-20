@@ -22,8 +22,8 @@
     "component-library"
   ],
   "scripts": {
-    "all": "pnpm i && pnpm clean && pnpm format && pnpm lint && pnpm build",
-    "github": "pnpm i && pnpm lint && pnpm build",
+    "all": "pnpm i && pnpm clean && pnpm format && pnpm lint && pnpm build && pnpm test",
+    "github": "pnpm i && pnpm lint && pnpm build && pnpm test",
     "clean": "rm -rf coverage badges dist",
     "format": "pnpm prettier --write ./src --loglevel warn",
     "lint": "eslint src -c ./.eslintrc.json5",
@@ -42,7 +42,7 @@
     "start:css-lib": "pnpm -F css-lib dev",
     "start:react-lib": "pnpm -F react-lib dev",
     "start:svelte-lib": "pnpm -F svelte-lib dev",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "pnpm svelte-lib test",
     "landing": "pnpm -F landing",
     "lib-staging": "pnpm -F lib-staging",
     "css-lib": "pnpm -F css-lib",
