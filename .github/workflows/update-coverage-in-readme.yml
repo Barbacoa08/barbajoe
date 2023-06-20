@@ -23,7 +23,6 @@ jobs:
           echo "Summary HTML - ${{ steps.coverageComment.outputs.summaryHtml }}"
 
       - name: Create the badge
-        if: github.ref == 'refs/heads/main'
         uses: schneegans/dynamic-badges-action@v1.6.0
         with:
           auth: ${{ secrets.GIST_SECRET }}
@@ -32,4 +31,4 @@ jobs:
           label: Coverage
           message: ${{ steps.coverageComment.outputs.coverage }}%
           color: ${{ steps.coverageComment.outputs.color }}
-          namedLogo: javascript
+          namedLogo: svelte

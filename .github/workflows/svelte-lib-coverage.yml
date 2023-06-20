@@ -50,6 +50,12 @@ jobs:
         with:
           coverage-summary-path: ./src/packages/svelte-lib/coverage/coverage-summary.json
 
+      - name: Check the output coverage
+        run: |
+          echo "Coverage Percentage - ${{ steps.coverageComment.outputs.coverage }}"
+          echo "Coverage Color - ${{ steps.coverageComment.outputs.color }}"
+          echo "Summary HTML - ${{ steps.coverageComment.outputs.summaryHtml }}"
+
       - name: Create the badge
         uses: schneegans/dynamic-badges-action@v1.6.0
         with:
@@ -59,4 +65,4 @@ jobs:
           label: Coverage
           message: ${{ steps.coverageComment.outputs.coverage }}%
           color: ${{ steps.coverageComment.outputs.color }}
-          namedLogo: javascript
+          namedLogo: svelte
