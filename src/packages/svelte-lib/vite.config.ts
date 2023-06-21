@@ -10,7 +10,7 @@ export default defineConfig({
     include: ["src/**/*.{test,spec}.{js,ts}"],
 
     coverage: {
-      reporter: ["text", "json-summary", "json"],
+      reporter: ["json-summary", "html"],
       lines: 90,
       branches: 90,
       functions: 90,

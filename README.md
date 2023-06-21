@@ -11,4 +11,4 @@ Libraries:
 
 - CSS Lib `src/packages/css-lib` ([repo](https://github.com/Barbacoa08/barbajoe/tree/main/src/packages/css-lib)): minimal css library that I've created so that I can stop copy-pasting my styling all over. Implemented in the barbajoe site, with plans to implement in the fighter-advice site.
 - React Lib `src/packages/react-lib` ([repo](https://github.com/Barbacoa08/barbajoe/tree/main/src/packages/react-lib)): WIP, functional but not particularly useful or published to NPM/Deno
-- Svelte Lib `src/packages/svelte-lib` ([repo](https://github.com/Barbacoa08/barbajoe/tree/main/src/packages/svelte-lib)): WIP, functional but not particularly useful or published to NPM/Deno
+- Svelte Lib `src/packages/svelte-lib` ([repo](https://github.com/Barbacoa08/barbajoe/tree/main/src/packages/svelte-lib)): WIP, functional but not particularly useful or published to NPM/Deno. Code Coverage: ![badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/barbacoa08/0549c337c501b3d5d709f55341796e15/raw/jest-coverage-comment__main.json)
