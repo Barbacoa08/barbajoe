@@ -19,9 +19,9 @@ jobs:
 
       - name: Check the output coverage
         run: |
-          echo "Coverage Percentage - ${{ steps.coverageComment.outputs.coverage }}"
-          echo "Coverage Color - ${{ steps.coverageComment.outputs.color }}"
-          echo "Summary HTML - ${{ steps.coverageComment.outputs.summaryHtml }}"
+          echo "Coverage Percentage - ${{ steps.coverageComment.summary.coverage }}"
+          echo "Coverage Color - ${{ steps.coverageComment.summary.color }}"
+          echo "Summary HTML - ${{ steps.coverageComment.summary.summaryHtml }}"
 
       - name: Create the badge
         uses: schneegans/dynamic-badges-action@v1.6.0
@@ -30,6 +30,6 @@ jobs:
           gistID: 0549c337c501b3d5d709f55341796e15
           filename: jest-coverage-comment__main.json
           label: Coverage
-          message: ${{ steps.coverageComment.outputs.coverage }}%
-          color: ${{ steps.coverageComment.outputs.color }}
+          message: ${{ steps.coverageComment.summary.coverage }}%
+          color: ${{ steps.coverageComment.summary.color }}
           namedLogo: svelte
