@@ -35,6 +35,10 @@ a:visited {
   display: inline-block;
   color: var(--color-link-text);
 }
+a:hover,
+a:focus {
+  color: var(--color-link-text-hover);
+}
 a[aria-disabled="true"] {
   pointer-events: none;
   opacity: 0.5;

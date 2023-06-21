@@ -1,15 +1,11 @@
-/* TODO: consider moving `--color-link-text-active-hover`+`--color-link-text-active` to `variabless.css` */
-
 header {
   --header-background-color: #ffffff;
   --color-link-text-active: #0000ee;
-  --color-link-text-active-hover: #00008a;
 }
 @media (prefers-color-scheme: dark) {
   header {
     --header-background-color: #1a202c;
     --color-link-text-active: #87e7ee;
-    --color-link-text-active-hover: #25cbda;
   }
 }
 
@@ -48,13 +44,13 @@ header ul li:focus,
 header ul li.active:focus {
   padding: 0.5rem;
   border-bottom: 2px solid;
-  color: var(--color-link-text-active-hover);
+  color: var(--color-link-text-hover);
 }
 header ul li:hover a,
 header ul li.active:hover a,
 header ul li:focus a,
 header ul li.active:focus a {
-  color: var(--color-link-text-active-hover);
+  color: var(--color-link-text-hover);
 }
 
 header ul li a,
