@@ -1,6 +1,4 @@
 <script lang="ts">
-  import "css-lib/dist/barbiecss.css";
-
   export let isExternal = false;
   export let href = "/";
 </script>
