@@ -57,15 +57,8 @@ jobs:
           echo "Coverage Color - ${{ steps.coverageComment.outputs.color }}"
           echo "Summary HTML - ${{ steps.coverageComment.outputs.summaryHtml }}"
 
-      - name: joe tests
-        run: |
-          echo "Coverage Percentage - ${{ steps.coverageComment }}"
-          echo "Coverage Color - ${{ steps.coverageComment.outputs }}"
-          echo "Summary HTML - ${{ steps.coverageComment.outputs.total }}"
-          echo "Summary HTML - ${{ steps.coverageComment.conclusion }}"
-          echo "Summary HTML - ${{ steps.coverageComment.conclusion.total }}"
-
       - name: Create the badge
+        if: github.ref == 'refs/heads/main'
         uses: schneegans/dynamic-badges-action@v1.6.0
         with:
           auth: ${{ secrets.GIST_SECRET }}
