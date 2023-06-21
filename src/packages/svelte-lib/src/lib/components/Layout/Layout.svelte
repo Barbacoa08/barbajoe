@@ -5,7 +5,7 @@
   import { Link } from "../Link";
 
   export let links: HeaderLink[] = [];
-  export let logo: LogoData | undefined;
+  export let logo: LogoData | undefined = undefined;
 </script>
 
 <slot name="header"><Header {links} {logo} /></slot>
