@@ -15,6 +15,7 @@ jobs:
         with:
           hide-comment: true
           coverage-summary-path: ./src/packages/svelte-lib/coverage/coverage-summary.json
+          coverage-path: ./src/packages/svelte-lib/coverage/coverage-summary.json
 
       - name: Check the output coverage
         run: |
