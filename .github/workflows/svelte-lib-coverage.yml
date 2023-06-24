@@ -1,4 +1,4 @@
-name: create coverage comment in pull request
+name: PR Coverage Report
 on:
   pull_request:
 

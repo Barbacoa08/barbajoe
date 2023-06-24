@@ -1,6 +1,6 @@
 ---
-import Header from "./Header.astro";
-import Footer from "./Footer.astro";
+import type { HeaderLink, LogoData } from "svelte-lib";
+import { Layout as SvelteLayout } from "svelte-lib";
 
 export interface Props {
   title: string;
@@ -8,7 +8,31 @@ export interface Props {
 
 const { title } = Astro.props;
 
-import "css-lib/dist/barbiecss.css";
+const route = Astro.url.pathname;
+
+const routes = {
+  home: "/",
+  css: "/css-lib/",
+  svelte: "/svelte-lib/",
+  react: "/react-lib/",
+};
+const links: HeaderLink[] = [
+  { href: routes.css, text: "CSS", active: route.startsWith(routes.css) },
+  {
+    href: routes.svelte,
+    text: "Svelte",
+    active: route.startsWith(routes.svelte),
+  },
+  { href: routes.react, text: "React", active: route.startsWith(routes.react) },
+];
+
+const logo: LogoData = {
+  href: routes.home,
+  src: "/favicon.ico",
+  alt: "Logo",
+  ariaLabel: "go to landing page",
+  text: "barbajoe's svelte library",
+};
 ---
 
 <!DOCTYPE html>
@@ -23,13 +47,9 @@ import "css-lib/dist/barbiecss.css";
   </head>
   <body>
     <div>
-      <Header />
-
-      <main id="main-content">
+      <SvelteLayout links={links} logo={logo}>
         <slot />
-      </main>
-
-      <Footer />
+      </SvelteLayout>
     </div>
   </body>
 </html>
