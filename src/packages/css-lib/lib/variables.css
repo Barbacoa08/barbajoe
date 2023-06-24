@@ -6,6 +6,7 @@
   --border-color-gray: #cccccc;
 
   --color-link-text: #0000ee;
+  --color-link-text-hover: #00008a;
   --color-text: hsl(12, 5%, 4%);
   --color-bg: hsl(10, 21%, 95%);
   --color-bg-accent: hsl(185, 100%, 50%);
@@ -20,6 +21,7 @@
     --border-color-gray: #646464;
 
     --color-link-text: #86a0ee;
+    --color-link-text-hover: #25cbda;
     --color-text: hsl(0, 100%, 95%);
     --color-bg: hsl(198, 100%, 11%);
     --color-bg-accent: hsl(220, 70%, 50%);
