@@ -1,4 +1,5 @@
 ---
+import type { HeaderLink, LogoData } from "svelte-lib";
 import { Layout as SvelteLayout } from "svelte-lib";
 
 export interface Props {
@@ -15,8 +16,7 @@ const routes = {
   svelte: "/svelte-lib/",
   react: "/react-lib/",
 };
-const links = [
-  { href: routes.home, text: "Home", active: route === routes.home },
+const links: HeaderLink[] = [
   { href: routes.css, text: "CSS", active: route.startsWith(routes.css) },
   {
     href: routes.svelte,
@@ -26,8 +26,8 @@ const links = [
   { href: routes.react, text: "React", active: route.startsWith(routes.react) },
 ];
 
-const logo = {
-  href: "/",
+const logo: LogoData = {
+  href: routes.home,
   src: "/favicon.ico",
   alt: "Logo",
   ariaLabel: "go to landing page",
@@ -47,7 +47,7 @@ const logo = {
   </head>
   <body>
     <div>
-      <SvelteLayout {links} {logo}>
+      <SvelteLayout links={links} logo={logo}>
         <slot />
       </SvelteLayout>
     </div>
