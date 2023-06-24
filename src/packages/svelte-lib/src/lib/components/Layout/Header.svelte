@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from "$app/stores";
+  import { Link } from "$lib";
   import type { HeaderLink, LogoData } from "$lib/types";
-  import Link from "../Link/Link.svelte";
 
   export let links: HeaderLink[] = [];
   export let logo: LogoData | undefined;

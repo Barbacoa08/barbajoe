@@ -1,4 +1,6 @@
 <script lang="ts">
+  import "css-lib/dist/barbiecss.css";
+
   import type { HeaderLink, LogoData } from "$lib/types";
 
   import { Footer, Header } from "./";
@@ -8,7 +10,7 @@
   export let logo: LogoData | undefined = undefined;
 </script>
 
-<slot name="header"><Header {links} {logo} /></slot>
+<Header {links} {logo}><slot name="header" /></Header>
 
 <main id="main-content">
   <slot />
@@ -16,7 +18,7 @@
 
 <Footer>
   <slot name="footer">
-    &forall; by <Link isExternal href="https://github.com/Barbacoa08/">
+    &forall; by <Link isExternal href="https://barbajoe.tech/">
       <code>barbajoe</code>
     </Link>
   </slot>
