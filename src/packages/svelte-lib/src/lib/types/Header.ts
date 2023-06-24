@@ -1,6 +1,7 @@
 export interface HeaderLink {
   text: string;
   href: string;
+  active?: boolean;
 }
 
 export interface LogoData {

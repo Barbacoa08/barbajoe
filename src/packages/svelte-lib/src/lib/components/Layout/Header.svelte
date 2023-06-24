@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { page } from "$app/stores";
   import { Link } from "$lib";
   import type { HeaderLink, LogoData } from "$lib/types";
 
@@ -27,7 +26,7 @@
   {#if links.length > 0}
     <ul>
       {#each links as link}
-        <li class:active={$page.url.pathname.startsWith(link.href)}>
+        <li class:active={link.active}>
           <a href={link.href}>{link.text}</a>
         </li>
       {/each}
