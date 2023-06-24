@@ -16,8 +16,8 @@
     "!dist/**/*.spec.*"
   ],
   "scripts": {
-    "all": "pnpm i && pnpm format && pnpm lint && pnpm build && pnpm check && pnpm test && pnpm build-storybook",
-    "clean": "rm -rf coverage dist .svelte-kit",
+    "all": "pnpm i && pnpm format && pnpm lint && pnpm build && pnpm check && pnpm test && pnpm build:storybook",
+    "clean": "rm -rf coverage dist storybook-static .svelte-kit",
     "dev": "vite build --watch",
     "dev:storybook": "pnpm storybook",
     "dev:sveltekit": "vite dev",
