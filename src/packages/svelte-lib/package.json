@@ -16,11 +16,13 @@
     "!dist/**/*.spec.*"
   ],
   "scripts": {
-    "all": "pnpm i && pnpm format && pnpm lint && pnpm build && pnpm check && pnpm test",
+    "all": "pnpm i && pnpm format && pnpm lint && pnpm build && pnpm check && pnpm test && pnpm build-storybook",
     "clean": "rm -rf coverage dist .svelte-kit",
     "dev": "vite build --watch",
+    "dev:storybook": "pnpm storybook",
     "dev:sveltekit": "vite dev",
     "build": "pnpm clean && pnpm run package && vite build && pnpm test",
+    "build:storybook": "storybook build",
     "build:watch": "vite build --watch",
     "preview": "vite preview",
     "package": "svelte-kit sync && svelte-package && publint",
@@ -32,8 +34,7 @@
     "test:coverage": "vitest run --coverage",
     "lint": "prettier --plugin-search-dir . --check . && eslint ./src",
     "format": "prettier --plugin-search-dir . --write .",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "storybook": "storybook dev -p 6006"
   },
   "peerDependencies": {
     "css-lib": "workspace:*",
