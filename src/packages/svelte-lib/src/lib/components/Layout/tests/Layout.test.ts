@@ -3,6 +3,8 @@ import { axe } from "jest-axe";
 
 import LayoutWithHeaderAndFooter from "./LayoutWithHeaderAndFooter.svelte";
 import MinimalLayout from "./MinimalLayout.svelte";
+import LayoutWithLinks from "./LayoutWithLinks.svelte";
+import LayoutWithLogo from "./LayoutWithLogo.svelte";
 
 describe("Layout component", () => {
   describe("LayoutWithHeaderAndFooter", () => {
@@ -30,6 +32,36 @@ describe("Layout component", () => {
 
     it("passes basic axe compliance", async () => {
       const { container } = render(MinimalLayout);
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+    });
+  });
+
+  describe("LayoutWithLinks", () => {
+    it("LayoutWithLinks: fully renders without exploding", () => {
+      render(LayoutWithLinks);
+
+      const element = screen.getByText("Layout With Links");
+      expect(element).toBeInTheDocument();
+    });
+
+    it("passes basic axe compliance", async () => {
+      const { container } = render(LayoutWithLinks);
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+    });
+  });
+
+  describe("LayoutWithLogo", () => {
+    it("LayoutWithLogo: fully renders without exploding", () => {
+      render(LayoutWithLogo);
+
+      const element = screen.getByText("Layout With Logo");
+      expect(element).toBeInTheDocument();
+    });
+
+    it("passes basic axe compliance", async () => {
+      const { container } = render(LayoutWithLogo);
       const results = await axe(container);
       expect(results).toHaveNoViolations();
     });
