@@ -1,12 +1,38 @@
 ---
-import Header from "./Header.astro";
-import Footer from "./Footer.astro";
+import { Layout as SvelteLayout } from "svelte-lib";
 
 export interface Props {
   title: string;
 }
 
 const { title } = Astro.props;
+
+const route = Astro.url.pathname;
+
+const routes = {
+  home: "/",
+  css: "/css-lib/",
+  svelte: "/svelte-lib/",
+  react: "/react-lib/",
+};
+const links = [
+  { href: routes.home, text: "Home", active: route === routes.home },
+  { href: routes.css, text: "CSS", active: route.startsWith(routes.css) },
+  {
+    href: routes.svelte,
+    text: "Svelte",
+    active: route.startsWith(routes.svelte),
+  },
+  { href: routes.react, text: "React", active: route.startsWith(routes.react) },
+];
+
+const logo = {
+  href: "/",
+  src: "/favicon.ico",
+  alt: "Logo",
+  ariaLabel: "go to landing page",
+  text: "barbajoe's svelte library",
+};
 ---
 
 <!DOCTYPE html>
@@ -21,13 +47,9 @@ const { title } = Astro.props;
   </head>
   <body>
     <div>
-      <Header />
-
-      <main id="main-content">
+      <SvelteLayout {links} {logo}>
         <slot />
-      </main>
-
-      <Footer />
+      </SvelteLayout>
     </div>
   </body>
 </html>
