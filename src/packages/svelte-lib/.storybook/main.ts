@@ -1,4 +1,6 @@
 import type { StorybookConfig } from "@storybook/sveltekit";
+import { mergeConfig } from "vite";
+
 const config: StorybookConfig = {
   stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
   addons: [
@@ -13,6 +15,15 @@ const config: StorybookConfig = {
   },
   docs: {
     autodocs: true,
+  },
+  async viteFinal(config) {
+    return mergeConfig(config, {
+      resolve: {
+        alias: {
+          $lib: "/src/lib",
+        },
+      },
+    });
   },
 };
 export default config;
