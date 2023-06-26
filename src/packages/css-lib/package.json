@@ -12,7 +12,7 @@
     "build:prod": "lightningcss --minify --bundle --sourcemap --targets '>= 0.25%' lib/barbiecss.css -o dist/barbiecss.css"
   },
   "devDependencies": {
-    "lightningcss-cli": "1.21.0",
-    "parcel": "2.9.2"
+    "lightningcss-cli": "1.21.1",
+    "parcel": "2.9.3"
   }
 }
