@@ -35,7 +35,7 @@
   },
   "peerDependencies": {
     "css-lib": "workspace:*",
-    "svelte": "3.59.2"
+    "svelte": "4.0.0"
   },
   "devDependencies": {
     "@sveltejs/adapter-auto": "2.1.0",
