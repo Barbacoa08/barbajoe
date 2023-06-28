@@ -5,5 +5,50 @@ import Layout from "../layouts/Layout.astro";
 <Layout title="barbajoe css lib">
   <h1>CSS Library</h1>
 
-  <p>TODO</p>
+  <p><b>TLDR</b>: TODO: publish to NPM and give install instructions</p>
+
+  <div class="container">
+    <code>npm i -D barbajoe/css-lib</code>
+    <code>pnpm add -D barbajoe/css-lib</code>
+    <code>yarn add -D barbajoe/css-lib</code>
+  </div>
+
+  <h2>Components</h2>
+
+  <h3>Layout</h3>
+
+  <p>
+    Sets a Header, Footer, and a main body section that auto expands to the view
+    height (<code>vh</code>)
+  </p>
+
+  <h4>Usage</h4>
+
+  <p>Requires that you have the structure:</p>
+  <pre>
+    <code>
+&lt;body&gt;
+  &lt;div&gt;
+    &lt;main&gt;
+      &lt;header&gt;{`{header content}`}&lt;/header&gt;
+      {`{main content}`}
+      &lt;footer&gt;{`{footer content}`}&lt;/footer&gt;
+    &lt;/main&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+    </code>
+  </pre>
 </Layout>
+
+<style>
+  .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 1rem;
+  }
+  @media (max-width: 1279px) {
+    .container {
+      grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
+    }
+  }
+</style>
