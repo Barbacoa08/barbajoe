@@ -9,11 +9,11 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "@astrojs/svelte": "3.0.0",
-    "astro": "2.7.0",
+    "@astrojs/svelte": "3.1.0",
+    "astro": "2.7.3",
     "css-lib": "workspace:*",
     "react-lib": "workspace:*",
-    "svelte": "4.0.0",
+    "svelte": "4.0.2",
     "svelte-lib": "workspace:*"
   }
 }
