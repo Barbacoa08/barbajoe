@@ -11,7 +11,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: "18"
-      - run: npm i && npm run build
+      - run: npm i && mkdir -p dist && npm run build:prod
         working-directory: src/packages/css-lib
       - uses: JS-DevTools/npm-publish@v2
         with:
