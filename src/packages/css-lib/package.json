@@ -13,7 +13,7 @@
     "dist/style.css"
   ],
   "scripts": {
-    "all": "pnpm clean && pnpm build",
+    "all": "pnpm i && pnpm clean && pnpm build",
     "dev": "pnpm parcel watch lib/barbajoe.css --dist-dir dist",
     "clean": "rm -rf dist",
     "build": "mkdir -p dist && pnpm build:prod",
