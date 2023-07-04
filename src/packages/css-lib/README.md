@@ -11,3 +11,9 @@ Uses [Parcel](https://parceljs.org/) for the dev build (HMR).
 ## hosted via Netlify
 
 [See it in action here](https://lib-staging.barbajoe.tech/css-lib)
+
+## publish instructions
+
+- navigate to this directory (`barbajoe/src/packages/css-lib/`)
+- `npm login`
+- `npm publish --otp=onetimepasswordfromauthenticator`
