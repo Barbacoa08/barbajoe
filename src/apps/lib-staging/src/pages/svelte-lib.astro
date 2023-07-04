@@ -1,17 +1,44 @@
 ---
 import Layout from "../layouts/Layout.astro";
-
-import { Link } from "svelte-lib";
 ---
 
 <Layout title="barbajoe svelte lib">
   <h1>Svelte Library</h1>
-  <p>Minimal example page for the Svelte Library</p>
+  <p>
+    <b>TLDR</b>: install into your project, wrap your app in the layout
+    component and then start using any give component as you wish.
+  </p>
 
-  <h2>Link Examples</h2>
+  <p>Install scripts:</p>
+  <div class="container">
+    <code>npm i -D @barbajoe/svelte-lib</code>
+    <code>pnpm add -D @barbajoe/svelte-lib</code>
+    <code>yarn add -D @barbajoe/svelte-lib</code>
+  </div>
 
-  <section>
-    <p>internal <code>Link</code> to Homepage</p>
-    <Link href="/">Home</Link>
-  </section>
+  <h2>Components</h2>
+
+  <h3>Layout</h3>
+
+  <p>
+    Sets a Header, Footer, and a main body section that auto expands to the view
+    height (<code>vh</code>)
+  </p>
+
+  <h4>Usage</h4>
+
+  <p>TODO: add example code</p>
 </Layout>
+
+<style>
+  .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 1rem;
+  }
+  @media (max-width: 1279px) {
+    .container {
+      grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
+    }
+  }
+</style>

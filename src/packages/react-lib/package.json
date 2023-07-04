@@ -1,6 +1,14 @@
 {
-  "name": "react-lib",
+  "name": "@barbajoe/react-lib",
   "version": "0.1.0",
+  "license": "MIT",
+  "author": "Barbacoa08",
+  "repository": "https://github.com/Barbacoa08/barbajoe/tree/main/src/packages/react-lib",
+  "homepage": "https://lib-staging.barbajoe.tech/",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "bugs": "https://github.com/Barbacoa08/barbajoe/issues",
   "type": "module",
   "main": "./dist/react-lib.umd.js",

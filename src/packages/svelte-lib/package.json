@@ -1,6 +1,14 @@
 {
-  "name": "svelte-lib",
+  "name": "@barbajoe/svelte-lib",
   "version": "0.2.0",
+  "license": "MIT",
+  "author": "Barbacoa08",
+  "repository": "https://github.com/Barbacoa08/barbajoe/tree/main/src/packages/svelte-lib",
+  "homepage": "https://lib-staging.barbajoe.tech/",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "svelte": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "type": "module",
@@ -37,7 +45,7 @@
     "storybook": "storybook dev -p 6006"
   },
   "peerDependencies": {
-    "css-lib": "workspace:*",
+    "@barbajoe/css-lib": "workspace:*",
     "svelte": "4.0.2"
   },
   "devDependencies": {
