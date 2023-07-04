@@ -42,7 +42,7 @@
     "format": "prettier --plugin-search-dir . --write ."
   },
   "peerDependencies": {
-    "css-lib": "workspace:*",
+    "@barbajoe/css-lib": "workspace:*",
     "svelte": "4.0.2"
   },
   "devDependencies": {

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import "css-lib/dist/barbiecss.css";
+  import "@barbajoe/css-lib/dist/barbiecss.css";
 
   import type { HeaderLink, LogoData } from "$lib/types";
 
