@@ -3,3 +3,9 @@
 # barbajoe's svelte library
 
 WIP
+
+## publish instructions
+
+- navigate to this directory (`barbajoe/src/packages/svelte-lib/`)
+- `npm login`
+- `npm publish --otp=onetimepasswordfromauthenticator`
