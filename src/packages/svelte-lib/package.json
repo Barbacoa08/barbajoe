@@ -1,6 +1,6 @@
 {
   "name": "@barbajoe/svelte-lib",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "license": "MIT",
   "author": "Barbacoa08",
   "repository": "https://github.com/Barbacoa08/barbajoe/tree/main/src/packages/svelte-lib",
@@ -42,10 +42,11 @@
     "format": "prettier --plugin-search-dir . --write ."
   },
   "peerDependencies": {
-    "@barbajoe/css-lib": "workspace:*",
-    "svelte": "4.0.2"
+    "@barbajoe/css-lib": "*",
+    "svelte": "^4"
   },
   "devDependencies": {
+    "@barbajoe/css-lib": "workspace:*",
     "@sveltejs/adapter-auto": "2.1.0",
     "@sveltejs/kit": "1.21.0",
     "@sveltejs/package": "2.1.0",
