@@ -9,8 +9,6 @@
 <header>
   <a class="skip-link" href="#main-content">Skip to main content</a>
 
-  <slot />
-
   {#if logo}
     <div>
       <Link href={logo.href || "/"} aria-label={logo.ariaLabel}>
@@ -22,6 +20,8 @@
       {/if}
     </div>
   {/if}
+
+  <slot />
 
   {#if links.length > 0}
     <ul>
