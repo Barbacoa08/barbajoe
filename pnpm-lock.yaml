@@ -27,14 +27,14 @@ importers:
         specifier: 7.32.2
         version: 7.32.2(eslint@8.44.0)
       prettier:
-        specifier: 2.8.8
-        version: 2.8.8
+        specifier: 3.0.0
+        version: 3.0.0
       prettier-plugin-astro:
         specifier: 0.10.0
         version: 0.10.0
       prettier-plugin-svelte:
         specifier: 2.10.1
-        version: 2.10.1(prettier@2.8.8)(svelte@4.0.2)
+        version: 2.10.1(prettier@3.0.0)(svelte@4.0.2)
 
   src/apps/landing:
     dependencies:
@@ -53,21 +53,21 @@ importers:
       '@astrojs/svelte':
         specifier: 3.1.0
         version: 3.1.0(astro@2.7.3)(svelte@4.0.2)(typescript@5.1.6)(vite@4.3.9)
+      '@barbajoe/css-lib':
+        specifier: workspace:*
+        version: link:../../packages/css-lib
+      '@barbajoe/react-lib':
+        specifier: workspace:*
+        version: link:../../packages/react-lib
+      '@barbajoe/svelte-lib':
+        specifier: workspace:*
+        version: link:../../packages/svelte-lib
       astro:
         specifier: 2.7.3
         version: 2.7.3
-      css-lib:
-        specifier: workspace:*
-        version: link:../../packages/css-lib
-      react-lib:
-        specifier: workspace:*
-        version: link:../../packages/react-lib
       svelte:
         specifier: 4.0.2
         version: 4.0.2
-      svelte-lib:
-        specifier: workspace:*
-        version: link:../../packages/svelte-lib
 
   src/packages/css-lib:
     devDependencies:
@@ -106,11 +106,10 @@ importers:
         version: 3.0.3(typescript@5.1.6)
 
   src/packages/svelte-lib:
-    dependencies:
-      css-lib:
+    devDependencies:
+      '@barbajoe/css-lib':
         specifier: workspace:*
         version: link:../css-lib
-    devDependencies:
       '@sveltejs/adapter-auto':
         specifier: 2.1.0
         version: 2.1.0(@sveltejs/kit@1.21.0)
@@ -160,11 +159,11 @@ importers:
         specifier: 22.1.0
         version: 22.1.0
       prettier:
-        specifier: 2.8.8
-        version: 2.8.8
+        specifier: 3.0.0
+        version: 3.0.0
       prettier-plugin-svelte:
         specifier: 2.10.1
-        version: 2.10.1(prettier@2.8.8)(svelte@4.0.2)
+        version: 2.10.1(prettier@3.0.0)(svelte@4.0.2)
       publint:
         specifier: 0.1.15
         version: 0.1.15
@@ -6287,13 +6286,13 @@ packages:
       synckit: 0.8.4
     dev: false
 
-  /prettier-plugin-svelte@2.10.1(prettier@2.8.8)(svelte@4.0.2):
+  /prettier-plugin-svelte@2.10.1(prettier@3.0.0)(svelte@4.0.2):
     resolution: {integrity: sha512-Wlq7Z5v2ueCubWo0TZzKc9XHcm7TDxqcuzRuGd0gcENfzfT4JZ9yDlCbEgxWgiPmLHkBjfOtpAWkcT28MCDpUQ==}
     peerDependencies:
       prettier: ^1.16.4 || ^2.0.0
       svelte: ^3.2.0 || ^4.0.0-next.0
     dependencies:
-      prettier: 2.8.8
+      prettier: 3.0.0
       svelte: 4.0.2
     dev: true
 
@@ -6301,6 +6300,12 @@ packages:
     resolution: {integrity: sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==}
     engines: {node: '>=10.13.0'}
     hasBin: true
+
+  /prettier@3.0.0:
+    resolution: {integrity: sha512-zBf5eHpwHOGPC47h0zrPyNn+eAEIdEzfywMoYn2XPi0P44Zp0tSq64rq0xAREh4auw2cJZHo9QUob+NqCQky4g==}
+    engines: {node: '>=14'}
+    hasBin: true
+    dev: true
 
   /pretty-format@27.5.1:
     resolution: {integrity: sha512-Qb1gy5OrP5+zDf2Bvnzdl3jsTf1qXVMazbvCoKhtKqVs4/YK4ozX4gKQJJVyNe+cajNPn0KoC0MC3FUmaHWEmQ==}
