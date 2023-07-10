@@ -42,8 +42,8 @@
     "format": "prettier --plugin-search-dir . --write ."
   },
   "peerDependencies": {
-    "@barbajoe/css-lib": "*",
-    "svelte": "^4"
+    "@barbajoe/css-lib": "0.1.3",
+    "svelte": "4.0.5"
   },
   "devDependencies": {
     "@barbajoe/css-lib": "workspace:*",
