@@ -1,6 +1,7 @@
 import type { Preview } from "@storybook/svelte";
 
-import "css-lib/dist/barbiecss.css";
+// BUG: importing shoves all content down, need import into each story :(
+// import "@barbajoe/css-lib/dist/barbajoe.css";
 
 const preview: Preview = {
   parameters: {
