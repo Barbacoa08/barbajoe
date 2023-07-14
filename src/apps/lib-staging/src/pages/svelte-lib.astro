@@ -9,12 +9,54 @@ import Layout from "../layouts/Layout.astro";
     component and then start using any give component as you wish.
   </p>
 
-  <p>Install scripts:</p>
+  <p>Install the Svelte+CSS Libraries:</p>
   <div class="container">
-    <code>npm i -D @barbajoe/svelte-lib</code>
-    <code>pnpm add -D @barbajoe/svelte-lib</code>
-    <code>yarn add -D @barbajoe/svelte-lib</code>
+    <code>npm i -D @barbajoe/svelte-lib && npm i -D @barbajoe/css-lib</code>
+    <code>pnpm add -D @barbajoe/svelte-lib && pnpm add -D @barbajoe/css-lib</code>
+    <code>yarn add -D @barbajoe/svelte-lib && yarn add -D @barbajoe/css-lib</code>
   </div>
+
+  <p>
+    Then wrap your app in the <code>Layout</code> component and you're good to go!
+  </p>
+
+  <p>
+    Note that you can overwrite CSS Variables if you wish. See the <a
+      href="/css-variables">Variables</a
+    > page for more info.
+  </p>
+
+  <p>TODO: add CSS Variables page</p>
+
+  <pre>
+    <code>
+{`
+<script lang="ts">
+  import { page } from "$app/stores";
+  import { Layout } from "@barbajoe/svelte-lib";
+  import type { HeaderLink, LogoData } from "@barbajoe/svelte-lib/dist/types";
+
+  $: links = [
+    { href: "/page1", text: "Page 1", active: $page.url.pathname === "/page1" },
+    { href: "/page2", text: "Page 2", active: $page.url.pathname === "/page2" },
+    { href: "/page3", text: "Page 3", active: $page.url.pathname === "/page3" },
+  ] as HeaderLink[];
+
+  const logo: LogoData = {
+    href: "/",
+    src: "/favicon.ico",
+    alt: "Logo",
+    ariaLabel: "go to landing page",
+    text: "barbajoe's svelte library",
+  };
+</script>
+
+<Layout {links} {logo}>
+  <slot />
+</Layout>
+`}
+    </code>
+  </pre>
 
   <h2>Components</h2>
 

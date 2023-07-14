@@ -2,7 +2,13 @@
   import { Layout } from "..";
 </script>
 
-<Layout logo={{ src: "/non-existant-file.png", ariaLabel: "logo", text: "<- cool logo eh?" }}>
+<Layout
+  logo={{
+    src: "/non-existant-file.png",
+    ariaLabel: "logo",
+    text: "<- cool logo eh?",
+  }}
+>
   <svelte:fragment slot="header">barbajoe's svelte library</svelte:fragment>
 
   <h1>Layout With Logo</h1>
