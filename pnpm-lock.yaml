@@ -153,8 +153,8 @@ importers:
         specifier: 2.32.2
         version: 2.32.2(eslint@8.44.0)(svelte@4.0.5)
       jest-axe:
-        specifier: 7.0.1
-        version: 7.0.1
+        specifier: 8.0.0
+        version: 8.0.0
       jsdom:
         specifier: 22.1.0
         version: 22.1.0
@@ -1942,7 +1942,7 @@ packages:
     resolution: {integrity: sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==}
     dev: true
 
-  /@rollup/pluginutils@5.0.2(rollup@3.21.2):
+  /@rollup/pluginutils@5.0.2(rollup@3.26.2):
     resolution: {integrity: sha512-pTd9rIsP92h+B6wWwFbW8RkZv4hiR/xKsqre4SIuAOaOEQRxi0lqLke9k2/7WegC85GgUs9pjmOjCUi3In4vwA==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
@@ -1954,7 +1954,7 @@ packages:
       '@types/estree': 1.0.0
       estree-walker: 2.0.2
       picomatch: 2.3.1
-      rollup: 3.21.2
+      rollup: 3.26.2
     dev: true
 
   /@rushstack/node-core-library@3.59.4:
@@ -3023,13 +3023,13 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
-  /axe-core@4.5.1:
-    resolution: {integrity: sha512-1exVbW0X1O/HSr/WMwnaweyqcWOgZgLiVxdLG34pvSQk4NlYQr9OUy0JLwuhFfuVNQzzqgH57eYzkFBCb3bIsQ==}
+  /axe-core@4.6.3:
+    resolution: {integrity: sha512-/BQzOX780JhsxDnPpH4ZiyrJAzcd8AfzFPkv+89veFSr1rcMjuq2JDCwypKaPeB6ljHp9KjXhPpjgCvQlWYuqg==}
     engines: {node: '>=4'}
     dev: true
 
-  /axe-core@4.6.3:
-    resolution: {integrity: sha512-/BQzOX780JhsxDnPpH4ZiyrJAzcd8AfzFPkv+89veFSr1rcMjuq2JDCwypKaPeB6ljHp9KjXhPpjgCvQlWYuqg==}
+  /axe-core@4.7.2:
+    resolution: {integrity: sha512-zIURGIS1E1Q4pcrMjp+nnEh+16G56eG/MUllJH8yEvw7asDo7Ac9uhC9KIH5jzpITueEZolfYglnCGIuSBz39g==}
     engines: {node: '>=4'}
     dev: true
 
@@ -4918,11 +4918,11 @@ packages:
       istanbul-lib-report: 3.0.0
     dev: true
 
-  /jest-axe@7.0.1:
-    resolution: {integrity: sha512-1JoEla6gL4rcsTxEWm+VBcWMwOhP3f9w4dH7/YW3H41nU08Dds3gUFqxgdAq/pzBNPpauC3QPr/BuO+0W8eamg==}
+  /jest-axe@8.0.0:
+    resolution: {integrity: sha512-4kNcNn7J0jPO4jANEYZOHeQ/tSBvkXS+MxTbX1CKbXGd0+ZbRGDn/v/8IYWI/MmYX15iLVyYRnRev9X3ksePWA==}
     engines: {node: '>= 14.0.0'}
     dependencies:
-      axe-core: 4.5.1
+      axe-core: 4.7.2
       chalk: 4.1.2
       jest-matcher-utils: 29.2.2
       lodash.merge: 4.6.2
@@ -6851,19 +6851,11 @@ packages:
       glob: 7.2.3
     dev: true
 
-  /rollup@3.21.2:
-    resolution: {integrity: sha512-c4vC+JZ3bbF4Kqq2TtM7zSKtSyMybFOjqmomFax3xpfYaPZDZ4iz8NMIuBRMjnXOcKYozw7bC6vhJjiWD6JpzQ==}
-    engines: {node: '>=14.18.0', npm: '>=8.0.0'}
-    hasBin: true
-    requiresBuild: true
-    optionalDependencies:
-      fsevents: 2.3.2
-    dev: true
-
   /rollup@3.26.2:
     resolution: {integrity: sha512-6umBIGVz93er97pMgQO08LuH3m6PUb3jlDUUGFsNJB6VgTCUaDFpupf5JfU30529m/UKOgmiX+uY6Sx8cOYpLA==}
     engines: {node: '>=14.18.0', npm: '>=8.0.0'}
     hasBin: true
+    requiresBuild: true
     optionalDependencies:
       fsevents: 2.3.2
 
@@ -7736,7 +7728,7 @@ packages:
       typescript: '*'
     dependencies:
       '@microsoft/api-extractor': 7.36.0
-      '@rollup/pluginutils': 5.0.2(rollup@3.21.2)
+      '@rollup/pluginutils': 5.0.2(rollup@3.26.2)
       '@rushstack/node-core-library': 3.59.4
       '@vue/language-core': 1.8.3(typescript@5.1.6)
       debug: 4.3.4
@@ -7744,7 +7736,7 @@ packages:
       typescript: 5.1.6
       vue-tsc: 1.8.3(typescript@5.1.6)
     optionalDependencies:
-      rollup: 3.21.2
+      rollup: 3.26.2
       vite: 4.4.2(@types/node@20.3.1)
     transitivePeerDependencies:
       - '@types/node'
