@@ -10,6 +10,6 @@
   "dependencies": {
     "@astrojs/markdown-component": "1.0.5",
     "@cronitorio/cronitor-rum-js": "0.3.0",
-    "astro": "2.8.3"
+    "astro": "2.9.0"
   }
 }
