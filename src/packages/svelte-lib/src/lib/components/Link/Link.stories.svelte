@@ -7,10 +7,10 @@
 <Meta title="Components/Link" component={Link} />
 
 <Template let:args>
-  <Link {...args}/>
+  <Link {...args} />
 </Template>
 
-<Story name="Auto args" args={{href: "/"}}/>
+<Story name="Auto args" args={{ href: "https://kagi.com" }}>ping</Story>
 
 <!-- Primary -->
 <Story name="Link">
