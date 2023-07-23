@@ -54,6 +54,7 @@
     "@storybook/addon-essentials": "7.1.0",
     "@storybook/addon-interactions": "7.1.0",
     "@storybook/addon-links": "7.1.0",
+    "@storybook/addon-svelte-csf": "3.0.3",
     "@storybook/blocks": "7.1.0",
     "@storybook/svelte": "7.1.0",
     "@storybook/sveltekit": "7.1.0",
