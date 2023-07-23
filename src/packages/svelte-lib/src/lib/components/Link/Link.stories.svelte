@@ -12,7 +12,6 @@
 
 <Story name="Auto args" args={{ href: "https://kagi.com" }}>ping</Story>
 
-<!-- Primary -->
 <Story name="Link">
   <Link href="https://kagi.com">Kagi Search Engine</Link>
 </Story>
