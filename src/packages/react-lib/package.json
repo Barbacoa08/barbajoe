@@ -27,7 +27,7 @@
   "scripts": {
     "clean": "rm -rf dist",
     "dev": "vite build --watch",
-    "build": "pnpm clean && tsc && vite build",
+    "build": "pnpm clean && tsc && vite build --logLevel=error",
     "preview": "vite preview"
   },
   "devDependencies": {
