@@ -24,7 +24,7 @@
   <slot />
 
   {#if links.length > 0}
-    <ul>
+    <ul class="site-header-links">
       {#each links as link}
         <li class:active={link.active}>
           <a href={link.href}>{link.text}</a>

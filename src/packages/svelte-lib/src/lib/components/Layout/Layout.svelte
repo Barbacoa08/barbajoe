@@ -10,7 +10,10 @@
   export let logo: LogoData | undefined = undefined;
 </script>
 
-<Header {links} {logo}><slot name="header" /></Header>
+<Header {links} {logo}>
+  <slot name="logo" />
+  <slot name="header" />
+</Header>
 
 <main id="main-content">
   <slot />
