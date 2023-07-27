@@ -20,7 +20,7 @@ header {
   padding: 0.5rem 1.5rem;
 }
 
-header ul {
+header ul.site-header-links {
   min-height: 45px;
   display: flex;
   align-items: center;
@@ -28,36 +28,36 @@ header ul {
   margin: 0;
 }
 
-header ul li {
+header ul.site-header-links li {
   padding: 0 0.5rem;
   border-bottom: 2px solid transparent;
   color: var(--color-link-text-active);
 }
-header ul li.active {
+header ul.site-header-links li.active {
   padding: 0.5rem;
   border-bottom: 2px solid;
   color: var(--color-link-text-active);
 }
-header ul li:hover,
-header ul li.active:hover,
-header ul li:focus,
-header ul li.active:focus {
+header ul.site-header-links li:hover,
+header ul.site-header-links li.active:hover,
+header ul.site-header-links li:focus,
+header ul.site-header-links li.active:focus {
   padding: 0.5rem;
   border-bottom: 2px solid;
   color: var(--color-link-text-hover);
 }
-header ul li:hover a,
-header ul li.active:hover a,
-header ul li:focus a,
-header ul li.active:focus a {
+header ul.site-header-links li:hover a,
+header ul.site-header-links li.active:hover a,
+header ul.site-header-links li:focus a,
+header ul.site-header-links li.active:focus a {
   color: var(--color-link-text-hover);
 }
 
-header ul li a,
-header ul li.active a {
+header ul.site-header-links li a,
+header ul.site-header-links li.active a {
   text-decoration-line: none;
 }
-header ul li.active a {
+header ul.site-header-links li.active a {
   color: var(--color-link-text-active);
 }
 
