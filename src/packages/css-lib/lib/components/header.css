@@ -9,7 +9,7 @@ header {
   }
 }
 
-header {
+header.site-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -20,7 +20,7 @@ header {
   padding: 0.5rem 1.5rem;
 }
 
-header ul.site-header-links {
+header.site-header ul.site-header-links {
   min-height: 45px;
   display: flex;
   align-items: center;
@@ -28,36 +28,36 @@ header ul.site-header-links {
   margin: 0;
 }
 
-header ul.site-header-links li {
+header.site-header ul.site-header-links > li {
   padding: 0 0.5rem;
   border-bottom: 2px solid transparent;
   color: var(--color-link-text-active);
 }
-header ul.site-header-links li.active {
+header.site-header ul.site-header-links > li.active {
   padding: 0.5rem;
   border-bottom: 2px solid;
   color: var(--color-link-text-active);
 }
-header ul.site-header-links li:hover,
-header ul.site-header-links li.active:hover,
-header ul.site-header-links li:focus,
-header ul.site-header-links li.active:focus {
+header.site-header ul.site-header-links > li:hover,
+header.site-header ul.site-header-links > li.active:hover,
+header.site-header ul.site-header-links > li:focus,
+header.site-header ul.site-header-links > li.active:focus {
   padding: 0.5rem;
   border-bottom: 2px solid;
   color: var(--color-link-text-hover);
 }
-header ul.site-header-links li:hover a,
-header ul.site-header-links li.active:hover a,
-header ul.site-header-links li:focus a,
-header ul.site-header-links li.active:focus a {
+header.site-header ul.site-header-links > li:hover > a,
+header.site-header ul.site-header-links > li.active:hover > a,
+header.site-header ul.site-header-links > li:focus > a,
+header.site-header ul.site-header-links > li.active:focus > a {
   color: var(--color-link-text-hover);
 }
 
-header ul.site-header-links li a,
-header ul.site-header-links li.active a {
+header.site-header ul.site-header-links > li > a,
+header.site-header ul.site-header-links > li.active > a {
   text-decoration-line: none;
 }
-header ul.site-header-links li.active a {
+header.site-header ul.site-header-links > li.active > a {
   color: var(--color-link-text-active);
 }
 
