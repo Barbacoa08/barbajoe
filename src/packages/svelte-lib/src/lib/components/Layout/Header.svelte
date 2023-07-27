@@ -6,7 +6,7 @@
   export let logo: LogoData | undefined;
 </script>
 
-<header>
+<header class="site-header">
   <a class="skip-link" href="#main-content">Skip to main content</a>
 
   {#if logo}
