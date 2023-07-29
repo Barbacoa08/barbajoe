@@ -1,0 +1,38 @@
+form {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  & input[type="text"],
+  & input[type="password"],
+  & input[type="email"],
+  & input[type="number"],
+  & input[type="tel"],
+  & input[type="url"],
+  & input[type="search"],
+  & textarea,
+  & select {
+    font-size: var(--font-size-base);
+    border: 1px solid var(--border-color-gray);
+    border-radius: 0.2em;
+    padding: 0.5em;
+    margin-top: 0.5rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  & .helper-text {
+    font-size: small;
+  }
+
+  & label:has(input[type="checkbox"]) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    & input[type="checkbox"] {
+      margin-right: 0.5rem;
+      transform: scale(1.5);
+    }
+  }
+}
