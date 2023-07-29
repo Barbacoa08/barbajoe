@@ -4,7 +4,7 @@
   let showModal = false;
 </script>
 
-<button class="modal-button" on:click={() => (showModal = true)}> open </button>
+<button on:click={() => (showModal = true)}> open </button>
 
 <Modal bind:showModal>
   <svelte:fragment slot="dialog-header-text">Put Title Here</svelte:fragment>
