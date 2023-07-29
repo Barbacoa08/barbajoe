@@ -2,6 +2,7 @@
   import { Link } from "$lib";
   import BasicModalImplementation from "$lib/components/Modal/tests/BasicModalImplementation.svelte";
   import FormModal from "$lib/components/Modal/tests/FormModal.svelte";
+  import OpenModal from "$lib/components/Modal/tests/OpenModal.svelte";
 </script>
 
 <h1>Minimal Page Example</h1>
@@ -14,4 +15,5 @@
 <div>
   <BasicModalImplementation />
   <FormModal />
+  <OpenModal />
 </div>
