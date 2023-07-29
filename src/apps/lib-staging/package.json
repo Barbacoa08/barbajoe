@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@astrojs/svelte": "3.1.0",
-    "astro": "2.9.2",
+    "astro": "2.9.6",
     "@barbajoe/css-lib": "workspace:*",
     "@barbajoe/react-lib": "workspace:*",
     "svelte": "4.1.1",
