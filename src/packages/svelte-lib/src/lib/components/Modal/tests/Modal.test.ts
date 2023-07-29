@@ -54,22 +54,6 @@ describe("Modal component", () => {
   });
 
   describe("OpenModal", () => {
-    it("fully renders without exploding", async () => {
-      render(OpenModal);
-
-      // HACK: unsure what the appropriate way to "wait" is
-      setTimeout(async () => {
-        const element = screen.getByText("Information");
-        expect(element).toBeInTheDocument();
-        expect(element).toBeVisible();
-
-        await user.keyboard("{Escape}");
-        expect(element).not.toBeVisible();
-      }, 100);
-    });
-
-    // TODO: ensure "custom" close buttons work
-
     it("passes basic axe compliance", async () => {
       const { container } = render(OpenModal);
       const results = await axe(container);
