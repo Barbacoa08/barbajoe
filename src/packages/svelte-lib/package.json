@@ -24,12 +24,12 @@
     "!dist/**/*.spec.*"
   ],
   "scripts": {
-    "all": "pnpm i && pnpm format && pnpm lint && pnpm build && pnpm check && pnpm test && pnpm build:storybook",
+    "all": "pnpm i && pnpm clean && pnpm format && pnpm lint && pnpm check && pnpm build && pnpm test && pnpm build:storybook",
     "clean": "rm -rf coverage dist storybook-static .svelte-kit",
     "dev": "vite build --watch",
     "dev:storybook": "pnpm storybook",
     "dev:sveltekit": "vite dev",
-    "build": "pnpm clean && vite build --logLevel=error && pnpm test && pnpm package",
+    "build": "vite build --logLevel=error && pnpm test && pnpm package",
     "build:storybook": "storybook build",
     "build:watch": "vite build --watch",
     "preview": "vite preview",
