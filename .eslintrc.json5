@@ -78,5 +78,13 @@
   rules: {
     "no-var": "error",
   },
-  ignorePatterns: ["**/dist/**"],
+  ignorePatterns: [
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/build/**",
+    "**/coverage/**",
+    "**/.svelte-kit/**",
+    "**/package/**",
+    "**/storybook-static/**",
+  ],
 }
