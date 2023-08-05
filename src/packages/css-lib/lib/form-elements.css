@@ -22,6 +22,12 @@ form {
     box-sizing: border-box;
   }
 
+  &:disabled {
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    /* TODO: find a better color combo, this is super "meh" */
+  }
+
   & .helper-text {
     font-size: small;
   }
