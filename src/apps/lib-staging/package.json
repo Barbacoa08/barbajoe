@@ -9,8 +9,8 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "@astrojs/svelte": "3.1.0",
-    "astro": "2.10.7",
+    "@astrojs/svelte": "3.1.1",
+    "astro": "2.10.13",
     "@barbajoe/css-lib": "workspace:*",
     "@barbajoe/react-lib": "workspace:*",
     "svelte": "4.2.0",
