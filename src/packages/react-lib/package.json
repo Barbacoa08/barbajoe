@@ -36,9 +36,9 @@
     "@vitejs/plugin-react": "4.0.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "typescript": "5.1.6",
+    "typescript": "5.2.2",
     "vite": "4.4.9",
-    "vite-plugin-dts": "3.5.2"
+    "vite-plugin-dts": "3.5.3"
   },
   "peerDependencies": {
     "react": "18.2.0",
