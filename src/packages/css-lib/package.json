@@ -20,7 +20,7 @@
     "build:prod": "lightningcss --nesting --minify --bundle --sourcemap --targets '>= 0.25%' lib/barbajoe.css -o dist/barbajoe.css"
   },
   "devDependencies": {
-    "lightningcss-cli": "1.21.7",
-    "parcel": "2.9.3"
+    "lightningcss-cli": "1.22.0",
+    "parcel": "2.10.0"
   }
 }
