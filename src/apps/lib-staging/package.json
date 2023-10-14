@@ -13,7 +13,7 @@
     "astro": "2.10.15",
     "@barbajoe/css-lib": "workspace:*",
     "@barbajoe/react-lib": "workspace:*",
-    "svelte": "4.2.0",
+    "svelte": "4.2.1",
     "@barbajoe/svelte-lib": "workspace:*"
   }
 }
