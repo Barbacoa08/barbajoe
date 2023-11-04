@@ -39,7 +39,7 @@ jobs:
       - name: build svelte-lib package
         run: pnpm css-lib build && pnpm svelte-lib build
 
-      - uses: JS-DevTools/npm-publish@v2
+      - uses: JS-DevTools/npm-publish@v3
         with:
           token: ${{ secrets.NPM_AUTH_TOKEN }}
           package: ./src/packages/svelte-lib/package.json
