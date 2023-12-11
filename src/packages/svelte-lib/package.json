@@ -45,8 +45,8 @@
     "storybook": "storybook dev -p 6006"
   },
   "peerDependencies": {
-    "@barbajoe/css-lib": "*",
-    "svelte": "^4"
+    "@barbajoe/css-lib": "0.1.8",
+    "svelte": "4.2.8"
   },
   "devDependencies": {
     "@barbajoe/css-lib": "workspace:*",
