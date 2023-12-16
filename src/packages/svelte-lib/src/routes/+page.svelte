@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { Link, TextGradient } from "$lib";
-  import { SearchIcon, Notebook } from "$lib";
+  import { Link, TextGradient, Icons } from "$lib";
 
   import BasicModalImplementation from "$lib/components/Modal/tests/BasicModalImplementation.svelte";
   import FormModal from "$lib/components/Modal/tests/FormModal.svelte";
@@ -26,8 +25,8 @@
 <h2>Icons Example</h2>
 <div>
   <ul>
-    <li>The Search Icon: <span><SearchIcon /></span></li>
-    <li>The Notebook Icon: <span><Notebook /></span></li>
+    <li>The Search Icon: <span><Icons.Search /></span></li>
+    <li>The Notebook Icon: <span><Icons.Notebook /></span></li>
   </ul>
 </div>
 

@@ -31,8 +31,8 @@ export { People };
 import Scale from "./Scale.svelte";
 export { Scale };
 
-import SearchIcon from "./SearchIcon.svelte";
-export { SearchIcon };
+import Search from "./Search.svelte";
+export { Search };
 
 import Sleep from "./Sleep.svelte";
 export { Sleep };
