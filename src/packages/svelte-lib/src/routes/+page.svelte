@@ -1,5 +1,7 @@
 <script lang="ts">
-  import { Link } from "$lib";
+  import { Link, TextGradient } from "$lib";
+  import { SearchIcon, Notebook } from "$lib";
+
   import BasicModalImplementation from "$lib/components/Modal/tests/BasicModalImplementation.svelte";
   import FormModal from "$lib/components/Modal/tests/FormModal.svelte";
   import OpenModal from "$lib/components/Modal/tests/OpenModal.svelte";
@@ -17,3 +19,20 @@
   <FormModal />
   <OpenModal />
 </div>
+
+<h2>TextGradient Example</h2>
+<p>Example of the <TextGradient>Text Gradient</TextGradient> component.</p>
+
+<h2>Icons Example</h2>
+<div>
+  <ul>
+    <li>The Search Icon: <span><SearchIcon /></span></li>
+    <li>The Notebook Icon: <span><Notebook /></span></li>
+  </ul>
+</div>
+
+<style>
+  ul li span {
+    color: purple;
+  }
+</style>

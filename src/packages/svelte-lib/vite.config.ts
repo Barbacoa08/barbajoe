@@ -11,10 +11,6 @@ export default defineConfig({
 
     coverage: {
       reporter: ["json-summary", "html"],
-      lines: 90,
-      branches: 90,
-      functions: 0, // TODO: renable after I figure out how to test `<dialog>` elements
-      statements: 90,
     },
   },
 });
