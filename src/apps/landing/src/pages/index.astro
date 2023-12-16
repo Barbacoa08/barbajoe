@@ -4,7 +4,7 @@ import Markdown from "@astrojs/markdown-component";
 import Layout from "../layouts/Layout.astro";
 
 const readme = await fetch(
-  "https://raw.githubusercontent.com/Barbacoa08/Barbacoa08/main/README.md"
+  "https://raw.githubusercontent.com/Barbacoa08/Barbacoa08/main/README.md",
 ).then((res) => res.text());
 ---
 
