@@ -59,7 +59,7 @@
     "@storybook/svelte": "7.6.6",
     "@storybook/sveltekit": "7.6.6",
     "@storybook/testing-library": "0.2.2",
-    "@sveltejs/adapter-auto": "2.1.1",
+    "@sveltejs/adapter-auto": "3.0.1",
     "@sveltejs/kit": "1.30.3",
     "@sveltejs/package": "2.2.3",
     "@sveltejs/vite-plugin-svelte": "3.0.1",
