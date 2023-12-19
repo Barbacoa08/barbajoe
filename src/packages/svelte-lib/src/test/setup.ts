@@ -5,9 +5,6 @@ import { vi } from "vitest";
 
 import "@testing-library/jest-dom";
 
-// HACK: https://github.com/testing-library/jest-dom/issues/442#issuecomment-1163011282
-import "@testing-library/jest-dom/extend-expect";
-
 expect.extend(toHaveNoViolations);
 
 // https://github.com/sveltejs/kit/issues/5525#issuecomment-1186390654
