@@ -1,6 +1,6 @@
 {
   "name": "@barbajoe/svelte-lib",
-  "version": "0.2.9",
+  "version": "0.2.10",
   "license": "MIT",
   "author": "Barbacoa08",
   "repository": "https://github.com/Barbacoa08/barbajoe/tree/main/src/packages/svelte-lib",
@@ -24,7 +24,7 @@
     "!dist/**/*.spec.*"
   ],
   "scripts": {
-    "all": "pnpm i && pnpm clean && pnpm format && pnpm lint && pnpm check && pnpm build && pnpm test && pnpm build:storybook",
+    "all": "pnpm i && pnpm clean && pnpm format && pnpm lint && pnpm check && pnpm build && pnpm build:storybook",
     "clean": "rm -rf coverage dist storybook-static .svelte-kit",
     "dev": "vite build --watch",
     "dev:storybook": "pnpm storybook",

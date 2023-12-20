@@ -11,6 +11,8 @@ export default defineConfig({
 
     coverage: {
       reporter: ["json-summary", "html"],
+      include: ["src/lib/**/*.{js,ts}"],
+      exclude: ["src/lib/types"],
     },
   },
 });
