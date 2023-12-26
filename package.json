@@ -50,8 +50,8 @@
     "svelte-lib": "pnpm -F @barbajoe/svelte-lib"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "6.15.0",
-    "@typescript-eslint/parser": "6.15.0",
+    "@typescript-eslint/eslint-plugin": "6.16.0",
+    "@typescript-eslint/parser": "6.16.0",
     "eslint": "8.56.0",
     "eslint-plugin-astro": "0.31.0",
     "eslint-plugin-jsx-a11y": "6.8.0",
