@@ -19,6 +19,9 @@ export { EyeOff };
 import EyeOpen from "./EyeOpen.svelte";
 export { EyeOpen };
 
+import GitHub from "./GitHub.svelte";
+export { GitHub };
+
 import LinkedIn from "./LinkedIn.svelte";
 export { LinkedIn };
 
