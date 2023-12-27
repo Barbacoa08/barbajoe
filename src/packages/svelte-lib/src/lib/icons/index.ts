@@ -1,6 +1,9 @@
 // icons mostly built from: https://www.svgrepo.com/
 // and https://svelte-icons-kit.singhalankur.com/
 
+import Bluesky from "./Bluesky.svelte";
+export { Bluesky };
+
 import Bowl from "./Bowl.svelte";
 export { Bowl };
 
@@ -15,6 +18,9 @@ export { EyeOff };
 
 import EyeOpen from "./EyeOpen.svelte";
 export { EyeOpen };
+
+import LinkedIn from "./LinkedIn.svelte";
+export { LinkedIn };
 
 import Me from "./Me.svelte";
 export { Me };
