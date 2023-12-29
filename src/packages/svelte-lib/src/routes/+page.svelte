@@ -40,16 +40,15 @@
     <Button variant="tertiary">Tertiary Button</Button>
     <Button variant="custom" class="custom-button-class">Custom Button</Button>
   </div>
-
 </section>
 
 <h2>Share Button</h2>
 <section>
-    <Share
-      title="Share Button Example"
-      text="This is an example of the Share Button component."
-      url="/"
-      callback={() => console.log("Share button clicked")}
+  <Share
+    title="Share Button Example"
+    text="This is an example of the Share Button component."
+    url="/"
+    callback={() => console.log("Share button clicked")}
   >
     Share
   </Share>
