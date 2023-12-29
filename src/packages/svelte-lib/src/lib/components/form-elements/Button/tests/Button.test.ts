@@ -1,7 +1,8 @@
-import { render, screen } from "@testing-library/svelte";
+import { fireEvent, render, screen } from "@testing-library/svelte";
 import { axe } from "jest-axe";
 
 import AllVariants from "./AllVariants.svelte";
+import ClickTest from "./ClickTest.svelte";
 
 describe("Button component", () => {
   describe("AllVariants", () => {
@@ -34,6 +35,15 @@ describe("Button component", () => {
 
       expect(buttons[3]).toHaveClass("custom-button-class");
       expect(buttons[3]).not.toHaveClass("primary", "secondary", "tertiary");
+    });
+
+    it("responds to click events", async () => {
+      render(ClickTest);
+      const button = screen.getByRole("button");
+      expect(button).toHaveTextContent("no action");
+
+      await fireEvent.click(button);
+      expect(button).toHaveTextContent("clicked");
     });
 
     it("passes basic axe compliance", async () => {
