@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Link, TextGradient, Icons } from "$lib";
+  import { Button, Link, TextGradient, Icons } from "$lib";
 
   import BasicModalImplementation from "$lib/components/Modal/tests/BasicModalImplementation.svelte";
   import FormModal from "$lib/components/Modal/tests/FormModal.svelte";
@@ -30,8 +30,23 @@
   </ul>
 </div>
 
+<h2>Form Elements</h2>
+<section>
+  <div class="buttons">
+    <Button>Primary Button</Button>
+    <Button variant="secondary">Secondary Button</Button>
+    <Button variant="tertiary">Tertiary Button</Button>
+  </div>
+</section>
+
 <style>
   ul li span {
     color: purple;
+  }
+
+  div.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
   }
 </style>
