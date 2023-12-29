@@ -3,22 +3,18 @@
 
   export let variant: "primary" | "secondary" | "tertiary" | "custom" =
     "primary";
-  // TODO: if `slot` empty, force `aria-label` or `aria-labelledby`
 
-  // TODO: combine classes
-  // const {class as extraClasses, ...rest} = $$restProps;
   const cssClasses = clsx(
     variant === "primary" && "primary",
     variant === "secondary" && "secondary",
     variant === "tertiary" && "tertiary",
-    // extraClasses
+    $$props.class,
   );
 </script>
 
 <button {...$$restProps} class={cssClasses}><slot /></button>
 
 <style>
-  /* TODO: add border radius, color, and background variables */
   button {
     cursor: pointer;
     font-size: 1rem;

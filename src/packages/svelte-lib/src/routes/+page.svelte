@@ -4,6 +4,8 @@
   import BasicModalImplementation from "$lib/components/Modal/tests/BasicModalImplementation.svelte";
   import FormModal from "$lib/components/Modal/tests/FormModal.svelte";
   import OpenModal from "$lib/components/Modal/tests/OpenModal.svelte";
+
+  import "./global.css";
 </script>
 
 <h1>Minimal Page Example</h1>
@@ -36,6 +38,7 @@
     <Button>Primary Button</Button>
     <Button variant="secondary">Secondary Button</Button>
     <Button variant="tertiary">Tertiary Button</Button>
+    <Button variant="custom" class="custom-button-class">Custom Button</Button>
   </div>
 </section>
 
