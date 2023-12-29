@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, Link, TextGradient, Icons } from "$lib";
+  import { Button, Link, TextGradient, Icons, Share } from "$lib";
 
   import BasicModalImplementation from "$lib/components/Modal/tests/BasicModalImplementation.svelte";
   import FormModal from "$lib/components/Modal/tests/FormModal.svelte";
@@ -40,6 +40,19 @@
     <Button variant="tertiary">Tertiary Button</Button>
     <Button variant="custom" class="custom-button-class">Custom Button</Button>
   </div>
+
+</section>
+
+<h2>Share Button</h2>
+<section>
+    <Share
+      title="Share Button Example"
+      text="This is an example of the Share Button component."
+      url="/"
+      callback={() => console.log("Share button clicked")}
+  >
+    Share
+  </Share>
 </section>
 
 <style>
