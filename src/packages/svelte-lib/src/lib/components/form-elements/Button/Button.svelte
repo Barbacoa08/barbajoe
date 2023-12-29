@@ -12,7 +12,16 @@
   );
 </script>
 
-<button {...$$restProps} class={cssClasses}><slot /></button>
+<button
+  on:click
+  on:blur
+  on:focus
+  on:keydown
+  {...$$restProps}
+  class={cssClasses}
+>
+  <slot />
+</button>
 
 <style>
   button {
