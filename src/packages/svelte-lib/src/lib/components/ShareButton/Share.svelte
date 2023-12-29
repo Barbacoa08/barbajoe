@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { browser } from "$app/environment";
   import { copyTextToClipboard } from "$lib/utils";
 
   import { Button } from "../form-elements";
@@ -13,12 +12,11 @@
   export let callback: undefined | (() => void) = undefined;
 
   $: webShareAPISupported =
-    browser &&
+    typeof window !== "undefined" &&
     typeof navigator.share !== "undefined" &&
     typeof navigator.canShare !== "undefined";
 
-  $: handleWebShare;
-  const handleWebShare = async () => {
+  $: handleWebShare = async () => {
     if (webShareAPISupported) {
       navigator.share({
         title,
