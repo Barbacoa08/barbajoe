@@ -1,3 +1,13 @@
+<script context="module" lang="ts">
+  export type ShareCallback =
+    | undefined
+    | (({ webshared }: CallbackProps) => void);
+
+  export interface CallbackProps {
+    webshared: boolean;
+  }
+</script>
+
 <script lang="ts">
   import { copyTextToClipboard } from "$lib/utils";
 
@@ -9,9 +19,7 @@
   export let text: string;
 
   export let url: string;
-  export let callback:
-    | undefined
-    | (({ webshared }: { webshared: boolean }) => void) = undefined;
+  export let callback: ShareCallback = undefined;
 
   $: webShareAPISupported =
     typeof window !== "undefined" &&
