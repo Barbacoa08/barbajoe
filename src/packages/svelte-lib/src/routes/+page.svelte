@@ -1,4 +1,5 @@
 <script lang="ts">
+  import type { ShareCallback } from "$lib/components";
   import { Button, Link, TextGradient, Icons, Share } from "$lib";
 
   import BasicModalImplementation from "$lib/components/Modal/tests/BasicModalImplementation.svelte";
@@ -6,6 +7,14 @@
   import OpenModal from "$lib/components/Modal/tests/OpenModal.svelte";
 
   import "./global.css";
+
+  const mockShareCallback: ShareCallback = async ({ webshared }) => {
+    if (webshared) {
+      alert("Shared!");
+    } else {
+      alert("Copied URL to clipboard");
+    }
+  };
 </script>
 
 <h1>Minimal Page Example</h1>
@@ -51,7 +60,7 @@
     title="Share Button Example"
     text="This is an example of the Share Button component."
     url="/"
-    callback={() => console.log("Share button clicked")}
+    callback={mockShareCallback}
   >
     Share
   </Share>
