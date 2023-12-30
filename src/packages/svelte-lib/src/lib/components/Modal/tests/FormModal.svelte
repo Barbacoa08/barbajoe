@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { Button } from "$lib/components";
   import { Modal } from "../";
 
   let showModal = false;
@@ -8,7 +9,7 @@
   };
 </script>
 
-<button on:click={() => (showModal = true)}> open </button>
+<Button on:click={() => (showModal = true)}>open form modal</Button>
 
 <Modal bind:showModal>
   <svelte:fragment slot="dialog-header-text">Insert Entry</svelte:fragment>
@@ -26,13 +27,9 @@
   </form>
 
   <svelte:fragment slot="dialog-footer">
-    <button class="modal-action-button" on:click={clearAndClose}>
-      cancel
-    </button>
+    <Button variant="secondary" on:click={clearAndClose}>cancel</Button>
 
-    <button class="modal-action-button" on:click={clearAndClose}>
-      insert
-    </button>
+    <Button on:click={clearAndClose}>insert</Button>
   </svelte:fragment>
 </Modal>
 
