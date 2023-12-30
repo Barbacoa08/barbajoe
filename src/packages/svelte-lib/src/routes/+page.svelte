@@ -38,6 +38,9 @@
     <Button>Primary Button</Button>
     <Button variant="secondary">Secondary Button</Button>
     <Button variant="tertiary">Tertiary Button</Button>
+    <Button variant="icon" aria-label="Search">
+      <Icons.Search /> <span>⌘K</span>
+    </Button>
     <Button variant="custom" class="custom-button-class">Custom Button</Button>
   </div>
 </section>

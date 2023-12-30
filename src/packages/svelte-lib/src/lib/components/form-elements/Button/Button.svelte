@@ -1,13 +1,23 @@
 <script lang="ts">
   import clsx from "clsx";
 
-  export let variant: "primary" | "secondary" | "tertiary" | "custom" =
+  export let variant: "primary" | "secondary" | "tertiary" | "icon" | "custom" =
     "primary";
+  if (
+    variant === "icon" &&
+    !$$props["aria-label"] &&
+    !$$props["aria-labelledby"]
+  ) {
+    const error =
+      "BARBAJOE svelte-lib error: Icon buttons must have an `aria-label` or `aria-labelledby` to comply with accessibility guidelines.";
+    console.error(error);
+  }
 
   const cssClasses = clsx(
     variant === "primary" && "primary",
     variant === "secondary" && "secondary",
     variant === "tertiary" && "tertiary",
+    variant === "icon" && "icon",
     $$props.class,
   );
 </script>
@@ -53,6 +63,30 @@
       &:hover,
       &:focus {
         color: var(--color-text);
+      }
+    }
+
+    &.icon {
+      color: var(--color-link-text);
+      background: none;
+
+      display: flex;
+      align-items: center;
+
+      border: 1px solid var(--color-link-text);
+      padding: 0.3rem 0.5rem;
+      border-radius: 0.5rem;
+
+      &:hover {
+        color: var(--color-text);
+        border-color: var(--color-text);
+        background-color: var(--color-bg);
+        box-shadow: inset 0 0 0 0.1rem var(--color-link-text);
+        transition: all 0.15s cubic-bezier(0.165, 0.84, 0.44, 1);
+      }
+
+      & > span {
+        padding-left: 0.25rem;
       }
     }
   }
