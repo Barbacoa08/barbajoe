@@ -1,8 +1,21 @@
-<script lang="ts">
+<script context="module" lang="ts">
   import clsx from "clsx";
+  import type { HTMLButtonAttributes } from "svelte/elements";
 
-  export let variant: "primary" | "secondary" | "tertiary" | "icon" | "custom" =
-    "primary";
+  export type Variant =
+    | "primary"
+    | "secondary"
+    | "tertiary"
+    | "icon"
+    | "custom";
+</script>
+
+<script lang="ts">
+  interface $$Props extends HTMLButtonAttributes {
+    variant?: Variant;
+  }
+  export let variant: Variant = "primary";
+
   if (
     variant === "icon" &&
     !$$props["aria-label"] &&
@@ -22,7 +35,7 @@
   );
 </script>
 
-<button on:click on:blur on:focus {...$$restProps} class={cssClasses}>
+<button {...$$restProps} class={cssClasses}>
   <slot />
 </button>
 
