@@ -9,7 +9,9 @@
   export let text: string;
 
   export let url: string;
-  export let callback: undefined | (() => void) = undefined;
+  export let callback:
+    | undefined
+    | (({ webshared }: { webshared: boolean }) => void) = undefined;
 
   $: webShareAPISupported =
     typeof window !== "undefined" &&
@@ -18,16 +20,16 @@
 
   $: handleWebShare = async () => {
     if (webShareAPISupported) {
-      navigator.share({
+      await navigator.share({
         title,
         text,
         url,
       });
+      callback?.({ webshared: true });
     } else {
       copyTextToClipboard(url);
+      callback?.({ webshared: false });
     }
-
-    callback?.();
   };
 </script>
 
