@@ -14,7 +14,7 @@
 <h2>Link Example</h2>
 <p>Internal Link: <Link href="/page1">Page 1</Link></p>
 
-<h2>Modal Examples (for tests)</h2>
+<h2>Modal Examples (from tests)</h2>
 <div>
   <BasicModalImplementation />
   <FormModal />
@@ -38,6 +38,9 @@
     <Button>Primary Button</Button>
     <Button variant="secondary">Secondary Button</Button>
     <Button variant="tertiary">Tertiary Button</Button>
+    <Button variant="icon" aria-label="Search">
+      <Icons.Search /> <span>⌘K</span>
+    </Button>
     <Button variant="custom" class="custom-button-class">Custom Button</Button>
   </div>
 </section>

@@ -1,6 +1,6 @@
 {
   "name": "@barbajoe/svelte-lib",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "license": "MIT",
   "author": "Barbacoa08",
   "repository": "https://github.com/Barbacoa08/barbajoe/tree/main/src/packages/svelte-lib",
@@ -70,7 +70,6 @@
     "@typescript-eslint/eslint-plugin": "6.16.0",
     "@typescript-eslint/parser": "6.16.0",
     "@vitest/coverage-v8": "1.1.0",
-    "clsx": "2.0.0",
     "eslint": "8.56.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-storybook": "0.6.15",
@@ -90,5 +89,8 @@
     "vite": "5.0.10",
     "vitest": "1.1.0",
     "vitest-dom": "0.1.1"
+  },
+  "dependencies": {
+    "clsx": "2.1.0"
   }
 }

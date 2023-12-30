@@ -1,5 +1,7 @@
 <!-- copy-pasted (mostly) from: https://svelte.dev/examples/modal -->
 <script lang="ts">
+  import { Button } from "$lib/components";
+
   export let showModal = false;
 
   let dialog: HTMLDialogElement;
@@ -27,9 +29,7 @@
 
     <div class="dialog-footer">
       <slot name="dialog-footer">
-        <button class="modal-action-button" on:click={() => dialog.close()}>
-          close
-        </button>
+        <Button on:click={() => dialog.close()}>close</Button>
       </slot>
     </div>
   </div>
