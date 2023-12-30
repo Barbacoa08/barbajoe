@@ -24,7 +24,7 @@ describe("Modal component", () => {
       const element = screen.getByText("Put Title Here");
       expect(element).toBeInTheDocument();
 
-      const closeButton = screen.getByText("open");
+      const closeButton = screen.getByText("open basic modal");
       await user.click(closeButton);
     });
 
@@ -42,7 +42,7 @@ describe("Modal component", () => {
       const element = screen.getByText("Insert Entry");
       expect(element).toBeInTheDocument();
 
-      const closeButton = screen.getByText("open");
+      const closeButton = screen.getByText("open form modal");
       await user.click(closeButton);
     });
 

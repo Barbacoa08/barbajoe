@@ -14,7 +14,7 @@
 <h2>Link Example</h2>
 <p>Internal Link: <Link href="/page1">Page 1</Link></p>
 
-<h2>Modal Examples (for tests)</h2>
+<h2>Modal Examples (from tests)</h2>
 <div>
   <BasicModalImplementation />
   <FormModal />
