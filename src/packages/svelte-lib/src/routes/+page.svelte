@@ -68,6 +68,10 @@
   </div>
 
   <div>
+    <Input type="password">Password Input</Input>
+  </div>
+
+  <div>
     <Textarea>
       Adding <TextGradient>swagger</TextGradient> to the label
     </Textarea>
