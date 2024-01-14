@@ -1,8 +1,17 @@
-<script lang="ts">
+<script context="module" lang="ts">
   import clsx from "clsx";
 
-  export let variant: "primary" | "secondary" | "tertiary" | "icon" | "custom" =
-    "primary";
+  export type Variant =
+    | "primary"
+    | "secondary"
+    | "tertiary"
+    | "icon"
+    | "custom";
+</script>
+
+<script lang="ts">
+  export let variant: Variant = "primary";
+
   if (
     variant === "icon" &&
     !$$props["aria-label"] &&
