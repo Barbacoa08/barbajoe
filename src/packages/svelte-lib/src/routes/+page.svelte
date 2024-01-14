@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { ShareCallback } from "$lib/components";
-  import { Button, Link, TextGradient, Icons, Share } from "$lib";
+  import { Button, Link, TextGradient, Icons, Share, Input } from "$lib";
 
   import BasicModalImplementation from "$lib/components/Modal/tests/BasicModalImplementation.svelte";
   import FormModal from "$lib/components/Modal/tests/FormModal.svelte";
@@ -52,6 +52,27 @@
     </Button>
     <Button variant="custom" class="custom-button-class">Custom Button</Button>
   </div>
+
+  <section class="text-input-examples">
+    <h3>Text Input Examples</h3>
+
+    <div>
+      <label for="text-input-example">Manual Label</label>
+      <Input id="text-input-example" placeholder="placeholder" />
+    </div>
+
+    <div>
+      <Input
+        id="custom-labeled-input"
+        placeholder="placeholder"
+        on:click={() => {
+          console.log("ping");
+        }}
+      >
+        Using the slot <TextGradient>with</TextGradient> special formatting
+      </Input>
+    </div>
+  </section>
 </section>
 
 <h2>Share Button</h2>
@@ -75,5 +96,11 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+  }
+
+  .text-input-examples {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
   }
 </style>
