@@ -4,6 +4,7 @@
 
 <script lang="ts">
   export let value: string = "";
+  export let placeholder: string = "";
   export let id: string | undefined = genId();
   export let type:
     | "text"
@@ -21,6 +22,7 @@
   {id}
   {type}
   {value}
+  {placeholder}
   on:click
   on:blur
   on:focus

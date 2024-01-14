@@ -42,7 +42,7 @@
 </div>
 
 <h2>Form Elements</h2>
-<section>
+<section class="form-examples">
   <div class="buttons">
     <Button>Primary Button</Button>
     <Button variant="secondary">Secondary Button</Button>
@@ -53,26 +53,16 @@
     <Button variant="custom" class="custom-button-class">Custom Button</Button>
   </div>
 
-  <section class="text-input-examples">
-    <h3>Text Input Examples</h3>
+  <div>
+    <Input on:click={() => console.log("ping")}>
+      Using the slot <TextGradient>with</TextGradient> special formatting
+    </Input>
+  </div>
 
-    <div>
-      <label for="text-input-example">Manual Label</label>
-      <Input id="text-input-example" placeholder="placeholder" />
-    </div>
-
-    <div>
-      <Input
-        id="custom-labeled-input"
-        placeholder="placeholder"
-        on:click={() => {
-          console.log("ping");
-        }}
-      >
-        Using the slot <TextGradient>with</TextGradient> special formatting
-      </Input>
-    </div>
-  </section>
+  <div>
+    <label for="textarea-example">TODO: textarea</label>
+    <textarea id="textarea-example" />
+  </div>
 </section>
 
 <h2>Share Button</h2>
@@ -98,9 +88,8 @@
     justify-content: space-between;
   }
 
-  .text-input-examples {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+  .form-examples {
+    display: grid;
+    gap: 2rem;
   }
 </style>
