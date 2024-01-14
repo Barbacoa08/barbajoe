@@ -1,6 +1,14 @@
 <script lang="ts">
   import type { ShareCallback } from "$lib/components";
-  import { Button, Link, TextGradient, Icons, Share, Input } from "$lib";
+  import {
+    Button,
+    Link,
+    TextGradient,
+    Icons,
+    Share,
+    Input,
+    Textarea,
+  } from "$lib";
 
   import BasicModalImplementation from "$lib/components/Modal/tests/BasicModalImplementation.svelte";
   import FormModal from "$lib/components/Modal/tests/FormModal.svelte";
@@ -55,13 +63,14 @@
 
   <div>
     <Input on:click={() => console.log("ping")}>
-      Using the slot <TextGradient>with</TextGradient> special formatting
+      Using <TextGradient>special formatting</TextGradient>
     </Input>
   </div>
 
   <div>
-    <label for="textarea-example">TODO: textarea</label>
-    <textarea id="textarea-example" />
+    <Textarea>
+      Adding <TextGradient>swagger</TextGradient> to the label
+    </Textarea>
   </div>
 </section>
 
