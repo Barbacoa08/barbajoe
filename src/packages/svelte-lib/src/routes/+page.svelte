@@ -12,7 +12,7 @@
 
   import BasicModalImplementation from "$lib/components/Modal/tests/BasicModalImplementation.svelte";
   import FormModal from "$lib/components/Modal/tests/FormModal.svelte";
-  import OpenModal from "$lib/components/Modal/tests/OpenModal.svelte";
+  // import OpenModal from "$lib/components/Modal/tests/OpenModal.svelte";
 
   import "./global.css";
 
@@ -35,7 +35,7 @@
 <div>
   <BasicModalImplementation />
   <FormModal />
-  <OpenModal />
+  <!-- <OpenModal /> -->
 </div>
 
 <h2>TextGradient Example</h2>
