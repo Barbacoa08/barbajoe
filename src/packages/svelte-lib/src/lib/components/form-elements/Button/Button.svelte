@@ -44,12 +44,16 @@
     padding: 0.2em 0.5em;
     background: rgba(0, 0, 0, 0.3);
 
+    &[disabled] {
+      cursor: not-allowed;
+    }
+
     &.primary {
       color: var(--color-text);
       background: var(--color-bg-accent);
 
-      &:hover,
-      &:focus {
+      &:hover:not([disabled]),
+      &:focus:not([disabled]) {
         box-shadow: 0 0 0 2px var(--color-link-text-hover);
       }
     }
@@ -57,8 +61,8 @@
     &.secondary {
       color: var(--color-link-text);
 
-      &:hover,
-      &:focus {
+      &:hover:not([disabled]),
+      &:focus:not([disabled]) {
         color: var(--color-link-text-hover);
         box-shadow: 0 0 0 2px var(--color-link-text-hover);
       }
@@ -69,8 +73,8 @@
       background: transparent;
       border: none;
 
-      &:hover,
-      &:focus {
+      &:hover:not([disabled]),
+      &:focus:not([disabled]) {
         color: var(--color-text);
       }
     }
@@ -86,7 +90,7 @@
       padding: 0.3rem 0.5rem;
       border-radius: 0.5rem;
 
-      &:hover {
+      &:hover:not([disabled]) {
         color: var(--color-text);
         border-color: var(--color-text);
         background-color: var(--color-bg);

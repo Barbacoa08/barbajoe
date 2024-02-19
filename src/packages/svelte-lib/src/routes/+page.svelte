@@ -59,6 +59,7 @@
       <Icons.Search /> <span>⌘K</span>
     </Button>
     <Button variant="custom" class="custom-button-class">Custom Button</Button>
+    <Button disabled>Disabled Button</Button>
   </div>
 
   <div>
