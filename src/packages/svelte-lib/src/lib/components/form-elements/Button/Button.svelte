@@ -46,6 +46,7 @@
 
     &[disabled] {
       cursor: not-allowed;
+      opacity: 0.8;
     }
 
     &.primary {
