@@ -1,5 +1,4 @@
 // icons mostly built from: https://www.svgrepo.com/
-// and https://svelte-icons-kit.singhalankur.com/
 
 import Bluesky from "./Bluesky.svelte";
 export { Bluesky };
