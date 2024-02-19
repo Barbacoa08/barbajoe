@@ -21,6 +21,9 @@ export { EyeOpen };
 import GitHub from "./GitHub.svelte";
 export { GitHub };
 
+import Heart from "./Heart.svelte";
+export { Heart };
+
 import LinkedIn from "./LinkedIn.svelte";
 export { LinkedIn };
 
@@ -42,8 +45,14 @@ export { Scale };
 import Search from "./Search.svelte";
 export { Search };
 
+import ShootingStar from "./ShootingStar.svelte";
+export { ShootingStar };
+
 import Sleep from "./Sleep.svelte";
 export { Sleep };
+
+import Star from "./Star.svelte";
+export { Star };
 
 import Trash from "./Trash.svelte";
 export { Trash };
