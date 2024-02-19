@@ -25,6 +25,14 @@
   };
 </script>
 
+<svelte:head>
+  <title>Barbajoe's Svelte Library</title>
+  <meta
+    name="description"
+    content="The landing page for Barbajoe's Svelte Library"
+  />
+</svelte:head>
+
 <h1>Minimal Page Example</h1>
 <p>Minimal svelte page example.</p>
 
@@ -59,6 +67,7 @@
       <Icons.Search /> <span>⌘K</span>
     </Button>
     <Button variant="custom" class="custom-button-class">Custom Button</Button>
+    <Button disabled>Disabled Button</Button>
   </div>
 
   <div>
