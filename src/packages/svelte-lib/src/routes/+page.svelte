@@ -25,6 +25,14 @@
   };
 </script>
 
+<svelte:head>
+  <title>Barbajoe's Svelte Library</title>
+  <meta
+    name="description"
+    content="The landing page for Barbajoe's Svelte Library"
+  />
+</svelte:head>
+
 <h1>Minimal Page Example</h1>
 <p>Minimal svelte page example.</p>
 
