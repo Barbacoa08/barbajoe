@@ -57,5 +57,8 @@ export { Star };
 import Trash from "./Trash.svelte";
 export { Trash };
 
+import TwitterX from "./TwitterX.svelte";
+export { TwitterX };
+
 import WordBubble from "./WordBubble.svelte";
 export { WordBubble };
