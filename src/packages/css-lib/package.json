@@ -21,6 +21,6 @@
   },
   "devDependencies": {
     "lightningcss-cli": "1.24.0",
-    "parcel": "2.11.0"
+    "parcel": "2.12.0"
   }
 }
