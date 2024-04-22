@@ -9,14 +9,14 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "@astrojs/svelte": "5.2.0",
+    "@astrojs/svelte": "5.4.0",
     "@barbajoe/css-lib": "workspace:*",
     "@barbajoe/react-lib": "workspace:*",
     "@barbajoe/svelte-lib": "workspace:*",
     "astro": "2.10.15",
-    "svelte": "4.2.12"
+    "svelte": "4.2.15"
   },
   "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "3.0.2"
+    "@sveltejs/vite-plugin-svelte": "3.1.0"
   }
 }
