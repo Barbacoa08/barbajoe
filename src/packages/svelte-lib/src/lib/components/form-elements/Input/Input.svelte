@@ -20,13 +20,20 @@
   const handleVisibilityToggle = () => {
     inputType = inputType === "password" ? "text" : "password";
   };
+
+  const handleOnInput = (
+    e: Event & {
+      currentTarget: EventTarget & HTMLInputElement;
+    },
+  ) => {
+    value = (e.target as HTMLInputElement).value;
+  };
 </script>
 
 <label for={id}><slot /></label>
 
 <div class="wrapper">
   <input
-    {...$$restProps}
     type={inputType}
     {id}
     {value}
@@ -35,10 +42,11 @@
     on:blur
     on:focus
     on:change
-    on:input
+    on:input={handleOnInput}
     on:keydown
     on:keyup
     on:paste
+    {...$$restProps}
   />
 
   {#if type === "password"}
