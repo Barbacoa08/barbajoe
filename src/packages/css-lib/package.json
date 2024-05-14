@@ -1,6 +1,6 @@
 {
   "name": "@barbajoe/css-lib",
-  "version": "0.1.9",
+  "version": "0.1.10-alpha",
   "license": "MIT",
   "author": "Barbacoa08",
   "repository": "https://github.com/Barbacoa08/barbajoe/tree/main/src/packages/css-lib",
@@ -10,7 +10,8 @@
     "registry": "https://registry.npmjs.org/"
   },
   "files": [
-    "dist/barbajoe.css"
+    "dist/barbajoe.css",
+    "dist/barbajoe.css.map"
   ],
   "scripts": {
     "all": "pnpm i && pnpm clean && pnpm build",
