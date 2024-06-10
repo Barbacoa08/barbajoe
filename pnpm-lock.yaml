@@ -191,8 +191,8 @@ importers:
         specifier: 2.39.0
         version: 2.39.0(eslint@8.57.0)(svelte@4.2.17)
       jest-axe:
-        specifier: 8.0.0
-        version: 8.0.0
+        specifier: 9.0.0
+        version: 9.0.0
       jsdom:
         specifier: 24.1.0
         version: 24.1.0
@@ -6326,6 +6326,11 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
+  /axe-core@4.9.1:
+    resolution: {integrity: sha512-QbUdXJVTpvUTHU7871ppZkdOLBeGUKBQWHkHrvN2V9IQWGMt61zf3B45BtzjxEJzYuj0JBjBZP/hmYS/R9pmAw==}
+    engines: {node: '>=4'}
+    dev: true
+
   /axobject-query@3.2.1:
     resolution: {integrity: sha512-jsyHu61e6N4Vbz/v18DHwWYKK0bSWLqn47eeDSKPB7m8tqMHF9YJ+mhIk2lVteyZrY8tnSj/jHOv4YiTCuCJgg==}
     dependencies:
@@ -9448,11 +9453,11 @@ packages:
       minimatch: 3.1.2
     dev: true
 
-  /jest-axe@8.0.0:
-    resolution: {integrity: sha512-4kNcNn7J0jPO4jANEYZOHeQ/tSBvkXS+MxTbX1CKbXGd0+ZbRGDn/v/8IYWI/MmYX15iLVyYRnRev9X3ksePWA==}
-    engines: {node: '>= 14.0.0'}
+  /jest-axe@9.0.0:
+    resolution: {integrity: sha512-Xt7O0+wIpW31lv0SO1wQZUTyJE7DEmnDEZeTt9/S9L5WUywxrv8BrgvTuQEqujtfaQOcJ70p4wg7UUgK1E2F5g==}
+    engines: {node: '>= 16.0.0'}
     dependencies:
-      axe-core: 4.7.2
+      axe-core: 4.9.1
       chalk: 4.1.2
       jest-matcher-utils: 29.2.2
       lodash.merge: 4.6.2
