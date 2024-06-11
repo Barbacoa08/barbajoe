@@ -1,47 +1,49 @@
 {
-  "name": "@barbajoe/react-lib",
-  "version": "0.1.0",
-  "license": "MIT",
-  "author": "Barbacoa08",
-  "repository": "https://github.com/Barbacoa08/barbajoe/tree/main/src/packages/react-lib",
-  "homepage": "https://lib-staging.barbajoe.tech/",
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
-  },
-  "bugs": "https://github.com/Barbacoa08/barbajoe/issues",
-  "type": "module",
-  "main": "./dist/react-lib.umd.js",
-  "module": "./dist/react-lib.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    "./react-lib.css": "./dist/react-lib.css",
-    ".": {
-      "import": "./dist/react-lib.js",
-      "require": "./dist/react-lib.umd.cjs"
-    }
-  },
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "clean": "rm -rf dist",
-    "dev": "vite build --watch",
-    "build": "pnpm clean && tsc && vite build --logLevel=error",
-    "preview": "vite preview"
-  },
-  "devDependencies": {
-    "@types/react": "18.3.3",
-    "@types/react-dom": "18.3.0",
-    "@vitejs/plugin-react": "4.3.1",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
-    "typescript": "5.4.5",
-    "vite": "5.2.13",
-    "vite-plugin-dts": "3.9.1"
-  },
-  "peerDependencies": {
-    "react": "18.3.1",
-    "react-dom": "18.3.1"
-  }
+	"name": "@barbajoe/react-lib",
+	"version": "0.1.0",
+	"license": "MIT",
+	"author": "Barbacoa08",
+	"repository": "https://github.com/Barbacoa08/barbajoe/tree/main/src/packages/react-lib",
+	"homepage": "https://lib-staging.barbajoe.tech/",
+	"publishConfig": {
+		"access": "public",
+		"registry": "https://registry.npmjs.org/"
+	},
+	"bugs": "https://github.com/Barbacoa08/barbajoe/issues",
+	"type": "module",
+	"main": "./dist/react-lib.umd.js",
+	"module": "./dist/react-lib.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		"./react-lib.css": "./dist/react-lib.css",
+		".": {
+			"import": "./dist/react-lib.js",
+			"require": "./dist/react-lib.umd.cjs"
+		}
+	},
+	"files": ["dist"],
+	"scripts": {
+		"all": "pnpm i && pnpm clean && pnpm style-check && pnpm build",
+		"clean": "rm -rf dist",
+		"lint": "biome ci ./src",
+		"format": "biome format --write ./src",
+		"style-check": "biome check --write ./src",
+		"dev": "vite build --watch",
+		"build": "pnpm clean && tsc && vite build --logLevel=error",
+		"preview": "vite preview"
+	},
+	"devDependencies": {
+		"@types/react": "18.3.3",
+		"@types/react-dom": "18.3.0",
+		"@vitejs/plugin-react": "4.3.1",
+		"react": "18.3.1",
+		"react-dom": "18.3.1",
+		"typescript": "5.4.5",
+		"vite": "5.2.13",
+		"vite-plugin-dts": "3.9.1"
+	},
+	"peerDependencies": {
+		"react": "18.3.1",
+		"react-dom": "18.3.1"
+	}
 }
