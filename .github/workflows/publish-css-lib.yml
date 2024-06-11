@@ -10,7 +10,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: "18"
+          node-version: 20
       - run: npm i && mkdir -p dist && npm run build:prod
         working-directory: src/packages/css-lib
       - uses: JS-DevTools/npm-publish@v3
