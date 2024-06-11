@@ -49,8 +49,5 @@
     "css-lib": "pnpm -F @barbajoe/css-lib",
     "react-lib": "pnpm -F @barbajoe/react-lib",
     "svelte-lib": "pnpm -F @barbajoe/svelte-lib"
-  },
-  "dependencies": {
-    "@biomejs/biome": "^1.8.1"
   }
 }
