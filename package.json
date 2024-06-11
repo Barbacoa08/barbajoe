@@ -25,8 +25,9 @@
     "all": "pnpm i && pnpm clean && pnpm format && pnpm lint && pnpm build && pnpm test",
     "github": "pnpm i && pnpm lint && pnpm build && pnpm test",
     "clean": "rm -rf coverage badges dist",
-    "format": "pnpm prettier --write ./src --log-level warn",
-    "lint": "eslint src -c ./.eslintrc.json5",
+    "lint": "biome ci ./src",
+    "format": "biome format --write ./src",
+    "style-check": "biome check --write ./src",
     "build": "pnpm build:packages && pnpm build:apps",
     "build:apps": "pnpm build:landing && pnpm build:lib-staging",
     "build:landing": "pnpm -F landing build",
@@ -49,15 +50,7 @@
     "react-lib": "pnpm -F @barbajoe/react-lib",
     "svelte-lib": "pnpm -F @barbajoe/svelte-lib"
   },
-  "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "7.13.0",
-    "@typescript-eslint/parser": "7.13.0",
-    "eslint": "8.57.0",
-    "eslint-plugin-astro": "1.2.0",
-    "eslint-plugin-jsx-a11y": "6.8.0",
-    "eslint-plugin-react": "7.34.2",
-    "prettier": "3.3.1",
-    "prettier-plugin-astro": "0.14.0",
-    "prettier-plugin-svelte": "3.2.4"
+  "dependencies": {
+    "@biomejs/biome": "^1.8.1"
   }
 }
