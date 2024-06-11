@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-  import { genId } from "$lib/utils";
+import { genId } from "$lib/utils";
 </script>
 
 <script lang="ts">

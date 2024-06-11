@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { Icons } from "$lib";
+import { Icons } from "$lib";
 
-  export let disabled: boolean = false;
-  export let href: string = "";
+export let disabled: boolean = false;
+export let href: string = "";
 </script>
 
 <li class:disabled>

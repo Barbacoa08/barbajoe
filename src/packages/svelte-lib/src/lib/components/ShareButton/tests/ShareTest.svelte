@@ -1,7 +1,7 @@
 <script>
-  import Share from "../Share.svelte";
+import Share from "../Share.svelte";
 
-  $: result = "no action";
+$: result = "no action";
 </script>
 
 <main>

@@ -1,7 +1,7 @@
 <script>
-  import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
+import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 
-  import Link from "./Link.svelte";
+import Link from "./Link.svelte";
 </script>
 
 <Meta title="Components/Link" component={Link} />

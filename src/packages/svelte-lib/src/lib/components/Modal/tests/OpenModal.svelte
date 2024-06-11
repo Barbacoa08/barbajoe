@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Modal } from "../";
+import { Modal } from "../";
 </script>
 
 <Modal showModal>

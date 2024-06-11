@@ -1,13 +1,13 @@
 <script lang="ts">
-  import "@barbajoe/css-lib/dist/barbajoe.css";
+import "@barbajoe/css-lib/dist/barbajoe.css";
 
-  import type { HeaderLink, LogoData } from "$lib/types";
+import type { HeaderLink, LogoData } from "$lib/types";
 
-  import { Footer, Header } from "./";
-  import { Link } from "../Link";
+import { Footer, Header } from "./";
+import { Link } from "../Link";
 
-  export let links: HeaderLink[] = [];
-  export let logo: LogoData | undefined = undefined;
+export let links: HeaderLink[] = [];
+export let logo: LogoData | undefined = undefined;
 </script>
 
 <Header {links} {logo}>

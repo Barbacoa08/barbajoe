@@ -1,7 +1,7 @@
 <script>
-  import Button from "../Button.svelte";
+import Button from "../Button.svelte";
 
-  $: result = "no action";
+$: result = "no action";
 </script>
 
 <main>

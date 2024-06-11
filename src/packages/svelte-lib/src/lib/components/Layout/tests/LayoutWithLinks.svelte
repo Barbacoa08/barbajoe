@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Layout } from "..";
+import { Layout } from "..";
 </script>
 
 <Layout links={[{ href: "/", text: "home", active: true }]}>

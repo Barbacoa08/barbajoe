@@ -1,12 +1,7 @@
 <script context="module" lang="ts">
-  import clsx from "clsx";
+import clsx from "clsx";
 
-  export type Variant =
-    | "primary"
-    | "secondary"
-    | "tertiary"
-    | "icon"
-    | "custom";
+export type Variant = "primary" | "secondary" | "tertiary" | "icon" | "custom";
 </script>
 
 <script lang="ts">

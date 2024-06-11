@@ -1,13 +1,13 @@
 <!-- copy-pasted (mostly) from: https://svelte.dev/examples/modal -->
 <script lang="ts">
-  import { Button } from "$lib/components";
+import { Button } from "$lib/components";
 
-  export let showModal = false;
+export let showModal = false;
 
-  let dialog: HTMLDialogElement;
+let dialog: HTMLDialogElement;
 
-  $: if (dialog && showModal) dialog.showModal();
-  $: if (dialog && !showModal) dialog.close();
+$: if (dialog && showModal) dialog.showModal();
+$: if (dialog && !showModal) dialog.close();
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->

@@ -1,8 +1,8 @@
 <script lang="ts">
-  import "./page.css";
-  import Header from "../Header/Header.svelte";
+import "./page.css";
+import Header from "../Header/Header.svelte";
 
-  let user: { name: string } | null = null;
+let user: { name: string } | null = null;
 </script>
 
 <article>

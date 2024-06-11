@@ -1,5 +1,5 @@
 <script>
-  import TextGradient from "../TextGradient.svelte";
+import TextGradient from "../TextGradient.svelte";
 </script>
 
 <main>

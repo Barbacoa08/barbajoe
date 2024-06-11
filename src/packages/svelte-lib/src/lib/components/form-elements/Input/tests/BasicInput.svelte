@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Input } from "../";
+import { Input } from "../";
 </script>
 
 <main>

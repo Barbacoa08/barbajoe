@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { Button } from "$lib/components";
-  import { Modal } from "../";
+import { Button } from "$lib/components";
+import { Modal } from "../";
 
-  let showModal = false;
+let showModal = false;
 
-  const clearAndClose = () => {
-    showModal = false;
-  };
+const clearAndClose = () => {
+	showModal = false;
+};
 </script>
 
 <Button on:click={() => (showModal = true)}>open form modal</Button>

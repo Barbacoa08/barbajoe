@@ -1,9 +1,9 @@
 <script>
-  export let width = "1.5rem";
-  export let height = "1.5rem";
+export let width = "1.5rem";
+export let height = "1.5rem";
 
-  export let filled = false;
-  $: viewBox = filled ? "0 0 940.688 940.688" : "0 0 288.259 288.259";
+export let filled = false;
+$: viewBox = filled ? "0 0 940.688 940.688" : "0 0 288.259 288.259";
 </script>
 
 <svg {height} {width} fill="currentColor" {viewBox} {...$$restProps}>
