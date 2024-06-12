@@ -24,7 +24,9 @@
 	"scripts": {
 		"all": "pnpm i && pnpm lint && pnpm build && pnpm test",
 		"github": "pnpm i && pnpm lint && pnpm build && pnpm test",
-		"lint": "pnpm -F css-lib lint && pnpm -F react-lib lint && pnpm -F svelte-lib lint",
+		"lint": "pnpm lint:packages && pnpm lint:apps",
+		"lint:apps": "pnpm -F landing lint && pnpm -F lib-staging lint",
+		"lint:packages": "pnpm -F css-lib lint && pnpm -F react-lib lint && pnpm -F svelte-lib lint",
 		"build": "pnpm build:packages && pnpm build:apps",
 		"build:apps": "pnpm build:landing && pnpm build:lib-staging",
 		"build:landing": "pnpm -F landing build",

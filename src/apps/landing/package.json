@@ -1,15 +1,20 @@
 {
-  "name": "@barbajoe/landing",
-  "version": "1.0.0",
-  "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview"
-  },
-  "dependencies": {
-    "@astrojs/markdown-component": "1.0.5",
-    "@cronitorio/cronitor-rum-js": "0.3.0",
-    "astro": "2.10.15"
-  }
+	"name": "@barbajoe/landing",
+	"version": "1.0.0",
+	"scripts": {
+		"all": "pnpm i && pnpm clean && pnpm style-check && pnpm build",
+		"clean": "rm -rf dist",
+		"lint": "biome ci ./src",
+		"format": "biome format --write ./src",
+		"style-check": "biome check --write ./src",
+		"dev": "astro dev --open",
+		"start": "astro dev",
+		"build": "astro build",
+		"preview": "astro preview"
+	},
+	"dependencies": {
+		"@astrojs/markdown-component": "1.0.5",
+		"@cronitorio/cronitor-rum-js": "0.3.0",
+		"astro": "2.10.15"
+	}
 }

@@ -1,22 +1,27 @@
 {
-  "name": "@barbajoe/lib-staging",
-  "type": "module",
-  "version": "0.1.0",
-  "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview"
-  },
-  "dependencies": {
-    "@astrojs/svelte": "5.5.0",
-    "@barbajoe/css-lib": "workspace:*",
-    "@barbajoe/react-lib": "workspace:*",
-    "@barbajoe/svelte-lib": "workspace:*",
-    "astro": "2.10.15",
-    "svelte": "4.2.18"
-  },
-  "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "3.1.1"
-  }
+	"name": "@barbajoe/lib-staging",
+	"type": "module",
+	"version": "0.1.0",
+	"scripts": {
+		"all": "pnpm i && pnpm clean && pnpm style-check && pnpm build",
+		"clean": "rm -rf dist",
+		"lint": "biome ci ./src",
+		"format": "biome format --write ./src",
+		"style-check": "biome check --write ./src",
+		"dev": "astro dev --open",
+		"start": "astro dev",
+		"build": "astro build",
+		"preview": "astro preview"
+	},
+	"dependencies": {
+		"@astrojs/svelte": "5.5.0",
+		"@barbajoe/css-lib": "workspace:*",
+		"@barbajoe/react-lib": "workspace:*",
+		"@barbajoe/svelte-lib": "workspace:*",
+		"astro": "2.10.15",
+		"svelte": "4.2.18"
+	},
+	"devDependencies": {
+		"@sveltejs/vite-plugin-svelte": "3.1.1"
+	}
 }
