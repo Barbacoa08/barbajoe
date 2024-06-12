@@ -2,9 +2,9 @@ import { render, screen } from "@testing-library/svelte";
 import { axe } from "jest-axe";
 
 import LayoutWithHeaderAndFooter from "./LayoutWithHeaderAndFooter.svelte";
-import MinimalLayout from "./MinimalLayout.svelte";
 import LayoutWithLinks from "./LayoutWithLinks.svelte";
 import LayoutWithLogo from "./LayoutWithLogo.svelte";
+import MinimalLayout from "./MinimalLayout.svelte";
 
 describe("Layout component", () => {
 	describe("LayoutWithHeaderAndFooter", () => {

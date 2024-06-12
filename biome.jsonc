@@ -1,0 +1,18 @@
+{
+	// per: https://biomejs.dev/internals/language-support/
+	// When linting .svelte files, it’s advised to turn off useConst to prevent compiler errors. Use the option overrides for that.
+	"overrides": [
+		{
+			"include": [
+				"*.svelte"
+			],
+			"linter": {
+				"rules": {
+					"style": {
+						"useConst": "off"
+					}
+				}
+			}
+		}
+	]
+}

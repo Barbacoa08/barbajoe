@@ -18,13 +18,9 @@
 			"svelte": "./dist/index.js"
 		}
 	},
-	"files": [
-		"dist",
-		"!dist/**/*.test.*",
-		"!dist/**/*.spec.*"
-	],
+	"files": ["dist", "!dist/**/*.test.*", "!dist/**/*.spec.*"],
 	"scripts": {
-		"all": "pnpm i && pnpm clean && pnpm format && pnpm lint && pnpm check && pnpm build && pnpm build:storybook",
+		"all": "pnpm i && pnpm clean && pnpm style-check && pnpm check && pnpm build && pnpm build:storybook",
 		"clean": "rm -rf coverage dist storybook-static .svelte-kit",
 		"lint": "biome ci ./src",
 		"format": "biome format --write ./src",

@@ -1,14 +1,14 @@
 <script lang="ts">
-import type { ShareCallback } from "$lib/components";
 import {
 	Button,
-	Link,
-	TextGradient,
 	Icons,
-	Share,
 	Input,
+	Link,
+	Share,
+	TextGradient,
 	Textarea,
 } from "$lib";
+import type { ShareCallback } from "$lib/components";
 
 import BasicModalImplementation from "$lib/components/Modal/tests/BasicModalImplementation.svelte";
 import FormModal from "$lib/components/Modal/tests/FormModal.svelte";

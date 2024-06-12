@@ -3,8 +3,8 @@ import "@barbajoe/css-lib/dist/barbajoe.css";
 
 import type { HeaderLink, LogoData } from "$lib/types";
 
-import { Footer, Header } from "./";
 import { Link } from "../Link";
+import { Footer, Header } from "./";
 
 export let links: HeaderLink[] = [];
 export let logo: LogoData | undefined = undefined;
