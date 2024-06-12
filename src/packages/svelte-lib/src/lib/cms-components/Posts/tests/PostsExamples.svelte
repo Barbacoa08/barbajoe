@@ -1,6 +1,6 @@
 <script>
-  import Post from "../Post.svelte";
-  import Posts from "../Posts.svelte";
+import Post from "../Post.svelte";
+import Posts from "../Posts.svelte";
 </script>
 
 <main>

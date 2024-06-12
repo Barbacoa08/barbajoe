@@ -1,11 +1,11 @@
 <script context="module" lang="ts">
-  export type ShareCallback =
-    | undefined
-    | (({ webshared }: CallbackProps) => void);
+export type ShareCallback =
+	| undefined
+	| (({ webshared }: CallbackProps) => void);
 
-  export interface CallbackProps {
-    webshared: boolean;
-  }
+export interface CallbackProps {
+	webshared: boolean;
+}
 </script>
 
 <script lang="ts">

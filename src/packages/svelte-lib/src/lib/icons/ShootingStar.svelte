@@ -1,8 +1,8 @@
 <script>
-  export let width = "1.5rem";
-  export let height = "1.5rem";
+export let width = "1.5rem";
+export let height = "1.5rem";
 
-  export let sparkles = false;
+export let sparkles = false;
 </script>
 
 <svg {height} {width} fill="currentColor" viewBox="0 0 24 24" {...$$restProps}>

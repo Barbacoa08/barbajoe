@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { genId } from "$lib/utils";
+import { genId } from "$lib/utils";
 
-  const id = genId();
+const id = genId();
 
-  export let expanded = false;
+export let expanded = false;
 </script>
 
 <li class={$$props.class}>

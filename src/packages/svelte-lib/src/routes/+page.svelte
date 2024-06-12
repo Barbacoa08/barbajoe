@@ -1,28 +1,28 @@
 <script lang="ts">
-  import type { ShareCallback } from "$lib/components";
-  import {
-    Button,
-    Link,
-    TextGradient,
-    Icons,
-    Share,
-    Input,
-    Textarea,
-  } from "$lib";
+import {
+	Button,
+	Icons,
+	Input,
+	Link,
+	Share,
+	TextGradient,
+	Textarea,
+} from "$lib";
+import type { ShareCallback } from "$lib/components";
 
-  import BasicModalImplementation from "$lib/components/Modal/tests/BasicModalImplementation.svelte";
-  import FormModal from "$lib/components/Modal/tests/FormModal.svelte";
-  // import OpenModal from "$lib/components/Modal/tests/OpenModal.svelte";
+import BasicModalImplementation from "$lib/components/Modal/tests/BasicModalImplementation.svelte";
+import FormModal from "$lib/components/Modal/tests/FormModal.svelte";
+// import OpenModal from "$lib/components/Modal/tests/OpenModal.svelte";
 
-  import "./global.css";
+import "./global.css";
 
-  const mockShareCallback: ShareCallback = async ({ webshared }) => {
-    if (webshared) {
-      alert("Shared!");
-    } else {
-      alert("Copied URL to clipboard");
-    }
-  };
+const mockShareCallback: ShareCallback = async ({ webshared }) => {
+	if (webshared) {
+		alert("Shared!");
+	} else {
+		alert("Copied URL to clipboard");
+	}
+};
 </script>
 
 <svelte:head>

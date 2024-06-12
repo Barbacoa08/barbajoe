@@ -1,8 +1,8 @@
 <script>
-  export let width = "1.5rem";
-  export let height = "1.5rem";
-  export let fill = "currentColor";
-  export let stroke = "none";
+export let width = "1.5rem";
+export let height = "1.5rem";
+export let fill = "currentColor";
+export let stroke = "none";
 </script>
 
 <svg

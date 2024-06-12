@@ -1,6 +1,6 @@
 <script lang="ts">
-  export let isExternal = false;
-  export let href = "/";
+export let isExternal = false;
+export let href = "/";
 </script>
 
 <a

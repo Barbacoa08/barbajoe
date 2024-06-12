@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { Link } from "$lib";
-  import type { HeaderLink, LogoData } from "$lib/types";
+import { Link } from "$lib";
+import type { HeaderLink, LogoData } from "$lib/types";
 
-  export let links: HeaderLink[] = [];
-  export let logo: LogoData | undefined;
+export let links: HeaderLink[] = [];
+export let logo: LogoData | undefined;
 </script>
 
 <header class="site-header">

@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
-  import { EyeOff, EyeOpen } from "$lib/icons";
-  import { genId } from "$lib/utils";
+import { EyeOff, EyeOpen } from "$lib/icons";
+import { genId } from "$lib/utils";
 </script>
 
 <script lang="ts">

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Textarea } from "..";
+import { Textarea } from "..";
 </script>
 
 <main>
