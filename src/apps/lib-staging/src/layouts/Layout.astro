@@ -3,7 +3,7 @@ import type { HeaderLink, LogoData } from "@barbajoe/svelte-lib";
 import { Layout as SvelteLayout } from "@barbajoe/svelte-lib";
 
 export interface Props {
-  title: string;
+	title: string;
 }
 
 const { title } = Astro.props;
@@ -11,27 +11,27 @@ const { title } = Astro.props;
 const route = Astro.url.pathname;
 
 const routes = {
-  home: "/",
-  css: "/css-lib/",
-  svelte: "/svelte-lib/",
-  react: "/react-lib/",
+	home: "/",
+	css: "/css-lib/",
+	svelte: "/svelte-lib/",
+	react: "/react-lib/",
 };
 const links: HeaderLink[] = [
-  { href: routes.css, text: "CSS", active: route.startsWith(routes.css) },
-  {
-    href: routes.svelte,
-    text: "Svelte",
-    active: route.startsWith(routes.svelte),
-  },
-  { href: routes.react, text: "React", active: route.startsWith(routes.react) },
+	{ href: routes.css, text: "CSS", active: route.startsWith(routes.css) },
+	{
+		href: routes.svelte,
+		text: "Svelte",
+		active: route.startsWith(routes.svelte),
+	},
+	{ href: routes.react, text: "React", active: route.startsWith(routes.react) },
 ];
 
 const logo: LogoData = {
-  href: routes.home,
-  src: "/favicon.ico",
-  alt: "Logo",
-  ariaLabel: "go to landing page",
-  text: "barbajoe's svelte library",
+	href: routes.home,
+	src: "/favicon.ico",
+	alt: "Logo",
+	ariaLabel: "go to landing page",
+	text: "barbajoe's svelte library",
 };
 ---
 
