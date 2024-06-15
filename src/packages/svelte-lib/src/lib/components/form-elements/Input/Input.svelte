@@ -26,16 +26,16 @@ import { genId } from "$lib/utils";
       currentTarget: EventTarget & HTMLInputElement;
     },
   ) => {
-    value = (e.target as HTMLInputElement).value;
-  };
+		value = (e.target as HTMLInputElement).value;
+	};
 </script>
 
-<label for={id}><slot /></label>
-
 <div class="wrapper">
-  <input
-    type={inputType}
-    {id}
+	<label for={id}><slot /></label>
+
+	<input
+		type={inputType}
+		{id}
     {value}
     {placeholder}
     on:click
