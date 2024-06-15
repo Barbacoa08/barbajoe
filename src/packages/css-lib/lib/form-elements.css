@@ -32,13 +32,18 @@ form {
     font-size: small;
   }
 
-  & label:has(input[type="checkbox"]) {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    & input[type="checkbox"] {
-      margin-right: 0.5rem;
-      transform: scale(1.5);
-    }
-  }
+	& label {
+		font-size: larger;
+		font-weight: bold;
+
+		&:has(input[type="checkbox"]) {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			& input[type="checkbox"] {
+				margin-right: 0.5rem;
+				transform: scale(1.5);
+			}
+		}
+	}
 }
