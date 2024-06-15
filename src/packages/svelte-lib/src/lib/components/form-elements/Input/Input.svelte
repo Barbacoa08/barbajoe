@@ -30,51 +30,54 @@ import { genId } from "$lib/utils";
 	};
 </script>
 
-<div class="wrapper">
+<div>
 	<label for={id}><slot /></label>
 
-	<input
-		type={inputType}
-		{id}
-		{value}
-		{placeholder}
-		on:click
-		on:blur
-		on:focus
-		on:change
-		on:input={handleOnInput}
-		on:keydown
-		on:keyup
-		on:paste
-		{...$$restProps}
-	/>
+	<div class="input-and-toggle">
+		<input
+			type={inputType}
+			{id}
+			{value}
+			{placeholder}
+			on:click
+			on:blur
+			on:focus
+			on:change
+			on:input={handleOnInput}
+			on:keydown
+			on:keyup
+			on:paste
+			{...$$restProps}
+		/>
 
-	{#if type === "password"}
-		<button
-			type="button"
-			aria-label="toggle text visibility"
-			on:click={handleVisibilityToggle}
-		>
-			{#if inputType === "password"}
-				<EyeOff />
-			{:else}
-				<EyeOpen />
-			{/if}
-		</button>
-	{/if}
+		{#if type === "password"}
+			<button
+				type="button"
+				aria-label="toggle text visibility"
+				on:click={handleVisibilityToggle}
+			>
+				{#if inputType === "password"}
+					<EyeOff />
+				{:else}
+					<EyeOpen />
+				{/if}
+			</button>
+		{/if}
+	</div>
 </div>
 
 <style>
-	div.wrapper {
+	div.input-and-toggle {
 		position: relative;
-	}
-	div.wrapper input + button {
-		background-color: transparent;
-		border: none;
 
-		position: absolute;
-		right: 0.4rem;
-		top: 0.4rem;
-		cursor: pointer;
+		& input + button {
+			background-color: transparent;
+			border: none;
+
+			position: absolute;
+			right: 0.4rem;
+			top: 1rem;
+			cursor: pointer;
+		}
 	}
 </style>

@@ -26,11 +26,11 @@ const mockShareCallback: ShareCallback = async ({ webshared }) => {
 </script>
 
 <svelte:head>
-  <title>Barbajoe's Svelte Library</title>
-  <meta
-    name="description"
-    content="The landing page for Barbajoe's Svelte Library"
-  />
+	<title>Barbajoe's Svelte Library</title>
+	<meta
+		name="description"
+		content="The landing page for Barbajoe's Svelte Library"
+	/>
 </svelte:head>
 
 <h1>Minimal Page Example</h1>
@@ -41,9 +41,9 @@ const mockShareCallback: ShareCallback = async ({ webshared }) => {
 
 <h2>Modal Examples (from tests)</h2>
 <div>
-  <BasicModalImplementation />
-  <FormModal />
-  <!-- <OpenModal /> -->
+	<BasicModalImplementation />
+	<FormModal />
+	<!-- <OpenModal /> -->
 </div>
 
 <h2>TextGradient Example</h2>
@@ -51,67 +51,68 @@ const mockShareCallback: ShareCallback = async ({ webshared }) => {
 
 <h2>Icons Example</h2>
 <div>
-  <ul>
-    <li>The Search Icon: <span><Icons.Search /></span></li>
-    <li>The Notebook Icon: <span><Icons.Notebook /></span></li>
-  </ul>
+	<ul>
+		<li>The Search Icon: <span><Icons.Search /></span></li>
+		<li>The Notebook Icon: <span><Icons.Notebook /></span></li>
+	</ul>
 </div>
 
 <h2>Form Elements</h2>
 <section class="form-examples">
-  <div class="buttons">
-    <Button>Primary Button</Button>
-    <Button variant="secondary">Secondary Button</Button>
-    <Button variant="tertiary">Tertiary Button</Button>
-    <Button variant="icon" aria-label="Search">
-      <Icons.Search /> <span>⌘K</span>
-    </Button>
-    <Button variant="custom" class="custom-button-class">Custom Button</Button>
-    <Button disabled>Disabled Button</Button>
-  </div>
+	<div class="buttons">
+		<Button>Primary Button</Button>
+		<Button variant="secondary">Secondary Button</Button>
+		<Button variant="tertiary">Tertiary Button</Button>
+		<Button variant="icon" aria-label="Search">
+			<Icons.Search /> <span>⌘K</span>
+		</Button>
+		<Button variant="custom" class="custom-button-class">Custom Button</Button>
+		<Button disabled>Disabled Button</Button>
+	</div>
 
-  <div>
-    <Input on:click={() => console.log("ping")}>
-      Using <TextGradient>special formatting</TextGradient>
-    </Input>
-  </div>
+	<form>
+		<Input on:click={() => console.log("ping")}>
+			Using <TextGradient>special formatting</TextGradient>
+		</Input>
+	</form>
 
-  <div>
-    <Input type="password">Password Input</Input>
-  </div>
+	<form>
+		<Input type="password" aria-label="password input without visual label" />
+		<Input type="password">Password Inputs 👆👇</Input>
+	</form>
 
-  <div>
-    <Textarea>
-      Adding <TextGradient>swagger</TextGradient> to the label
-    </Textarea>
-  </div>
+	<form>
+		<Textarea>
+			Adding <TextGradient>swagger</TextGradient> to the label
+		</Textarea>
+	</form>
 </section>
 
 <h2>Share Button</h2>
 <section>
-  <Share
-    title="Share Button Example"
-    text="This is an example of the Share Button component."
-    url="/"
-    callback={mockShareCallback}
-  >
-    Share
-  </Share>
+	<Share
+		title="Share Button Example"
+		text="This is an example of the Share Button component."
+		url="/"
+		callback={mockShareCallback}
+	>
+		Share
+	</Share>
 </section>
 
 <style>
-  ul li span {
-    color: purple;
-  }
+	ul li span {
+		color: purple;
+	}
 
-  div.buttons {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-  }
+	div.buttons {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+	}
 
-  .form-examples {
-    display: grid;
-    gap: 2rem;
-  }
+	.form-examples {
+		display: grid;
+		gap: 2rem;
+	}
 </style>
