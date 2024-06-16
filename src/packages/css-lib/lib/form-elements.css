@@ -1,49 +1,49 @@
 form {
-  margin-top: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+	margin-top: 1rem;
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
 
-  & input[type="text"],
-  & input[type="password"],
-  & input[type="email"],
-  & input[type="number"],
-  & input[type="tel"],
-  & input[type="url"],
-  & input[type="search"],
-  & textarea,
-  & select {
-    font-size: var(--font-size-base);
-    border: 1px solid var(--border-color-gray);
-    border-radius: 0.2em;
-    padding: 0.5em;
-    margin-top: 0.5rem;
-    width: 100%;
-    box-sizing: border-box;
-  }
+	& input[type="text"],
+	& input[type="password"],
+	& input[type="email"],
+	& input[type="number"],
+	& input[type="tel"],
+	& input[type="url"],
+	& input[type="search"],
+	& textarea,
+	& select {
+		font-size: var(--font-size-base);
+		border: 1px solid var(--border-color-gray);
+		border-radius: 0.2em;
+		padding: 0.5em;
+		margin-top: 0.5rem;
+		width: 100%;
+		box-sizing: border-box;
+	}
 
-  &:disabled {
-    color: var(--color-text);
-    background-color: var(--color-bg);
-    /* TODO: find a better color combo, this is super "meh" */
-  }
+	&:disabled {
+		color: var(--color-text);
+		background-color: var(--color-bg);
+		/* TODO: find a better color combo, this is super "meh" */
+	}
 
-  & .helper-text {
-    font-size: small;
-  }
+	& .helper-text {
+		font-size: small;
+	}
+
+	fieldset legend {
+		font-size: 1.3rem;
+	}
 
 	& label {
-		font-size: larger;
-		font-weight: bold;
+		font-size: 1.3rem;
 
+		&:has(input[type="radio"]),
 		&:has(input[type="checkbox"]) {
-			display: flex;
-			flex-wrap: wrap;
-			align-items: center;
-			& input[type="checkbox"] {
-				margin-right: 0.5rem;
-				transform: scale(1.5);
-			}
+			display: grid;
+			grid-template-columns: 1.5rem auto;
+			gap: 0.3rem;
 		}
 	}
 }
