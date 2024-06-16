@@ -1,28 +1,28 @@
 <script lang="ts">
-import {
-	Button,
-	Icons,
-	Input,
-	Link,
-	Share,
-	TextGradient,
-	Textarea,
-} from "$lib";
-import type { ShareCallback } from "$lib/components";
+	import {
+		Button,
+		Icons,
+		Input,
+		Link,
+		Share,
+		TextGradient,
+		Textarea,
+	} from "$lib";
+	import type { ShareCallback } from "$lib/components";
 
-import BasicModalImplementation from "$lib/components/Modal/tests/BasicModalImplementation.svelte";
-import FormModal from "$lib/components/Modal/tests/FormModal.svelte";
-// import OpenModal from "$lib/components/Modal/tests/OpenModal.svelte";
+	import BasicModalImplementation from "$lib/components/Modal/tests/BasicModalImplementation.svelte";
+	import FormModal from "$lib/components/Modal/tests/FormModal.svelte";
+	// import OpenModal from "$lib/components/Modal/tests/OpenModal.svelte";
 
-import "./global.css";
+	import "./global.css";
 
-const mockShareCallback: ShareCallback = async ({ webshared }) => {
-	if (webshared) {
-		alert("Shared!");
-	} else {
-		alert("Copied URL to clipboard");
-	}
-};
+	const mockShareCallback: ShareCallback = async ({ webshared }) => {
+		if (webshared) {
+			alert("Shared!");
+		} else {
+			alert("Copied URL to clipboard");
+		}
+	};
 </script>
 
 <svelte:head>
@@ -85,6 +85,59 @@ const mockShareCallback: ShareCallback = async ({ webshared }) => {
 		<Textarea>
 			Adding <TextGradient>swagger</TextGradient> to the label
 		</Textarea>
+	</form>
+</section>
+
+<h2>Form example</h2>
+<section>
+	<form>
+		<label>
+			Type
+			<select name="type">
+				<option value="1">One</option>
+				<option value="2">Two</option>
+			</select>
+		</label>
+
+		<fieldset>
+			<legend>Difficulty</legend>
+
+			<label>
+				<input type="radio" name="difficulty" value="easy" required />
+				Easy
+			</label>
+
+			<label>
+				<input type="radio" name="difficulty" value="medium" />
+				Medium
+			</label>
+
+			<label>
+				<input type="radio" name="difficulty" value="hard" />
+				Hard
+			</label>
+		</fieldset>
+
+		<fieldset>
+			<legend>Modifier</legend>
+
+			<label>
+				<input type="checkbox" name="modifier" value="1" />
+				Lorem ipsum dolor sit amet
+			</label>
+
+			<label>
+				<input type="checkbox" name="modifier" value="1.1" />
+				Ut enim ad minim veniam
+			</label>
+
+			<label>
+				<input type="checkbox" name="modifier" value="1.25" />
+				Duis aute irure dolor in reprehenderit
+			</label>
+		</fieldset>
+
+		<Button type="submit">Add</Button>
 	</form>
 </section>
 
