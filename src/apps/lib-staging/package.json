@@ -14,7 +14,7 @@
 		"preview": "astro preview"
 	},
 	"dependencies": {
-		"@astrojs/svelte": "5.5.0",
+		"@astrojs/svelte": "5.6.0",
 		"@barbajoe/css-lib": "workspace:*",
 		"@barbajoe/react-lib": "workspace:*",
 		"@barbajoe/svelte-lib": "workspace:*",

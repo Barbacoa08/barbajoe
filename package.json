@@ -50,6 +50,6 @@
 		"svelte-lib": "pnpm -F @barbajoe/svelte-lib"
 	},
 	"dependencies": {
-		"@biomejs/biome": "1.8.1"
+		"@biomejs/biome": "1.8.2"
 	}
 }
