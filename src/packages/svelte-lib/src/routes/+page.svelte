@@ -1,28 +1,29 @@
 <script lang="ts">
-import {
-	Button,
-	Icons,
-	Input,
-	Link,
-	Share,
-	TextGradient,
-	Textarea,
-} from "$lib";
-import type { ShareCallback } from "$lib/components";
+	import {
+		Button,
+		Icons,
+		Input,
+		Link,
+		Share,
+		TextGradient,
+		Textarea,
+	} from "$lib";
+	import { Post, Posts } from "$lib/cms-components";
+	import type { ShareCallback } from "$lib/components";
 
-import BasicModalImplementation from "$lib/components/Modal/tests/BasicModalImplementation.svelte";
-import FormModal from "$lib/components/Modal/tests/FormModal.svelte";
-// import OpenModal from "$lib/components/Modal/tests/OpenModal.svelte";
+	import BasicModalImplementation from "$lib/components/Modal/tests/BasicModalImplementation.svelte";
+	import FormModal from "$lib/components/Modal/tests/FormModal.svelte";
+	// import OpenModal from "$lib/components/Modal/tests/OpenModal.svelte";
 
-import "./global.css";
+	import "./global.css";
 
-const mockShareCallback: ShareCallback = async ({ webshared }) => {
-	if (webshared) {
-		alert("Shared!");
-	} else {
-		alert("Copied URL to clipboard");
-	}
-};
+	const mockShareCallback: ShareCallback = async ({ webshared }) => {
+		if (webshared) {
+			alert("Shared!");
+		} else {
+			alert("Copied URL to clipboard");
+		}
+	};
 </script>
 
 <svelte:head>
@@ -38,6 +39,12 @@ const mockShareCallback: ShareCallback = async ({ webshared }) => {
 
 <h2>Link Example</h2>
 <p>Internal Link: <Link href="/page1">Page 1</Link></p>
+
+<h2>Posts Example</h2>
+<Posts>
+	<Post disabled href="/post/1">Disabled Post</Post>
+	<Post href="/post/2">Enabled Post</Post>
+</Posts>
 
 <h2>Modal Examples (from tests)</h2>
 <div>
