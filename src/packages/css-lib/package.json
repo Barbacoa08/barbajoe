@@ -1,29 +1,27 @@
 {
-  "name": "@barbajoe/css-lib",
-  "version": "0.2.1",
-  "license": "MIT",
-  "author": "Barbacoa08",
-  "repository": "https://github.com/Barbacoa08/barbajoe/tree/main/src/packages/css-lib",
-  "homepage": "https://lib-staging.barbajoe.tech/",
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
-  },
-  "files": [
-    "dist/barbajoe.css"
-  ],
-  "scripts": {
-    "all": "pnpm i && pnpm clean && pnpm style-check && pnpm build",
-    "dev": "pnpm parcel watch lib/barbajoe.css --dist-dir dist",
-    "clean": "rm -rf dist",
-    "lint": "biome ci ./lib",
-    "format": "biome format --write ./lib",
-    "style-check": "biome check --write ./lib",
-    "build": "mkdir -p dist && pnpm build:prod",
-    "build:prod": "lightningcss --nesting --minify --bundle --targets '>= 0.25%' lib/barbajoe.css -o dist/barbajoe.css"
-  },
-  "devDependencies": {
-    "lightningcss-cli": "1.25.1",
-    "parcel": "2.12.0"
-  }
+	"name": "@barbajoe/css-lib",
+	"version": "0.2.1",
+	"license": "MIT",
+	"author": "Barbacoa08",
+	"repository": "https://github.com/Barbacoa08/barbajoe/tree/main/src/packages/css-lib",
+	"homepage": "https://lib-staging.barbajoe.tech/",
+	"publishConfig": {
+		"access": "public",
+		"registry": "https://registry.npmjs.org/"
+	},
+	"files": ["dist/barbajoe.css"],
+	"scripts": {
+		"all": "pnpm i && pnpm clean && pnpm style-check && pnpm build",
+		"dev": "pnpm parcel watch lib/barbajoe.css --dist-dir dist",
+		"clean": "rm -rf dist",
+		"lint": "biome ci ./lib",
+		"format": "biome format --write ./lib",
+		"style-check": "biome check --write ./lib",
+		"build": "mkdir -p dist && pnpm build:prod",
+		"build:prod": "lightningcss --nesting --minify --bundle --targets '>= 0.25%' lib/barbajoe.css -o dist/barbajoe.css"
+	},
+	"devDependencies": {
+		"lightningcss-cli": "1.25.1",
+		"parcel": "2.12.0"
+	}
 }

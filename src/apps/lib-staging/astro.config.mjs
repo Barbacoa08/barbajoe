@@ -4,6 +4,6 @@ import svelte from "@astrojs/svelte";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://lib-staging.barbajoe.tech/",
-  integrations: [svelte()],
+	site: "https://lib-staging.barbajoe.tech/",
+	integrations: [svelte()],
 });
