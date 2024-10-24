@@ -19,7 +19,7 @@
 		"@barbajoe/react-lib": "workspace:*",
 		"@barbajoe/svelte-lib": "workspace:*",
 		"astro": "2.10.15",
-		"svelte": "4.2.18"
+		"svelte": "5.1.1"
 	},
 	"devDependencies": {
 		"@sveltejs/vite-plugin-svelte": "3.1.1"
