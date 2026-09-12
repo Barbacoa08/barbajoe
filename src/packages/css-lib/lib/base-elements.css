@@ -1,18 +1,18 @@
 html,
 dialog {
   font-family: system-ui, sans-serif;
-  font-size: var(--font-size-base);
-  color: var(--color-text);
-  background-color: var(--color-bg);
+  font-size: var(--bj-font-size-base);
+  color: var(--bj-color-text);
+  background-color: var(--bj-color-bg);
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-link-text-hover);
+  outline: 2px solid var(--bj-color-focus-ring);
   outline-offset: 2px;
 }
 
 h1 {
-  font-size: var(--font-size-xl);
+  font-size: var(--bj-font-size-xl);
 }
 
 h1:first-child {
@@ -20,9 +20,9 @@ h1:first-child {
 }
 
 h2 {
-  font-size: var(--font-size-lg);
-  margin-top: 3rem;
-  border-bottom: 1px solid var(--border-color-gray);
+  font-size: var(--bj-font-size-lg);
+  margin-top: calc(var(--bj-space-8) + var(--bj-space-4));
+  border-bottom: 1px solid var(--bj-color-border);
 }
 
 ul {
@@ -44,11 +44,11 @@ code {
 
 a,
 a:visited {
-  color: var(--color-link-text);
+  color: var(--bj-color-link);
 }
 a:hover,
 a:focus {
-  color: var(--color-link-text-hover);
+  color: var(--bj-color-link-hover);
 }
 a[aria-disabled="true"] {
   pointer-events: none;
