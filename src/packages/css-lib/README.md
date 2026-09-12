@@ -1,6 +1,28 @@
 # barbajoe's css library
 
-TODO: add content and run+build details
+One stylesheet for personal applications that makes ordinary semantic HTML look
+and behave consistently. Import the bundle once at the application entry point;
+the library deliberately styles document elements such as headings, forms,
+links, dialogs, and `main` without requiring utility classes.
+
+## application shell
+
+Use `app-shell` on the element that owns the page-level header, main content,
+and footer. It creates a full-height grid without assuming that a particular
+direct child of `body` is always the application root.
+
+```html
+<body>
+  <div class="app-shell">
+    <header>...</header>
+    <main>...</main>
+    <footer>...</footer>
+  </div>
+</body>
+```
+
+Classes remain appropriate for visual or structural roles HTML cannot express,
+such as `site-header`, `text-gradient`, and `dialog-content-container`.
 
 ## tech notes
 
