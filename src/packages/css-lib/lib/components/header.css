@@ -1,12 +1,6 @@
 header {
-  --header-background-color: #ffffff;
-  --color-link-text-active: #0000ee;
-}
-@media (prefers-color-scheme: dark) {
-  header {
-    --header-background-color: #1a202c;
-    --color-link-text-active: #87e7ee;
-  }
+  --header-background-color: var(--bj-color-surface);
+  --color-link-text-active: var(--bj-color-link);
 }
 
 header.site-header {
@@ -15,7 +9,7 @@ header.site-header {
   justify-content: space-between;
 
   background-color: var(--header-background-color);
-  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.5);
+  box-shadow: var(--bj-shadow-raised);
   border-bottom: 1px solid rgba(255 255 255 / 6%);
   padding: 0.5rem 1.5rem;
 }

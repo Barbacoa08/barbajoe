@@ -7,7 +7,7 @@
   background-size: 100% 200%;
   background-position-y: 100%;
   border-radius: 0.4rem;
-  animation: pulse 4s ease-in-out infinite;
+  animation: pulse var(--bj-motion-duration-decorative) ease-in-out infinite;
 }
 
 @keyframes pulse {

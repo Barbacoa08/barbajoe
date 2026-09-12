@@ -11,6 +11,6 @@ body {
 
 body main {
   inline-size: min(calc(100% - 2rem), 60ch);
-  margin-block: 1rem;
+  margin-block: var(--bj-space-4);
   margin-inline: auto;
 }
