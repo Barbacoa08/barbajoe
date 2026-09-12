@@ -6,6 +6,11 @@ dialog {
   background-color: var(--color-bg);
 }
 
+:focus-visible {
+  outline: 2px solid var(--color-link-text-hover);
+  outline-offset: 2px;
+}
+
 h1 {
   font-size: var(--font-size-xl);
 }
@@ -39,7 +44,6 @@ code {
 
 a,
 a:visited {
-  display: inline-block;
   color: var(--color-link-text);
 }
 a:hover,
@@ -50,4 +54,15 @@ a[aria-disabled="true"] {
   pointer-events: none;
   opacity: 0.5;
   text-decoration: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }

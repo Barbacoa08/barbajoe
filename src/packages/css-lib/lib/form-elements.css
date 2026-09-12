@@ -22,10 +22,15 @@ form {
 		box-sizing: border-box;
 	}
 
-	&:disabled {
+	& :is(input, textarea, select, button):disabled {
 		color: var(--color-text);
 		background-color: var(--color-bg);
-		/* TODO: find a better color combo, this is super "meh" */
+		cursor: not-allowed;
+		opacity: 0.65;
+	}
+
+	& :is(input, textarea, select, button):focus-visible {
+		border-color: var(--color-link-text-hover);
 	}
 
 	& .helper-text {

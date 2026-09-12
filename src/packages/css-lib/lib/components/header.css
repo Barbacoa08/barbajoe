@@ -40,16 +40,16 @@ header.site-header ul.site-header-links > li.active {
 }
 header.site-header ul.site-header-links > li:hover,
 header.site-header ul.site-header-links > li.active:hover,
-header.site-header ul.site-header-links > li:focus,
-header.site-header ul.site-header-links > li.active:focus {
+header.site-header ul.site-header-links > li:focus-within,
+header.site-header ul.site-header-links > li.active:focus-within {
   padding: 0.5rem;
   border-bottom: 2px solid;
   color: var(--color-link-text-hover);
 }
 header.site-header ul.site-header-links > li:hover > a,
 header.site-header ul.site-header-links > li.active:hover > a,
-header.site-header ul.site-header-links > li:focus > a,
-header.site-header ul.site-header-links > li.active:focus > a {
+header.site-header ul.site-header-links > li:focus-within > a,
+header.site-header ul.site-header-links > li.active:focus-within > a {
   color: var(--color-link-text-hover);
 }
 

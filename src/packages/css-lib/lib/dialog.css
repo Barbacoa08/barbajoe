@@ -1,6 +1,8 @@
 dialog {
-  width: 32em;
-  height: 30rem;
+  box-sizing: border-box;
+  inline-size: min(32em, calc(100vi - 2rem));
+  block-size: min(30rem, calc(100vh - 2rem));
+  max-block-size: calc(100dvb - 2rem);
   border-radius: 0.2em;
   border: none;
   padding: 0;
@@ -10,8 +12,9 @@ dialog::backdrop {
   background: rgba(0, 0, 0, 0.3);
 }
 
-dialog > div.dialog-content-container {
-  height: -webkit-fill-available;
+dialog > .dialog-content-container {
+  min-block-size: 0;
+  overflow: auto;
   display: grid;
   grid-template-rows: auto 1fr auto;
 
