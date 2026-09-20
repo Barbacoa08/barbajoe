@@ -1,5 +1,9 @@
 packages:
   - "src/packages/css-lib"
+overrides:
+  micromatch: 4.0.8
+  msgpackr: 1.12.1
+  picomatch: 2.3.2
 allowBuilds:
   '@biomejs/biome': false
   '@swc/core': false
