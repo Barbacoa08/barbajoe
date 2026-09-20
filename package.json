@@ -4,6 +4,10 @@
 	"description": "Development workspace for the @barbajoe/css-lib CSS package.",
 	"author": "Joe S",
 	"license": "MIT",
+	"packageManager": "pnpm@12.5.1",
+	"engines": {
+		"node": ">=24 <25"
+	},
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/Barbacoa08/barbajoe/"
