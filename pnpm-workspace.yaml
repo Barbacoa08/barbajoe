@@ -2,3 +2,12 @@
 packages:
   - "src/apps/*"
   - "src/packages/*"
+allowBuilds:
+  '@biomejs/biome': false
+  '@sveltejs/kit': false
+  '@swc/core': false
+  esbuild: false
+  lightningcss-cli: true
+  lmdb: false
+  msgpackr-extract: false
+  svelte-preprocess: false
