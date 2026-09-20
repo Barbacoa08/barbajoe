@@ -1,5 +1,6 @@
 packages:
   - "src/packages/css-lib"
+pmOnFail: ignore
 overrides:
   micromatch: 4.0.8
   msgpackr: 1.12.1
