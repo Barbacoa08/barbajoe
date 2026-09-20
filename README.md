@@ -19,8 +19,8 @@ possible rebuild direction. Their source remains available in Git history.
 - `.project`: local planning convention. Only its README is committed.
 
 The two former Netlify sites have stopped builds and retain their last deployed
-versions. npm publication is intentionally disabled while the CSS package and
-release process are modernized.
+versions. Automated npm publication has been removed, and manual publication is
+temporarily paused while the CSS package and release process are modernized.
 
 ## Development
 

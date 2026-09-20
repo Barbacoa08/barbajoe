@@ -44,6 +44,9 @@ Uses [Parcel](https://parceljs.org/) for the dev build (HMR).
 
 ## publish instructions
 
+Publishing is temporarily paused while the CSS library and release process are
+modernized. Do not publish a new version until that work is complete.
+
 - navigate to this directory (`barbajoe/src/packages/css-lib/`)
 - `npm login`
 - `npm publish --otp=onetimepasswordfromauthenticator`
