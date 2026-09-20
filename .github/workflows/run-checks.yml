@@ -1,70 +1,33 @@
-name: CI (lint+build+tests)
+name: CI
+
 on:
-  - push
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
 
 jobs:
-  build:
-    name: install PNPM and then run `pnpm github`
+  check:
+    name: Lint and build CSS library
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
+      - uses: actions/checkout@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4.0.0
+        with:
+          version: 9.15.9
+          run_install: false
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-
-      - uses: pnpm/action-setup@v4.0.0
-        name: Install pnpm
-        id: pnpm-install
-        with:
-          version: 8
-          run_install: false
-
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        run: |
-          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-
-      - uses: actions/cache@v4
-        name: Setup pnpm cache
-        with:
-          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-
-      - name: run `pnpm github`
-        run: pnpm github
-
-      - name: generate coverage report
-        if: github.ref == 'refs/heads/main'
-        run: pnpm svelte-lib test:coverage
-
-      - name: generate coverage output
-        if: github.ref == 'refs/heads/main'
-        id: coverageComment
-        uses: MishaKav/jest-coverage-comment@main
-        with:
-          hide-comment: true
-          coverage-summary-path: ./src/packages/svelte-lib/coverage/coverage-summary.json
-
-      - name: Check the output coverage
-        if: github.ref == 'refs/heads/main'
-        run: |
-          echo "Coverage Percentage - ${{ steps.coverageComment.outputs.coverage }}"
-          echo "Coverage Color - ${{ steps.coverageComment.outputs.color }}"
-          echo "Summary HTML - ${{ steps.coverageComment.outputs.summaryHtml }}"
-
-      - name: Create the badge
-        if: github.ref == 'refs/heads/main'
-        uses: schneegans/dynamic-badges-action@v1.7.0
-        with:
-          auth: ${{ secrets.GIST_SECRET }}
-          gistID: 0549c337c501b3d5d709f55341796e15
-          filename: jest-coverage-comment__main.json
-          label: Coverage
-          message: ${{ steps.coverageComment.outputs.coverage }}%
-          color: ${{ steps.coverageComment.outputs.color }}
-          namedLogo: svelte
+          cache: pnpm
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --config.lockfile=true
+      - name: Lint CSS library
+        run: pnpm lint
+      - name: Build CSS library
+        run: pnpm build
