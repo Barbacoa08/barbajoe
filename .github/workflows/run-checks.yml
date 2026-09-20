@@ -23,6 +23,8 @@ jobs:
           install: false
       - name: Install dependencies
         run: pnpm install --frozen-lockfile --config.lockfile=true
+      - name: Test CSS contracts
+        run: pnpm test
       - name: Lint CSS library
         run: pnpm lint
       - name: Build CSS library
