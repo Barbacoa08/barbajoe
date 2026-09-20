@@ -1,4 +1,3 @@
-// copy-pasted (mostly) from: https://github.com/sveltejs/vite-plugin-svelte/blob/main/.github/renovate.json5
 {
   extends: [
     "config:base",
@@ -10,4 +9,11 @@
   reviewers: ["Barbacoa08"],
   labels: ["dependencies"],
   rangeStrategy: "pin",
+  // Archived workspaces contain documentation only. Re-enable their paths if
+  // an application or component library is deliberately rebuilt.
+  ignorePaths: [
+    "src/apps/**",
+    "src/packages/react-lib/**",
+    "src/packages/svelte-lib/**",
+  ],
 }

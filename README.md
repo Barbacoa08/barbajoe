@@ -1,26 +1,34 @@
-# barbajoe's mono repo
+# barbajoe
 
-This repo contains the scaffolding (WIP) for three app and two libraries.
+This repository is centered on
+[`@barbajoe/css-lib`](src/packages/css-lib/README.md), a small stylesheet for
+giving ordinary semantic HTML a consistent visual foundation.
 
-## Apps:
+The previous landing and library-staging applications and the experimental
+React and Svelte component libraries have been retired. Each former workspace
+retains a short README describing its purpose, former technology, and a
+possible rebuild direction. Their source remains available in Git history.
 
-- App 1 `src/apps/landing` ([repo](https://github.com/Barbacoa08/barbajoe/tree/main/src/apps/landing), [live site](https://barbajoe.tech/)): an overview of my creations
-- App 2 `src/apps/lib-staging` ([repo](https://github.com/Barbacoa08/barbajoe/tree/main/src/apps/lib-staging), [live site](https://lib-staging.barbajoe.tech/)): WIP, a staging environment for the libraries for testing and example usage.
+## Repository layout
 
-## Libraries:
+- `src/packages/css-lib`: the active CSS package.
+- `src/apps/landing`: rebuild brief for the personal landing site.
+- `src/apps/lib-staging`: rebuild brief for the library demonstration site.
+- `src/packages/react-lib`: rebuild brief for the React component library.
+- `src/packages/svelte-lib`: rebuild brief for the Svelte component library.
+- `.project`: local planning convention. Only its README is committed.
 
-- CSS Lib `src/packages/css-lib` ([repo](https://github.com/Barbacoa08/barbajoe/tree/main/src/packages/css-lib)): minimal css library that I've created so that I can stop copy-pasting my styling all over. Implemented in the barbajoe site, with plans to implement in the fighter-advice site.
-- React Lib `src/packages/react-lib` ([repo](https://github.com/Barbacoa08/barbajoe/tree/main/src/packages/react-lib)): WIP, functional but not particularly useful or published to NPM/Deno
-- Svelte Lib `src/packages/svelte-lib` ([repo](https://github.com/Barbacoa08/barbajoe/tree/main/src/packages/svelte-lib)): WIP, functional but not particularly useful or published to NPM/Deno. Code Coverage: ![badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/barbacoa08/0549c337c501b3d5d709f55341796e15/raw/jest-coverage-comment__main.json)
+The two former Netlify sites have stopped builds and retain their last deployed
+versions. npm publication is intentionally disabled while the CSS package and
+release process are modernized.
 
-## dev
+## Development
 
-- run barbajoe landing: `pnpm start`
-- run lib-staging: `pnpm start:lib-staging`
-- run all libs: `pnpm start:libs`
-- run libs individually:
-  - `pnpm start:css-lib`
-  - `pnpm start:svelte-lib`
-  - `pnpm start:react-lib`
-- ~run svelte lib app with css-lib: `pnpm start:css-lib & pnpm svelte-lib dev:sveltekit`~
-  - auto build is misconfigured as I haven't update vite's `watch` command to handle css@next (for nested styling). Run svelte-lib app by itself and manually build css-lib via: `pnpm build:css-lib`
+Install the locked dependencies and run the repository checks:
+
+```sh
+pnpm install --frozen-lockfile
+pnpm check
+```
+
+The individual commands are `pnpm lint` and `pnpm build`.

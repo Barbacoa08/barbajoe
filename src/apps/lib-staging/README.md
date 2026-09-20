@@ -1,17 +1,28 @@
-[![Netlify Status](https://api.netlify.com/api/v1/badges/d7428821-71ab-40e4-b778-9d7db9aefc0c/deploy-status)](https://app.netlify.com/sites/lib-staging/deploys)
+# Library staging application
 
-# barbajoe's library stage
+This directory records the retired library staging application.
 
-A staging environment for my libraries.
+## Purpose
 
-## tech ish
+The application served
+[lib-staging.barbajoe.tech](https://lib-staging.barbajoe.tech/) as a place to
+exercise and document the CSS, React, and Svelte libraries together. It offered
+an index of the libraries plus dedicated example routes for each one.
 
-Scafolded via [Astro](https://astro.build/)
+## Former implementation
 
-Hosted via [Netlify](https://www.netlify.com/), [see it in action here](https://lib-staging.barbajoe.tech/)
+- Astro generated the site and routed the library example pages.
+- Astro's Svelte integration rendered the Svelte layout components.
+- Workspace dependencies connected the CSS, React, and Svelte libraries.
+- The Svelte layout supplied the shared header, navigation, main content, and
+  footer while the CSS library supplied global styling.
+- Netlify hosted the site. Its builds are stopped so the last deployment can
+  remain available while this implementation is absent.
 
-Domain Registered via [namecheap](https://www.namecheap.com/)
+## Rebuild direction
 
-QR Code via [QR Code Monkey](https://www.qrcode-monkey.com/)
-
-<img alt="QR Code" src="./barbajoe-lib-staging-homepage.svg" width="200" />
+Rebuild this application only when there are active libraries that need a
+shared demonstration environment. It should use current tooling, import the
+real packaged outputs, provide focused examples and accessibility checks, and
+avoid becoming a second implementation of library behavior. Reconfigure and
+restart the Netlify site only after the replacement is ready.

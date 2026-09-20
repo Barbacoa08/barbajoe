@@ -22,3 +22,7 @@ pnpm-debug.log*
 
 # netlify-specific ignores
 package-lock.json
+
+# local project plans and decision records
+.project/*
+!.project/README.md
