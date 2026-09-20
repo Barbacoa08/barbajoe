@@ -1,12 +1,14 @@
 /* NOTE: this needs to be tested with `lib-staging` and `fighter-advice/src/routes/+page.svelte` */
 
-.scaleup-on-hover {
-	transition: transform var(--barba-motion-duration-fast)
-		var(--barba-motion-easing-emphasized) 0s;
-}
-.scaleup-on-hover:hover,
-.scaleup-on-hover:focus-within {
-	transform: scale(1.02);
+@media (prefers-reduced-motion: no-preference) {
+	.scaleup-on-hover {
+		transition: transform var(--barba-motion-duration-fast)
+			var(--barba-motion-easing-emphasized) 0s;
+	}
+	.scaleup-on-hover:hover,
+	.scaleup-on-hover:focus-within {
+		transform: scale(1.02);
+	}
 }
 
 .scaleup-on-hover.disabled {

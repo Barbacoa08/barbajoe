@@ -32,9 +32,15 @@ dialog div.dialog-footer {
 	gap: 1em;
 }
 
-dialog[open] {
-	animation: zoom 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+@media (prefers-reduced-motion: no-preference) {
+	dialog[open] {
+		animation: zoom 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+	}
+	dialog[open]::backdrop {
+		animation: fade 0.2s ease-out;
+	}
 }
+
 @keyframes zoom {
 	from {
 		transform: scale(0.95);
@@ -42,10 +48,6 @@ dialog[open] {
 	to {
 		transform: scale(1);
 	}
-}
-
-dialog[open]::backdrop {
-	animation: fade 0.2s ease-out;
 }
 @keyframes fade {
 	from {

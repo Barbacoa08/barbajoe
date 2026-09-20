@@ -7,7 +7,13 @@
 	background-size: 100% 200%;
 	background-position-y: 100%;
 	border-radius: 0.4rem;
-	animation: pulse var(--barba-motion-duration-decorative) ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.text-gradient {
+		animation: pulse var(--barba-motion-duration-decorative) ease-in-out
+			infinite;
+	}
 }
 
 @keyframes pulse {
