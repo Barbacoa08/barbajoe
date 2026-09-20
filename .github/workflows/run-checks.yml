@@ -24,7 +24,7 @@ jobs:
           node-version: 20
           cache: pnpm
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile --config.lockfile=true
       - name: Lint CSS library
         run: pnpm lint
       - name: Build CSS library
