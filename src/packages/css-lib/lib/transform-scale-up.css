@@ -1,19 +1,20 @@
 /* NOTE: this needs to be tested with `lib-staging` and `fighter-advice/src/routes/+page.svelte` */
 
 .scaleup-on-hover {
-  transition: transform var(--barba-motion-duration-fast) var(--barba-motion-easing-emphasized) 0s;
+	transition: transform var(--barba-motion-duration-fast)
+		var(--barba-motion-easing-emphasized) 0s;
 }
 .scaleup-on-hover:hover,
 .scaleup-on-hover:focus-within {
-  transform: scale(1.02);
+	transform: scale(1.02);
 }
 
 .scaleup-on-hover.disabled {
-  transform: none;
+	transform: none;
 }
 li a[aria-disabled="true"],
 li.disabled a {
-  pointer-events: none;
-  opacity: 0.5;
-  transition: none;
+	pointer-events: none;
+	opacity: 0.5;
+	transition: none;
 }

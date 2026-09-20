@@ -1,68 +1,68 @@
 html,
 dialog {
-  font-family: system-ui, sans-serif;
-  font-size: var(--barba-font-size-base);
-  color: var(--barba-color-text);
-  background-color: var(--barba-color-bg);
+	font-family: system-ui, sans-serif;
+	font-size: var(--barba-font-size-base);
+	color: var(--barba-color-text);
+	background-color: var(--barba-color-bg);
 }
 
 :focus-visible {
-  outline: 2px solid var(--barba-color-focus-ring);
-  outline-offset: 2px;
+	outline: 2px solid var(--barba-color-focus-ring);
+	outline-offset: 2px;
 }
 
 h1 {
-  font-size: var(--barba-font-size-xl);
+	font-size: var(--barba-font-size-xl);
 }
 
 h1:first-child {
-  margin-top: 0;
+	margin-top: 0;
 }
 
 h2 {
-  font-size: var(--barba-font-size-lg);
-  margin-top: calc(var(--barba-space-8) + var(--barba-space-4));
-  border-bottom: 1px solid var(--barba-color-border);
+	font-size: var(--barba-font-size-lg);
+	margin-top: calc(var(--barba-space-8) + var(--barba-space-4));
+	border-bottom: 1px solid var(--barba-color-border);
 }
 
 ul {
-  list-style-type: "- ";
-  padding: 0 12px; /* counter balances the default offset so that the dash lines up with the left content */
+	list-style-type: "- ";
+	padding: 0 12px; /* counter balances the default offset so that the dash lines up with the left content */
 }
 
 code {
-  font-family:
-    Menlo,
-    Monaco,
-    Lucida Console,
-    Liberation Mono,
-    DejaVu Sans Mono,
-    Bitstream Vera Sans Mono,
-    Courier New,
-    monospace;
+	font-family:
+		Menlo,
+		Monaco,
+		Lucida Console,
+		Liberation Mono,
+		DejaVu Sans Mono,
+		Bitstream Vera Sans Mono,
+		Courier New,
+		monospace;
 }
 
 a,
 a:visited {
-  color: var(--barba-color-link);
+	color: var(--barba-color-link);
 }
 a:hover,
 a:focus {
-  color: var(--barba-color-link-hover);
+	color: var(--barba-color-link-hover);
 }
 a[aria-disabled="true"] {
-  pointer-events: none;
-  opacity: 0.5;
-  text-decoration: none;
+	pointer-events: none;
+	opacity: 0.5;
+	text-decoration: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
-    transition-duration: 0.01ms !important;
-  }
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		scroll-behavior: auto !important;
+		transition-duration: 0.01ms !important;
+	}
 }

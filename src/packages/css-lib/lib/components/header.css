@@ -1,78 +1,72 @@
 header {
-  --header-background-color: var(--barba-color-surface);
-  --color-link-text-active: var(--barba-color-link);
+	--header-background-color: var(--barba-color-surface);
+	--color-link-text-active: var(--barba-color-link);
 }
 
 header.site-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 
-  background-color: var(--header-background-color);
-  box-shadow: var(--barba-shadow-raised);
-  border-bottom: 1px solid rgba(255 255 255 / 6%);
-  padding: 0.5rem 1.5rem;
+	background-color: var(--header-background-color);
+	box-shadow: var(--barba-shadow-raised);
+	border-bottom: 1px solid rgba(255 255 255 / 6%);
+	padding: 0.5rem 1.5rem;
 }
 
 header.site-header ul.site-header-links {
-  min-height: 45px;
-  display: flex;
-  align-items: center;
-  list-style: none;
-  margin: 0;
+	min-height: 45px;
+	display: flex;
+	align-items: center;
+	list-style: none;
+	margin: 0;
 }
 
 header.site-header ul.site-header-links > li {
-  padding: 0 0.5rem;
-  border-bottom: 2px solid transparent;
-  color: var(--color-link-text-active);
+	padding: 0 0.5rem;
+	border-bottom: 2px solid transparent;
+	color: var(--color-link-text-active);
 }
 header.site-header ul.site-header-links > li.active {
-  padding: 0.5rem;
-  border-bottom: 2px solid;
-  color: var(--color-link-text-active);
+	padding: 0.5rem;
+	border-bottom: 2px solid;
+	color: var(--color-link-text-active);
+}
+header.site-header ul.site-header-links > li > a {
+	text-decoration-line: none;
+}
+header.site-header ul.site-header-links > li.active > a {
+	color: var(--color-link-text-active);
 }
 header.site-header ul.site-header-links > li:hover,
-header.site-header ul.site-header-links > li.active:hover,
-header.site-header ul.site-header-links > li:focus-within,
-header.site-header ul.site-header-links > li.active:focus-within {
-  padding: 0.5rem;
-  border-bottom: 2px solid;
-  color: var(--color-link-text-hover);
+header.site-header ul.site-header-links > li:focus-within {
+	padding: 0.5rem;
+	border-bottom: 2px solid;
+	color: var(--color-link-text-hover);
 }
 header.site-header ul.site-header-links > li:hover > a,
-header.site-header ul.site-header-links > li.active:hover > a,
-header.site-header ul.site-header-links > li:focus-within > a,
-header.site-header ul.site-header-links > li.active:focus-within > a {
-  color: var(--color-link-text-hover);
-}
-
-header.site-header ul.site-header-links > li > a,
-header.site-header ul.site-header-links > li.active > a {
-  text-decoration-line: none;
-}
-header.site-header ul.site-header-links > li.active > a {
-  color: var(--color-link-text-active);
+header.site-header ul.site-header-links > li:focus-within > a {
+	color: var(--color-link-text-hover);
 }
 
 .skip-link {
-  position: absolute;
-  top: -1000px;
-  left: -1000px;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
+	position: absolute;
+	top: -1000px;
+	left: -1000px;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
 
-  background-color: var(--header-background-color);
-  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.5);
-  border-bottom: 1px solid rgba(255 255 255 / 6%);
-  padding: 0.5rem 1.5rem;
-  opacity: 0.9;
+	background-color: var(--header-background-color);
+	box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.5);
+	border-bottom: 1px solid rgba(255 255 255 / 6%);
+	padding: 0.5rem 1.5rem;
+	opacity: 0.9;
 }
 .skip-link:focus {
-  top: auto;
-  left: auto;
-  width: auto;
-  height: auto;
-  overflow: visible;
+	top: auto;
+	left: auto;
+	width: auto;
+	height: auto;
+	overflow: visible;
 }

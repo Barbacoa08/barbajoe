@@ -25,7 +25,7 @@
 		"css-lib": "pnpm --filter @barbajoe/css-lib",
 		"lint": "pnpm --filter @barbajoe/css-lib lint"
 	},
-	"dependencies": {
-		"@biomejs/biome": "1.8.3"
+	"devDependencies": {
+		"@biomejs/biome": "2.5.14"
 	}
 }
