@@ -5,6 +5,12 @@
 	"author": "Barbacoa08",
 	"repository": "https://github.com/Barbacoa08/barbajoe/tree/main/src/packages/css-lib",
 	"homepage": "https://lib-staging.barbajoe.tech/",
+	"style": "./dist/barbajoe.css",
+	"exports": {
+		".": "./dist/barbajoe.css",
+		"./dist/barbajoe.css": "./dist/barbajoe.css"
+	},
+	"sideEffects": ["./dist/barbajoe.css"],
 	"publishConfig": {
 		"access": "public",
 		"registry": "https://registry.npmjs.org/"
