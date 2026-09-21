@@ -1,14 +1,9 @@
-header {
-	--header-background-color: var(--barba-color-surface);
-	--color-link-text-active: var(--barba-color-link);
-}
-
 header.site-header {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 
-	background-color: var(--header-background-color);
+	background-color: var(--barba-color-surface);
 	box-shadow: var(--barba-shadow-raised);
 	border-bottom: 1px solid rgba(255 255 255 / 6%);
 	padding: 0.5rem 1.5rem;
@@ -25,28 +20,28 @@ header.site-header ul.site-header-links {
 header.site-header ul.site-header-links > li {
 	padding: 0 0.5rem;
 	border-bottom: 2px solid transparent;
-	color: var(--color-link-text-active);
+	color: var(--barba-color-link);
 }
 header.site-header ul.site-header-links > li.active {
 	padding: 0.5rem;
 	border-bottom: 2px solid;
-	color: var(--color-link-text-active);
+	color: var(--barba-color-link);
 }
 header.site-header ul.site-header-links > li > a {
 	text-decoration-line: none;
 }
 header.site-header ul.site-header-links > li.active > a {
-	color: var(--color-link-text-active);
+	color: var(--barba-color-link);
 }
 header.site-header ul.site-header-links > li:hover,
 header.site-header ul.site-header-links > li:focus-within {
 	padding: 0.5rem;
 	border-bottom: 2px solid;
-	color: var(--color-link-text-hover);
+	color: var(--barba-color-link-hover);
 }
 header.site-header ul.site-header-links > li:hover > a,
 header.site-header ul.site-header-links > li:focus-within > a {
-	color: var(--color-link-text-hover);
+	color: var(--barba-color-link-hover);
 }
 
 .skip-link {
@@ -57,7 +52,7 @@ header.site-header ul.site-header-links > li:focus-within > a {
 	height: 1px;
 	overflow: hidden;
 
-	background-color: var(--header-background-color);
+	background-color: var(--barba-color-surface);
 	box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.5);
 	border-bottom: 1px solid rgba(255 255 255 / 6%);
 	padding: 0.5rem 1.5rem;

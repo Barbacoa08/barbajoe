@@ -29,28 +29,10 @@
 	--barba-color-bg: light-dark(hsl(10 21% 95%), hsl(198 100% 11%));
 	--barba-color-surface: light-dark(#ffffff, #1a202c);
 	--barba-color-surface-inverse: light-dark(#222222, #d2d2d2);
-	--barba-color-border: light-dark(#cccccc, #646464);
-	--barba-color-link: light-dark(#0000ee, #86a0ee);
+	--barba-color-border: light-dark(#888888, #6d6d6d);
+	--barba-color-link: light-dark(#0000ee, #9eb2ff);
 	--barba-color-link-hover: light-dark(#00008a, #25cbda);
 	--barba-color-accent: light-dark(hsl(185 100% 50%), hsl(220 70% 50%));
 	--barba-color-focus-ring: var(--barba-color-link-hover);
-	--barba-color-danger: light-dark(hsl(0 72% 38%), hsl(0 100% 76%));
-
-	/* Compatibility aliases for existing applications */
-	--font-size-sm: var(--barba-font-size-sm);
-	--font-size-base: var(--barba-font-size-base);
-	--font-size-lg: var(--barba-font-size-lg);
-	--font-size-xl: var(--barba-font-size-xl);
-
-	--border-color-gray: var(--barba-color-border);
-	--color-border: var(--barba-color-border);
-	--color-link-text: var(--barba-color-link);
-	--color-link-text-hover: var(--barba-color-link-hover);
-	--color-text: var(--barba-color-text);
-	--color-text-muted: var(--barba-color-text-muted);
-	--color-bg: var(--barba-color-bg);
-	--color-bg-accent: var(--barba-color-accent);
-	--card-background-color: var(--barba-color-surface-inverse);
-	--card-link-color: var(--barba-color-surface);
-	--card-link-color-hover: var(--barba-color-link-hover);
+	--barba-color-danger: light-dark(#9b1c1c, #ff9090);
 }
