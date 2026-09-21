@@ -10,7 +10,7 @@
 		".": "./dist/barbajoe.css",
 		"./dist/barbajoe.css": "./dist/barbajoe.css"
 	},
-	"sideEffects": ["./dist/barbajoe.css"],
+	"sideEffects": ["./dist/barbajoe.css", "./specimen/dialog.js"],
 	"publishConfig": {
 		"access": "public",
 		"registry": "https://registry.npmjs.org/"
@@ -25,7 +25,7 @@
 		"style-check": "biome check --write ./lib",
 		"build": "mkdir -p dist && pnpm build:prod",
 		"build:prod": "lightningcss --nesting --minify --bundle --targets '>= 0.25%' lib/barbajoe.css -o dist/barbajoe.css",
-		"build:specimen": "parcel build specimen/index.html specimen/headers.html specimen/layout-header.html specimen/layout-footer.html specimen/layout-minimal.html --dist-dir .output/specimen"
+		"build:specimen": "parcel build specimen/index.html specimen/headers.html specimen/layout-header.html specimen/layout-footer.html specimen/layout-minimal.html --dist-dir .output/specimen --no-cache"
 	},
 	"devDependencies": {
 		"lightningcss-cli": "1.33.0",
