@@ -22,9 +22,10 @@
 	],
 	"scripts": {
 		"build": "pnpm --filter @barbajoe/css-lib build",
+		"build:specimen": "pnpm --filter @barbajoe/css-lib build:specimen",
 		"check": "pnpm lint && pnpm build",
 		"css-lib": "pnpm --filter @barbajoe/css-lib",
-		"lint": "biome ci src/packages/css-lib/lib --error-on-warnings"
+		"lint": "biome ci src/packages/css-lib/lib src/packages/css-lib/specimen --error-on-warnings"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.5.14"

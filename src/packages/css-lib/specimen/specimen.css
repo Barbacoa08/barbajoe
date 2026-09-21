@@ -1,3 +1,27 @@
 .specimen-page-note {
 	max-inline-size: 42rem;
 }
+
+.specimen-section {
+	margin-block: var(--barba-space-8);
+}
+
+.specimen-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+	gap: var(--barba-space-4);
+}
+
+.specimen-demo {
+	border: 1px solid var(--barba-color-border);
+	border-radius: var(--barba-radius-md);
+	padding: var(--barba-space-4);
+	background: var(--barba-color-surface);
+}
+
+.specimen-actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: end;
+	gap: var(--barba-space-4);
+}
