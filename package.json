@@ -4,6 +4,11 @@
 	"description": "Development workspace for the @barbajoe/css-lib CSS package.",
 	"author": "Joe S",
 	"license": "MIT",
+	"packageManager": "pnpm@12.5.1",
+	"engines": {
+		"node": ">=24 <25",
+		"pnpm": "12.5.1"
+	},
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/Barbacoa08/barbajoe/"
@@ -19,9 +24,9 @@
 		"build": "pnpm --filter @barbajoe/css-lib build",
 		"check": "pnpm lint && pnpm build",
 		"css-lib": "pnpm --filter @barbajoe/css-lib",
-		"lint": "pnpm --filter @barbajoe/css-lib lint"
+		"lint": "biome ci src/packages/css-lib/lib --error-on-warnings"
 	},
-	"dependencies": {
-		"@biomejs/biome": "1.8.3"
+	"devDependencies": {
+		"@biomejs/biome": "2.5.14"
 	}
 }

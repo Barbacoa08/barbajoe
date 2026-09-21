@@ -14,14 +14,14 @@
 		"all": "pnpm i && pnpm clean && pnpm style-check && pnpm build",
 		"dev": "pnpm parcel watch lib/barbajoe.css --dist-dir dist",
 		"clean": "rm -rf dist",
-		"lint": "biome ci ./lib",
+		"lint": "biome ci ./lib --error-on-warnings",
 		"format": "biome format --write ./lib",
 		"style-check": "biome check --write ./lib",
 		"build": "mkdir -p dist && pnpm build:prod",
 		"build:prod": "lightningcss --nesting --minify --bundle --targets '>= 0.25%' lib/barbajoe.css -o dist/barbajoe.css"
 	},
 	"devDependencies": {
-		"lightningcss-cli": "1.25.1",
-		"parcel": "2.12.0"
+		"lightningcss-cli": "1.33.0",
+		"parcel": "2.16.4"
 	}
 }
