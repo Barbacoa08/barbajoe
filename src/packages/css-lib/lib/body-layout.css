@@ -3,9 +3,15 @@ body {
 }
 
 .app-shell {
-	min-block-size: 100dvh;
+	min-block-size: 100vh;
 	display: grid;
 	grid-template-rows: auto minmax(0, 1fr) auto;
+}
+
+@supports (min-block-size: 100dvh) {
+	.app-shell {
+		min-block-size: 100dvh;
+	}
 }
 
 body main {
