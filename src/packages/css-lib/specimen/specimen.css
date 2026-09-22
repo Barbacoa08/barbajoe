@@ -26,6 +26,11 @@
 	gap: var(--barba-space-4);
 }
 
+.specimen-disabled-link {
+	color: var(--barba-color-link);
+	opacity: 0.5;
+}
+
 .specimen-theme {
 	border: 1px solid var(--barba-color-border);
 	border-radius: var(--barba-radius-md);
