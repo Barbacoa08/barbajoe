@@ -101,9 +101,17 @@
 	gap: var(--barba-space-2);
 }
 
-.specimen-primitives > span {
+.specimen-primitive {
+	display: flex;
+	align-items: center;
+	gap: var(--barba-space-2);
+}
+
+.specimen-primitive-swatch {
+	inline-size: var(--barba-space-8);
+	block-size: var(--barba-space-8);
+	border: 1px solid var(--barba-color-border);
 	border-radius: var(--barba-radius-sm);
-	padding: var(--barba-space-2);
 }
 
 .specimen-primitive-accent {
