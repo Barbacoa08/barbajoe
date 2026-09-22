@@ -77,6 +77,7 @@ All public tokens use the `--barba-` prefix. The semantic color roles are:
 - `--barba-color-bg`
 - `--barba-color-surface`
 - `--barba-color-surface-inverse`
+- `--barba-color-control-bg`
 - `--barba-color-border`
 - `--barba-color-link`
 - `--barba-color-link-hover`

@@ -29,6 +29,7 @@
 	--barba-color-bg: light-dark(hsl(10 21% 95%), hsl(198 100% 11%));
 	--barba-color-surface: light-dark(#ffffff, #1a202c);
 	--barba-color-surface-inverse: light-dark(#222222, #d2d2d2);
+	--barba-color-control-bg: light-dark(#ffffff, #201a2c);
 	--barba-color-border: light-dark(#888888, #6d6d6d);
 	--barba-color-link: light-dark(#0000ee, #9eb2ff);
 	--barba-color-link-hover: light-dark(#00008a, #25cbda);
