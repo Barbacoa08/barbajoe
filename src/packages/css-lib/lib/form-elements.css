@@ -20,6 +20,7 @@ form {
 		margin-top: var(--barba-space-2);
 		width: 100%;
 		box-sizing: border-box;
+		background-color: var(--barba-color-control-bg);
 	}
 
 	& :is(input, textarea, select, button):disabled {

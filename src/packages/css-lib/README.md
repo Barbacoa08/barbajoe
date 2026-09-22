@@ -1,52 +1,154 @@
-# barbajoe's css library
+# Barbajoe CSS library
 
-One stylesheet for personal applications that makes ordinary semantic HTML look
-and behave consistently. Import the bundle once at the application entry point;
-the library deliberately styles document elements such as headings, forms,
-links, dialogs, and `main` without requiring utility classes.
+One global stylesheet for personal applications. It gives ordinary semantic
+HTML a consistent foundation for typography, forms, links, dialogs, page
+layout, and a small set of reusable visual treatments.
 
-## application shell
+## Installation and import
 
-Use `app-shell` on the element that owns the page-level header, main content,
-and footer. It creates a full-height grid without assuming that a particular
-direct child of `body` is always the application root.
+Install the package, then import its stylesheet once from an application entry
+point. The package-root import is preferred:
 
-```html
-<body>
-  <div class="app-shell">
-    <header>...</header>
-    <main>...</main>
-    <footer>...</footer>
-  </div>
-</body>
+```js
+import "@barbajoe/css-lib";
 ```
 
-Classes remain appropriate for visual or structural roles HTML cannot express,
-such as `site-header`, `text-gradient`, and `dialog-content-container`.
+The explicit stylesheet subpath remains supported:
 
-## tokens
+```js
+import "@barbajoe/css-lib/dist/barbajoe.css";
+```
 
-New library tokens use the `--barba-` prefix. They cover typography, spacing,
-radius, shadow, motion, and semantic colors such as `--barba-color-text`,
-`--barba-color-bg`, `--barba-color-border`, `--barba-color-text-muted`, and
-`--barba-color-focus-ring`. Existing token names remain aliases so applications
-can migrate only when it is useful.
+Both paths resolve to the same global stylesheet. The repository tracks the
+source in `lib/`; npm receives only the generated `dist/barbajoe.css` bundle,
+the package metadata, and this README.
 
-## tech notes
+## Application shell
 
-Uses [lightningcss](https://lightningcss.dev/docs.html) (a parcel library) for the prod build, which doesn't have a `watch` command, but is _delightfully_ barebones, and I love that.
+Add `app-shell` to the element that owns the page regions. A direct `main` is
+required. Direct `header` and `footer` regions are independently optional, so
+the supported structures are:
 
-Uses [Parcel](https://parceljs.org/) for the dev build (HMR).
+```html
+<!-- Full shell -->
+<div class="app-shell">
+  <header>...</header>
+  <main>...</main>
+  <footer>...</footer>
+</div>
 
-## hosted via Netlify
+<!-- Header and main -->
+<div class="app-shell">
+  <header>...</header>
+  <main>...</main>
+</div>
 
-[See it in action here](https://lib-staging.barbajoe.tech/css-lib)
+<!-- Main and footer -->
+<div class="app-shell">
+  <main>...</main>
+  <footer>...</footer>
+</div>
 
-## publish instructions
+<!-- Main only -->
+<div class="app-shell">
+  <main>...</main>
+</div>
+```
 
-Publishing is temporarily paused while the CSS library and release process are
-modernized. Do not publish a new version until that work is complete.
+See the [full shell](specimen/index.html),
+[header-and-main shell](specimen/layout-header.html),
+[main-and-footer shell](specimen/layout-footer.html), and
+[main-only shell](specimen/layout-minimal.html) specimens.
 
-- navigate to this directory (`barbajoe/src/packages/css-lib/`)
-- `npm login`
-- `npm publish --otp=onetimepasswordfromauthenticator`
+A `site-header` supports a brand or title with navigation, a brand or title
+alone, or navigation alone. All three compositions appear in the
+[header specimen](specimen/headers.html#combined-header).
+
+Classes remain appropriate for roles that semantic HTML cannot express by
+itself, including `site-header`, `text-gradient`, `scaleup-on-hover`, and
+`dialog-content-container`.
+
+## Tokens and accessibility contract
+
+All public tokens use the `--barba-` prefix. The semantic color roles are:
+
+- `--barba-color-text`
+- `--barba-color-text-muted`
+- `--barba-color-bg`
+- `--barba-color-surface`
+- `--barba-color-surface-inverse`
+- `--barba-color-control-bg`
+- `--barba-color-border`
+- `--barba-color-link`
+- `--barba-color-link-hover`
+- `--barba-color-accent`
+- `--barba-color-focus-ring`
+- `--barba-color-danger`
+
+The old unprefixed aliases were intentionally removed before version 1.0.
+
+The following default pairings are guaranteed. Text roles meet at least 7:1
+against both supported backgrounds. Border meets at least 3:1; focus ring uses
+the link-hover color and therefore also exceeds 3:1.
+
+| Scheme | Role | On page background | On surface |
+| --- | --- | ---: | ---: |
+| Light | Text | 17.52:1 | 19.77:1 |
+| Light | Muted text | 8.33:1 | 9.40:1 |
+| Light | Link | 8.33:1 | 9.40:1 |
+| Light | Link hover / focus | 13.61:1 | 15.36:1 |
+| Light | Danger | 7.22:1 | 8.15:1 |
+| Light | Border | 3.14:1 | 3.54:1 |
+| Dark | Text | 13.06:1 | 13.67:1 |
+| Dark | Muted text | 8.75:1 | 9.16:1 |
+| Dark | Link | 7.62:1 | 7.98:1 |
+| Dark | Link hover / focus | 7.89:1 | 8.26:1 |
+| Dark | Danger | 7.16:1 | 7.49:1 |
+| Dark | Border | 3.01:1 | 3.15:1 |
+
+These guarantees apply only to the listed default pairings. Accent,
+inverse-surface, arbitrary token combinations, and consumer overrides do not
+carry a general contrast guarantee. The forced light and dark matrices in the
+[component catalog](specimen/index.html#color-heading) display the contract.
+
+## Local development
+
+From this package directory, install the repository dependencies and start the
+specimen:
+
+```bash
+pnpm dev
+```
+
+Parcel opens the component catalog automatically and applies HTML, CSS, and
+dialog-fixture changes with hot module replacement. Use the navigation to
+review the component catalog, header compositions, and all four application
+shell structures in the same session.
+
+Build the production package with Lightning CSS:
+
+```bash
+pnpm build
+```
+
+Build the specimen independently of the development server:
+
+```bash
+pnpm build:specimen
+```
+
+Run warning-fatal checks for the maintained CSS and specimen files:
+
+```bash
+pnpm lint
+```
+
+`dist/`, `.output/`, and `.parcel-cache/` are generated locally and are not
+tracked by Git.
+
+## Publication state
+
+The package remains at version `0.2.1`. Publication is paused until a separate
+release need and a restored publication process are explicitly approved. Do
+not change the version merely because stabilization work contains breaking
+pre-1.0 changes.

@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta
+			name="description"
+			content="Interactive development specimen for the Barbajoe CSS library."
+		/>
+		<title>Component catalog · Barbajoe CSS specimen</title>
+		<link rel="stylesheet" href="../lib/barbajoe.css" />
+		<link rel="stylesheet" href="./specimen.css" />
+	</head>
+	<body>
+		<div class="app-shell">
+			<header class="site-header">
+				<a class="skip-link" href="#main-content">Skip to main content</a>
+				<strong>Barbajoe CSS specimen</strong>
+				<nav aria-label="Specimen pages">
+					<ul class="site-header-links">
+						<li class="active">
+							<a href="./index.html" aria-current="page">Catalog</a>
+						</li>
+						<li><a href="./headers.html">Headers</a></li>
+						<li><a href="./layout-header.html">Header layout</a></li>
+						<li><a href="./layout-footer.html">Footer layout</a></li>
+						<li><a href="./layout-minimal.html">Minimal layout</a></li>
+					</ul>
+				</nav>
+			</header>
+
+			<main id="main-content">
+				<h1 class="text-gradient">CSS component catalog</h1>
+				<p>
+					This page exercises the maintained selectors, semantic HTML defaults,
+					interactive states, and motion preferences.
+				</p>
+
+				<section class="specimen-section" aria-labelledby="typography-heading">
+					<h2 id="typography-heading">Typography and links</h2>
+					<div class="specimen-grid">
+						<div class="specimen-demo">
+							<h1>First-level heading</h1>
+							<h2>Second-level heading</h2>
+							<p>
+								Body text with <code>inline code</code>, a
+								<a href="#link-target">regular link</a>, and a
+								<a href="#disabled-link" aria-disabled="true" tabindex="-1"
+									>disabled link</a
+								>.
+							</p>
+						</div>
+						<div class="specimen-demo" id="link-target">
+							<p>Lists retain the library's dash treatment:</p>
+							<ul>
+								<li>Semantic defaults</li>
+								<li>Keyboard-visible focus</li>
+								<li>Light and dark schemes</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<section class="specimen-section" aria-labelledby="color-heading">
+					<h2 id="color-heading">Semantic color contract</h2>
+					<p class="specimen-page-note">
+						Every named text role below is guaranteed against both the page and
+						surface backgrounds. Borders and focus rings have a separate non-text
+						contrast guarantee.
+					</p>
+					<div class="specimen-grid">
+						<article class="specimen-theme specimen-theme-light">
+							<h3>Forced light scheme</h3>
+							<div class="specimen-theme-surfaces">
+								<div class="specimen-token-surface specimen-token-surface-bg">
+									<strong>Page background</strong>
+									<ul class="specimen-token-list">
+										<li>Text</li>
+										<li class="specimen-token-muted">Muted text</li>
+										<li class="specimen-token-link">Link</li>
+										<li class="specimen-token-link-hover">Link hover / focus</li>
+										<li class="specimen-token-danger">Danger</li>
+									</ul>
+									<div class="specimen-token-border">Border sample</div>
+									<div class="specimen-token-focus">Focus-ring sample</div>
+								</div>
+								<div class="specimen-token-surface specimen-token-surface-raised">
+									<strong>Surface background</strong>
+									<ul class="specimen-token-list">
+										<li>Text</li>
+										<li class="specimen-token-muted">Muted text</li>
+										<li class="specimen-token-link">Link</li>
+										<li class="specimen-token-link-hover">Link hover / focus</li>
+										<li class="specimen-token-danger">Danger</li>
+									</ul>
+									<div class="specimen-token-border">Border sample</div>
+									<div class="specimen-token-focus">Focus-ring sample</div>
+								</div>
+							</div>
+							<p><small>Primitive swatches; no foreground guarantee</small></p>
+							<div class="specimen-primitives">
+								<div class="specimen-primitive">
+									<span
+										class="specimen-primitive-swatch specimen-primitive-accent"
+										aria-hidden="true"
+									></span>
+									<span>Accent</span>
+								</div>
+								<div class="specimen-primitive">
+									<span
+										class="specimen-primitive-swatch specimen-primitive-inverse"
+										aria-hidden="true"
+									></span>
+									<span>Inverse surface</span>
+								</div>
+							</div>
+						</article>
+
+						<article class="specimen-theme specimen-theme-dark">
+							<h3>Forced dark scheme</h3>
+							<div class="specimen-theme-surfaces">
+								<div class="specimen-token-surface specimen-token-surface-bg">
+									<strong>Page background</strong>
+									<ul class="specimen-token-list">
+										<li>Text</li>
+										<li class="specimen-token-muted">Muted text</li>
+										<li class="specimen-token-link">Link</li>
+										<li class="specimen-token-link-hover">Link hover / focus</li>
+										<li class="specimen-token-danger">Danger</li>
+									</ul>
+									<div class="specimen-token-border">Border sample</div>
+									<div class="specimen-token-focus">Focus-ring sample</div>
+								</div>
+								<div class="specimen-token-surface specimen-token-surface-raised">
+									<strong>Surface background</strong>
+									<ul class="specimen-token-list">
+										<li>Text</li>
+										<li class="specimen-token-muted">Muted text</li>
+										<li class="specimen-token-link">Link</li>
+										<li class="specimen-token-link-hover">Link hover / focus</li>
+										<li class="specimen-token-danger">Danger</li>
+									</ul>
+									<div class="specimen-token-border">Border sample</div>
+									<div class="specimen-token-focus">Focus-ring sample</div>
+								</div>
+							</div>
+							<p><small>Primitive swatches; no foreground guarantee</small></p>
+							<div class="specimen-primitives">
+								<div class="specimen-primitive">
+									<span
+										class="specimen-primitive-swatch specimen-primitive-accent"
+										aria-hidden="true"
+									></span>
+									<span>Accent</span>
+								</div>
+								<div class="specimen-primitive">
+									<span
+										class="specimen-primitive-swatch specimen-primitive-inverse"
+										aria-hidden="true"
+									></span>
+									<span>Inverse surface</span>
+								</div>
+							</div>
+						</article>
+					</div>
+				</section>
+
+				<section class="specimen-section" aria-labelledby="forms-heading">
+					<h2 id="forms-heading">Form elements</h2>
+					<form>
+						<div class="specimen-grid">
+							<label>
+								Text
+								<input type="text" value="Barbajoe" />
+								<small class="helper-text">Helper text for a text field.</small>
+							</label>
+							<label>
+								Password
+								<input type="password" value="password" />
+							</label>
+							<label>
+								Email
+								<input type="email" value="hello@example.com" />
+							</label>
+							<label>
+								Number
+								<input type="number" value="8" />
+							</label>
+							<label>
+								Telephone
+								<input type="tel" value="555-0100" />
+							</label>
+							<label>
+								URL
+								<input type="url" value="https://barbajoe.tech" />
+							</label>
+							<label>
+								Search
+								<input type="search" value="CSS" />
+							</label>
+							<label>
+								Select
+								<select>
+									<option>Semantic HTML</option>
+									<option>Custom class</option>
+								</select>
+							</label>
+						</div>
+
+						<label>
+							Textarea
+							<textarea rows="3">A multiline value.</textarea>
+						</label>
+
+						<fieldset>
+							<legend>Choices</legend>
+							<label><input type="checkbox" checked /> Checked option</label>
+							<label><input type="checkbox" /> Unchecked option</label>
+							<label><input type="radio" name="choice" checked /> First choice</label>
+							<label><input type="radio" name="choice" /> Second choice</label>
+						</fieldset>
+
+						<div class="specimen-actions">
+							<button type="button">Button</button>
+							<button type="button" disabled>Disabled button</button>
+							<label>
+								Disabled field
+								<input type="text" value="Unavailable" disabled />
+							</label>
+						</div>
+					</form>
+				</section>
+
+				<section class="specimen-section" aria-labelledby="motion-heading">
+					<h2 id="motion-heading">Motion and interaction</h2>
+					<div class="specimen-grid">
+						<div class="specimen-demo scaleup-on-hover">
+							<strong>Hover or focus within</strong>
+							<p>This surface scales only when motion is acceptable.</p>
+							<a href="#motion-heading">Focus this link</a>
+						</div>
+						<div class="specimen-demo scaleup-on-hover disabled">
+							<strong>Disabled scale surface</strong>
+							<p>This example remains static.</p>
+						</div>
+					</div>
+				</section>
+
+				<section class="specimen-section" aria-labelledby="dialog-heading">
+					<h2 id="dialog-heading">Dialog</h2>
+					<button type="button" id="open-dialog">Open dialog</button>
+					<dialog id="specimen-dialog" aria-labelledby="specimen-dialog-title">
+						<div class="dialog-content-container">
+							<h2 class="dialog-header" id="specimen-dialog-title">
+								Native modal dialog
+							</h2>
+							<p>
+								This exercises the content grid, backdrop, focus handling, and
+								motion preference.
+							</p>
+							<div class="dialog-footer">
+								<button type="button" id="close-dialog">Close dialog</button>
+							</div>
+						</div>
+					</dialog>
+				</section>
+			</main>
+
+			<footer>
+				<code>@barbajoe/css-lib</code> development specimen
+			</footer>
+		</div>
+		<script type="module" src="./specimen.js"></script>
+	</body>
+</html>

@@ -27,3 +27,5 @@ jobs:
         run: pnpm lint
       - name: Build CSS library
         run: pnpm build
+      - name: Build CSS specimen
+        run: pnpm build:specimen

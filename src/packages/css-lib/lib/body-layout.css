@@ -2,20 +2,35 @@ body {
 	margin: 0;
 }
 
+body main {
+	inline-size: min(calc(100% - 2rem), 60ch);
+	margin-block: var(--barba-space-4);
+	margin-inline: auto;
+}
+
 .app-shell {
 	min-block-size: 100vh;
 	display: grid;
-	grid-template-rows: auto minmax(0, 1fr) auto;
+	grid-template:
+		"header" auto
+		"main" minmax(0, 1fr)
+		"footer" auto / minmax(0, 1fr);
+}
+
+.app-shell > header {
+	grid-area: header;
+}
+
+.app-shell > main {
+	grid-area: main;
+}
+
+.app-shell > footer {
+	grid-area: footer;
 }
 
 @supports (min-block-size: 100dvh) {
 	.app-shell {
 		min-block-size: 100dvh;
 	}
-}
-
-body main {
-	inline-size: min(calc(100% - 2rem), 60ch);
-	margin-block: var(--barba-space-4);
-	margin-inline: auto;
 }

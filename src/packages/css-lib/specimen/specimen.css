@@ -1,0 +1,123 @@
+.specimen-page-note {
+	max-inline-size: 42rem;
+}
+
+.specimen-section {
+	margin-block: var(--barba-space-8);
+}
+
+.specimen-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+	gap: var(--barba-space-4);
+}
+
+.specimen-demo {
+	border: 1px solid var(--barba-color-border);
+	border-radius: var(--barba-radius-md);
+	padding: var(--barba-space-4);
+	background: var(--barba-color-surface);
+}
+
+.specimen-actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: end;
+	gap: var(--barba-space-4);
+}
+
+.specimen-theme {
+	border: 1px solid var(--barba-color-border);
+	border-radius: var(--barba-radius-md);
+	padding: var(--barba-space-4);
+	background: var(--barba-color-bg);
+	color: var(--barba-color-text);
+}
+
+.specimen-theme-light {
+	color-scheme: light;
+}
+
+.specimen-theme-dark {
+	color-scheme: dark;
+}
+
+.specimen-theme-surfaces {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+	gap: var(--barba-space-3);
+}
+
+.specimen-token-surface {
+	border-radius: var(--barba-radius-sm);
+	padding: var(--barba-space-4);
+	color: var(--barba-color-text);
+}
+
+.specimen-token-surface-bg {
+	background: var(--barba-color-bg);
+}
+
+.specimen-token-surface-raised {
+	background: var(--barba-color-surface);
+}
+
+.specimen-token-list {
+	padding-inline-start: var(--barba-space-6);
+}
+
+.specimen-token-muted {
+	color: var(--barba-color-text-muted);
+}
+
+.specimen-token-link {
+	color: var(--barba-color-link);
+}
+
+.specimen-token-link-hover {
+	color: var(--barba-color-link-hover);
+}
+
+.specimen-token-danger {
+	color: var(--barba-color-danger);
+}
+
+.specimen-token-border {
+	margin-block: var(--barba-space-4);
+	border-block-start: 3px solid var(--barba-color-border);
+	padding-block-start: var(--barba-space-2);
+}
+
+.specimen-token-focus {
+	margin: 3px;
+	border-radius: var(--barba-radius-sm);
+	padding: var(--barba-space-2);
+	outline: 3px solid var(--barba-color-focus-ring);
+}
+
+.specimen-primitives {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--barba-space-2);
+}
+
+.specimen-primitive {
+	display: flex;
+	align-items: center;
+	gap: var(--barba-space-2);
+}
+
+.specimen-primitive-swatch {
+	inline-size: var(--barba-space-8);
+	block-size: var(--barba-space-8);
+	border: 1px solid var(--barba-color-border);
+	border-radius: var(--barba-radius-sm);
+}
+
+.specimen-primitive-accent {
+	background: var(--barba-color-accent);
+}
+
+.specimen-primitive-inverse {
+	background: var(--barba-color-surface-inverse);
+}

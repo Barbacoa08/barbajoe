@@ -5,6 +5,12 @@
 	"author": "Barbacoa08",
 	"repository": "https://github.com/Barbacoa08/barbajoe/tree/main/src/packages/css-lib",
 	"homepage": "https://lib-staging.barbajoe.tech/",
+	"style": "./dist/barbajoe.css",
+	"exports": {
+		".": "./dist/barbajoe.css",
+		"./dist/barbajoe.css": "./dist/barbajoe.css"
+	},
+	"sideEffects": ["./dist/barbajoe.css", "./specimen/specimen.js"],
 	"publishConfig": {
 		"access": "public",
 		"registry": "https://registry.npmjs.org/"
@@ -12,13 +18,14 @@
 	"files": ["dist/barbajoe.css"],
 	"scripts": {
 		"all": "pnpm i && pnpm clean && pnpm style-check && pnpm build",
-		"dev": "pnpm parcel watch lib/barbajoe.css --dist-dir dist",
+		"dev": "parcel serve specimen/index.html specimen/headers.html specimen/layout-header.html specimen/layout-footer.html specimen/layout-minimal.html --open",
 		"clean": "rm -rf dist",
-		"lint": "biome ci ./lib --error-on-warnings",
+		"lint": "biome ci ./lib ./specimen --error-on-warnings",
 		"format": "biome format --write ./lib",
 		"style-check": "biome check --write ./lib",
 		"build": "mkdir -p dist && pnpm build:prod",
-		"build:prod": "lightningcss --nesting --minify --bundle --targets '>= 0.25%' lib/barbajoe.css -o dist/barbajoe.css"
+		"build:prod": "lightningcss --nesting --minify --bundle --targets '>= 0.25%' lib/barbajoe.css -o dist/barbajoe.css",
+		"build:specimen": "parcel build specimen/index.html specimen/headers.html specimen/layout-header.html specimen/layout-footer.html specimen/layout-minimal.html --dist-dir .output/specimen --no-cache"
 	},
 	"devDependencies": {
 		"lightningcss-cli": "1.33.0",
