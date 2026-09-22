@@ -10,3 +10,9 @@ if (
 	openButton.addEventListener("click", () => dialog.showModal());
 	closeButton.addEventListener("click", () => dialog.close());
 }
+
+for (const disabledLink of document.querySelectorAll(
+	'a[aria-disabled="true"]',
+)) {
+	disabledLink.addEventListener("click", (event) => event.preventDefault());
+}
