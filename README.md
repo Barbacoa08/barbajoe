@@ -18,9 +18,11 @@ possible rebuild direction. Their source remains available in Git history.
 - `src/packages/svelte-lib`: rebuild brief for the Svelte component library.
 - `.project`: local planning convention. Only its README is committed.
 
-The two former Netlify sites have stopped builds and retain their last deployed
-versions. Automated npm publication has been removed, and manual publication is
-temporarily paused while the CSS package and release process are modernized.
+The former library-staging Netlify site now hosts the
+[CSS specimen](https://lib-staging.barbajoe.tech/) from `src/packages/css-lib`.
+The landing site's builds remain stopped. Automated npm publication has been
+removed, and manual publication is temporarily paused while the CSS package
+and release process are modernized.
 
 ## Development
 

@@ -16,13 +16,13 @@ an index of the libraries plus dedicated example routes for each one.
 - Workspace dependencies connected the CSS, React, and Svelte libraries.
 - The Svelte layout supplied the shared header, navigation, main content, and
   footer while the CSS library supplied global styling.
-- Netlify hosted the site. Its builds are stopped so the last deployment can
-  remain available while this implementation is absent.
+- Netlify hosted the site. That Netlify project now serves the CSS specimen
+  from `src/packages/css-lib`; this retired application is no longer deployed.
 
 ## Rebuild direction
 
 Rebuild this application only when there are active libraries that need a
 shared demonstration environment. It should use current tooling, import the
 real packaged outputs, provide focused examples and accessibility checks, and
-avoid becoming a second implementation of library behavior. Reconfigure and
-restart the Netlify site only after the replacement is ready.
+avoid becoming a second implementation of library behavior. Hosting it again
+would require a separate site or an explicit decision to replace the specimen.

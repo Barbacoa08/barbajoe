@@ -5,6 +5,7 @@ form {
 	gap: var(--barba-space-4);
 
 	& input[type="text"],
+	& input:not([type]),
 	& input[type="password"],
 	& input[type="email"],
 	& input[type="number"],
