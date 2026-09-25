@@ -25,6 +25,8 @@ jobs:
         run: pnpm install --frozen-lockfile --config.lockfile=true
       - name: Lint CSS library
         run: pnpm lint
+      - name: Test release helpers
+        run: pnpm test:release
       - name: Build CSS library
         run: pnpm build
       - name: Build CSS specimen

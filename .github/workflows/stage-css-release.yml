@@ -1,0 +1,89 @@
+name: Stage CSS release
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - src/packages/css-lib/package.json
+
+permissions:
+  contents: read
+
+concurrency:
+  group: css-staged-release
+  cancel-in-progress: false
+
+jobs:
+  gate:
+    name: Check CSS version increase
+    runs-on: ubuntu-latest
+    outputs:
+      stage: ${{ steps.version.outputs.stage }}
+      previous: ${{ steps.version.outputs.previous }}
+      current: ${{ steps.version.outputs.current }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - uses: pnpm/setup@703c52620218391530e48b9e8870d5c0082e1b9b # v2.1.0
+        with:
+          runtime: node@24
+          cache: false
+          install: false
+      - name: Compare current, previous, and published versions
+        id: version
+        env:
+          BEFORE_SHA: ${{ github.event.before }}
+        run: |
+          previous=$(git show "${BEFORE_SHA}:src/packages/css-lib/package.json" | node -e 'let data = ""; process.stdin.on("data", chunk => data += chunk); process.stdin.on("end", () => console.log(JSON.parse(data).version))')
+          current=$(node -p "require('./src/packages/css-lib/package.json').version")
+          published=$(pnpm view @barbajoe/css-lib dist-tags.latest)
+          node .github/scripts/css-release-gate.mjs "$previous" "$current" "$published"
+
+  stage:
+    name: Validate and stage CSS package
+    needs: gate
+    if: needs.gate.outputs.stage == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: pnpm/setup@703c52620218391530e48b9e8870d5c0082e1b9b # v2.1.0
+        with:
+          runtime: node@24
+          cache: false
+          install: false
+      - name: Install locked dependencies
+        run: pnpm install --frozen-lockfile --config.lockfile=true
+      - name: Test release helpers and check CSS
+        run: pnpm test:release && pnpm check && pnpm build:specimen
+      - name: Inspect package contents
+        env:
+          CURRENT_VERSION: ${{ needs.gate.outputs.current }}
+        run: pnpm -C src/packages/css-lib pack --dry-run --json --ignore-scripts | node .github/scripts/css-package-check.mjs "$CURRENT_VERSION"
+      - name: Stage package for npm 2FA approval
+        run: pnpm -C src/packages/css-lib stage publish --ignore-scripts --no-git-checks --access public --tag latest
+
+  remind:
+    name: Assign npm approval reminder
+    needs: [gate, stage]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: pnpm/setup@703c52620218391530e48b9e8870d5c0082e1b9b # v2.1.0
+        with:
+          runtime: node@24
+          cache: false
+          install: false
+      - name: Create or reuse version reminder
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          PREVIOUS_VERSION: ${{ needs.gate.outputs.previous }}
+          CURRENT_VERSION: ${{ needs.gate.outputs.current }}
+        run: node .github/scripts/css-stage-reminder.mjs
