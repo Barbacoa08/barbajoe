@@ -1,0 +1,6 @@
+[build]
+command = "pnpm check && pnpm build:specimen"
+publish = "src/packages/css-lib/.output/specimen"
+
+[build.environment]
+NODE_VERSION = "24"
