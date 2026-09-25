@@ -146,6 +146,16 @@ pnpm lint
 `dist/`, `.output/`, and `.parcel-cache/` are generated locally and are not
 tracked by Git.
 
+## Hosted specimen
+
+The specimen is hosted at https://lib-staging.barbajoe.tech/ on the existing
+library-staging Netlify site. Production deploys from `main`, and pull requests
+receive Netlify Deploy Previews for review before merging. Netlify publishes
+the static output of `pnpm build:specimen`.
+
+For live editing, run `pnpm css-lib dev` from the repository root. Parcel's
+watch mode and hot module replacement remain the local development workflow.
+
 ## Publication state
 
 The package remains at version `0.2.1`. Publication is paused until a separate
