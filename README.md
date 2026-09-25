@@ -20,9 +20,10 @@ possible rebuild direction. Their source remains available in Git history.
 
 The former library-staging Netlify site now hosts the
 [CSS specimen](https://lib-staging.barbajoe.tech/) from `src/packages/css-lib`.
-The landing site's builds remain stopped. Automated npm publication has been
-removed, and manual publication is temporarily paused while the CSS package
-and release process are modernized.
+The landing site's builds remain stopped. The CSS package has a staged npm
+release workflow: a deliberate version increase merged into `main` prepares a
+package for review, but npm publication still requires the maintainer's 2FA
+approval. See the [CSS release instructions](src/packages/css-lib/README.md#releasing-the-css-package).
 
 ## Development
 
@@ -33,4 +34,14 @@ pnpm install --frozen-lockfile
 pnpm check
 ```
 
-The individual commands are `pnpm lint` and `pnpm build`.
+The individual commands are `pnpm lint`, `pnpm build`, and
+`pnpm test:release` for the release-workflow helpers.
+
+## Future publishable libraries
+
+The staged-release workflow covers only `@barbajoe/css-lib`. If a React,
+Svelte, or other publishable library is reintroduced, give it a separate
+release workflow or explicitly extend the existing one. Its build and package
+checks, version gate, npm trusted-publisher configuration, and approval
+reminder must be designed for that library; do not assume the CSS workflow
+will publish it.

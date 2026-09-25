@@ -156,9 +156,36 @@ the static output of `pnpm build:specimen`.
 For live editing, run `pnpm css-lib dev` from the repository root. Parcel's
 watch mode and hot module replacement remain the local development workflow.
 
-## Publication state
+## Releasing the CSS package
 
-The package remains at version `0.2.1`. Publication is paused until a separate
-release need and a restored publication process are explicitly approved. Do
-not change the version merely because stabilization work contains breaking
-pre-1.0 changes.
+The package remains at version `0.2.1`. Adding the staged-release workflow does
+not change that version or stage a release. Change the version only when there
+is an approved reason to release the CSS library. The workflow is specific to
+this package and accepts stable `MAJOR.MINOR.PATCH` versions only.
+
+Before the first staged release, configure npm's trusted publisher for
+`@barbajoe/css-lib` with GitHub user `Barbacoa08`, repository `barbajoe`, and
+workflow filename `stage-css-release.yml`. Allow **stage publishing only**, not
+direct publishing. Ensure the npm maintainer account has 2FA enabled. After the
+trusted publisher is configured, set the package's Publishing access to
+**Require two-factor authentication and disallow tokens**, then remove the old
+`NPM_AUTH_TOKEN` GitHub secret if it still exists. The workflow uses OIDC and
+does not require an npm token. Enable GitHub email notifications for issue
+assignments if you want the staged-release reminder in your inbox.
+
+To release, raise this package's version in a pull request and merge it into
+`main`. The workflow compares that version with the preceding `main` version
+and npm's published `latest`; equal, lower, and prerelease versions do not
+stage. It then installs locked dependencies, tests, builds, checks that the
+package contains only its expected CSS file and metadata, and stages it on
+npm. A separate job assigns Joe a GitHub issue only after staging succeeds.
+The package is not installable yet.
+
+Review the successful workflow run and sign in to npm. Open **Staged Packages**
+for `@barbajoe/css-lib`, inspect the staged version, and approve or reject it
+with npm 2FA. Close the reminder issue afterward. GitHub email and the issue
+are reminders; neither can approve the npm release. If staging fails, no
+approval issue is created. If the reminder job fails after staging succeeded,
+check npm's staging queue before retrying anything; do not rerun the entire
+release workflow blindly because npm will reject a duplicate staged version.
+Create the reminder issue manually if necessary.
