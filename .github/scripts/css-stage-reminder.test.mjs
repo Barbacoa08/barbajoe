@@ -11,7 +11,7 @@ const input = {
 	assignee: "Barbacoa08",
 };
 
-test("creates an assigned reminder containing the staged version and run link", async () => {
+test("creates an assigned reminder with the run and npm staged-packages links", async () => {
 	const requests = [];
 	const fetchImpl = async (url, options) => {
 		requests.push({ url, options });
@@ -32,6 +32,10 @@ test("creates an assigned reminder containing the staged version and run link", 
 	assert.deepEqual(payload.assignees, ["Barbacoa08"]);
 	assert.match(payload.body, /0\.2\.1 → 0\.3\.0/);
 	assert.match(payload.body, /actions\/runs\/123/);
+	assert.match(
+		payload.body,
+		/\[Staged Packages\]\(https:\/\/www\.npmjs\.com\/settings\/barbajoe\/staged-packages\)/,
+	);
 });
 
 test("does not create a second issue for a version already reminded", async () => {

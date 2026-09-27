@@ -49,7 +49,7 @@ export async function createCssStageReminder({
 		"",
 		`[Review the successful staging workflow](${runUrl}).`,
 		"",
-		"Sign in to [npm](https://www.npmjs.com/), open **Staged Packages**, inspect `@barbajoe/css-lib`, and approve or reject this version with your npm 2FA. Approval does not happen through this issue or its email notification.",
+		"Open [Staged Packages](https://www.npmjs.com/settings/barbajoe/staged-packages) on npm, sign in if prompted, inspect `@barbajoe/css-lib`, and approve or reject this version with your npm 2FA. Approval does not happen through this issue or its email notification.",
 		"",
 		"Close this issue after approval or rejection.",
 	].join("\n");
