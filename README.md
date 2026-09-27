@@ -45,3 +45,6 @@ release workflow or explicitly extend the existing one. Its build and package
 checks, version gate, npm trusted-publisher configuration, and approval
 reminder must be designed for that library; do not assume the CSS workflow
 will publish it.
+
+For the former coverage badge and guidance on adding badges when a library has
+meaningful tests again, see [Badges and coverage](docs/badges-and-coverage.md).
