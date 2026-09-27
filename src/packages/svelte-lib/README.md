@@ -14,16 +14,8 @@ The package included:
 - A collection of reusable SVG icon components.
 - Small utilities and shared header and logo types.
 
-The package used Svelte 4, SvelteKit, TypeScript, and Vite. Vitest, Testing
-Library, jsdom, and `jest-axe` covered component behavior and accessibility.
-Storybook provided interactive stories and development examples. The library
-depended on `@barbajoe/css-lib` for shared styling.
+The package used Svelte 4, SvelteKit, TypeScript, and Vite. Vitest, Testing Library, jsdom, and `jest-axe` covered component behavior and accessibility. Storybook provided interactive stories and development examples. The library depended on `@barbajoe/css-lib` for shared styling.
 
 ## Rebuild direction
 
-Reintroduce a Svelte package only when an application needs a reusable
-component set. Use the current Svelte packaging recommendations, keep the CSS
-library as the visual foundation, and restore components in consumer-driven
-groups. Tests should cover behavior and accessibility, while an interactive
-catalog such as Storybook should be added only when its ongoing value justifies
-the dependency surface.
+Reintroduce a Svelte package only when an application needs a reusable component set. Use the current Svelte packaging recommendations, keep the CSS library as the visual foundation, and restore components in consumer-driven groups. Tests should cover behavior and accessibility, while an interactive catalog such as Storybook should be added only when its ongoing value justifies the dependency surface.

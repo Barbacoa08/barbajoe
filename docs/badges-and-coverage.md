@@ -21,10 +21,10 @@ readers an at-a-glance coverage value without committing generated badge files.
 
 That Gist last changed in December 2023 and its `100%` value is historical,
 not a current project metric. The Svelte workflow and badge were removed when
-the library was retired. `GIST_SECRET` is retained for now but no current
-workflow uses it. A repository secret does not reveal whether its underlying
-GitHub token is still valid, who owns it, or what permissions it has; verify
-those before any reuse.
+the library was retired. The `GIST_SECRET` repository secret has since been
+deleted; no current workflow uses it. Deleting the repository secret does not
+establish whether its underlying GitHub token is still valid. Verify the old
+token's status separately if it can be identified.
 
 ## When a library returns
 
@@ -39,8 +39,8 @@ coverage service such as [Codecov](https://docs.codecov.com/docs/status-badges)
 against the extra external service and upload permissions. The old
 Gist-and-Shields pattern remains viable for a small public project when a
 separate service is undesirable, but it requires a GitHub token that can write
-the Gist. If choosing it, inspect or replace `GIST_SECRET` with a time-limited
-token granting only the needed [Gists write
+the Gist. If choosing it, create a new repository secret backed by a
+time-limited token granting only the needed [Gists write
 permission](https://docs.github.com/en/rest/authentication/permissions-required-for-fine-grained-personal-access-tokens#user-permissions-for-gists),
 pin the action to a reviewed commit, and update the
 badge only from a trusted `main` workflow after coverage succeeds. Do not make
