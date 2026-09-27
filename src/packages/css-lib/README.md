@@ -1,13 +1,10 @@
 # Barbajoe CSS library
 
-One global stylesheet for personal applications. It gives ordinary semantic
-HTML a consistent foundation for typography, forms, links, dialogs, page
-layout, and a small set of reusable visual treatments.
+One global stylesheet for personal applications. It gives ordinary semantic HTML a consistent foundation for typography, forms, links, dialogs, page layout, and a small set of reusable visual treatments.
 
 ## Installation and import
 
-Install the package, then import its stylesheet once from an application entry
-point. The package-root import is preferred:
+Install the package, then import its stylesheet once from an application entry point. The package-root import is preferred:
 
 ```js
 import "@barbajoe/css-lib";
@@ -19,15 +16,11 @@ The explicit stylesheet subpath remains supported:
 import "@barbajoe/css-lib/dist/barbajoe.css";
 ```
 
-Both paths resolve to the same global stylesheet. The repository tracks the
-source in `lib/`; npm receives only the generated `dist/barbajoe.css` bundle,
-the package metadata, and this README.
+Both paths resolve to the same global stylesheet. The repository tracks the source in `lib/`; npm receives only the generated `dist/barbajoe.css` bundle, the package metadata, and this README.
 
 ## Application shell
 
-Add `app-shell` to the element that owns the page regions. A direct `main` is
-required. Direct `header` and `footer` regions are independently optional, so
-the supported structures are:
+Add `app-shell` to the element that owns the page regions. A direct `main` is required. Direct `header` and `footer` regions are independently optional, so the supported structures are:
 
 ```html
 <!-- Full shell -->
@@ -55,18 +48,11 @@ the supported structures are:
 </div>
 ```
 
-See the [full shell](specimen/index.html),
-[header-and-main shell](specimen/layout-header.html),
-[main-and-footer shell](specimen/layout-footer.html), and
-[main-only shell](specimen/layout-minimal.html) specimens.
+See the [full shell](specimen/index.html), [header-and-main shell](specimen/layout-header.html), [main-and-footer shell](specimen/layout-footer.html), and [main-only shell](specimen/layout-minimal.html) specimens.
 
-A `site-header` supports a brand or title with navigation, a brand or title
-alone, or navigation alone. All three compositions appear in the
-[header specimen](specimen/headers.html#combined-header).
+A `site-header` supports a brand or title with navigation, a brand or title alone, or navigation alone. All three compositions appear in the [header specimen](specimen/headers.html#combined-header).
 
-Classes remain appropriate for roles that semantic HTML cannot express by
-itself, including `site-header`, `text-gradient`, `scaleup-on-hover`, and
-`dialog-content-container`.
+Classes remain appropriate for roles that semantic HTML cannot express by itself, including `site-header`, `text-gradient`, `scaleup-on-hover`, and `dialog-content-container`.
 
 ## Tokens and accessibility contract
 
@@ -87,9 +73,7 @@ All public tokens use the `--barba-` prefix. The semantic color roles are:
 
 The old unprefixed aliases were intentionally removed before version 1.0.
 
-The following default pairings are guaranteed. Text roles meet at least 7:1
-against both supported backgrounds. Border meets at least 3:1; focus ring uses
-the link-hover color and therefore also exceeds 3:1.
+The following default pairings are guaranteed. Text roles meet at least 7:1 against both supported backgrounds. Border meets at least 3:1; focus ring uses the link-hover color and therefore also exceeds 3:1.
 
 | Scheme | Role | On page background | On surface |
 | --- | --- | ---: | ---: |
@@ -106,24 +90,17 @@ the link-hover color and therefore also exceeds 3:1.
 | Dark | Danger | 7.16:1 | 7.49:1 |
 | Dark | Border | 3.01:1 | 3.15:1 |
 
-These guarantees apply only to the listed default pairings. Accent,
-inverse-surface, arbitrary token combinations, and consumer overrides do not
-carry a general contrast guarantee. The forced light and dark matrices in the
-[component catalog](specimen/index.html#color-heading) display the contract.
+These guarantees apply only to the listed default pairings. Accent, inverse-surface, arbitrary token combinations, and consumer overrides do not carry a general contrast guarantee. The forced light and dark matrices in the [component catalog](specimen/index.html#color-heading) display the contract.
 
 ## Local development
 
-From this package directory, install the repository dependencies and start the
-specimen:
+From this package directory, install the repository dependencies and start the specimen:
 
 ```bash
 pnpm dev
 ```
 
-Parcel opens the component catalog automatically and applies HTML, CSS, and
-dialog-fixture changes with hot module replacement. Use the navigation to
-review the component catalog, header compositions, and all four application
-shell structures in the same session.
+Parcel opens the component catalog automatically and applies HTML, CSS, and dialog-fixture changes with hot module replacement. Use the navigation to review the component catalog, header compositions, and all four application shell structures in the same session.
 
 Build the production package with Lightning CSS:
 
@@ -143,49 +120,20 @@ Run warning-fatal checks for the maintained CSS and specimen files:
 pnpm lint
 ```
 
-`dist/`, `.output/`, and `.parcel-cache/` are generated locally and are not
-tracked by Git.
+`dist/`, `.output/`, and `.parcel-cache/` are generated locally and are not tracked by Git.
 
 ## Hosted specimen
 
-The specimen is hosted at https://lib-staging.barbajoe.tech/ on the existing
-library-staging Netlify site. Production deploys from `main`, and pull requests
-receive Netlify Deploy Previews for review before merging. Netlify publishes
-the static output of `pnpm build:specimen`.
+The specimen is hosted at https://lib-staging.barbajoe.tech/ on the existing library-staging Netlify site. Production deploys from `main`, and pull requests receive Netlify Deploy Previews for review before merging. Netlify publishes the static output of `pnpm build:specimen`.
 
-For live editing, run `pnpm css-lib dev` from the repository root. Parcel's
-watch mode and hot module replacement remain the local development workflow.
+For live editing, run `pnpm css-lib dev` from the repository root. Parcel's watch mode and hot module replacement remain the local development workflow.
 
 ## Releasing the CSS package
 
-The package remains at version `0.2.1`. Adding the staged-release workflow does
-not change that version or stage a release. Change the version only when there
-is an approved reason to release the CSS library. The workflow is specific to
-this package and accepts stable `MAJOR.MINOR.PATCH` versions only.
+The package remains at version `0.2.1`. Adding the staged-release workflow does not change that version or stage a release. Change the version only when there is an approved reason to release the CSS library. The workflow is specific to this package and accepts stable `MAJOR.MINOR.PATCH` versions only.
 
-Before the first staged release, configure npm's trusted publisher for
-`@barbajoe/css-lib` with GitHub user `Barbacoa08`, repository `barbajoe`, and
-workflow filename `stage-css-release.yml`. Allow **stage publishing only**, not
-direct publishing. Ensure the npm maintainer account has 2FA enabled. After the
-trusted publisher is configured, set the package's Publishing access to
-**Require two-factor authentication and disallow tokens**, then remove the old
-`NPM_AUTH_TOKEN` GitHub secret if it still exists. The workflow uses OIDC and
-does not require an npm token. Enable GitHub email notifications for issue
-assignments if you want the staged-release reminder in your inbox.
+Before the first staged release, configure npm's trusted publisher for `@barbajoe/css-lib` with GitHub user `Barbacoa08`, repository `barbajoe`, and workflow filename `stage-css-release.yml`. Allow **stage publishing only**, not direct publishing. Ensure the npm maintainer account has 2FA enabled. After the trusted publisher is configured, set the package's Publishing access to **Require two-factor authentication and disallow tokens**, then remove the old `NPM_AUTH_TOKEN` GitHub secret if it still exists. The workflow uses OIDC and does not require an npm token. Enable GitHub email notifications for issue assignments if you want the staged-release reminder in your inbox.
 
-To release, raise this package's version in a pull request and merge it into
-`main`. The workflow compares that version with the preceding `main` version
-and npm's published `latest`; equal, lower, and prerelease versions do not
-stage. It then installs locked dependencies, tests, builds, checks that the
-package contains only its expected CSS file and metadata, and stages it on
-npm. A separate job assigns Joe a GitHub issue only after staging succeeds.
-The package is not installable yet.
+To release, raise this package's version in a pull request and merge it into `main`. The workflow compares that version with the preceding `main` version and npm's published `latest`; equal, lower, and prerelease versions do not stage. It then installs locked dependencies, tests, builds, checks that the package contains only its expected CSS file and metadata, and stages it on npm. A separate job assigns Joe a GitHub issue only after staging succeeds. The package is not installable yet.
 
-Review the successful workflow run and sign in to npm. Open **Staged Packages**
-for `@barbajoe/css-lib`, inspect the staged version, and approve or reject it
-with npm 2FA. Close the reminder issue afterward. GitHub email and the issue
-are reminders; neither can approve the npm release. If staging fails, no
-approval issue is created. If the reminder job fails after staging succeeded,
-check npm's staging queue before retrying anything; do not rerun the entire
-release workflow blindly because npm will reject a duplicate staged version.
-Create the reminder issue manually if necessary.
+Review the successful workflow run and sign in to npm. Open **Staged Packages** for `@barbajoe/css-lib`, inspect the staged version, and approve or reject it with npm 2FA. Close the reminder issue afterward. GitHub email and the issue are reminders; neither can approve the npm release. If staging fails, no approval issue is created. If the reminder job fails after staging succeeded, check npm's staging queue before retrying anything; do not rerun the entire release workflow blindly because npm will reject a duplicate staged version. Create the reminder issue manually if necessary.
