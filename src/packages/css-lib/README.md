@@ -54,6 +54,39 @@ A `site-header` supports a brand or title with navigation, a brand or title alon
 
 Classes remain appropriate for roles that semantic HTML cannot express by itself, including `site-header`, `text-gradient`, `scaleup-on-hover`, and `dialog-content-container`.
 
+## Buttons, forms, and dialogs
+
+Native `button` and button-type `input` elements are styled automatically: `submit` is primary, `button` is secondary, and `reset` is tertiary. A button without a type receives primary styling to match its usual form-submit behavior; write `type="button"` for a non-submit action. Override emphasis independently of behavior with `data-barba-variant="primary"`, `"secondary"`, or `"tertiary"`. These attributes affect appearance only.
+
+The Updated Soft treatment reuses the existing palette. Primary hover uses link-hover in light mode and inverse-surface (light gray) in dark mode. Secondary hover uses surface; tertiary hover uses control background. Text colors do not change on hover. Disabled controls retain their emphasis with reduced opacity and no hover treatment. The global keyboard focus ring applies to controls inside and outside forms.
+
+Text inputs (including omitted `type`), textarea, and select receive the same appearance regardless of form ancestry or the `form` attribute. Full-width sizing and additional top spacing remain specific to controls inside forms. Forms retain their stacked layout. Page-footer margin/alignment apply only to `.app-shell > footer`, not article or dialog footers.
+
+For a three-region dialog, use this direct-child structure:
+
+```html
+<dialog id="edit-dialog" aria-labelledby="edit-title">
+  <form method="dialog" class="dialog-content-container">
+    <header class="dialog-header"><h2 id="edit-title">Edit</h2></header>
+    <div class="dialog-body">
+      <label>Title <input name="title" value="Initial title" required /></label>
+    </div>
+    <footer class="dialog-footer">
+      <button type="submit" value="submit">Submit</button>
+      <button type="button" command="close" commandfor="edit-dialog">Cancel</button>
+      <button type="reset">Reset</button>
+    </footer>
+  </form>
+</dialog>
+<button type="button" command="show-modal" commandfor="edit-dialog">Open</button>
+```
+
+Dialogs grow with content from a 16rem minimum to an 80dvb maximum; available viewport space caps the minimum and maximum to preserve 1rem outer gutters. The structured body normally owns scrolling, leaving header/footer visible and the footer at the bottom for short content. Its scrolling region retains at least 6rem of height. On exceptionally short screens, the outer dialog can scroll too, keeping the readable body and oversized header/footer actions reachable. Unstructured dialogs retain padding and native scrolling; their content does not receive the three-region layout. Existing structured consumers should wrap their body in `.dialog-body`.
+
+`method="dialog"` submits and closes after native validation without a network request. Cancel is a non-submit button; `command="close"` performs its dismissal in browsers supporting HTML invoker commands. Reset restores initial values without closing. Closing does not reset fields. Consumers supporting browsers without invoker commands must supply open/close behavior; the specimen includes a feature-detected fallback, not library JavaScript. See the [short and long dialog examples](specimen/index.html#dialog-heading).
+
+An `aria-disabled="true"` link receives disabled appearance and ignores pointer interaction, but ARIA does not prevent keyboard activation. Consumers must remove its navigation target or prevent activation; the specimen prevents its click event for both pointer and keyboard activation.
+
 ## Tokens and accessibility contract
 
 All public tokens use the `--barba-` prefix. The semantic color roles are:
@@ -121,6 +154,17 @@ pnpm lint
 ```
 
 `dist/`, `.output/`, and `.parcel-cache/` are generated locally and are not tracked by Git.
+
+### Button and dialog review checks
+
+Review both the source specimen and built specimen served from `.output/specimen` as the web root (its generated asset URLs are root-relative). These are manual browser checks, separate from release-helper tests:
+
+- Compare primary, secondary, and tertiary buttons in both forced schemes, including hover, keyboard focus, disabled, and optional emphasis overrides. Primary dark hover is light gray; all hover text stays unchanged.
+- Compare text fields inside, outside, and associated with a form. Edit the associated field and confirm the form's Reset restores it.
+- Open the short dialog: the footer sits at the bottom without forcing maximum height. Open the long dialog: the body scrolls while header/footer stay visible.
+- Edit dialog fields and Reset; clear the required title and Submit; Cancel while invalid; Submit while valid. Reset stays open, invalid Submit stays open, Cancel and valid Submit close, and focus returns to the opener. Reopening retains values until Reset.
+- Tab and Shift+Tab through a dialog, reach the final long-body field, and dismiss with Escape. Check 320px-wide and exceptionally short viewports; all actions must remain reachable without page horizontal overflow.
+- Review reduced-motion preferences and additional browsers separately. A successful build or one browser's measurements are not a cross-browser accessibility guarantee.
 
 ## Hosted specimen
 
