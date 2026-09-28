@@ -54,6 +54,43 @@ A `site-header` supports a brand or title with navigation, a brand or title alon
 
 Classes remain appropriate for roles that semantic HTML cannot express by itself, including `site-header`, `text-gradient`, `scaleup-on-hover`, and `dialog-content-container`.
 
+## Buttons, forms, and dialogs
+
+Native `button` and button-type `input` elements are styled automatically: `submit` is primary, `button` is secondary, and `reset` is tertiary. A button without a type receives primary styling to match its usual form-submit behavior; write `type="button"` for a non-submit action. Override emphasis independently of behavior with `data-barba-variant="primary"`, `"secondary"`, or `"tertiary"`. These attributes affect appearance only.
+
+The Updated Soft treatment reuses the existing palette. Primary hover uses link-hover in light mode and inverse-surface (light gray) in dark mode. Secondary hover uses surface; tertiary hover uses control background. Text colors do not change on hover. Disabled controls retain their emphasis with reduced opacity and no hover treatment. The global keyboard focus ring applies to controls inside and outside forms.
+
+Text inputs (including omitted `type`), textarea, and select receive the same appearance regardless of form ancestry or the `form` attribute. Full-width sizing and additional top spacing remain specific to controls inside forms. Forms retain their stacked layout. Page-footer margin/alignment apply only to `.app-shell > footer`, not article or dialog footers.
+
+For a three-region dialog, use this direct-child structure:
+
+```html
+<dialog id="edit-dialog" aria-labelledby="edit-title" closedby="any">
+  <form method="dialog" class="dialog-content-container">
+    <header class="dialog-header"><h2 id="edit-title">Edit</h2></header>
+    <div class="dialog-body">
+      <label>Title <input name="title" value="Initial title" required /></label>
+    </div>
+    <footer class="dialog-footer">
+      <button type="reset">Reset</button>
+      <button type="button" command="request-close" commandfor="edit-dialog">Cancel</button>
+      <button type="submit" value="submit">Submit</button>
+    </footer>
+  </form>
+</dialog>
+<button type="button" command="show-modal" commandfor="edit-dialog">Open</button>
+```
+
+Dialogs grow with content from a 16rem minimum to an 80dvb maximum; available viewport space caps the minimum and maximum to preserve 1rem outer gutters. The structured body normally owns scrolling, leaving header/footer visible and the footer at the bottom for short content. Its scrolling region retains at least 6rem of height. On exceptionally short screens, the outer dialog can scroll too, keeping the readable body and oversized header/footer actions reachable. Unstructured dialogs retain padding and native scrolling; their content does not receive the three-region layout. Existing structured consumers should wrap their body in `.dialog-body`.
+
+Dialogs share a top offset of 10% of the visible viewport, with a minimum 1rem gap. Their opening animation is anchored at the top, so different content heights do not change that position. Place footer actions in HTML order **Reset (if present), Cancel, Submit**: Submit is rightmost and Cancel immediately precedes it in left-to-right layouts. Use markup order rather than CSS reversal so keyboard and reading order match the visual order; actions may wrap on narrow screens.
+
+`method="dialog"` submits and closes after native validation without a network request. Cancel is a non-submit button; `command="request-close"` follows the same cancellable dismissal path as native outside-click dismissal or Escape. Reset restores initial values without closing. Closing does not reset fields. Unless there is a strong reason otherwise, use `closedby="any"` to treat clicks outside the dialog as cancellation: no submission, validation, or reset. Applications with cancellation cleanup should share that behavior through the dialog's `cancel` event, not solely a Cancel-button click handler. Preventing that event can keep the dialog open when dismissal needs confirmation.
+
+Invoker commands and native light dismissal require browser support; CSS cannot supply those behaviors. Consumers targeting older browsers must provide appropriate open/close/dismissal behavior. The specimen includes feature-detected fallbacks (outside clicks invoke its Cancel button), not library JavaScript. See the [short and long dialog examples](specimen/index.html#dialog-heading) and [native light-dismiss documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog#closedby).
+
+An `aria-disabled="true"` link receives disabled appearance and ignores pointer interaction, but ARIA does not prevent keyboard activation. Consumers must remove its navigation target or prevent activation; the specimen prevents its click event for both pointer and keyboard activation.
+
 ## Tokens and accessibility contract
 
 All public tokens use the `--barba-` prefix. The semantic color roles are:
@@ -122,6 +159,17 @@ pnpm lint
 
 `dist/`, `.output/`, and `.parcel-cache/` are generated locally and are not tracked by Git.
 
+### Button and dialog review checks
+
+Review both the source specimen and built specimen served from `.output/specimen` as the web root (its generated asset URLs are root-relative). These are manual browser checks, separate from release-helper tests:
+
+- Compare primary, secondary, and tertiary buttons in both forced schemes, including hover, keyboard focus, disabled, and optional emphasis overrides. Primary dark hover is light gray; all hover text stays unchanged.
+- Compare text fields inside, outside, and associated with a form. Edit the associated field and confirm the form's Reset restores it.
+- Open the short dialog: the footer sits at the bottom without forcing maximum height. Open the long dialog: the body scrolls while header/footer stay visible. Switching between them keeps the same top offset; footer actions read Reset, Cancel, Submit.
+- Edit dialog fields and Reset; clear the required title and Submit; Cancel or click outside while invalid; Submit while valid. Reset stays open, invalid Submit stays open, Cancel/outside dismissal and valid Submit close, and focus returns to the opener. Reopening retains values until Reset. Clicking inside or dragging from inside to outside must not dismiss the dialog.
+- Tab and Shift+Tab through a dialog, reach the final long-body field, and dismiss with Escape. Check 320px-wide and exceptionally short viewports; all actions must remain reachable without page horizontal overflow.
+- Review reduced-motion preferences and additional browsers separately. A successful build or one browser's measurements are not a cross-browser accessibility guarantee.
+
 ## Hosted specimen
 
 The specimen is hosted at https://lib-staging.barbajoe.tech/ on the existing library-staging Netlify site. Production deploys from `main`, and pull requests receive Netlify Deploy Previews for review before merging. Netlify publishes the static output of `pnpm build:specimen`.
@@ -130,7 +178,7 @@ For live editing, run `pnpm css-lib dev` from the repository root. Parcel's watc
 
 ## Releasing the CSS package
 
-The package is currently at version `0.3.0`. Change the version only when there is an approved reason to release the CSS library. The staged-release workflow is specific to this package and accepts stable `MAJOR.MINOR.PATCH` versions only.
+The package is currently at version `0.3.1`. Change the version only when there is an approved reason to release the CSS library. The staged-release workflow is specific to this package and accepts stable `MAJOR.MINOR.PATCH` versions only.
 
 The npm trusted publisher for `@barbajoe/css-lib` identifies GitHub user `Barbacoa08`, repository `barbajoe`, and workflow `stage-css-release.yml`. It must allow **stage publishing only**, not direct publishing. Keep the npm maintainer account's 2FA enabled and the package's Publishing access set to **Require two-factor authentication and disallow tokens**. The workflow uses OIDC; it needs neither a bypass-2FA npm access token nor an `NPM_AUTH_TOKEN` GitHub secret. Enable GitHub email notifications for issue assignments if you want the staged-release reminder in your inbox.
 

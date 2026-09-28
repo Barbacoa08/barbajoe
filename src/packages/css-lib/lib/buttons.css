@@ -1,0 +1,55 @@
+/* Native behavior supplies the default emphasis; the BARBA hook is optional. */
+:is(button, input[type="button"], input[type="submit"], input[type="reset"]) {
+	font: inherit;
+	font-weight: 600;
+	line-height: 1.25;
+	padding: var(--barba-space-2) var(--barba-space-4);
+	min-block-size: 2.75rem;
+	max-inline-size: 100%;
+	box-sizing: border-box;
+	border: 1px solid var(--barba-color-border);
+	border-radius: var(--barba-radius-md);
+	background-color: var(--barba-color-control-bg);
+	color: var(--barba-color-text);
+	align-self: start;
+
+	&:enabled {
+		cursor: pointer;
+	}
+
+	&:enabled:is(:hover, :active) {
+		background-color: var(--barba-color-surface);
+		border-color: var(--barba-color-link-hover);
+	}
+}
+
+:is(button:not([type]), button[type="submit"], input[type="submit"]):not(
+	[data-barba-variant]
+),
+:is(button, input)[data-barba-variant="primary"] {
+	background-color: var(--barba-color-link);
+	border-color: var(--barba-color-link);
+	color: var(--barba-color-surface);
+
+	&:enabled:is(:hover, :active) {
+		background-color: light-dark(
+			var(--barba-color-link-hover),
+			var(--barba-color-surface-inverse)
+		);
+		border-color: light-dark(
+			var(--barba-color-link-hover),
+			var(--barba-color-surface-inverse)
+		);
+	}
+}
+
+:is(button[type="reset"], input[type="reset"]):not([data-barba-variant]),
+:is(button, input)[data-barba-variant="tertiary"] {
+	background-color: transparent;
+	border-color: transparent;
+
+	&:enabled:is(:hover, :active) {
+		background-color: var(--barba-color-control-bg);
+		border-color: transparent;
+	}
+}

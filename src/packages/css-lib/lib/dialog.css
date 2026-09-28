@@ -1,35 +1,59 @@
 dialog {
 	box-sizing: border-box;
 	inline-size: min(32em, calc(100vi - 2rem));
-	block-size: min(30rem, calc(100vh - 2rem));
-	max-block-size: calc(100dvb - 2rem);
+	block-size: fit-content;
+	min-block-size: min(16rem, 80dvb, calc(100dvb - 2rem));
+	max-block-size: min(80dvb, calc(100dvb - 2rem));
+	/* Shared top anchor keeps differently sized modals in the same place. */
+	margin-block: max(1rem, 10dvb) auto;
+	transform-origin: top center;
 	border-radius: 0.2em;
 	border: none;
-	padding: 0;
+	padding: var(--barba-space-4);
 	text-align: left;
+	overflow: auto;
+
+	&:has(> .dialog-content-container) {
+		padding: 0;
+	}
 }
 dialog::backdrop {
 	background: rgba(0, 0, 0, 0.3);
 }
 
 dialog > .dialog-content-container {
-	min-block-size: 0;
-	overflow: auto;
+	box-sizing: border-box;
+	min-block-size: inherit;
+	max-block-size: inherit;
 	display: grid;
-	grid-template-rows: auto 1fr auto;
-
-	padding: 1em;
-}
-
-dialog h2.dialog-header {
+	/* Keep a readable body even when the outer dialog must scroll. */
+	grid-template-rows: auto minmax(6rem, 1fr) auto;
 	margin: 0;
-	padding: 0.5em 1em;
+	gap: 0;
 }
 
-dialog div.dialog-footer {
+dialog > .dialog-content-container > :is(.dialog-header, .dialog-footer) {
+	margin: 0;
+	padding: var(--barba-space-4);
+}
+
+dialog .dialog-header :is(h1, h2, h3) {
+	margin: 0;
+}
+
+dialog > .dialog-content-container > .dialog-body {
+	min-block-size: 0;
+	min-inline-size: 0;
+	overflow: auto;
+	padding: var(--barba-space-4);
+	overflow-wrap: anywhere;
+}
+
+dialog > .dialog-content-container > .dialog-footer {
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: end;
-	gap: 1em;
+	gap: var(--barba-space-2);
 }
 
 @media (prefers-reduced-motion: no-preference) {

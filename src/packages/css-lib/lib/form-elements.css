@@ -1,39 +1,46 @@
+/* Appearance follows the control, not its form ancestry or form owner. */
+:is(
+	input[type="text"],
+	input:not([type]),
+	input[type="password"],
+	input[type="email"],
+	input[type="number"],
+	input[type="tel"],
+	input[type="url"],
+	input[type="search"],
+	textarea,
+	select
+) {
+	font: inherit;
+	font-size: var(--barba-font-size-base);
+	color: var(--barba-color-text);
+	border: 1px solid var(--barba-color-border);
+	border-radius: var(--barba-radius-sm);
+	padding: var(--barba-space-2);
+	box-sizing: border-box;
+	max-inline-size: 100%;
+	background-color: var(--barba-color-control-bg);
+
+	form & {
+		margin-top: var(--barba-space-2);
+		width: 100%;
+	}
+}
+
+:is(input, textarea, select, button):disabled {
+	cursor: not-allowed;
+	opacity: 0.65;
+}
+
+:is(input, textarea, select, button):focus-visible {
+	border-color: var(--barba-color-focus-ring);
+}
+
 form {
 	margin-top: var(--barba-space-4);
 	display: flex;
 	flex-direction: column;
 	gap: var(--barba-space-4);
-
-	& input[type="text"],
-	& input:not([type]),
-	& input[type="password"],
-	& input[type="email"],
-	& input[type="number"],
-	& input[type="tel"],
-	& input[type="url"],
-	& input[type="search"],
-	& textarea,
-	& select {
-		font-size: var(--barba-font-size-base);
-		border: 1px solid var(--barba-color-border);
-		border-radius: var(--barba-radius-sm);
-		padding: var(--barba-space-2);
-		margin-top: var(--barba-space-2);
-		width: 100%;
-		box-sizing: border-box;
-		background-color: var(--barba-color-control-bg);
-	}
-
-	& :is(input, textarea, select, button):disabled {
-		color: var(--barba-color-text);
-		background-color: var(--barba-color-bg);
-		cursor: not-allowed;
-		opacity: 0.65;
-	}
-
-	& :is(input, textarea, select, button):focus-visible {
-		border-color: var(--barba-color-focus-ring);
-	}
 
 	& .helper-text {
 		font-size: small;

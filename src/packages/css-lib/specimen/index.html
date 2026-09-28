@@ -167,7 +167,7 @@
 
 				<section class="specimen-section" aria-labelledby="forms-heading">
 					<h2 id="forms-heading">Form elements</h2>
-					<form>
+					<form id="catalog-form" data-specimen-no-submit>
 						<div class="specimen-grid">
 							<label>
 								Text
@@ -221,7 +221,9 @@
 						</fieldset>
 
 						<div class="specimen-actions">
-							<button type="button">Button</button>
+							<button type="submit">Submit</button>
+							<button type="button">Cancel</button>
+							<button type="reset">Reset</button>
 							<button type="button" disabled>Disabled button</button>
 							<label>
 								Disabled field
@@ -229,6 +231,45 @@
 							</label>
 						</div>
 					</form>
+					<p>Submit is prevented in this non-networked example. Cancel is intentionally inert; Reset restores the initial values.</p>
+					<div class="specimen-grid">
+						<label>Outside-form implicit text input <input value="Outside the form" /></label>
+						<label>Associated by form attribute <input type="text" form="catalog-form" value="Associated with catalog form" /></label>
+						<label>Outside-form disabled input <input value="Unavailable" disabled /></label>
+						<label>Read-only input <input value="Read only" readonly /></label>
+					</div>
+				</section>
+
+				<section class="specimen-section" aria-labelledby="buttons-heading">
+					<h2 id="buttons-heading">Buttons — Updated Soft</h2>
+					<p>Native submit, button, and reset types provide primary, secondary, and tertiary emphasis. Text color stays unchanged on hover. These type="button" examples use the optional emphasis override and perform no action.</p>
+					<div class="specimen-grid">
+						<article class="specimen-theme specimen-theme-light">
+							<h3>Light buttons</h3>
+							<div class="specimen-actions">
+								<button type="button" data-barba-variant="primary">Primary</button>
+								<button type="button" data-barba-variant="secondary">Secondary</button>
+								<button type="button" data-barba-variant="tertiary">Tertiary</button>
+							</div>
+							<p>Primary text contrast: 9.40:1 resting, 15.36:1 hovered.</p>
+							<button type="button" data-barba-variant="primary" disabled>Disabled primary</button>
+						</article>
+						<article class="specimen-theme specimen-theme-dark">
+							<h3>Dark buttons</h3>
+							<div class="specimen-actions">
+								<button type="button" data-barba-variant="primary">Primary</button>
+								<button type="button" data-barba-variant="secondary">Secondary</button>
+								<button type="button" data-barba-variant="tertiary">Tertiary</button>
+							</div>
+							<p>Primary text contrast: 7.98:1 resting, 10.79:1 hovered (existing light gray).</p>
+							<button type="button" data-barba-variant="primary" disabled>Disabled primary</button>
+						</article>
+					</div>
+					<article class="specimen-demo">
+						<h3>Article footer</h3>
+						<p>Only the application-shell footer receives page-specific margin and alignment.</p>
+						<footer>Article metadata stays in the article's normal flow.</footer>
+					</article>
 				</section>
 
 				<section class="specimen-section" aria-labelledby="motion-heading">
@@ -247,21 +288,50 @@
 				</section>
 
 				<section class="specimen-section" aria-labelledby="dialog-heading">
-					<h2 id="dialog-heading">Dialog</h2>
-					<button type="button" id="open-dialog">Open dialog</button>
-					<dialog id="specimen-dialog" aria-labelledby="specimen-dialog-title">
-						<div class="dialog-content-container">
-							<h2 class="dialog-header" id="specimen-dialog-title">
-								Native modal dialog
-							</h2>
-							<p>
-								This exercises the content grid, backdrop, focus handling, and
-								motion preference.
-							</p>
-							<div class="dialog-footer">
-								<button type="button" id="close-dialog">Close dialog</button>
+					<h2 id="dialog-heading">Dialogs</h2>
+					<p>Both dialogs start at the same viewport-relative top offset. Short content leaves the footer at the minimum-height bottom. Long content grows to the viewport cap, then only its body scrolls. Footer order is Reset, Cancel, Submit. Submit validates and closes; Cancel or clicking outside closes without validation; Reset restores initial values and stays open. Closing does not reset the form.</p>
+					<div class="specimen-actions">
+						<button type="button" command="show-modal" commandfor="specimen-dialog">Open short dialog</button>
+						<button type="button" command="show-modal" commandfor="specimen-long-dialog">Open long dialog</button>
+					</div>
+					<dialog id="specimen-dialog" aria-labelledby="specimen-dialog-title" closedby="any">
+						<form method="dialog" class="dialog-content-container">
+							<header class="dialog-header"><h2 id="specimen-dialog-title">Short dialog</h2></header>
+							<div class="dialog-body">
+								<label>Short title <input name="title" value="Initial short title" required autofocus /></label>
+								<small class="helper-text">Clear the title to exercise native required-field validation.</small>
 							</div>
-						</div>
+							<footer class="dialog-footer">
+								<button type="reset">Reset</button>
+								<button type="button" command="request-close" commandfor="specimen-dialog">Cancel</button>
+								<button type="submit" value="submit">Submit</button>
+							</footer>
+						</form>
+					</dialog>
+					<dialog id="specimen-long-dialog" aria-labelledby="specimen-long-dialog-title" closedby="any">
+						<form method="dialog" class="dialog-content-container">
+							<header class="dialog-header"><h2 id="specimen-long-dialog-title">Long dialog</h2></header>
+							<div class="dialog-body">
+								<label>Long title <input name="title" value="Initial long title" required autofocus /></label>
+								<p>Edit the values, then use Reset to restore them. Submit and Cancel close the dialog without making a network request.</p>
+								<h3>Content-driven sizing</h3>
+								<p>The dialog grows with its contents rather than reserving a fixed preferred height. Its minimum leaves space for a useful short form.</p>
+								<h3>Viewport limits</h3>
+								<p>The maximum is eighty percent of the visible viewport, with outer gutters retained on exceptionally short screens. The minimum shrinks when the viewport cannot accommodate it.</p>
+								<h3>Scroll ownership</h3>
+								<p>The header and footer remain visible while this body scrolls. Move through these fields with Tab or scroll with your pointer to review the whole form.</p>
+								<label>Notes <textarea name="notes" rows="5">Initial notes to restore with Reset.</textarea></label>
+								<h3>Keyboard and validation</h3>
+								<p>Clear the required title and try Submit. Native validation keeps the dialog open. Cancel does not submit or validate the form. Escape also dismisses the native modal.</p>
+								<label>Final field <input name="final" value="Initial final value" /></label>
+								<p>This is the end of the scrolling body. Footer actions remain independently accessible.</p>
+							</div>
+							<footer class="dialog-footer">
+								<button type="reset">Reset</button>
+								<button type="button" command="request-close" commandfor="specimen-long-dialog">Cancel</button>
+								<button type="submit" value="submit">Submit</button>
+							</footer>
+						</form>
 					</dialog>
 				</section>
 			</main>
