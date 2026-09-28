@@ -4,6 +4,9 @@ dialog {
 	block-size: fit-content;
 	min-block-size: min(16rem, 80dvb, calc(100dvb - 2rem));
 	max-block-size: min(80dvb, calc(100dvb - 2rem));
+	/* Shared top anchor keeps differently sized modals in the same place. */
+	margin-block: max(1rem, 10dvb) auto;
+	transform-origin: top center;
 	border-radius: 0.2em;
 	border: none;
 	padding: var(--barba-space-4);

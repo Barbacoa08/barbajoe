@@ -65,16 +65,16 @@ Text inputs (including omitted `type`), textarea, and select receive the same ap
 For a three-region dialog, use this direct-child structure:
 
 ```html
-<dialog id="edit-dialog" aria-labelledby="edit-title">
+<dialog id="edit-dialog" aria-labelledby="edit-title" closedby="any">
   <form method="dialog" class="dialog-content-container">
     <header class="dialog-header"><h2 id="edit-title">Edit</h2></header>
     <div class="dialog-body">
       <label>Title <input name="title" value="Initial title" required /></label>
     </div>
     <footer class="dialog-footer">
-      <button type="submit" value="submit">Submit</button>
-      <button type="button" command="close" commandfor="edit-dialog">Cancel</button>
       <button type="reset">Reset</button>
+      <button type="button" command="request-close" commandfor="edit-dialog">Cancel</button>
+      <button type="submit" value="submit">Submit</button>
     </footer>
   </form>
 </dialog>
@@ -83,7 +83,11 @@ For a three-region dialog, use this direct-child structure:
 
 Dialogs grow with content from a 16rem minimum to an 80dvb maximum; available viewport space caps the minimum and maximum to preserve 1rem outer gutters. The structured body normally owns scrolling, leaving header/footer visible and the footer at the bottom for short content. Its scrolling region retains at least 6rem of height. On exceptionally short screens, the outer dialog can scroll too, keeping the readable body and oversized header/footer actions reachable. Unstructured dialogs retain padding and native scrolling; their content does not receive the three-region layout. Existing structured consumers should wrap their body in `.dialog-body`.
 
-`method="dialog"` submits and closes after native validation without a network request. Cancel is a non-submit button; `command="close"` performs its dismissal in browsers supporting HTML invoker commands. Reset restores initial values without closing. Closing does not reset fields. Consumers supporting browsers without invoker commands must supply open/close behavior; the specimen includes a feature-detected fallback, not library JavaScript. See the [short and long dialog examples](specimen/index.html#dialog-heading).
+Dialogs share a top offset of 10% of the visible viewport, with a minimum 1rem gap. Their opening animation is anchored at the top, so different content heights do not change that position. Place footer actions in HTML order **Reset (if present), Cancel, Submit**: Submit is rightmost and Cancel immediately precedes it in left-to-right layouts. Use markup order rather than CSS reversal so keyboard and reading order match the visual order; actions may wrap on narrow screens.
+
+`method="dialog"` submits and closes after native validation without a network request. Cancel is a non-submit button; `command="request-close"` follows the same cancellable dismissal path as native outside-click dismissal or Escape. Reset restores initial values without closing. Closing does not reset fields. Unless there is a strong reason otherwise, use `closedby="any"` to treat clicks outside the dialog as cancellation: no submission, validation, or reset. Applications with cancellation cleanup should share that behavior through the dialog's `cancel` event, not solely a Cancel-button click handler. Preventing that event can keep the dialog open when dismissal needs confirmation.
+
+Invoker commands and native light dismissal require browser support; CSS cannot supply those behaviors. Consumers targeting older browsers must provide appropriate open/close/dismissal behavior. The specimen includes feature-detected fallbacks (outside clicks invoke its Cancel button), not library JavaScript. See the [short and long dialog examples](specimen/index.html#dialog-heading) and [native light-dismiss documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog#closedby).
 
 An `aria-disabled="true"` link receives disabled appearance and ignores pointer interaction, but ARIA does not prevent keyboard activation. Consumers must remove its navigation target or prevent activation; the specimen prevents its click event for both pointer and keyboard activation.
 
@@ -161,8 +165,8 @@ Review both the source specimen and built specimen served from `.output/specimen
 
 - Compare primary, secondary, and tertiary buttons in both forced schemes, including hover, keyboard focus, disabled, and optional emphasis overrides. Primary dark hover is light gray; all hover text stays unchanged.
 - Compare text fields inside, outside, and associated with a form. Edit the associated field and confirm the form's Reset restores it.
-- Open the short dialog: the footer sits at the bottom without forcing maximum height. Open the long dialog: the body scrolls while header/footer stay visible.
-- Edit dialog fields and Reset; clear the required title and Submit; Cancel while invalid; Submit while valid. Reset stays open, invalid Submit stays open, Cancel and valid Submit close, and focus returns to the opener. Reopening retains values until Reset.
+- Open the short dialog: the footer sits at the bottom without forcing maximum height. Open the long dialog: the body scrolls while header/footer stay visible. Switching between them keeps the same top offset; footer actions read Reset, Cancel, Submit.
+- Edit dialog fields and Reset; clear the required title and Submit; Cancel or click outside while invalid; Submit while valid. Reset stays open, invalid Submit stays open, Cancel/outside dismissal and valid Submit close, and focus returns to the opener. Reopening retains values until Reset. Clicking inside or dragging from inside to outside must not dismiss the dialog.
 - Tab and Shift+Tab through a dialog, reach the final long-body field, and dismiss with Escape. Check 320px-wide and exceptionally short viewports; all actions must remain reachable without page horizontal overflow.
 - Review reduced-motion preferences and additional browsers separately. A successful build or one browser's measurements are not a cross-browser accessibility guarantee.
 

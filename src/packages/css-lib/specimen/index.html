@@ -289,12 +289,12 @@
 
 				<section class="specimen-section" aria-labelledby="dialog-heading">
 					<h2 id="dialog-heading">Dialogs</h2>
-					<p>Short content leaves the footer at the minimum-height bottom. Long content grows to the viewport cap, then only its body scrolls. Submit validates and closes; Cancel closes without validation; Reset restores initial values and stays open. Closing does not reset the form.</p>
+					<p>Both dialogs start at the same viewport-relative top offset. Short content leaves the footer at the minimum-height bottom. Long content grows to the viewport cap, then only its body scrolls. Footer order is Reset, Cancel, Submit. Submit validates and closes; Cancel or clicking outside closes without validation; Reset restores initial values and stays open. Closing does not reset the form.</p>
 					<div class="specimen-actions">
 						<button type="button" command="show-modal" commandfor="specimen-dialog">Open short dialog</button>
 						<button type="button" command="show-modal" commandfor="specimen-long-dialog">Open long dialog</button>
 					</div>
-					<dialog id="specimen-dialog" aria-labelledby="specimen-dialog-title">
+					<dialog id="specimen-dialog" aria-labelledby="specimen-dialog-title" closedby="any">
 						<form method="dialog" class="dialog-content-container">
 							<header class="dialog-header"><h2 id="specimen-dialog-title">Short dialog</h2></header>
 							<div class="dialog-body">
@@ -302,13 +302,13 @@
 								<small class="helper-text">Clear the title to exercise native required-field validation.</small>
 							</div>
 							<footer class="dialog-footer">
-								<button type="submit" value="submit">Submit</button>
-								<button type="button" command="close" commandfor="specimen-dialog">Cancel</button>
 								<button type="reset">Reset</button>
+								<button type="button" command="request-close" commandfor="specimen-dialog">Cancel</button>
+								<button type="submit" value="submit">Submit</button>
 							</footer>
 						</form>
 					</dialog>
-					<dialog id="specimen-long-dialog" aria-labelledby="specimen-long-dialog-title">
+					<dialog id="specimen-long-dialog" aria-labelledby="specimen-long-dialog-title" closedby="any">
 						<form method="dialog" class="dialog-content-container">
 							<header class="dialog-header"><h2 id="specimen-long-dialog-title">Long dialog</h2></header>
 							<div class="dialog-body">
@@ -327,9 +327,9 @@
 								<p>This is the end of the scrolling body. Footer actions remain independently accessible.</p>
 							</div>
 							<footer class="dialog-footer">
-								<button type="submit" value="submit">Submit</button>
-								<button type="button" command="close" commandfor="specimen-long-dialog">Cancel</button>
 								<button type="reset">Reset</button>
+								<button type="button" command="request-close" commandfor="specimen-long-dialog">Cancel</button>
+								<button type="submit" value="submit">Submit</button>
 							</footer>
 						</form>
 					</dialog>
