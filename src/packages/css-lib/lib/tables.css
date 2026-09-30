@@ -1,0 +1,24 @@
+table {
+	border-collapse: collapse;
+}
+
+caption,
+th {
+	text-align: start;
+}
+
+caption {
+	padding-block-end: var(--barba-space-2);
+	font-weight: 700;
+}
+
+th {
+	font-weight: 600;
+}
+
+th,
+td {
+	padding-block: var(--barba-space-2);
+	padding-inline: var(--barba-space-3);
+	border-block-end: 1px solid var(--barba-color-border);
+}

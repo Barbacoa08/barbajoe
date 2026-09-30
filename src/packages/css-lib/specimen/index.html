@@ -61,6 +61,42 @@
 					</div>
 				</section>
 
+				<section class="specimen-section" aria-labelledby="tables-heading">
+					<h2 id="tables-heading">Data tables</h2>
+					<p class="specimen-page-note">Semantic tables receive only a readable foundation. The wide example's scrolling belongs to this specimen, not the library.</p>
+					<div class="specimen-grid">
+						<article class="specimen-theme specimen-theme-light">
+							<h3>Compact table · light</h3>
+							<table>
+								<caption>Sample issue totals</caption>
+								<thead>
+									<tr><th scope="col">State</th><th scope="col">Count</th><th scope="col">Owner</th></tr>
+								</thead>
+								<tbody>
+									<tr><th scope="row">Open</th><td>8</td><td>Joe</td></tr>
+									<tr><th scope="row">Closed</th><td>12</td><td>Joe</td></tr>
+								</tbody>
+							</table>
+						</article>
+						<article class="specimen-theme specimen-theme-dark">
+							<h3>Wide table · dark</h3>
+							<!-- biome-ignore lint/a11y/noNoninteractiveTabindex: Keyboard users need to focus and scroll this wide table. -->
+							<section class="specimen-table-scroll" aria-label="Wide data table" tabindex="0">
+								<table>
+									<caption>Sample release checklist</caption>
+									<thead>
+										<tr><th scope="col">Release</th><th scope="col">Status</th><th scope="col">CSS build</th><th scope="col">Specimen build</th><th scope="col">Manual review</th><th scope="col">Owner</th></tr>
+									</thead>
+									<tbody>
+										<tr><th scope="row">Sample A</th><td>Ready</td><td>Complete</td><td>Complete</td><td>Pending</td><td>Joe</td></tr>
+										<tr><th scope="row">Sample B</th><td>Draft</td><td>Complete</td><td>Pending</td><td>Pending</td><td>Joe</td></tr>
+									</tbody>
+								</table>
+							</section>
+						</article>
+					</div>
+				</section>
+
 				<section class="specimen-section" aria-labelledby="color-heading">
 					<h2 id="color-heading">Semantic color contract</h2>
 					<p class="specimen-page-note">

@@ -42,6 +42,14 @@
 	color-scheme: dark;
 }
 
+.specimen-table-scroll {
+	overflow-x: auto;
+}
+
+.specimen-table-scroll table {
+	min-inline-size: 42rem;
+}
+
 .specimen-theme-surfaces {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
