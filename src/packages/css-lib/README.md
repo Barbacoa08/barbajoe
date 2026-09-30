@@ -18,6 +18,14 @@ import "@barbajoe/css-lib/dist/barbajoe.css";
 
 Both paths resolve to the same global stylesheet. The repository tracks the source in `lib/`; npm receives only the generated `dist/barbajoe.css` bundle, the package metadata, and this README.
 
+## What the library owns
+
+Start with semantic HTML and the single stylesheet. The library supplies global defaults for ordinary elements such as links, form controls, buttons, and dialogs. Use its documented classes for roles that HTML alone cannot identify, such as an application shell or a structured dialog, and for optional visual treatments.
+
+Application CSS owns content- and project-specific choices. Override or extend the defaults with the public `--barba-` tokens and your own selectors. In particular, each application decides how wide data tables adapt to limited space, how images are sized or cropped, and when its content wraps or shortens. The library ships no image styling or general-purpose responsive table transformation.
+
+The [hosted specimen](https://lib-staging.barbajoe.tech/) shows the maintained defaults in context. The specimen is not part of the npm package.
+
 ## Application shell
 
 Add `app-shell` to the element that owns the page regions. A direct `main` is required. Direct `header` and `footer` regions are independently optional, so the supported structures are:
@@ -48,9 +56,9 @@ Add `app-shell` to the element that owns the page regions. A direct `main` is re
 </div>
 ```
 
-See the [full shell](specimen/index.html), [header-and-main shell](specimen/layout-header.html), [main-and-footer shell](specimen/layout-footer.html), and [main-only shell](specimen/layout-minimal.html) specimens.
+See the [full shell](https://lib-staging.barbajoe.tech/), [header-and-main shell](https://lib-staging.barbajoe.tech/layout-header.html), [main-and-footer shell](https://lib-staging.barbajoe.tech/layout-footer.html), and [main-only shell](https://lib-staging.barbajoe.tech/layout-minimal.html) specimens.
 
-A `site-header` supports a brand or title with navigation, a brand or title alone, or navigation alone. All three compositions appear in the [header specimen](specimen/headers.html#combined-header).
+A `site-header` supports a brand or title with navigation, a brand or title alone, or navigation alone. All three compositions appear in the [header specimen](https://lib-staging.barbajoe.tech/headers.html#combined-header).
 
 Classes remain appropriate for roles that semantic HTML cannot express by itself, including `site-header`, `text-gradient`, `scaleup-on-hover`, and `dialog-content-container`.
 
@@ -87,7 +95,7 @@ Dialogs share a top offset of 10% of the visible viewport, with a minimum 1rem g
 
 `method="dialog"` submits and closes after native validation without a network request. Cancel is a non-submit button; `command="request-close"` follows the same cancellable dismissal path as native outside-click dismissal or Escape. Reset restores initial values without closing. Closing does not reset fields. Unless there is a strong reason otherwise, use `closedby="any"` to treat clicks outside the dialog as cancellation: no submission, validation, or reset. Applications with cancellation cleanup should share that behavior through the dialog's `cancel` event, not solely a Cancel-button click handler. Preventing that event can keep the dialog open when dismissal needs confirmation.
 
-Invoker commands and native light dismissal require browser support; CSS cannot supply those behaviors. Consumers targeting older browsers must provide appropriate open/close/dismissal behavior. The specimen includes feature-detected fallbacks (outside clicks invoke its Cancel button), not library JavaScript. See the [short and long dialog examples](specimen/index.html#dialog-heading) and [native light-dismiss documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog#closedby).
+Invoker commands and native light dismissal require browser support; CSS cannot supply those behaviors. Consumers targeting older browsers must provide appropriate open/close/dismissal behavior. The specimen includes feature-detected fallbacks (outside clicks invoke its Cancel button), not library JavaScript. See the [short and long dialog examples](https://lib-staging.barbajoe.tech/#dialog-heading) and [native light-dismiss documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog#closedby).
 
 An `aria-disabled="true"` link receives disabled appearance and ignores pointer interaction, but ARIA does not prevent keyboard activation. Consumers must remove its navigation target or prevent activation; the specimen prevents its click event for both pointer and keyboard activation.
 
@@ -127,7 +135,7 @@ The following default pairings are guaranteed. Text roles meet at least 7:1 agai
 | Dark | Danger | 7.16:1 | 7.49:1 |
 | Dark | Border | 3.01:1 | 3.15:1 |
 
-These guarantees apply only to the listed default pairings. Accent, inverse-surface, arbitrary token combinations, and consumer overrides do not carry a general contrast guarantee. The forced light and dark matrices in the [component catalog](specimen/index.html#color-heading) display the contract.
+These guarantees apply only to the listed default pairings. Accent, inverse-surface, arbitrary token combinations, and consumer overrides do not carry a general contrast guarantee. The forced light and dark matrices in the [component catalog](https://lib-staging.barbajoe.tech/#color-heading) display the contract.
 
 ## Local development
 
@@ -178,7 +186,7 @@ For live editing, run `pnpm css-lib dev` from the repository root. Parcel's watc
 
 ## Releasing the CSS package
 
-The package is currently at version `0.3.1`. Change the version only when there is an approved reason to release the CSS library. The staged-release workflow is specific to this package and accepts stable `MAJOR.MINOR.PATCH` versions only.
+The package is currently at version `0.3.2`. Change the version only when there is an approved reason to release the CSS library. The staged-release workflow is specific to this package and accepts stable `MAJOR.MINOR.PATCH` versions only.
 
 The npm trusted publisher for `@barbajoe/css-lib` identifies GitHub user `Barbacoa08`, repository `barbajoe`, and workflow `stage-css-release.yml`. It must allow **stage publishing only**, not direct publishing. Keep the npm maintainer account's 2FA enabled and the package's Publishing access set to **Require two-factor authentication and disallow tokens**. The workflow uses OIDC; it needs neither a bypass-2FA npm access token nor an `NPM_AUTH_TOKEN` GitHub secret. Enable GitHub email notifications for issue assignments if you want the staged-release reminder in your inbox.
 
