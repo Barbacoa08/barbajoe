@@ -143,6 +143,12 @@ The following default pairings are guaranteed. Text roles meet at least 7:1 agai
 
 These guarantees apply only to the listed default pairings. Accent, inverse-surface, arbitrary token combinations, and consumer overrides do not carry a general contrast guarantee. The forced light and dark matrices in the [component catalog](https://lib-staging.barbajoe.tech/#color-heading) display the contract.
 
+## Browser support
+
+The library targets the current stable releases of Chrome, Edge, Firefox, and Safari on desktop, plus Safari on iOS and Chrome on Android, at the time a package version is released. Older browser versions, beta releases, and embedded or in-app webviews are outside this support target. A release-time target does not imply that every browser/device combination was manually checked.
+
+The Lightning CSS `>= 0.25%` build target controls CSS compilation; it is not a browser-support threshold or a polyfill for browser-native behavior. When a targeted browser lacks a CSS feature, provide a usable fallback or document the limitation before release. Dialog invoker commands and light dismissal are HTML features; applications using them own any needed behavioral fallback. The specimen's JavaScript fallback is not part of the CSS package.
+
 ## Local development
 
 From this package directory, install the repository dependencies and start the specimen:
@@ -173,16 +179,23 @@ pnpm lint
 
 `dist/`, `.output/`, and `.parcel-cache/` are generated locally and are not tracked by Git.
 
-### Button and dialog review checks
+### Manual browser review
 
-Review both the source specimen and built specimen served from `.output/specimen` as the web root (its generated asset URLs are root-relative). These are manual browser checks, separate from release-helper tests:
+For CSS-changing pull requests, review the affected examples in the source specimen and the built specimen or deploy preview. Serve `.output/specimen` as the web root because its generated asset URLs are root-relative. Use current desktop Chrome or Edge (one Chromium representative), Firefox, and Safari where available; check the other Chromium browser when a browser-specific issue warrants it. Record the date, commit or package version, specimen URL/build type, browser and version, OS/device, viewport and zoom, relevant color/motion settings, results, and anything not checked. Build and release-helper test results are separate from browser evidence.
+
+For the affected examples, check a narrow viewport (including 320px where layout matters), keyboard focus and navigation, 200% browser zoom, light and dark schemes, and actual reduced-motion behavior. A desktop window resized to phone width checks layout but not a mobile browser. **Recommended, not required:** occasionally review on an actual device in current iOS Safari and Android Chrome. Include this reminder in PR review, but do not block a PR or release solely because these device checks were skipped; record them as *not checked*, never *passed*.
+
+For visual CSS changes, keep a small before/after screenshot set of the affected specimen at the same desktop (1280×720) and narrow (390×844) viewport sizes; include an open-dialog state when dialog layout changes. Attach review screenshots to the PR rather than the CSS package. No automated visual-regression service is required.
+
+When buttons, forms, or dialogs change, use these focused checks:
 
 - Compare primary, secondary, and tertiary buttons in both forced schemes, including hover, keyboard focus, disabled, and optional emphasis overrides. Primary dark hover is light gray; all hover text stays unchanged.
 - Compare text fields inside, outside, and associated with a form. Edit the associated field and confirm the form's Reset restores it.
 - Open the short dialog: the footer sits at the bottom without forcing maximum height. Open the long dialog: the body scrolls while header/footer stay visible. Switching between them keeps the same top offset; footer actions read Reset, Cancel, Submit.
 - Edit dialog fields and Reset; clear the required title and Submit; Cancel or click outside while invalid; Submit while valid. Reset stays open, invalid Submit stays open, Cancel/outside dismissal and valid Submit close, and focus returns to the opener. Reopening retains values until Reset. Clicking inside or dragging from inside to outside must not dismiss the dialog.
 - Tab and Shift+Tab through a dialog, reach the final long-body field, and dismiss with Escape. Check 320px-wide and exceptionally short viewports; all actions must remain reachable without page horizontal overflow.
-- Review reduced-motion preferences and additional browsers separately. A successful build or one browser's measurements are not a cross-browser accessibility guarantee.
+- If table styling changes, inspect the compact and wide tables in both schemes. The wide specimen should scroll horizontally with keyboard focus without making the page overflow.
+- A successful build or one browser's measurements are not a cross-browser accessibility guarantee. Record any browser or device you did not check.
 
 ## Hosted specimen
 
