@@ -27,6 +27,12 @@
 	}
 }
 
+:is(input, textarea)::placeholder {
+	color: var(--barba-color-text-muted);
+	font-style: italic;
+	opacity: 1;
+}
+
 :is(input, textarea, select, button):disabled {
 	cursor: not-allowed;
 	opacity: 0.65;

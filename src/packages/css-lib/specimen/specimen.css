@@ -12,6 +12,10 @@
 	gap: var(--barba-space-4);
 }
 
+.specimen-placeholder-examples {
+	margin-block-start: var(--barba-space-4);
+}
+
 .specimen-demo {
 	border: 1px solid var(--barba-color-border);
 	border-radius: var(--barba-radius-md);
