@@ -46,8 +46,10 @@ export default defineConfig({
 		),
 	),
 	webServer: {
+		// Launch the long-lived server directly so Playwright owns its process
+		// group; a native pnpm wrapper can leave descendants holding pipes open.
 		command:
-			"pnpm build && pnpm build:specimen && pnpm exec http-server src/packages/css-lib/.output/specimen -a 127.0.0.1 -p 4173 -c-1",
+			"pnpm build && pnpm build:specimen && node node_modules/http-server/bin/http-server src/packages/css-lib/.output/specimen -a 127.0.0.1 -p 4173 -c-1",
 		url: `${baseURL}/index.html`,
 		reuseExistingServer: false,
 		timeout: 120_000,
