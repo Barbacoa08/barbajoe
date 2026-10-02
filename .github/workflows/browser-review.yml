@@ -1,0 +1,43 @@
+name: Browser review
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: browser-review-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  browser-review:
+    name: Review built CSS specimen
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Install pnpm and Node.js
+        uses: pnpm/setup@703c52620218391530e48b9e8870d5c0082e1b9b # v2.1.0
+        with:
+          runtime: node@v24.21.0
+          cache: true
+          install: false
+      - name: Install locked dependencies
+        run: pnpm install --frozen-lockfile --config.lockfile=true
+      - name: Install test browsers and system dependencies
+        run: pnpm exec playwright install --with-deps chromium firefox webkit
+      - name: Review built specimen
+        run: pnpm test:browser
+      - name: Upload browser review report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: browser-review-report
+          path: playwright-report/
+          retention-days: 14
+          if-no-files-found: warn

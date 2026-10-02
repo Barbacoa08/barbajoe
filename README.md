@@ -26,6 +26,8 @@ pnpm check
 
 The individual commands are `pnpm lint`, `pnpm build`, and `pnpm test:release` for the release-workflow helpers.
 
+For unattended specimen review, install the test browsers once with `pnpm exec playwright install chromium firefox webkit`, then run `pnpm test:browser`. The command builds and serves the specimen, checks it in three browser engines, and saves a report with screenshots. Open the report with `pnpm test:browser:report`. See the [browser-review instructions](src/packages/css-lib/README.md#automated-browser-review) for coverage and limitations.
+
 ## Future publishable libraries
 
 The staged-release workflow covers only `@barbajoe/css-lib`. If a React, Svelte, or other publishable library is reintroduced, give it a separate release workflow or explicitly extend the existing one. Its build and package checks, version gate, npm trusted-publisher configuration, and approval reminder must be designed for that library; do not assume the CSS workflow will publish it.
