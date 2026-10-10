@@ -4,10 +4,10 @@
 	"description": "Development workspace for the @barbajoe/css-lib CSS package.",
 	"author": "Joe S",
 	"license": "MIT",
-	"packageManager": "pnpm@12.6.0",
+	"packageManager": "pnpm@12.11.2",
 	"engines": {
 		"node": "v24.21.0",
-		"pnpm": "12.6.0"
+		"pnpm": "12.11.2"
 	},
 	"repository": {
 		"type": "git",
@@ -31,8 +31,8 @@
 		"test:browser:report": "playwright show-report"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.5.14",
-		"@playwright/test": "1.63.0",
+		"@biomejs/biome": "2.5.15",
+		"@playwright/test": "1.64.0",
 		"http-server": "14.1.1"
 	}
 }
