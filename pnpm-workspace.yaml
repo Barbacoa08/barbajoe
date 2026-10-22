@@ -4,7 +4,7 @@ pmOnFail: ignore
 overrides:
   micromatch: 4.0.8
   msgpackr: 1.12.1
-  picomatch: 2.3.2
+  picomatch: 4.0.7
 allowBuilds:
   '@biomejs/biome': false
   '@swc/core': false
