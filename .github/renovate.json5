@@ -9,6 +9,8 @@
   reviewers: ["Barbacoa08"],
   labels: ["dependencies"],
   rangeStrategy: "pin",
+  // Leave a buffer beyond pnpm's default one-day minimum release age.
+  minimumReleaseAge: "2 days",
   // Archived workspaces contain documentation only. Re-enable their paths if
   // an application or component library is deliberately rebuilt.
   ignorePaths: [
