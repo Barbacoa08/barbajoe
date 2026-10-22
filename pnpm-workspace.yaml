@@ -3,7 +3,7 @@ packages:
 pmOnFail: ignore
 overrides:
   micromatch: 4.0.8
-  msgpackr: 1.12.1
+  msgpackr: 2.1.1
   picomatch: 4.0.7
 allowBuilds:
   '@biomejs/biome': false
