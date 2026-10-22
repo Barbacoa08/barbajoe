@@ -18,7 +18,7 @@ jobs:
       - name: Install pnpm and Node.js
         uses: pnpm/setup@v3.1.1
         with:
-          runtime: node@v24.21.0
+          runtime: node@24.22.1
           cache: true
           install: false
       - name: Install dependencies
