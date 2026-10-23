@@ -133,3 +133,14 @@
 .specimen-primitive-inverse {
 	background: var(--barba-color-surface-inverse);
 }
+
+/* Example application override; not a library treatment. */
+.specimen-custom-action {
+	background-color: transparent;
+	color: var(--barba-color-link);
+	border-color: transparent;
+}
+.specimen-custom-action:enabled:is(:hover, :active) {
+	background-color: var(--barba-color-control-bg);
+	border-color: var(--barba-color-link-hover);
+}

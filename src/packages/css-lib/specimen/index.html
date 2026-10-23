@@ -296,7 +296,7 @@
 
 				<section class="specimen-section" aria-labelledby="buttons-heading">
 					<h2 id="buttons-heading">Buttons — Updated Soft</h2>
-					<p>Native submit, button, and reset types provide primary, secondary, and tertiary emphasis. Text color stays unchanged on hover. These type="button" examples use the optional emphasis override and perform no action.</p>
+					<p>Native submit, button, and reset types provide primary, secondary, and tertiary emphasis. Existing emphasis styles keep their text color on hover. Text and destructive actions below demonstrate the new optional treatments; their clicks only report local example state.</p>
 					<div class="specimen-grid">
 						<article class="specimen-theme specimen-theme-light">
 							<h3>Light buttons</h3>
@@ -307,6 +307,19 @@
 							</div>
 							<p>Primary text contrast: 9.40:1 resting, 15.36:1 hovered.</p>
 							<button type="button" data-barba-variant="primary" disabled>Disabled primary</button>
+							<h4>Text and destructive actions</h4>
+							<div class="specimen-actions">
+								<button type="button" data-barba-variant="text" data-specimen-action>Edit</button>
+								<button type="button" data-barba-variant="text" data-specimen-action>View details</button>
+								<button type="button" data-barba-variant="text" disabled>Unavailable</button>
+								<button type="button" data-barba-intent="danger" data-specimen-action>Delete</button>
+								<button type="button" data-barba-intent="danger" disabled>Delete unavailable</button>
+							</div>
+							<p>Text actions reveal their face and border on hover or keyboard focus. Delete starts as red text; hover and disabled states use the red outline.</p>
+							<h4>One application class</h4>
+							<button type="button" class="specimen-custom-action" data-specimen-action>Custom action</button>
+							<p>Application styles own the properties they set, including hover. The global keyboard focus ring remains.</p>
+							<p role="status" data-action-status>Try an action. No data changes.</p>
 						</article>
 						<article class="specimen-theme specimen-theme-dark">
 							<h3>Dark buttons</h3>
@@ -317,6 +330,19 @@
 							</div>
 							<p>Primary text contrast: 7.98:1 resting, 10.79:1 hovered (existing light gray).</p>
 							<button type="button" data-barba-variant="primary" disabled>Disabled primary</button>
+							<h4>Text and destructive actions</h4>
+							<div class="specimen-actions">
+								<button type="button" data-barba-variant="text" data-specimen-action>Edit</button>
+								<button type="button" data-barba-variant="text" data-specimen-action>View details</button>
+								<button type="button" data-barba-variant="text" disabled>Unavailable</button>
+								<button type="button" data-barba-intent="danger" data-specimen-action>Delete</button>
+								<button type="button" data-barba-intent="danger" disabled>Delete unavailable</button>
+							</div>
+							<p>Text actions reveal their face and border on hover or keyboard focus. Delete starts as red text; hover and disabled states use the red outline.</p>
+							<h4>One application class</h4>
+							<button type="button" class="specimen-custom-action" data-specimen-action>Custom action</button>
+							<p>Application styles own the properties they set, including hover. The global keyboard focus ring remains.</p>
+							<p role="status" data-action-status>Try an action. No data changes.</p>
 						</article>
 					</div>
 					<article class="specimen-demo">

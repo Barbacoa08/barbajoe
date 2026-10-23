@@ -95,9 +95,33 @@ The library does not set table width, scrolling, stripes, sticky headings, sorti
 
 ## Buttons, forms, and dialogs
 
-Native `button` and button-type `input` elements are styled automatically: `submit` is primary, `button` is secondary, and `reset` is tertiary. A button without a type receives primary styling to match its usual form-submit behavior; write `type="button"` for a non-submit action. Override emphasis independently of behavior with `data-barba-variant="primary"`, `"secondary"`, or `"tertiary"`. These attributes affect appearance only.
+Native `button` and button-type `input` elements are styled automatically: `submit` is primary, `button` is secondary, and `reset` is tertiary. A button without a type receives primary styling to match its usual form-submit behavior; write `type="button"` for a non-submit action. Override emphasis independently of behavior with `data-barba-variant="primary"`, `"secondary"`, `"tertiary"`, or `"text"`. These attributes affect appearance only.
 
-The Updated Soft treatment reuses the existing palette. Primary hover uses link-hover in light mode and inverse-surface (light gray) in dark mode. Secondary hover uses surface; tertiary hover uses control background. Text colors do not change on hover. Disabled controls retain their emphasis with reduced opacity and no hover treatment. The global keyboard focus ring applies to controls inside and outside forms.
+Use `data-barba-variant="text"` for a quiet action: link-colored text on a transparent face, with the same padded target as an ordinary button. Hover, press and keyboard focus reveal the control background and a visible link-hover border. Disabled text actions retain their transparent face without hover feedback.
+
+Use `data-barba-intent="danger"` for a destructive action. It starts as danger-colored text with a transparent face and border. Hover, press and keyboard focus reveal a surface-colored face and danger-colored border. Disabled danger actions keep that outlined appearance at the existing disabled opacity. Intent overrides the ordinary emphasis appearance, including when a variant is also present, and never changes native button behavior. Use a clear action label; color alone does not explain destruction. Applications own confirmation and deletion.
+
+```html
+<button type="button" data-barba-variant="text">Edit</button>
+<button type="button" data-barba-intent="danger">Delete</button>
+<button type="button" data-barba-intent="danger" disabled>Delete</button>
+```
+
+**Customization and compatibility:** Button defaults and their state rules use `:where()` to have zero specificity, including disabled appearance. A simple application class wins for the properties it sets, even when loaded before the library and while the button is hovered, pressed or keyboard-focused. Supply the desired interaction states for a custom appearance; overriding the background and border does not invent new hover feedback. Existing application selectors may now take precedence where the old library selectors won, so review consumer overrides when upgrading. Native primary/secondary/tertiary appearances remain the same, and the independent global focus outline stays visible unless an application explicitly overrides it. Other component rules, such as header navigation, still apply in their own contexts. Input-based button controls follow the same rules; text-field state styles remain unchanged.
+
+```css
+.my-action {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--barba-color-link);
+}
+.my-action:enabled:is(:hover, :active) {
+  background-color: var(--barba-color-control-bg);
+  border-color: var(--barba-color-link-hover);
+}
+```
+
+The Updated Soft treatment reuses the existing palette. Primary hover uses link-hover in light mode and inverse-surface (light gray) in dark mode. Secondary hover uses surface; tertiary hover uses control background. Primary/secondary/tertiary text colors do not change on hover. Disabled controls retain their emphasis with reduced opacity and no hover treatment. The global keyboard focus ring applies to controls inside and outside forms.
 
 Text inputs (including omitted `type`), textarea, and select receive the same appearance regardless of form ancestry or the `form` attribute. Full-width sizing and additional top spacing remain specific to controls inside forms. Forms retain their stacked layout. Page-footer margin/alignment apply only to `.app-shell > footer`, not article or dialog footers.
 

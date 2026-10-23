@@ -57,3 +57,12 @@ for (const disabledLink of document.querySelectorAll(
 )) {
 	disabledLink.addEventListener("click", (event) => event.preventDefault());
 }
+
+for (const button of document.querySelectorAll("[data-specimen-action]")) {
+	button.addEventListener("click", () => {
+		const status = button
+			.closest(".specimen-theme")
+			.querySelector("[data-action-status]");
+		status.textContent = `${button.textContent} activated. No data changed.`;
+	});
+}

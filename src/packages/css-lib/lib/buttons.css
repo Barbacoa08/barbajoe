@@ -1,5 +1,10 @@
-/* Native behavior supplies the default emphasis; the BARBA hook is optional. */
-:is(button, input[type="button"], input[type="submit"], input[type="reset"]) {
+/* Zero-specificity defaults let an application class own its chosen properties. */
+:where(
+	button,
+	input[type="button"],
+	input[type="submit"],
+	input[type="reset"]
+) {
 	font: inherit;
 	font-weight: 600;
 	line-height: 1.25;
@@ -12,44 +17,119 @@
 	background-color: var(--barba-color-control-bg);
 	color: var(--barba-color-text);
 	align-self: start;
-
-	&:enabled {
-		cursor: pointer;
-	}
-
-	&:enabled:is(:hover, :active) {
-		background-color: var(--barba-color-surface);
-		border-color: var(--barba-color-link-hover);
-	}
+}
+:where(
+	:is(
+		button,
+		input[type="button"],
+		input[type="submit"],
+		input[type="reset"]
+	):enabled
+) {
+	cursor: pointer;
+}
+:where(
+	:is(
+		button,
+		input[type="button"],
+		input[type="submit"],
+		input[type="reset"]
+	):enabled:is(:hover, :active)
+) {
+	background-color: var(--barba-color-surface);
+	border-color: var(--barba-color-link-hover);
 }
 
-:is(button:not([type]), button[type="submit"], input[type="submit"]):not(
-	[data-barba-variant]
-),
-:is(button, input)[data-barba-variant="primary"] {
+/* Native behavior supplies emphasis unless an explicit variant overrides it. */
+:where(
+	:is(button:not([type]), button[type="submit"], input[type="submit"]):not(
+		[data-barba-variant]
+	),
+	:is(button, input)[data-barba-variant="primary"]
+) {
 	background-color: var(--barba-color-link);
 	border-color: var(--barba-color-link);
 	color: var(--barba-color-surface);
-
-	&:enabled:is(:hover, :active) {
-		background-color: light-dark(
-			var(--barba-color-link-hover),
-			var(--barba-color-surface-inverse)
-		);
-		border-color: light-dark(
-			var(--barba-color-link-hover),
-			var(--barba-color-surface-inverse)
-		);
-	}
 }
-
-:is(button[type="reset"], input[type="reset"]):not([data-barba-variant]),
-:is(button, input)[data-barba-variant="tertiary"] {
+:where(
+	:is(
+		:is(button:not([type]), button[type="submit"], input[type="submit"]):not(
+			[data-barba-variant]
+		),
+		:is(button, input)[data-barba-variant="primary"]
+	):enabled:is(:hover, :active)
+) {
+	background-color: light-dark(
+		var(--barba-color-link-hover),
+		var(--barba-color-surface-inverse)
+	);
+	border-color: light-dark(
+		var(--barba-color-link-hover),
+		var(--barba-color-surface-inverse)
+	);
+}
+:where(
+	:is(button[type="reset"], input[type="reset"]):not([data-barba-variant]),
+	:is(button, input)[data-barba-variant="tertiary"]
+) {
 	background-color: transparent;
 	border-color: transparent;
-
-	&:enabled:is(:hover, :active) {
-		background-color: var(--barba-color-control-bg);
-		border-color: transparent;
-	}
 }
+:where(
+	:is(
+		:is(button[type="reset"], input[type="reset"]):not([data-barba-variant]),
+		:is(button, input)[data-barba-variant="tertiary"]
+	):enabled:is(:hover, :active)
+) {
+	background-color: var(--barba-color-control-bg);
+	border-color: transparent;
+}
+
+:where(:is(button, input)[data-barba-variant="text"]) {
+	background-color: transparent;
+	border-color: transparent;
+	color: var(--barba-color-link);
+}
+:where(
+	:is(button, input)[data-barba-variant="text"]:enabled:is(
+		:hover,
+		:active,
+		:focus-visible
+	)
+) {
+	background-color: var(--barba-color-control-bg);
+	border-color: var(--barba-color-link-hover);
+	color: var(--barba-color-link-hover);
+}
+
+/* Intent is independent of submit/reset behavior and overrides emphasis. */
+:where(:is(button, input)[data-barba-intent="danger"]) {
+	background-color: transparent;
+	border-color: transparent;
+	color: var(--barba-color-danger);
+}
+:where(
+	:is(button, input)[data-barba-intent="danger"]:enabled:is(
+		:hover,
+		:active,
+		:focus-visible
+	),
+	:is(button, input)[data-barba-intent="danger"]:disabled
+) {
+	background-color: var(--barba-color-surface);
+	border-color: var(--barba-color-danger);
+	color: var(--barba-color-danger);
+}
+
+:where(
+	:is(
+		button,
+		input[type="button"],
+		input[type="submit"],
+		input[type="reset"]
+	):disabled
+) {
+	cursor: not-allowed;
+	opacity: 0.65;
+}
+/* The global :focus-visible outline remains independent of button appearance. */
