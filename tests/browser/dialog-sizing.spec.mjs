@@ -124,6 +124,49 @@ for (const packaged of [false, true]) {
 		).toBeLessThanOrEqual(1);
 		await capture(testInfo, dialog, `${label}-short-screen-dialog`);
 	});
+	test(`${label}: full dialog dividers meet the scrolling body edges`, async ({
+		page,
+	}, testInfo) => {
+		const dialog = await fixture(page, packaged);
+		await dialog.evaluate((el) => {
+			el.dataset.barbaDialogDividers = "full";
+			el.dataset.barbaDialogHeight = "content";
+			el.dataset.barbaDialogSpacing = "compact";
+			el.querySelector(".dialog-body").insertAdjacentHTML(
+				"beforeend",
+				`<p>${"Review long content. ".repeat(150)}</p><input aria-label="Last field" value="End">`,
+			);
+		});
+		const header = dialog.locator(".dialog-header");
+		const footer = dialog.locator(".dialog-footer");
+		const body = dialog.locator(".dialog-body");
+		await expect(header).toHaveCSS("border-bottom-width", "1px");
+		await expect(footer).toHaveCSS("border-top-width", "1px");
+		await expect(header.locator("h2")).toHaveCSS("border-bottom-width", "0px");
+		expect(
+			await header.evaluate((el) => getComputedStyle(el, "::after").display),
+		).toBe("none");
+		for (const width of [1280, 320]) {
+			await page.setViewportSize({ width, height: 720 });
+			const h = await header.boundingBox(),
+				b = await body.boundingBox(),
+				f = await footer.boundingBox();
+			expect(h.x).toBeCloseTo(b.x, 0);
+			expect(h.width).toBeCloseTo(b.width, 0);
+			expect(h.y + h.height).toBeCloseTo(b.y, 0);
+			expect(f.x).toBeCloseTo(b.x, 0);
+			expect(f.width).toBeCloseTo(b.width, 0);
+			expect(f.y).toBeCloseTo(b.y + b.height, 0);
+			await body.getByLabel("Last field").focus();
+			expect(await body.evaluate((el) => el.scrollTop)).toBeGreaterThan(0);
+			expect((await header.boundingBox()).y).toBeCloseTo(h.y, 0);
+			expect((await footer.boundingBox()).y).toBeCloseTo(f.y, 0);
+			expect(
+				await dialog.evaluate((el) => el.scrollWidth - el.clientWidth),
+			).toBeLessThanOrEqual(1);
+		}
+		await capture(testInfo, dialog, `${label}-full-dividers`);
+	});
 }
 
 test("maintained content-fit dialogs validate and close through their icon", async ({

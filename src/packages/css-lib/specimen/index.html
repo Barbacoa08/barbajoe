@@ -414,13 +414,13 @@
 						</form>
 					</dialog>
 					<h3>Content-fit dialogs with a close action</h3>
-					<p>These examples keep the standard width and opt into compact padding, a content-fit minimum, and more vertical room. The title wraps above a continuous inset divider. The close icon uses the text-button treatment and follows the same cancellation path as Cancel and Escape.</p>
+					<p>These examples keep the standard width and opt into compact padding, a content-fit minimum, and more vertical room. Full-width header and footer dividers meet the scrolling body. The close icon uses the text-button treatment and follows the same cancellation path as Cancel and Escape.</p>
 					<div class="specimen-actions">
 						<button type="button" command="show-modal" commandfor="content-fit-short">Open content-fit short dialog</button>
 						<button type="button" command="show-modal" commandfor="content-fit-long">Open content-fit long dialog</button>
 					</div>
 
-					<dialog id="content-fit-short" aria-labelledby="content-fit-short-title" closedby="any" data-barba-dialog-spacing="compact" data-barba-dialog-height="content" data-barba-dialog-room="extra">
+					<dialog id="content-fit-short" aria-labelledby="content-fit-short-title" closedby="any" data-barba-dialog-spacing="compact" data-barba-dialog-height="content" data-barba-dialog-room="extra" data-barba-dialog-dividers="full">
 						<form method="dialog" class="dialog-content-container">
 							<header class="dialog-header dialog-header-actions">
 								<h2 id="content-fit-short-title">Content-fit short dialog</h2>
@@ -438,7 +438,7 @@
 						</form>
 					</dialog>
 
-					<dialog id="content-fit-long" aria-labelledby="content-fit-long-title" closedby="any" data-barba-dialog-spacing="compact" data-barba-dialog-height="content" data-barba-dialog-room="extra">
+					<dialog id="content-fit-long" aria-labelledby="content-fit-long-title" closedby="any" data-barba-dialog-spacing="compact" data-barba-dialog-height="content" data-barba-dialog-room="extra" data-barba-dialog-dividers="full">
 						<form method="dialog" class="dialog-content-container">
 							<header class="dialog-header dialog-header-actions">
 								<h2 id="content-fit-long-title">Content-fit long dialog</h2>

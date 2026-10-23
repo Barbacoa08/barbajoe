@@ -80,6 +80,24 @@ dialog .dialog-header-actions::after {
 	border-block-end: 1px solid var(--barba-color-border);
 }
 
+/* Full section borders meet the scrolling body without an inset gap. */
+dialog[data-barba-dialog-dividers="full"]
+	> .dialog-content-container
+	> .dialog-header {
+	border-block-end: 1px solid var(--barba-color-border);
+}
+dialog[data-barba-dialog-dividers="full"]
+	> .dialog-content-container
+	> .dialog-footer {
+	border-block-start: 1px solid var(--barba-color-border);
+}
+dialog[data-barba-dialog-dividers="full"] .dialog-header > :is(h1, h2, h3) {
+	border-block-end: 0;
+}
+dialog[data-barba-dialog-dividers="full"] .dialog-header-actions::after {
+	display: none;
+}
+
 /* Independent sizing options preserve the standard inline size. */
 dialog[data-barba-dialog-height="content"] {
 	min-block-size: 0;

@@ -152,7 +152,9 @@ Dialogs share a top offset of 10% of the visible viewport, with a minimum 1rem g
 
 The dialog's single grid column is constrained to the available width, and headings can wrap long unbroken titles. For a title beside a close action, add `dialog-header-actions` to `.dialog-header`. This optional flex row wraps when needed and draws one inset divider below the heading and all actions; the plain header pattern keeps its existing appearance.
 
-The following options are independent. Omit an attribute for the existing default. None changes the standard width of `min(32em, 100vi - 2rem)`.
+Add `data-barba-dialog-dividers="full"` to a structured dialog for full-width header and footer borders directly adjoining its scrolling body. This replaces the heading underline and any inset action-row divider with one continuous header border. Both borders remain visible with short or long content; existing dialog defaults remain unchanged when the attribute is omitted.
+
+The following sizing options are independent. Omit an attribute for the existing default. None changes the standard width of `min(32em, 100vi - 2rem)`.
 
 | Dialog attribute | Effect |
 | --- | --- |
@@ -166,7 +168,8 @@ Combine `data-barba-shape="icon"` with `data-barba-variant="text"` for a close b
 <dialog id="compact-dialog" aria-labelledby="compact-title" closedby="any"
   data-barba-dialog-spacing="compact"
   data-barba-dialog-height="content"
-  data-barba-dialog-room="extra">
+  data-barba-dialog-room="extra"
+  data-barba-dialog-dividers="full">
   <form method="dialog" class="dialog-content-container">
     <header class="dialog-header dialog-header-actions">
       <h2 id="compact-title">Edit item</h2>
