@@ -413,6 +413,57 @@
 							</footer>
 						</form>
 					</dialog>
+					<h3>Content-fit dialogs with a close action</h3>
+					<p>These examples keep the standard width and opt into compact padding, a content-fit minimum, and more vertical room. The title wraps above a continuous inset divider. The close icon uses the text-button treatment and follows the same cancellation path as Cancel and Escape.</p>
+					<div class="specimen-actions">
+						<button type="button" command="show-modal" commandfor="content-fit-short">Open content-fit short dialog</button>
+						<button type="button" command="show-modal" commandfor="content-fit-long">Open content-fit long dialog</button>
+					</div>
+
+					<dialog id="content-fit-short" aria-labelledby="content-fit-short-title" closedby="any" data-barba-dialog-spacing="compact" data-barba-dialog-height="content" data-barba-dialog-room="extra">
+						<form method="dialog" class="dialog-content-container">
+							<header class="dialog-header dialog-header-actions">
+								<h2 id="content-fit-short-title">Content-fit short dialog</h2>
+								<button type="button" data-barba-variant="text" data-barba-shape="icon" aria-label="Close dialog" command="request-close" commandfor="content-fit-short"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" /></svg></button>
+							</header>
+							<div class="dialog-body">
+								<label>Item name <input name="item" value="Weekend supplies" required autofocus /></label>
+
+							</div>
+							<footer class="dialog-footer">
+								<button type="reset">Reset</button>
+								<button type="button" command="request-close" commandfor="content-fit-short">Cancel</button>
+								<button type="submit" value="saved">Save</button>
+							</footer>
+						</form>
+					</dialog>
+
+					<dialog id="content-fit-long" aria-labelledby="content-fit-long-title" closedby="any" data-barba-dialog-spacing="compact" data-barba-dialog-height="content" data-barba-dialog-room="extra">
+						<form method="dialog" class="dialog-content-container">
+							<header class="dialog-header dialog-header-actions">
+								<h2 id="content-fit-long-title">Content-fit long dialog</h2>
+								<button type="button" data-barba-variant="text" data-barba-shape="icon" aria-label="Close dialog" command="request-close" commandfor="content-fit-long"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" /></svg></button>
+							</header>
+							<div class="dialog-body">
+								<label>Item name <input name="item" value="Weekend supplies" required autofocus /></label>
+								<p>Scroll through this synthetic example. The header and actions stay in place while the body scrolls.</p>
+								<p>Section 1. Keep editing within the body while the close action and footer remain available. Longer content uses the available vertical room.</p>
+								<p>Section 2. Keep editing within the body while the close action and footer remain available. Longer content uses the available vertical room.</p>
+								<p>Section 3. Keep editing within the body while the close action and footer remain available. Longer content uses the available vertical room.</p>
+								<p>Section 4. Keep editing within the body while the close action and footer remain available. Longer content uses the available vertical room.</p>
+								<p>Section 5. Keep editing within the body while the close action and footer remain available. Longer content uses the available vertical room.</p>
+								<p>Section 6. Keep editing within the body while the close action and footer remain available. Longer content uses the available vertical room.</p>
+								<p>Section 7. Keep editing within the body while the close action and footer remain available. Longer content uses the available vertical room.</p>
+								<p>Section 8. Keep editing within the body while the close action and footer remain available. Longer content uses the available vertical room.</p>
+								<label>Final field <input value="End of the form" /></label>
+							</div>
+							<footer class="dialog-footer">
+								<button type="reset">Reset</button>
+								<button type="button" command="request-close" commandfor="content-fit-long">Cancel</button>
+								<button type="submit" value="saved">Save</button>
+							</footer>
+						</form>
+					</dialog>
 				</section>
 			</main>
 

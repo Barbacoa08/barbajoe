@@ -150,6 +150,44 @@ Dialogs grow with content from a 16rem minimum to an 80dvb maximum; available vi
 
 Dialogs share a top offset of 10% of the visible viewport, with a minimum 1rem gap. Their opening animation is anchored at the top, so different content heights do not change that position. Place footer actions in HTML order **Reset (if present), Cancel, Submit**: Submit is rightmost and Cancel immediately precedes it in left-to-right layouts. Use markup order rather than CSS reversal so keyboard and reading order match the visual order; actions may wrap on narrow screens.
 
+The dialog's single grid column is constrained to the available width, and headings can wrap long unbroken titles. For a title beside a close action, add `dialog-header-actions` to `.dialog-header`. This optional flex row wraps when needed and draws one inset divider below the heading and all actions; the plain header pattern keeps its existing appearance.
+
+The following options are independent. Omit an attribute for the existing default. None changes the standard width of `min(32em, 100vi - 2rem)`.
+
+| Dialog attribute | Effect |
+| --- | --- |
+| `data-barba-dialog-spacing="compact"` | Uses `--barba-space-3` padding instead of `--barba-space-4` for the header, body and footer (or an unstructured dialog's own padding). |
+| `data-barba-dialog-height="content"` | Removes the outer minimum height and lowers the structured body's minimum from 6rem to 3rem; short content uses only the room it needs. |
+| `data-barba-dialog-room="extra"` | Starts at 5% of the viewport rather than 10%, and permits up to 90% rather than 80% of its height, while preserving at least 1rem outer gutters. |
+
+Combine `data-barba-shape="icon"` with `data-barba-variant="text"` for a close button that is transparent at rest and reveals its face and border during interaction. Icon geometry keeps a minimum 2.75rem target in both directions and centers the content; keep the SVG small enough to fit that target. Give the button an accessible name and hide its decorative SVG from assistive technology. The shape can also be combined with other button treatments.
+
+```html
+<dialog id="compact-dialog" aria-labelledby="compact-title" closedby="any"
+  data-barba-dialog-spacing="compact"
+  data-barba-dialog-height="content"
+  data-barba-dialog-room="extra">
+  <form method="dialog" class="dialog-content-container">
+    <header class="dialog-header dialog-header-actions">
+      <h2 id="compact-title">Edit item</h2>
+      <button type="button" data-barba-variant="text" data-barba-shape="icon"
+        aria-label="Close dialog" command="request-close" commandfor="compact-dialog">
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24">
+          <path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" />
+        </svg>
+      </button>
+    </header>
+    <div class="dialog-body">
+      <label>Item name <input name="item" required /></label>
+    </div>
+    <footer class="dialog-footer">
+      <button type="button" command="request-close" commandfor="compact-dialog">Cancel</button>
+      <button type="submit">Save</button>
+    </footer>
+  </form>
+</dialog>
+```
+
 `method="dialog"` submits and closes after native validation without a network request. Cancel is a non-submit button; `command="request-close"` follows the same cancellable dismissal path as native outside-click dismissal or Escape. Reset restores initial values without closing. Closing does not reset fields. Unless there is a strong reason otherwise, use `closedby="any"` to treat clicks outside the dialog as cancellation: no submission, validation, or reset. Applications with cancellation cleanup should share that behavior through the dialog's `cancel` event, not solely a Cancel-button click handler. Preventing that event can keep the dialog open when dismissal needs confirmation.
 
 Invoker commands and native light dismissal require browser support; CSS cannot supply those behaviors. Consumers targeting older browsers must provide appropriate open/close/dismissal behavior. The specimen includes feature-detected fallbacks (outside clicks invoke its Cancel button), not library JavaScript. See the [short and long dialog examples](https://lib-staging.barbajoe.tech/#dialog-heading) and [native light-dismiss documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog#closedby).
