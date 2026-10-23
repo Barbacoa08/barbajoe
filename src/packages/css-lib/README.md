@@ -62,6 +62,31 @@ A `site-header` supports a brand or title with navigation, a brand or title alon
 
 Classes remain appropriate for roles that semantic HTML cannot express by itself, including `site-header`, `text-gradient`, `scaleup-on-hover`, and `dialog-content-container`.
 
+## Header navigation
+
+Use `site-header` on a header, `site-header-links` on its navigation list, and optionally `site-header-brand` on its direct brand/title child:
+
+```html
+<header class="site-header">
+  <a class="site-header-brand" href="/">Our List</a>
+  <nav aria-label="Main">
+    <ul class="site-header-links">
+      <li><a href="/manage/" aria-current="page">Manage</a></li>
+      <li><button type="button">Update now</button></li>
+      <li><a href="/settings/">Help &amp; settings</a></li>
+    </ul>
+  </nav>
+</header>
+```
+
+Brand and navigation share a row whenever their content fits. Navigation moves to the inline end (right in left-to-right layouts), including when it wraps or is the header's only child. Long navigation labels can wrap within their targets. There is no viewport breakpoint that forces a second row.
+
+Direct links and buttons in the list share the same transparent navigation treatment, with padding on the interactive element and targets at least 44 CSS pixels wide and high. Header navigation overrides ordinary button emphasis; use `type="button"` for an action. Applications supply that action's behavior. Current-page links use `aria-current="page"`; existing `li.active > a` markup also keeps its underline. Hover, active and keyboard focus retain feedback, and the global keyboard focus ring remains visible. Native `disabled` buttons stay disabled. For disabled links, `aria-disabled` still requires application prevention of activation as described below.
+
+The optional `site-header-brand` class preserves one brand appearance on an anchor, strong text or a heading. It does not require an `h1` in the header or change the element's semantics. Choose headings according to the page hierarchy, and give links meaningful destinations. Use public `--barba-` tokens and application styles to customize the header; example JavaScript in the [header specimen](https://lib-staging.barbajoe.tech/headers.html) is not shipped in the package.
+
+**Compatibility for the upcoming minor release:** Existing header markup and `.active` remain supported. Navigation that previously occupied a new row below 40rem can now stay beside the brand; navigation-only headers now align to the inline end. Padding and the underline move from the list item to its direct interactive element, and direct navigation buttons now match links. Consumers with list-item padding/border overrides should remove or move those overrides to the link/button to avoid double spacing. The brand class is opt-in; existing unclassed brand elements keep their typography.
+
 ## Data tables
 
 Use a semantic `<table>` for tabular data, with a `<caption>` and `<th scope="col">` or `<th scope="row">` where appropriate. The library gives these elements collapsed borders, start-aligned captions and headings, modest cell spacing, and row dividers from the existing palette. No table class is required. See [MDN's table guidance](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/table) and the [compact and wide specimens](https://lib-staging.barbajoe.tech/#tables-heading).
@@ -201,7 +226,7 @@ pnpm test:browser:report
 
 The review builds the CSS and optimized specimen, serves `.output/specimen` on `127.0.0.1:4173`, runs the tests, and stops its server. Leave that port free; an existing server is rejected so stale output cannot silently pass. No separate development server is needed. The specimen build imports library source CSS through Parcel; the release-helper checks separately validate the packaged Lightning CSS bundle.
 
-Playwright runs Chromium, Firefox, and WebKit at 1280×720 and 390×844 in light and dark schemes. It checks all five pages and asset loading, page overflow, form reset and inert catalog actions, dialog reset/validation/dismissal/focus, dialog sizing and body scrolling, keyboard reachability, and keyboard table scrolling. Focused table and dialog checks also use 320px layouts. Each run captures full-page views, buttons/hover, placeholders, forms, tables, and open-dialog states for human review. These images are evidence, with no stored image baselines or automatic pixel comparisons.
+Playwright runs Chromium, Firefox, and WebKit at 1280×720 and 390×844 in light and dark schemes. It checks all five pages and asset loading, page overflow, form reset and inert catalog actions, dialog reset/validation/dismissal/focus, dialog sizing and body scrolling, keyboard reachability, and keyboard table scrolling. Focused header, table and dialog checks also use 320px layouts. Header checks cover content-based wrapping, right alignment, padded targets, current-page markup, disabled actions, semantic brand elements and long labels; a separate check exercises the packaged CSS and header text contrast. Each run captures full-page views, buttons/hover, placeholders, forms, tables, and open-dialog states for human review. These images are evidence, with no stored image baselines or automatic pixel comparisons.
 
 `playwright-report/` contains the HTML report, screenshots, environment attachments, and failure traces. `test-results/` contains individual test outputs. Both are ignored by Git and excluded from the npm package. Environment attachments identify the date, commit, browser build/version, OS, actual viewport, scheme, and build type. Test failures produce a nonzero exit code. Reports do not open automatically; the job can finish unattended.
 

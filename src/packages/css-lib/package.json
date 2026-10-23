@@ -14,7 +14,11 @@
 		".": "./dist/barbajoe.css",
 		"./dist/barbajoe.css": "./dist/barbajoe.css"
 	},
-	"sideEffects": ["./dist/barbajoe.css", "./specimen/specimen.js"],
+	"sideEffects": [
+		"./dist/barbajoe.css",
+		"./specimen/specimen.js",
+		"./specimen/headers.js"
+	],
 	"publishConfig": {
 		"access": "public",
 		"registry": "https://registry.npmjs.org/"
