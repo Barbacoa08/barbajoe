@@ -294,6 +294,119 @@
 					</div>
 				</section>
 
+				<section class="specimen-section" aria-labelledby="inline-forms-heading">
+					<h2 id="inline-forms-heading">Inline forms and input actions</h2>
+					<p>Use an <code>inline-field</code> wrapper for a visible standard-size, medium-weight label above an <code>input-row</code>. The input grows; Add wraps to the right when space runs out. An optional <code>input-action</code> groups a text input with its X. Ordinary stacked forms keep their existing appearance.</p>
+					<p>The X is our shared close/clear icon action: a native button with <code>data-barba-variant<wbr>=&quot;text&quot;</code> and <code>data-barba-shape<wbr>=&quot;icon&quot;</code>. It has a generous target, transparent resting face, and visible hover and keyboard-focus treatment. Its accessible name describes the action: “Clear item name” for an input, “Close dialog” for a modal. The icon is decorative; these actions do not delete saved data.</p>
+					<h3>Input and Add</h3>
+					<p>Add validates and reports locally; no information is saved or sent.</p>
+					<form data-specimen-inline="">
+						<div class="inline-field">
+							<label for="inline-item">Item name</label>
+							<div class="input-row">
+								<input id="inline-item" name="inline-item" type="text" value="" required=""/>
+								<button type="submit">Add</button>
+							</div>
+						</div>
+						<p role="status">Nothing added yet.</p>
+					</form>
+					<h3>Input with an X</h3>
+					<p>Only show the X when there is content. Keep its space reserved, and return focus to the input before hiding it. Applications handle clearing and synchronize visibility after typing, resets and programmatic value changes.</p>
+					<form data-specimen-inline="">
+						<div class="inline-field">
+							<label for="inline-clear">Item to clear</label>
+							<div class="input-row">
+								<div class="input-action">
+									<input id="inline-clear" name="inline-clear" type="text" value="Weekend supplies" required=""/>
+									<button type="button" data-barba-variant="text" data-barba-shape="icon" aria-label="Clear item to clear" title="Clear item to clear" aria-controls="inline-clear" data-specimen-clear="">
+										<svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24">
+											<path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2"/>
+										</svg>
+									</button>
+								</div>
+								<button type="submit">Add</button>
+							</div>
+						</div>
+						<div>
+							<button type="reset">Reset example</button>
+						</div>
+						<p role="status">Try the X, type again, or reset the example.</p>
+					</form>
+					<h3>Initially empty</h3>
+					<form data-specimen-inline="">
+						<div class="inline-field">
+							<label for="inline-empty">New item</label>
+							<div class="input-row">
+								<div class="input-action">
+									<input id="inline-empty" name="inline-empty" type="text" value="" required=""/>
+									<button type="button" data-barba-variant="text" data-barba-shape="icon" aria-label="Clear new item" title="Clear new item" aria-controls="inline-empty" data-specimen-clear="" hidden="">
+										<svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24">
+											<path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2"/>
+										</svg>
+									</button>
+								</div>
+								<button type="submit">Add</button>
+							</div>
+						</div>
+						<p role="status">Type to reveal the X.</p>
+					</form>
+					<h3>Controls associated with a separate form</h3>
+					<p>Use the <code>form</code> attribute on both the input and its submit button. The label and row layout are identical.</p>
+					<form id="inline-owner" data-specimen-inline="" data-specimen-status="inline-associated-status"></form>
+					<div class="inline-field">
+						<label for="inline-associated">Alternative name</label>
+						<div class="input-row">
+							<input id="inline-associated" name="inline-associated" type="text" value="" form="inline-owner" required=""/>
+							<button type="submit" form="inline-owner">Add</button>
+						</div>
+					</div>
+					<p id="inline-associated-status" role="status">Nothing added yet.</p>
+					<h3>Outside a form</h3>
+					<p>A standalone field can use the same input-action layout without a submit button.</p>
+					<div class="inline-field">
+						<label for="inline-standalone">Filter text</label>
+						<div class="input-action">
+							<input id="inline-standalone" type="text" value="Weekend"/>
+							<button type="button" data-barba-variant="text" data-barba-shape="icon" aria-label="Clear filter text" title="Clear filter text" aria-controls="inline-standalone" data-specimen-clear="">
+								<svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24">
+									<path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2"/>
+								</svg>
+							</button>
+						</div>
+					</div>
+					<h3>Unavailable actions</h3>
+					<p>For disabled or read-only inputs, a populated field retains a disabled X. It cannot change the value.</p>
+					<div class="inline-field">
+						<label for="inline-disabled">Disabled item</label>
+						<div class="input-row">
+							<div class="input-action">
+								<input id="inline-disabled" name="inline-disabled" type="text" value="Unavailable" disabled=""/>
+								<button type="button" data-barba-variant="text" data-barba-shape="icon" aria-label="Clear disabled item" title="Clear disabled item" aria-controls="inline-disabled" data-specimen-clear="" disabled="">
+									<svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24">
+										<path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2"/>
+									</svg>
+								</button>
+							</div>
+							<button type="submit" disabled="">Add</button>
+						</div>
+					</div>
+					<div class="inline-field">
+						<label for="inline-readonly">Read-only item</label>
+						<div class="input-row">
+							<div class="input-action">
+								<input id="inline-readonly" name="inline-readonly" type="text" value="Fixed value" readonly=""/>
+								<button type="button" data-barba-variant="text" data-barba-shape="icon" aria-label="Clear read-only item" title="Clear read-only item" aria-controls="inline-readonly" data-specimen-clear="" disabled="">
+									<svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24">
+										<path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2"/>
+									</svg>
+								</button>
+							</div>
+							<button type="submit" disabled="">Add</button>
+						</div>
+					</div>
+					<p>See the <a href="#dialog-heading">dialog examples</a> for the same X button used to close a modal through its cancellation path.</p>
+				</section>
+
 				<section class="specimen-section" aria-labelledby="buttons-heading">
 					<h2 id="buttons-heading">Buttons</h2>
 					<p>Native submit, button, and reset types provide primary, secondary, and tertiary emphasis. Existing emphasis styles keep their text color on hover. Text and destructive actions below demonstrate the new optional treatments; their clicks only report local example state.</p>
@@ -424,7 +537,7 @@
 						<form method="dialog" class="dialog-content-container">
 							<header class="dialog-header dialog-header-actions">
 								<h2 id="content-fit-short-title">Content-fit short dialog</h2>
-								<button type="button" data-barba-variant="text" data-barba-shape="icon" aria-label="Close dialog" command="request-close" commandfor="content-fit-short"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" /></svg></button>
+								<button type="button" data-barba-variant="text" data-barba-shape="icon" aria-label="Close dialog" title="Close dialog" command="request-close" commandfor="content-fit-short"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" /></svg></button>
 							</header>
 							<div class="dialog-body">
 								<label>Item name <input name="item" value="Weekend supplies" required autofocus /></label>
@@ -442,7 +555,7 @@
 						<form method="dialog" class="dialog-content-container">
 							<header class="dialog-header dialog-header-actions">
 								<h2 id="content-fit-long-title">Content-fit long dialog</h2>
-								<button type="button" data-barba-variant="text" data-barba-shape="icon" aria-label="Close dialog" command="request-close" commandfor="content-fit-long"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" /></svg></button>
+								<button type="button" data-barba-variant="text" data-barba-shape="icon" aria-label="Close dialog" title="Close dialog" command="request-close" commandfor="content-fit-long"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" /></svg></button>
 							</header>
 							<div class="dialog-body">
 								<label>Item name <input name="item" value="Weekend supplies" required autofocus /></label>

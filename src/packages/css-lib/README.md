@@ -127,6 +127,47 @@ Text inputs (including omitted `type`), textarea, and select receive the same ap
 
 Input and textarea placeholders use the existing muted-text color and italics at full opacity, making examples distinct from entered values without introducing another color. Keep a visible label for each control; placeholder text disappears as the user types and is not a substitute for a label. Compare both schemes in the [form specimen](https://lib-staging.barbajoe.tech/#forms-heading).
 
+### Inline fields and input actions
+
+Use these opt-in classes for single-line text or search inputs. Existing stacked forms and label weights are unchanged without the classes. See the [working catalog examples](https://lib-staging.barbajoe.tech/#inline-forms-heading).
+
+- `.inline-field`: wrap a visible, explicitly associated label and its control row. A direct-child label uses the standard 1.3rem size with medium weight 500. Place hints outside the label and associate them with `aria-describedby` when needed.
+- `.input-row`: wrap the input (or input-action group) and its Add/submit button. They share a minimum 2.75rem height. The field grows from a 14rem preferred width, and the action wraps to the inline end when space runs out. Keep input before Add in DOM order; don't reverse keyboard order with CSS.
+- `.input-action`: group one text/search input and its clear icon button. The group reserves space for the icon even when hidden, so text cannot run beneath it and the field does not resize. It can be used inside a row or alone. This is a single-icon layout, not a container for arbitrary action text or multiple icons.
+
+The pattern works inside a form, outside a form, and with a separate form owner. For the last case, add the same `form="entry-form"` attribute to both the input and submit button; the label still points to the input's ID. The classes don't establish form ownership. Keep the label visible; a placeholder is not a label. Other control types retain their normal treatment.
+
+```html
+<form id="entry-form">
+  <div class="inline-field">
+    <label for="item-name">Item name</label>
+    <div class="input-row">
+      <div class="input-action">
+        <input id="item-name" name="item" type="text" required>
+        <button type="button" data-barba-variant="text" data-barba-shape="icon"
+          aria-label="Clear item name" title="Clear item name"
+          aria-controls="item-name" hidden>
+          <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24">
+            <path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" />
+          </svg>
+        </button>
+      </div>
+      <button type="submit">Add</button>
+    </div>
+  </div>
+</form>
+```
+
+**Application behavior:** CSS only handles layout and the `hidden` state. Show the X only while `input.value.length > 0`; disable it if the field is disabled or read-only. Initialize that state on render, update it on input/change, after form reset, and whenever application code changes the value or editable state. Native reset completes after the reset event; synchronize after its default action. On clear, empty the value, return focus to the input **before** hiding/disabling the X, update application state and notify any dependent logic. Do not submit the form, reset unrelated fields, or delete persisted data. The specimen provides local example behavior in `specimen.js`; no JavaScript ships in the CSS package. The embedded pattern suppresses WebKit's native search-cancel decoration to avoid duplicate clear controls, so applications must supply the documented working X.
+
+### Shared close/clear icon action
+
+The X shown above is the standard close/clear icon in this library's examples. Reuse the same decorative SVG and native `button` with `data-barba-variant="text"` plus `data-barba-shape="icon"`. This combines the quiet resting appearance and visible hover/active/focus treatment with a minimum 2.75rem target (44px at the default root size). Keep the native focus outline and Enter/Space activation. `hidden` removes an empty field's clear button from keyboard and accessibility navigation.
+
+Give each button a context-specific accessible name: **“Clear item name”** for a field, **“Close dialog”** for a modal, or a more specific dialog name when needed. The SVG has `aria-hidden="true"`; the optional `title` provides an extra pointer hint and does not replace `aria-label`. The shared icon communicates a visual convention, not shared behavior: clear empties one field, while dialog close uses the same cancellation/request-close path as Cancel and Escape, including application cancellation guards. Use a separately labeled danger action for deletion. Avoid unlabeled X glyphs, clickable spans, or `type="reset"` as a field-clear shortcut.
+
+### Dialogs
+
 For a three-region dialog, use this direct-child structure:
 
 ```html

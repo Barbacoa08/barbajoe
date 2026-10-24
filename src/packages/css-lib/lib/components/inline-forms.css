@@ -1,0 +1,56 @@
+.input-action {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) 2.75rem;
+	align-items: center;
+	min-inline-size: 0;
+}
+/* Opt-in field layouts; ordinary stacked forms retain their defaults. */
+.inline-field > label {
+	display: block;
+	margin-block-end: var(--barba-space-2);
+	font-size: 1.3rem;
+	font-weight: 500;
+}
+.input-row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: start;
+	justify-content: end;
+	gap: var(--barba-space-2);
+}
+.input-row > input,
+.input-row > .input-action {
+	flex: 1 1 14rem;
+	min-inline-size: 0;
+}
+.input-row > button {
+	flex: 0 1 auto;
+}
+
+/* Scoped ancestry outweighs the existing form input top margin. */
+:is(.input-row, .input-action)
+input:is([type="text"], [type="search"], :not([type])) {
+	margin: 0;
+	inline-size: 100%;
+	min-inline-size: 0;
+	min-block-size: 2.75rem;
+	line-height: 1.25;
+}
+.input-action > input:is([type="text"], [type="search"], :not([type])) {
+	grid-area: 1 / 1 / 2 / 3;
+	padding-inline-end: 3.5rem;
+}
+.input-action > button[data-barba-shape="icon"] {
+	grid-area: 1 / 2;
+	justify-self: end;
+	margin-inline-end: 1px;
+	inline-size: 2.75rem;
+}
+/* Display styling must not reveal the app-controlled hidden clear action. */
+.input-action > button[hidden] {
+	display: none;
+}
+/* The documented X supplies the clear action for search inputs too. */
+.input-action > input[type="search"]::-webkit-search-cancel-button {
+	-webkit-appearance: none;
+}

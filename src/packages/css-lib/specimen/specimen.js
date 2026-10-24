@@ -66,3 +66,38 @@ for (const button of document.querySelectorAll("[data-specimen-action]")) {
 		status.textContent = `${button.textContent} activated. No data changed.`;
 	});
 }
+
+// Example application behavior, not part of the CSS package.
+for (const button of document.querySelectorAll("[data-specimen-clear]")) {
+	const input = document.getElementById(button.getAttribute("aria-controls"));
+	const sync = () => {
+		button.hidden = input.value.length === 0;
+		button.disabled =
+			input.disabled || input.readOnly || input.value.length === 0;
+	};
+	input.addEventListener("input", sync);
+	input.addEventListener("change", sync);
+	input.form?.addEventListener("reset", () => setTimeout(sync, 0));
+	button.addEventListener("click", () => {
+		if (input.disabled || input.readOnly) return;
+		input.value = "";
+		input.focus();
+		input.dispatchEvent(new Event("input", { bubbles: true }));
+	});
+	sync();
+}
+for (const form of document.querySelectorAll("form[data-specimen-inline]")) {
+	form.addEventListener("submit", (event) => {
+		event.preventDefault();
+		const input = [...form.elements].find(
+			(el) => el instanceof HTMLInputElement,
+		);
+		const status = form.dataset.specimenStatus
+			? document.getElementById(form.dataset.specimenStatus)
+			: form.querySelector('[role="status"]');
+		status.textContent = `Added “${input.value}” to this local example. Nothing was saved.`;
+		input.value = "";
+		input.focus();
+		input.dispatchEvent(new Event("input", { bubbles: true }));
+	});
+}
