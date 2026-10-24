@@ -411,6 +411,57 @@
 						</article>
 					</div>
 				</section>
+				<section class="specimen-section" aria-labelledby="disclosures-heading">
+					<h2 id="disclosures-heading">Disclosures</h2>
+					<p>Use <code>details.disclosure</code> to group optional settings, filters, or supporting information. The full summary is clickable, with a trailing chevron, a medium-weight title, and a divider when open. Keep essential instructions visible outside collapsed sections.</p>
+					<p>Place the label in <code>disclosure-label</code>, its title in <code>disclosure-title</code>, optional supporting text in <code>disclosure-description</code>, and the body in <code>disclosure-content</code>. A heading can carry both label and title classes. Choose its level for the page hierarchy; the class only normalizes its appearance.</p>
+					<p>These examples use native disclosure behavior: Enter or Space opens a focused summary, and multiple sections can stay open. Checkboxes and Reset work locally without saving. Put links, inputs, and extra actions in the body, never inside the summary. Nest only when the content needs that hierarchy.</p>
+					<div class="specimen-grid">
+						<article class="specimen-theme specimen-theme-light" data-disclosure-demo="light">
+							<h3>Settings and filters · light</h3>
+							<div class="specimen-disclosure-stack">
+								<details class="disclosure">
+									<summary><h4 class="disclosure-label disclosure-title">Preferences</h4></summary>
+									<div class="disclosure-content"><p>Choose which local hints to show. Closing this section preserves your choices; Reset restores this example’s defaults.</p>
+										<form><label><input type="checkbox" name="show-hints" checked> Show hints</label><label><input type="checkbox" name="show-completed"> Include completed items</label><button type="reset">Reset preferences</button></form></div>
+								</details>
+								<details class="disclosure" open>
+									<summary><span class="disclosure-label"><span class="disclosure-title">Shopping filters</span><span class="disclosure-description">All stores · All categories</span></span></summary>
+									<div class="disclosure-content"><p>The supporting summary describes the current selection. An application updates it when its filters change.</p>
+										<p>Each section opens independently. The library does not save expansion state or require other sections to close.</p>
+										<details class="disclosure"><summary><span class="disclosure-label disclosure-title">How matching works</span></summary><div class="disclosure-content"><p>An item matches any selected store and any selected category. Both groups apply together.</p><p>See the <a href="#chips-heading">chip examples</a> for selectable filters.</p></div></details></div>
+								</details>
+								<details class="disclosure"><summary><span class="disclosure-label disclosure-title">Help with shopping preferences and shared lists across multiple devices</span></summary><div class="disclosure-content"><p>Long labels wrap while the chevron stays reachable. Allow room for translated text and increased text size.</p></div></details>
+							</div></article>
+						<article class="specimen-theme specimen-theme-dark" data-disclosure-demo="dark">
+							<h3>Settings and filters · dark</h3>
+							<div class="specimen-disclosure-stack">
+								<details class="disclosure">
+									<summary><h4 class="disclosure-label disclosure-title">Preferences</h4></summary>
+									<div class="disclosure-content"><p>Choose which local hints to show. Closing this section preserves your choices; Reset restores this example’s defaults.</p>
+										<form><label><input type="checkbox" name="show-hints" checked> Show hints</label><label><input type="checkbox" name="show-completed"> Include completed items</label><button type="reset">Reset preferences</button></form></div>
+								</details>
+								<details class="disclosure" open>
+									<summary><span class="disclosure-label"><span class="disclosure-title">Shopping filters</span><span class="disclosure-description">All stores · All categories</span></span></summary>
+									<div class="disclosure-content"><p>The supporting summary describes the current selection. An application updates it when its filters change.</p>
+										<p>Each section opens independently. The library does not save expansion state or require other sections to close.</p>
+										<details class="disclosure"><summary><span class="disclosure-label disclosure-title">How matching works</span></summary><div class="disclosure-content"><p>An item matches any selected store and any selected category. Both groups apply together.</p><p>See the <a href="#chips-heading">chip examples</a> for selectable filters.</p></div></details></div>
+								</details>
+								<details class="disclosure"><summary><span class="disclosure-label disclosure-title">Help with shopping preferences and shared lists across multiple devices</span></summary><div class="disclosure-content"><p>Long labels wrap while the chevron stays reachable. Allow room for translated text and increased text size.</p></div></details>
+							</div></article>
+					</div>
+					<p>The summary target is at least 2.75rem high (44px at a 16px root size). Keyboard focus uses the library’s separate outline; hover and press tint the summary. The same panel treatment applies in both themes.</p>
+					<p>Use the native <code>open</code> attribute for an initially expanded section. Leave off the native <code>name</code> attribute to allow independent expansion. Do not add a button role, <code>tabindex</code>, or manually maintained <code>aria-expanded</code> to the summary. Applications own persistence and control behavior; no JavaScript is needed for opening and closing. If heading navigation inside a summary matters, check it with your target assistive technology, or place a section heading outside the disclosure. See <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/summary#summaries_as_headings">summary heading guidance</a>.</p>
+					<p>Unclassed <code>details</code> keeps the browser’s native appearance. App layouts own spacing between panels; the examples use a grid gap. Customize through the existing color, spacing, and radius tokens or scoped application CSS.</p>
+					<pre class="specimen-disclosure-markup"><code>&lt;details class="disclosure"&gt;
+  &lt;summary&gt;
+    &lt;span class="disclosure-label disclosure-title"&gt;Preferences&lt;/span&gt;
+  &lt;/summary&gt;
+  &lt;div class="disclosure-content"&gt;
+    &lt;p&gt;Settings and controls go here.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/details&gt;</code></pre>
+				</section>
 				<section class="specimen-section" aria-labelledby="inline-forms-heading">
 					<h2 id="inline-forms-heading">Inline forms and input actions</h2>
 					<p>Use an <code>inline-field</code> wrapper for a visible standard-size, medium-weight label above an <code>input-row</code>. The input grows; Add wraps to the right when space runs out. An optional <code>input-action</code> groups a text input with its X. Ordinary stacked forms keep their existing appearance.</p>

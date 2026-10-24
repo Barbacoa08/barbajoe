@@ -93,6 +93,33 @@ Use a semantic `<table>` for tabular data, with a `<caption>` and `<th scope="co
 
 The library does not set table width, scrolling, stripes, sticky headings, sorting, or narrow-screen column behavior. Each application chooses how its data fits available space. The wide specimen's scroll container demonstrates one application choice; it is not part of the shipped CSS.
 
+## Disclosures
+
+Use `details.disclosure` for the bordered disclosure panel. Its full-width summary has a trailing chevron, a minimum 2.75rem target height (44px at a 16px root size), hover/press feedback, and the library’s keyboard focus outline. Opening adds a divider between summary and body. See the [light and dark catalog examples](https://lib-staging.barbajoe.tech/#disclosures-heading) for settings, supporting summaries, nested help, and long labels.
+
+```html
+<details class="disclosure" open>
+  <summary>
+    <span class="disclosure-label">
+      <span class="disclosure-title">Shopping filters</span>
+      <span class="disclosure-description">All stores · All categories</span>
+    </span>
+  </summary>
+  <div class="disclosure-content">
+    <p>Settings, controls, and links go here.</p>
+  </div>
+</details>
+```
+
+- `.disclosure-label` fills the available summary width and wraps long text without crowding the chevron. For a simple label, put both label and title classes on one element.
+- `.disclosure-title` uses medium weight 500 and normalizes heading margins, size, and borders. A heading at the correct page level may replace the title span, for example `<h2 class="disclosure-label disclosure-title">Preferences</h2>`. The class changes appearance, not semantics. Some browser/assistive-technology combinations expose summary descendants as part of the toggle rather than separate headings; verify your target combinations, or place a section heading outside the disclosure when independent heading navigation is important. See [MDN’s summary heading guidance](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/summary#summaries_as_headings).
+- `.disclosure-description` provides optional muted supporting text below the title. The application keeps selection/status summaries up to date.
+- `.disclosure-content` pads the body and removes its first/last child’s outer block margins. Applications own spacing between panels, internal content layouts, and wide tables/media; long text wraps. Nested disclosures use the same markup, but avoid unnecessary nesting.
+
+Keep the summary’s wording descriptive. Place extra buttons, links, and inputs in the body, not inside the summary. Use disclosures when users can choose which optional information or settings to reveal; keep required instructions and critical status visible. Native `details`/`summary` provides pointer and keyboard operation and expanded-state semantics. Do not add `role="button"`, `tabindex`, or duplicate `aria-expanded` state. Add `open` for initial expansion. Omit `name` for independently expandable sections, as in the catalog; the library does not force an exclusive accordion, animate expansion, or persist state. Applications own persistence and any enclosed controls’ behavior. No JavaScript ships with this treatment.
+
+**Compatibility and customization:** This is opt-in; unclassed disclosures retain native styling. Use existing `--barba-` color, spacing, and radius tokens or scoped application selectors. Existing app-specific summary spacing, heading borders, or icons should be removed when adopting these classes to avoid duplicate decoration. The disclosure styling does not supply a disabled state; choose static content instead when expansion is unavailable.
+
 ## Buttons, forms, and dialogs
 
 Native `button` and button-type `input` elements are styled automatically: `submit` is primary, `button` is secondary, and `reset` is tertiary. A button without a type receives primary styling to match its usual form-submit behavior; write `type="button"` for a non-submit action. Override emphasis independently of behavior with `data-barba-variant="primary"`, `"secondary"`, `"tertiary"`, or `"text"`. These attributes affect appearance only.
@@ -374,7 +401,7 @@ Playwright runs Chromium, Firefox, and WebKit at 1280×720 and 390×844 in light
 
 For a focused local run, use `pnpm test:browser --project=webkit-narrow-dark`; add `--headed` to watch it. The same command runs in the **Browser review** GitHub Actions workflow on PRs, pushes to `main`, or manual dispatch. Download its `browser-review-report` artifact, unzip it, then run `pnpm test:browser:report /path/to/unzipped-report` with the directory containing `index.html`. Reports are retained for 14 days. Behavioral failures fail that CI job; configuring it as a required merge check is a separate maintainer choice.
 
-These are Playwright's bundled test browsers, not a guarantee about the current installed Chrome, Firefox, or Safari releases. WebKit is sufficient for automated coverage here but is not branded Safari. Narrow desktop viewports do not test real iOS/Android browser behavior. Runs request reduced motion for repeatable capture; they do not assert motion behavior, real 200% browser zoom, or screen-reader usability. Use the manual guidance below for those checks when relevant; actual-device review remains recommended, not required. The 13 release-helper tests are separate from these browser tests.
+These are Playwright's bundled test browsers, not a guarantee about the current installed Chrome, Firefox, or Safari releases. WebKit is sufficient for automated coverage here but is not branded Safari. Narrow desktop viewports do not test real iOS/Android browser behavior. Runs request reduced motion for repeatable capture; they do not assert motion behavior, real 200% browser zoom, or screen-reader usability. Use the manual guidance below for those checks when relevant; actual-device review remains recommended, not required. Disclosure checks exercise source and packaged CSS, padded summary targets, native controls, keyboard focus, nested content, forced colors, and unbroken-label reflow at 320px with enlarged text. The 13 release-helper tests are separate from these browser tests.
 
 Focus-return checks open dialogs from a focused button using Enter. On macOS, WebKit's default Tab navigation skips buttons, so the footer check uses Option-Tab; no system preferences are changed. These checks exercise keyboard dismissal and restoration, without assuming pointer clicks focus buttons in every browser.
 

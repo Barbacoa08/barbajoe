@@ -144,3 +144,12 @@
 	background-color: var(--barba-color-control-bg);
 	border-color: var(--barba-color-link-hover);
 }
+
+.specimen-disclosure-stack {
+	display: grid;
+	gap: var(--barba-space-4);
+}
+.specimen-disclosure-markup {
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+}
