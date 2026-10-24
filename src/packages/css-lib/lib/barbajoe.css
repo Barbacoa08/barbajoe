@@ -1,3 +1,5 @@
+@import "./variables.css";
+
 @import "./base-elements.css";
 @import "./tables.css";
 @import "./body-layout.css";
@@ -6,9 +8,8 @@
 @import "./buttons.css";
 @import "./text-gradient.css";
 @import "./transform-scale-up.css";
-@import "./variables.css";
 
 @import "./components/header.css";
 @import "./components/footer.css";
-
 @import "./components/inline-forms.css";
+@import "./components/chips.css";

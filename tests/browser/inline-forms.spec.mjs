@@ -109,7 +109,7 @@ for (const packaged of [false, true]) {
 		await clear.hover();
 		expect(
 			await clear.evaluate((el) => getComputedStyle(el).borderTopColor),
-		).not.toBe("rgba(0, 0, 0, 0)");
+		).toBe("rgba(0, 0, 0, 0)");
 		await clear.click();
 		await page
 			.getByRole("button", { name: "Reset example", exact: true })

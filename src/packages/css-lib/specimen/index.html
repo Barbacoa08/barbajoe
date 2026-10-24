@@ -294,10 +294,127 @@
 					</div>
 				</section>
 
+				<section class="specimen-section" aria-labelledby="chips-heading">
+					<h2 id="chips-heading">Chips</h2>
+					<p>Use informational chips for labels, toggle buttons for filters, and a separate X for removing a selection. Short chips are 1.5rem high (24px at a 16px root). Labels wrap rather than truncate. Compact targets trade touch comfort for density; retain the larger close/clear targets elsewhere.</p>
+					<p>The remove X shares the close/clear background-only treatment, with a 2px inset that leaves the chip border visible. Removing a selection does not delete the category or saved item. These examples keep all changes local.</p>
+					<div class="specimen-grid">
+						<article class="specimen-theme specimen-theme-light" data-chip-demo="">
+							<h3>Light mode</h3>
+							<h4>Informational</h4>
+							<p>Item category: <span class="chip">Produce</span></p>
+							<ul class="chip-list" aria-label="Item labels">
+								<li class="chip">
+									Produce
+								</li>
+								<li class="chip">
+									Pantry
+								</li>
+								<li class="chip">
+									Produce for the shared weekend shopping list
+								</li>
+							</ul>
+							<h4>Selectable filters</h4>
+							<fieldset>
+								<legend>Categories</legend>
+								<div class="chip-list">
+									<button type="button" class="chip" aria-pressed="true" data-chip-filter="Produce">Produce</button>
+									<button type="button" class="chip" aria-pressed="false" data-chip-filter="Pantry">Pantry</button>
+									<button type="button" class="chip" aria-pressed="false" disabled>Unavailable</button>
+								</div>
+							</fieldset>
+							<p data-chip-results="" role="status">Showing: Apples.</p>
+							<h4>Removable selections</h4>
+							<ul class="chip-list" data-chip-selections="" aria-label="Selected categories">
+								<li class="chip chip-removable">
+									<span>Produce</span>
+									<button type="button" data-barba-variant="icon" data-barba-shape="icon" data-barba-size="compact" data-chip-remove="" aria-label="Remove Produce" title="Remove Produce">
+										<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24">
+											<path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2"/>
+										</svg>
+									</button>
+								</li>
+								<li class="chip chip-removable">
+									<span>Pantry</span>
+									<button type="button" data-barba-variant="icon" data-barba-shape="icon" data-barba-size="compact" data-chip-remove="" aria-label="Remove Pantry" title="Remove Pantry">
+										<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24">
+											<path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2"/>
+										</svg>
+									</button>
+								</li>
+								<li class="chip chip-removable">
+									<span>Locked</span>
+									<button type="button" data-barba-variant="icon" data-barba-shape="icon" data-barba-size="compact" data-chip-remove="" aria-label="Remove Locked" title="Remove Locked" disabled>
+										<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24">
+											<path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2"/>
+										</svg>
+									</button>
+								</li>
+							</ul>
+							<button type="button" data-chip-restore="">Restore selections</button>
+							<p data-chip-status="" role="status">All sample selections are present.</p>
+						</article>
+						<article class="specimen-theme specimen-theme-dark" data-chip-demo="">
+							<h3>Dark mode</h3>
+							<h4>Informational</h4>
+							<p>Item category: <span class="chip">Produce</span></p>
+							<ul class="chip-list" aria-label="Item labels">
+								<li class="chip">
+									Produce
+								</li>
+								<li class="chip">
+									Pantry
+								</li>
+								<li class="chip">
+									Produce for the shared weekend shopping list
+								</li>
+							</ul>
+							<h4>Selectable filters</h4>
+							<fieldset>
+								<legend>Categories</legend>
+								<div class="chip-list">
+									<button type="button" class="chip" aria-pressed="true" data-chip-filter="Produce">Produce</button>
+									<button type="button" class="chip" aria-pressed="false" data-chip-filter="Pantry">Pantry</button>
+									<button type="button" class="chip" aria-pressed="false" disabled>Unavailable</button>
+								</div>
+							</fieldset>
+							<p data-chip-results="" role="status">Showing: Apples.</p>
+							<h4>Removable selections</h4>
+							<ul class="chip-list" data-chip-selections="" aria-label="Selected categories">
+								<li class="chip chip-removable">
+									<span>Produce</span>
+									<button type="button" data-barba-variant="icon" data-barba-shape="icon" data-barba-size="compact" data-chip-remove="" aria-label="Remove Produce" title="Remove Produce">
+										<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24">
+											<path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2"/>
+										</svg>
+									</button>
+								</li>
+								<li class="chip chip-removable">
+									<span>Pantry</span>
+									<button type="button" data-barba-variant="icon" data-barba-shape="icon" data-barba-size="compact" data-chip-remove="" aria-label="Remove Pantry" title="Remove Pantry">
+										<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24">
+											<path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2"/>
+										</svg>
+									</button>
+								</li>
+								<li class="chip chip-removable">
+									<span>Locked</span>
+									<button type="button" data-barba-variant="icon" data-barba-shape="icon" data-barba-size="compact" data-chip-remove="" aria-label="Remove Locked" title="Remove Locked" disabled>
+										<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24">
+											<path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2"/>
+										</svg>
+									</button>
+								</li>
+							</ul>
+							<button type="button" data-chip-restore="">Restore selections</button>
+							<p data-chip-status="" role="status">All sample selections are present.</p>
+						</article>
+					</div>
+				</section>
 				<section class="specimen-section" aria-labelledby="inline-forms-heading">
 					<h2 id="inline-forms-heading">Inline forms and input actions</h2>
 					<p>Use an <code>inline-field</code> wrapper for a visible standard-size, medium-weight label above an <code>input-row</code>. The input grows; Add wraps to the right when space runs out. An optional <code>input-action</code> groups a text input with its X. Ordinary stacked forms keep their existing appearance.</p>
-					<p>The X is our shared close/clear icon action: a native button with <code>data-barba-variant<wbr>=&quot;text&quot;</code> and <code>data-barba-shape<wbr>=&quot;icon&quot;</code>. It has a generous target, transparent resting face, and visible hover and keyboard-focus treatment. Its accessible name describes the action: “Clear item name” for an input, “Close dialog” for a modal. The icon is decorative; these actions do not delete saved data.</p>
+					<p>The X is our shared close/clear icon action: a native button with <code>data-barba-variant<wbr>=&quot;icon&quot;</code> and <code>data-barba-shape<wbr>=&quot;icon&quot;</code>. It has a generous target, transparent resting face, a circular hover background inset by 2px, and a separate keyboard-focus outline. Its accessible name describes the action: “Clear item name” for an input, “Close dialog” for a modal. The icon is decorative; these actions do not delete saved data.</p>
 					<h3>Input and Add</h3>
 					<p>Add validates and reports locally; no information is saved or sent.</p>
 					<form data-specimen-inline="">
@@ -318,7 +435,7 @@
 							<div class="input-row">
 								<div class="input-action">
 									<input id="inline-clear" name="inline-clear" type="text" value="Weekend supplies" required=""/>
-									<button type="button" data-barba-variant="text" data-barba-shape="icon" aria-label="Clear item to clear" title="Clear item to clear" aria-controls="inline-clear" data-specimen-clear="">
+									<button type="button" data-barba-variant="icon" data-barba-shape="icon" aria-label="Clear item to clear" title="Clear item to clear" aria-controls="inline-clear" data-specimen-clear="">
 										<svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24">
 											<path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2"/>
 										</svg>
@@ -339,7 +456,7 @@
 							<div class="input-row">
 								<div class="input-action">
 									<input id="inline-empty" name="inline-empty" type="text" value="" required=""/>
-									<button type="button" data-barba-variant="text" data-barba-shape="icon" aria-label="Clear new item" title="Clear new item" aria-controls="inline-empty" data-specimen-clear="" hidden="">
+									<button type="button" data-barba-variant="icon" data-barba-shape="icon" aria-label="Clear new item" title="Clear new item" aria-controls="inline-empty" data-specimen-clear="" hidden="">
 										<svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24">
 											<path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2"/>
 										</svg>
@@ -367,7 +484,7 @@
 						<label for="inline-standalone">Filter text</label>
 						<div class="input-action">
 							<input id="inline-standalone" type="text" value="Weekend"/>
-							<button type="button" data-barba-variant="text" data-barba-shape="icon" aria-label="Clear filter text" title="Clear filter text" aria-controls="inline-standalone" data-specimen-clear="">
+							<button type="button" data-barba-variant="icon" data-barba-shape="icon" aria-label="Clear filter text" title="Clear filter text" aria-controls="inline-standalone" data-specimen-clear="">
 								<svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24">
 									<path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2"/>
 								</svg>
@@ -381,7 +498,7 @@
 						<div class="input-row">
 							<div class="input-action">
 								<input id="inline-disabled" name="inline-disabled" type="text" value="Unavailable" disabled=""/>
-								<button type="button" data-barba-variant="text" data-barba-shape="icon" aria-label="Clear disabled item" title="Clear disabled item" aria-controls="inline-disabled" data-specimen-clear="" disabled="">
+								<button type="button" data-barba-variant="icon" data-barba-shape="icon" aria-label="Clear disabled item" title="Clear disabled item" aria-controls="inline-disabled" data-specimen-clear="" disabled="">
 									<svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24">
 										<path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2"/>
 									</svg>
@@ -395,7 +512,7 @@
 						<div class="input-row">
 							<div class="input-action">
 								<input id="inline-readonly" name="inline-readonly" type="text" value="Fixed value" readonly=""/>
-								<button type="button" data-barba-variant="text" data-barba-shape="icon" aria-label="Clear read-only item" title="Clear read-only item" aria-controls="inline-readonly" data-specimen-clear="" disabled="">
+								<button type="button" data-barba-variant="icon" data-barba-shape="icon" aria-label="Clear read-only item" title="Clear read-only item" aria-controls="inline-readonly" data-specimen-clear="" disabled="">
 									<svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24">
 										<path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2"/>
 									</svg>
@@ -527,7 +644,7 @@
 						</form>
 					</dialog>
 					<h3>Content-fit dialogs with a close action</h3>
-					<p>These examples keep the standard width and opt into compact padding, a content-fit minimum, and more vertical room. Full-width header and footer dividers meet the scrolling body. The close icon uses the text-button treatment and follows the same cancellation path as Cancel and Escape.</p>
+					<p>These examples keep the standard width and opt into compact padding, a content-fit minimum, and more vertical room. Full-width header and footer dividers meet the scrolling body. The close icon uses the background-only icon treatment and follows the same cancellation path as Cancel and Escape.</p>
 					<div class="specimen-actions">
 						<button type="button" command="show-modal" commandfor="content-fit-short">Open content-fit short dialog</button>
 						<button type="button" command="show-modal" commandfor="content-fit-long">Open content-fit long dialog</button>
@@ -537,7 +654,7 @@
 						<form method="dialog" class="dialog-content-container">
 							<header class="dialog-header dialog-header-actions">
 								<h2 id="content-fit-short-title">Content-fit short dialog</h2>
-								<button type="button" data-barba-variant="text" data-barba-shape="icon" aria-label="Close dialog" title="Close dialog" command="request-close" commandfor="content-fit-short"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" /></svg></button>
+								<button type="button" data-barba-variant="icon" data-barba-shape="icon" aria-label="Close dialog" title="Close dialog" command="request-close" commandfor="content-fit-short"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" /></svg></button>
 							</header>
 							<div class="dialog-body">
 								<label>Item name <input name="item" value="Weekend supplies" required autofocus /></label>
@@ -555,7 +672,7 @@
 						<form method="dialog" class="dialog-content-container">
 							<header class="dialog-header dialog-header-actions">
 								<h2 id="content-fit-long-title">Content-fit long dialog</h2>
-								<button type="button" data-barba-variant="text" data-barba-shape="icon" aria-label="Close dialog" title="Close dialog" command="request-close" commandfor="content-fit-long"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" /></svg></button>
+								<button type="button" data-barba-variant="icon" data-barba-shape="icon" aria-label="Close dialog" title="Close dialog" command="request-close" commandfor="content-fit-long"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" /></svg></button>
 							</header>
 							<div class="dialog-body">
 								<label>Item name <input name="item" value="Weekend supplies" required autofocus /></label>

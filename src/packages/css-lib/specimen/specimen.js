@@ -101,3 +101,46 @@ for (const form of document.querySelectorAll("form[data-specimen-inline]")) {
 		input.dispatchEvent(new Event("input", { bubbles: true }));
 	});
 }
+
+// Local chip examples: consumers own filtering/removal and persistence.
+for (const panel of document.querySelectorAll("[data-chip-demo]")) {
+	const list = panel.querySelector("[data-chip-selections]");
+	const initial = list.innerHTML;
+	const restore = panel.querySelector("[data-chip-restore]");
+	for (const button of panel.querySelectorAll("[data-chip-filter]")) {
+		button.addEventListener("click", () => {
+			button.setAttribute(
+				"aria-pressed",
+				String(button.getAttribute("aria-pressed") !== "true"),
+			);
+			const selected = [
+				...panel.querySelectorAll('[data-chip-filter][aria-pressed="true"]'),
+			].map((el) => el.dataset.chipFilter);
+			const items = [
+				{ name: "Apples", category: "Produce" },
+				{ name: "Rice", category: "Pantry" },
+			];
+			panel.querySelector("[data-chip-results]").textContent = `Showing: ${items
+				.filter((item) => !selected.length || selected.includes(item.category))
+				.map((item) => item.name)
+				.join(", ")}.`;
+		});
+	}
+	list.addEventListener("click", (event) => {
+		const button = event.target.closest("[data-chip-remove]");
+		if (!button || button.disabled) return;
+		const enabled = [...list.querySelectorAll("button:enabled")];
+		const index = enabled.indexOf(button);
+		const next = enabled[index + 1] || enabled[index - 1] || restore;
+		const label = button.previousElementSibling.textContent;
+		next.focus();
+		button.closest("li").remove();
+		panel.querySelector("[data-chip-status]").textContent =
+			`Removed ${label} from this example. Nothing was deleted from storage.`;
+	});
+	restore.addEventListener("click", () => {
+		list.innerHTML = initial;
+		panel.querySelector("[data-chip-status]").textContent =
+			"All sample selections restored.";
+	});
+}

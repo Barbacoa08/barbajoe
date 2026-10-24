@@ -102,6 +102,23 @@
 	color: var(--barba-color-link-hover);
 }
 
+/* Close, clear and remove share appearance; shape/size own geometry below. */
+:where(button[data-barba-variant="icon"]) {
+	--_barba-icon-border: 2px;
+	border: 2px solid transparent;
+	border-radius: 50%;
+	background-color: transparent;
+	background-clip: padding-box;
+	color: var(--barba-color-link);
+}
+:where(button[data-barba-variant="icon"]:enabled:is(:hover, :active)) {
+	background-color: color-mix(
+		in srgb,
+		var(--barba-color-link) 18%,
+		var(--barba-color-surface)
+	);
+}
+
 /* Intent is independent of submit/reset behavior and overrides emphasis. */
 :where(:is(button, input)[data-barba-intent="danger"]) {
 	background-color: transparent;
@@ -138,6 +155,26 @@
 :where(button[data-barba-shape="icon"]) {
 	display: inline-grid;
 	place-items: center;
-	min-inline-size: 2.75rem;
-	padding: var(--barba-space-2);
+	inline-size: var(--_barba-icon-target, 2.75rem);
+	block-size: var(--_barba-icon-target, 2.75rem);
+	min-inline-size: var(--_barba-icon-target, 2.75rem);
+	min-block-size: var(--_barba-icon-target, 2.75rem);
+	padding: calc(
+		(var(--_barba-icon-target, 2.75rem) - var(--_barba-icon-glyph, 1.25rem)) /
+		2 -
+		var(--_barba-icon-border, 1px)
+	);
+}
+
+:where(button[data-barba-shape="icon"][data-barba-size="compact"]) {
+	--_barba-icon-target: 1.5rem;
+	--_barba-icon-glyph: 1rem;
+}
+:where(button[data-barba-shape="icon"] > svg) {
+	display: block;
+	inline-size: var(--_barba-icon-glyph, 1.25rem);
+	block-size: var(--_barba-icon-glyph, 1.25rem);
+}
+:where(button[data-barba-shape="icon"][hidden]) {
+	display: none;
 }

@@ -30,6 +30,8 @@ async function fixture(page, packaged) {
   <input type="button" class="consumer-action" value="Custom input button" />
   <input type="submit" class="consumer-action" value="Custom input submit" />
   <input type="reset" class="consumer-action" value="Custom input reset" />
+  <button type="button" data-barba-variant="icon" data-barba-shape="icon" class="consumer-action" aria-label="Custom close">×</button>
+  <button type="button" data-barba-variant="icon" data-barba-shape="icon" data-barba-size="compact" class="consumer-action" aria-label="Custom remove">×</button>
   <button type="button" class="consumer-action" disabled>Custom disabled</button>
   <input type="submit" class="consumer-action" disabled value="Custom disabled input" />
   <span id="palette" style="color:var(--barba-color-danger);background:var(--barba-color-surface);border:1px solid var(--barba-color-link-hover)"></span>

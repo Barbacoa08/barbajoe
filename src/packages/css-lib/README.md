@@ -144,7 +144,7 @@ The pattern works inside a form, outside a form, and with a separate form owner.
     <div class="input-row">
       <div class="input-action">
         <input id="item-name" name="item" type="text" required>
-        <button type="button" data-barba-variant="text" data-barba-shape="icon"
+        <button type="button" data-barba-variant="icon" data-barba-shape="icon"
           aria-label="Clear item name" title="Clear item name"
           aria-controls="item-name" hidden>
           <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24">
@@ -160,11 +160,47 @@ The pattern works inside a form, outside a form, and with a separate form owner.
 
 **Application behavior:** CSS only handles layout and the `hidden` state. Show the X only while `input.value.length > 0`; disable it if the field is disabled or read-only. Initialize that state on render, update it on input/change, after form reset, and whenever application code changes the value or editable state. Native reset completes after the reset event; synchronize after its default action. On clear, empty the value, return focus to the input **before** hiding/disabling the X, update application state and notify any dependent logic. Do not submit the form, reset unrelated fields, or delete persisted data. The specimen provides local example behavior in `specimen.js`; no JavaScript ships in the CSS package. The embedded pattern suppresses WebKit's native search-cancel decoration to avoid duplicate clear controls, so applications must supply the documented working X.
 
-### Shared close/clear icon action
+### Shared close/clear/remove icon action
 
-The X shown above is the standard close/clear icon in this library's examples. Reuse the same decorative SVG and native `button` with `data-barba-variant="text"` plus `data-barba-shape="icon"`. This combines the quiet resting appearance and visible hover/active/focus treatment with a minimum 2.75rem target (44px at the default root size). Keep the native focus outline and Enter/Space activation. `hidden` removes an empty field's clear button from keyboard and accessibility navigation.
+The X shown above is the standard close/clear/remove icon in the examples. Use a native `button` with `data-barba-variant="icon"` and `data-barba-shape="icon"`. The variant supplies a transparent resting face and a circular background on hover/press; the icon color stays unchanged and no visible border appears. A 2 CSS pixel transparent inset keeps the background clear of surrounding input/chip edges. Keyboard focus uses the separate global outline. Disabled actions retain the existing opacity and do not react to hover.
 
-Give each button a context-specific accessible name: **“Clear item name”** for a field, **“Close dialog”** for a modal, or a more specific dialog name when needed. The SVG has `aria-hidden="true"`; the optional `title` provides an extra pointer hint and does not replace `aria-label`. The shared icon communicates a visual convention, not shared behavior: clear empties one field, while dialog close uses the same cancellation/request-close path as Cancel and Escape, including application cancellation guards. Use a separately labeled danger action for deletion. Avoid unlabeled X glyphs, clickable spans, or `type="reset"` as a field-clear shortcut.
+The shape supplies a 2.75rem square target and a 1.25rem SVG (44px/20px at a 16px root). Add `data-barba-size="compact"` only for dense chip removal: a 1.5rem target and 1rem SVG (24px/16px). Compact targets are less forgiving, especially for touch; keep the larger size for close and clear. Sizes scale with root text; the inset remains 2px. `hidden` removes an empty field's clear action from layout and keyboard navigation.
+
+This is opt-in: existing `data-barba-variant="text"` icon buttons retain their text-button appearance. Change the variant to `icon` for the new convention. Ordinary text actions and danger treatments are unchanged. Do not use this quiet X convention for deleting saved data; use a named danger action.
+
+Give each button a context-specific accessible name: **“Clear item name”** for a field, **“Close dialog”** for a modal, or **“Remove Produce”** for a chip selection. The SVG has `aria-hidden="true"`; the optional `title` provides an extra pointer hint and does not replace `aria-label`. The shared icon communicates a visual convention, not shared behavior: clear empties one field, while dialog close uses the same cancellation/request-close path as Cancel and Escape, including application cancellation guards. Use a separately labeled danger action for deletion. Avoid unlabeled X glyphs, clickable spans, or `type="reset"` as a field-clear shortcut.
+
+### Chips
+
+See the [working light/dark catalog examples](https://lib-staging.barbajoe.tech/#chips-heading). `.chip` supplies dense typography and surface styling; `.chip-list` supplies wrapping and an 8px-equivalent gap. Short chips are 1.5rem high, including the remove target. Long labels wrap and may grow taller. Use:
+
+- Informational: a noninteractive `span` or list item with `.chip`; no keyboard stop.
+- Selectable: a native `button type="button"` with `.chip` and `aria-pressed="true|false"`. A thicker outline indicates selection without relying on color alone. Keep the label stable while toggling, and use native `disabled` when unavailable.
+- Removable: `.chip.chip-removable` containing a label span and a separate compact icon button. Do not make the containing chip another button or combine removal and selection on one target.
+
+```html
+<ul class="chip-list" aria-label="Selected categories">
+  <li class="chip chip-removable">
+    <span>Produce</span>
+    <button type="button" data-barba-variant="icon" data-barba-shape="icon"
+      data-barba-size="compact" aria-label="Remove Produce" title="Remove Produce">
+      <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24">
+        <path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" />
+      </svg>
+    </button>
+  </li>
+</ul>
+```
+
+Applications own selection, filtering and removal. Announce changed results when needed. Before removing a focused chip, move focus to the next enabled remove button, the previous one, or a stable nearby control if none remain. Removing a selection is distinct from deleting the underlying item. The catalog's filtering, removal and restore code is example-only; the package ships CSS, not JavaScript.
+
+### CSS organization and customization
+
+`barbajoe.css` imports tokens first, semantic defaults next, and optional component patterns last. There are no cascade layers. Button defaults, variants and states use zero-specificity `:where()` selectors so a consumer class can own the properties it sets even when loaded earlier. Chip appearance selectors carry one class of specificity; use a later consumer class to customize that appearance. Child layout selectors can include element types.
+
+Button appearance belongs in `buttons.css`; icon shape/size rules there supply geometry independently. `components/chips.css` owns chip labels, selected states, wrapping and placement. `components/inline-forms.css` owns input reservation/alignment, and `dialog.css` owns dialog layout and dividers. Neither layout module duplicates icon hover styles. Internal `--_barba-*` properties implement sizing and are not a public customization API; prefer the documented attributes and ordinary consumer CSS.
+
+Defaults followed by explicit variants are intentional specialization. Retain compatibility-sensitive legacy form/header rules until a separately reviewed migration; avoid appending stronger overrides to compensate for unclear ownership.
 
 ### Dialogs
 
@@ -203,7 +239,7 @@ The following sizing options are independent. Omit an attribute for the existing
 | `data-barba-dialog-height="content"` | Removes the outer minimum height and lowers the structured body's minimum from 6rem to 3rem; short content uses only the room it needs. |
 | `data-barba-dialog-room="extra"` | Starts at 5% of the viewport rather than 10%, and permits up to 90% rather than 80% of its height, while preserving at least 1rem outer gutters. |
 
-Combine `data-barba-shape="icon"` with `data-barba-variant="text"` for a close button that is transparent at rest and reveals its face and border during interaction. Icon geometry keeps a minimum 2.75rem target in both directions and centers the content; keep the SVG small enough to fit that target. Give the button an accessible name and hide its decorative SVG from assistive technology. The shape can also be combined with other button treatments.
+Combine `data-barba-shape="icon"` with `data-barba-variant="icon"` for the shared close action. Its circular hover background is inset by 2px; the 2.75rem target and separate focus outline remain intact. Give the button an accessible name and hide its decorative SVG from assistive technology. See the shared icon guidance above for sizing and compatibility.
 
 ```html
 <dialog id="compact-dialog" aria-labelledby="compact-title" closedby="any"
@@ -214,7 +250,7 @@ Combine `data-barba-shape="icon"` with `data-barba-variant="text"` for a close b
   <form method="dialog" class="dialog-content-container">
     <header class="dialog-header dialog-header-actions">
       <h2 id="compact-title">Edit item</h2>
-      <button type="button" data-barba-variant="text" data-barba-shape="icon"
+      <button type="button" data-barba-variant="icon" data-barba-shape="icon"
         aria-label="Close dialog" command="request-close" commandfor="compact-dialog">
         <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24">
           <path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" />
