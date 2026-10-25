@@ -6,6 +6,8 @@ for (const file of [
 	"layout-header.html",
 	"layout-footer.html",
 	"layout-minimal.html",
+	"editor.html",
+	"package-theme.html",
 ]) {
 	test(`${file} loads styled content without page overflow`, async ({
 		page,

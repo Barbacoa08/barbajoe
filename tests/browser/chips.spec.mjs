@@ -18,6 +18,10 @@ async function load(page, packaged) {
 		});
 	}
 }
+// Firefox protocol bounds can report a 44px box as 43.999969px.
+// Allow only 0.001 CSS px of numeric error; even a 43.99px target fails.
+const minimumTarget = 44 - 0.001;
+
 for (const packaged of [false, true]) {
 	const source = packaged ? "package" : "source";
 	test(`${source}: compact chip faces retain generous targets and inset backgrounds`, async ({
@@ -44,7 +48,7 @@ for (const packaged of [false, true]) {
 		]) {
 			const box = await page.locator(selector).boundingBox();
 			expect(box.height).toBeCloseTo(44, 1);
-			expect(box.width).toBeGreaterThanOrEqual(44);
+			expect(box.width).toBeGreaterThanOrEqual(minimumTarget);
 		}
 		expect(
 			(await page.locator("#selected .chip-face").boundingBox()).height,
@@ -169,8 +173,8 @@ for (const packaged of [false, true]) {
 					}),
 				);
 				for (let i = 0; i < boxes.length; i++) {
-					expect(boxes[i].width).toBeGreaterThanOrEqual(44);
-					expect(boxes[i].height).toBeGreaterThanOrEqual(44);
+					expect(boxes[i].width).toBeGreaterThanOrEqual(minimumTarget);
+					expect(boxes[i].height).toBeGreaterThanOrEqual(minimumTarget);
 					for (const other of boxes.slice(i + 1)) {
 						const overlapX =
 							Math.min(boxes[i].right, other.right) -

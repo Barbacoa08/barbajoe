@@ -184,6 +184,3 @@
 	inline-size: var(--_barba-icon-glyph, 1.25rem);
 	block-size: var(--_barba-icon-glyph, 1.25rem);
 }
-:where(button[data-barba-shape="icon"][hidden]) {
-	display: none;
-}

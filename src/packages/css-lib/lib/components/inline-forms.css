@@ -46,10 +46,6 @@ input:is([type="text"], [type="search"], :not([type])) {
 	margin-inline-end: 1px;
 	inline-size: 2.75rem;
 }
-/* Display styling must not reveal the app-controlled hidden clear action. */
-.input-action > button[hidden] {
-	display: none;
-}
 /* The documented X supplies the clear action for search inputs too. */
 .input-action > input[type="search"]::-webkit-search-cancel-button {
 	-webkit-appearance: none;

@@ -208,3 +208,10 @@
 	button:disabled {
 	outline-color: var(--barba-color-text-muted);
 }
+
+/* Catalog navigation only; not shipped in the library. */
+.specimen-contents {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--barba-space-3) var(--barba-space-6);
+}

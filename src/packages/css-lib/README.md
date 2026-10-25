@@ -2,6 +2,37 @@
 
 One global stylesheet for personal applications. It gives ordinary semantic HTML a consistent foundation for typography, forms, links, dialogs, page layout, and a small set of reusable visual treatments.
 
+## Contents
+
+- [Installation](#installation-and-import) · [Compatibility and adoption](#040-compatibility-and-adoption)
+- [API quick reference](#api-quick-reference) · [Application responsibilities](#what-the-library-owns)
+- [Shell](#application-shell) · [Header navigation](#header-navigation) · [Tables](#data-tables)
+- [Disclosures](#disclosures) · [Visually hidden text](#visually-hidden-text)
+- [Buttons](#buttons-forms-and-dialogs) · [Inline fields](#inline-fields-and-input-actions) · [X actions](#shared-closeclearremove-icon-action) · [Chips](#chips) · [Dialogs](#dialogs)
+- [Working editor](#working-editor) · [Tokens and themes](#tokens-and-accessibility-contract)
+- [Development](#local-development) · [Browser review](#automated-browser-review) · [Release](#releasing-the-css-package)
+
+## API quick reference
+
+These are styling hooks, not JavaScript components. Read the linked pattern guidance before copying markup. Attributes not listed here retain their native HTML meaning.
+
+| Pattern / public hooks | Required structure and states | Application responsibilities / customization |
+| --- | --- | --- |
+| `.app-shell`, `.site-header`, `.site-header-brand`, `.site-header-links`, `.skip-link` | Direct `main` in shell; optional direct header/footer. Navigation list with links/buttons; `aria-current="page"` (legacy `.active` supported). Skip link targets main. | Landmarks, meaningful headings/destinations, update actions; retain visible focus and content wrapping. |
+| Native buttons; `data-barba-variant="primary\|secondary\|tertiary\|text"`; `data-barba-intent="danger"` | Explicit native type; `disabled` for unavailable actions. Variants change appearance, not submit/reset behavior. | State, events, confirmation, pending/error feedback. Custom classes may override zero-specificity defaults; supply all interaction states. |
+| `data-barba-variant="icon"`, `data-barba-shape="icon"`, optional `data-barba-size="compact"` | Native named button, decorative SVG hidden from AT. Compact is a smaller face within a generous target. | Context-specific name, native disabled/hidden, distinct close/clear/remove behavior and focus transitions. |
+| `.inline-field`, `.input-row`, `.input-action` | Direct associated label; row contains input or action group then button. **Input-action requires the input and icon button as direct children.** Text/search inputs only. | Value/clear visibility, form ownership, validation, focus before hiding; not a generic textarea or nested-component layout. |
+| `.chip-list`, `.chip`, `.chip-face`, `.chip-removable` | List of chips; informational span/list item; selectable `button.chip[aria-pressed] > .chip-face`; removable container with label span and separate compact icon button. | Selection/removal, disabled state, stable names and next/previous/fallback focus. Keep 44×44px target space; don't add click handlers to information or whole removable containers. |
+| `details.disclosure`, `.disclosure-label`, `.disclosure-title`, `.disclosure-description`, `.disclosure-content` | Direct summary, label/title and optional description, then content wrapper. Native `open`; no invented disabled state. | Descriptive summary, optional persistence; keep required content visible. Avoid nested interactive summary content. |
+| `dialog`, `.dialog-content-container`, `.dialog-header`, `.dialog-header-actions`, `.dialog-body`, `.dialog-footer` | Direct structured form/container; header/body/footer children. Named native dialog. Optional `data-barba-dialog-spacing="compact"`, `-height="content"`, `-room="extra"`, `-dividers="full"` (all prefixed `data-barba-dialog`). | Open/close, validation, cancel guards, initial/restored focus, fallback browser behavior. Standard width is unchanged. |
+| `.visually-hidden` | Supplemental noninteractive text; optional empty persistent `role="status" aria-atomic="true"` region. | Naming source, live-region timing and update ownership; not for focusable elements or essential instructions. Use `.skip-link` for focus-revealed navigation. |
+| Native `hidden` | Ordinary hidden values suppress layout and keyboard access, including invalid values. `hidden="until-found"` stays browser-managed. | Remove the attribute / set `hidden=false` to reveal; do not write `hidden="false"`. Hidden is not disabled: form submission and scripts remain active. |
+| Semantic HTML defaults; `.helper-text`, `.text-gradient`, `.scaleup-on-hover` | Forms/labels, tables, typography; helper text is scoped to forms. Decorative classes are optional; `.scaleup-on-hover.disabled` suppresses scaling, and legacy `li.disabled > a/span` supplies disabled appearance only. | Associate help via `aria-describedby`; table captions/header relationships and overflow are app-owned. Do not rely on hover/motion/color alone. |
+
+Customize with public `--barba-color-*`, `--barba-font-size-{sm,base,lg,xl}`, `--barba-space-{1,2,3,4,6,8}`, `--barba-radius-{sm,md}`, `--barba-shadow-raised`, `--barba-motion-duration-{fast,base,decorative}` and `--barba-motion-easing-emphasized`. Private `--_barba-*` and compiler-generated `--lightningcss-*` properties are implementation details. Recheck contrast, target sizes, focus and reflow after overrides. See [the theme contract](#tokens-and-accessibility-contract).
+
+Ordinary `hidden` deliberately wins over component display styles through one shared rule. It is distinct from `.visually-hidden`, which keeps text available to assistive technology. See [MDN hidden semantics](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/hidden).
+
 ## Installation and import
 
 Install the package, then import its stylesheet once from an application entry point. The package-root import is preferred:
@@ -100,6 +131,8 @@ Direct links and buttons in the list share the same transparent navigation treat
 The optional `site-header-brand` class preserves one brand appearance on an anchor, strong text or a heading. It does not require an `h1` in the header or change the element's semantics. Choose headings according to the page hierarchy, and give links meaningful destinations. Use public `--barba-` tokens and application styles to customize the header; example JavaScript in the [header specimen](https://lib-staging.barbajoe.tech/headers.html) is not shipped in the package.
 
 **Compatibility for the upcoming minor release:** Existing header markup and `.active` remain supported. Navigation that previously occupied a new row below 40rem can now stay beside the brand; navigation-only headers now align to the inline end. Padding and the underline move from the list item to its direct interactive element, and direct navigation buttons now match links. Consumers with list-item padding/border overrides should remove or move those overrides to the link/button to avoid double spacing. The brand class is opt-in; existing unclassed brand elements keep their typography.
+
+Accessibility: use meaningful navigation landmarks and current-page semantics; distinguish multiple navigation regions by name. See [APG navigation-landmark guidance](https://www.w3.org/WAI/ARIA/apg/patterns/landmarks/examples/navigation.html).
 
 ## Data tables
 
@@ -351,6 +384,12 @@ Invoker commands and native light dismissal require browser support; CSS cannot 
 
 An `aria-disabled="true"` link receives disabled appearance and ignores pointer interaction, but ARIA does not prevent keyboard activation. Consumers must remove its navigation target or prevent activation; the specimen prevents its click event for both pointer and keyboard activation.
 
+## Working editor
+
+The [maintained editor](https://lib-staging.barbajoe.tech/editor.html) composes Name, Notes, informational/selectable/removable chips, close, and Delete/Cancel/Save. Toggle read-only and long content to exercise disabled controls, wrapping and scrolling. It uses the existing stacked labels; no new compact-label API is implied. `specimen/editor.css` contains only application-like layout, and `editor.js` owns synthetic draft/save/cancel/delete state and focus restoration. Neither ships in npm. Applications must add their own persistence, permissions, pending/error handling, and deletion safeguards.
+
+See the [separate Our List adoption plan](https://github.com/Barbacoa08/barbajoe/blob/main/docs/our-list-adoption.md) in this repository for a component-by-component migration proposal. The plan does not change or deploy Our List.
+
 ## Tokens and accessibility contract
 
 All public tokens use the `--barba-` prefix. The semantic color roles are:
@@ -389,7 +428,7 @@ The following default pairings are guaranteed. Text roles meet at least 7:1 agai
 
 These guarantees apply only to the listed default pairings. Accent, inverse-surface, arbitrary token combinations, and consumer overrides do not carry a general contrast guarantee. The forced light and dark matrices in the [component catalog](https://lib-staging.barbajoe.tech/#color-heading) display the contract.
 
-The published Lightning CSS bundle selects its light/dark palette from the system `prefers-color-scheme` setting. Setting `color-scheme` on an element alone does not switch its compiled palette. Applications that force a theme should set matching `color-scheme`, override semantic `--barba-color-*` tokens, and review the primary-button hover rule, which also uses `light-dark()` directly. This pre-existing limitation differs from the source-based catalog, which can display forced light and dark panels together.
+The published Lightning CSS bundle selects its light/dark palette from the system `prefers-color-scheme` setting. Setting `color-scheme` on an element alone does not switch its compiled palette. Applications that force a theme should set matching `color-scheme`, override semantic `--barba-color-*` tokens, and review the primary-button hover rule, which also uses `light-dark()` directly. This pre-existing limitation differs from the source-based catalog, which can display forced light and dark panels together. The [packaged-CSS example](https://lib-staging.barbajoe.tech/package-theme.html) imports the generated release CSS and shows the distinction. Change system preference to verify it; do not copy compiler-private variables.
 
 ## Browser support
 
@@ -405,7 +444,7 @@ From this package directory, install the repository dependencies and start the s
 pnpm dev
 ```
 
-Parcel opens the component catalog automatically and applies HTML, CSS, and dialog-fixture changes with hot module replacement. Use the navigation to review the component catalog, header compositions, and all four application shell structures in the same session.
+Parcel opens the component catalog automatically and applies HTML, CSS, and dialog-fixture changes with hot module replacement. Development startup also builds the package once for `package-theme.html`; after further library edits, run `pnpm build` to refresh that compiled example. `build:specimen` always regenerates the package before bundling all seven pages. Use the navigation to review the component catalog, header compositions, and all four application shell structures in the same session.
 
 Build the production package with Lightning CSS:
 
@@ -445,9 +484,9 @@ pnpm test:browser
 pnpm test:browser:report
 ```
 
-The review builds the CSS and optimized specimen, serves `.output/specimen` on `127.0.0.1:4173`, runs the tests, and stops its server. Leave that port free; an existing server is rejected so stale output cannot silently pass. No separate development server is needed. The specimen build imports library source CSS through Parcel; the release-helper checks separately validate the packaged Lightning CSS bundle.
+The review builds the CSS and optimized specimen, serves `.output/specimen` on `127.0.0.1:4173`, runs the tests, and stops its server. Leave that port free; an existing server is rejected so stale output cannot silently pass. No separate development server is needed. Most specimen pages import library source CSS through Parcel; `package-theme.html` imports the freshly generated release bundle. The editor and hidden-state regression checks also exercise both stylesheet builds. The release-helper checks separately validate the packaged Lightning CSS bundle.
 
-Playwright runs Chromium, Firefox, and WebKit at 1280×720 and 390×844 in light and dark schemes. It checks all five pages and asset loading, page overflow, form reset and inert catalog actions, dialog reset/validation/dismissal/focus, dialog sizing and body scrolling, keyboard reachability, and keyboard table scrolling. Focused header, table and dialog checks also use 320px layouts. Header checks cover content-based wrapping, right alignment, padded targets, current-page markup, disabled actions, semantic brand elements and long labels; a separate check exercises the packaged CSS and header text contrast. Each run captures full-page views, buttons/hover, placeholders, forms, tables, and open-dialog states for human review. These images are evidence, with no stored image baselines or automatic pixel comparisons.
+Playwright runs Chromium, Firefox, and WebKit at 1280×720 and 390×844 in light and dark schemes. It checks all seven pages and asset loading, page overflow, form reset and inert catalog actions, dialog reset/validation/dismissal/focus, dialog sizing and body scrolling, keyboard reachability, and keyboard table scrolling. Focused header, table and dialog checks also use 320px layouts. Header checks cover content-based wrapping, right alignment, padded targets, current-page markup, disabled actions, semantic brand elements and long labels; a separate check exercises the packaged CSS and header text contrast. Each run captures full-page views, buttons/hover, placeholders, forms, tables, and open-dialog states for human review. These images are evidence, with no stored image baselines or automatic pixel comparisons.
 
 `playwright-report/` contains the HTML report, screenshots, environment attachments, and failure traces. `test-results/` contains individual test outputs. Both are ignored by Git and excluded from the npm package. Environment attachments identify the date, commit, browser build/version, OS, actual viewport, scheme, and build type. Test failures produce a nonzero exit code. Reports do not open automatically; the job can finish unattended.
 

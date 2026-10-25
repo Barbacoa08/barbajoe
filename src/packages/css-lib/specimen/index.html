@@ -21,7 +21,7 @@
 						<li class="active">
 							<a href="./index.html" aria-current="page">Catalog</a>
 						</li>
-						<li><a href="./headers.html">Headers</a></li>
+						<li><a href="./headers.html">Headers</a></li><li><a href="./editor.html">Editor</a></li>
 						<li><a href="./layout-header.html">Header layout</a></li>
 						<li><a href="./layout-footer.html">Footer layout</a></li>
 						<li><a href="./layout-minimal.html">Minimal layout</a></li>
@@ -35,6 +35,17 @@
 					This page exercises the maintained selectors, semantic HTML defaults,
 					interactive states, and motion preferences.
 				</p>
+
+<nav aria-label="Catalog contents"><h2>Contents</h2><ul class="specimen-contents">
+<li><a href="#api-heading">API quick reference</a></li><li><a href="#typography-heading">Typography and links</a></li><li><a href="#tables-heading">Tables</a></li><li><a href="#color-heading">Colors and themes</a></li><li><a href="#forms-heading">Forms</a></li><li><a href="#chips-heading">Chips</a></li><li><a href="#disclosures-heading">Disclosures</a></li><li><a href="#visually-hidden-heading">Visually hidden text</a></li><li><a href="#inline-forms-heading">Inline fields and X actions</a></li><li><a href="#buttons-heading">Buttons</a></li><li><a href="#motion-heading">Motion</a></li><li><a href="#dialog-heading">Dialogs</a></li><li><a href="./editor.html">Working editor</a></li><li><a href="./headers.html">Headers</a></li></ul></nav>
+<section class="specimen-section" aria-labelledby="api-heading"><h2 id="api-heading">API quick reference</h2><p>The package supplies CSS only. Applications supply state, events, validation, focus, live announcements, and persistence. <a href="https://github.com/Barbacoa08/barbajoe/blob/main/src/packages/css-lib/README.md#api-quick-reference">Full markup, state and customization reference</a>.</p>
+<dl><dt>Shell and navigation</dt><dd><code>.app-shell</code> has a direct main and optional header/footer. <code>.site-header</code>, <code>.site-header-brand</code>, <code>.site-header-links</code> arrange native links and buttons; use <code>aria-current="page"</code> for the current destination. <code>.skip-link</code> targets main.</dd>
+<dt>Buttons and X actions</dt><dd><code>data-barba-variant</code>: primary, secondary, tertiary, text, icon. <code>data-barba-intent="danger"</code> supplies destructive appearance. Icon actions also use <code>data-barba-shape="icon"</code>; <code>data-barba-size="compact"</code> reduces the face, not the target. Native type, name, and disabled state remain required.</dd>
+<dt>Fields</dt><dd><code>.inline-field</code> has a direct visible label. <code>.input-row</code> wraps a field/group and action. <code>.input-action</code> requires a <strong>direct-child text/search input and icon button</strong>; nested component inputs and textareas need application layout. Hide clear when empty; restore focus before hiding it.</dd>
+<dt>Chips</dt><dd><code>.chip-list</code> wraps. Informational <code>.chip</code> stays noninteractive. A selectable button needs <code>aria-pressed</code> and a <code>.chip-face</code> child. <code>.chip-removable</code> contains a label span and separate compact X button; applications restore focus after removal.</dd>
+<dt>Disclosures</dt><dd><code>details.disclosure</code> has a direct summary with <code>.disclosure-label</code>, <code>.disclosure-title</code>, optional <code>.disclosure-description</code>, then <code>.disclosure-content</code>. Native <code>open</code> owns expansion.</dd>
+<dt>Dialogs</dt><dd>A named native dialog contains a direct <code>.dialog-content-container</code> with <code>.dialog-header</code>, <code>.dialog-body</code>, <code>.dialog-footer</code>. Add <code>.dialog-header-actions</code> for a close row. Optional <code>data-barba-dialog-*</code>: spacing=compact, height=content, room=extra, dividers=full. Applications own cancellation and initial/restored focus.</dd>
+<dt>Visibility and customization</dt><dd><code>.visually-hidden</code> retains supplemental text for assistive technology. Ordinary <code>hidden</code> suppresses rendering and tab stops; remove the attribute to reveal (the string “false” still hides). <code>hidden="until-found"</code> remains browser-managed. Customize public <code>--barba-</code> tokens; private <code>--_barba-</code> and compiler properties are not API. Decorative <code>.text-gradient</code> and <code>.scaleup-on-hover</code> are optional. Recheck contrast, focus, and target sizes after overrides.</dd></dl></section>
 
 				<section class="specimen-section" aria-labelledby="typography-heading">
 					<h2 id="typography-heading">Typography and links</h2>
@@ -98,7 +109,7 @@
 				</section>
 
 				<section class="specimen-section" aria-labelledby="color-heading">
-					<h2 id="color-heading">Semantic color contract</h2>
+					<h2 id="color-heading">Semantic color contract</h2><aside id="theme-guidance" class="specimen-demo"><p><strong>Source catalog themes differ from the installed package.</strong> These side-by-side examples force light and dark themes using source CSS. The compiled package selects its palette from the system preference; setting only <code>color-scheme</code> on a panel does not switch that palette. <a href="./package-theme.html">Inspect the packaged-CSS example</a>.</p><p>Applications forcing a theme must override semantic <code>--barba-color-*</code> tokens and review primary-button hover, as well as setting matching <code>color-scheme</code>. Do not copy compiler-private variables. Test contrast and native controls in the actual application build.</p></aside>
 					<p class="specimen-page-note">
 						Every named text role below is guaranteed against both the page and
 						surface backgrounds. Borders and focus rings have a separate non-text
@@ -202,7 +213,7 @@
 				</section>
 
 				<section class="specimen-section" aria-labelledby="forms-heading">
-					<h2 id="forms-heading">Form elements</h2>
+					<h2 id="forms-heading">Form elements</h2><p><strong>Accessibility:</strong> Use visible associated labels, connect hints/errors with aria-describedby and preserve native validation. <a href="https://www.w3.org/WAI/tutorials/forms/">WAI forms guidance</a>.</p>
 					<form id="catalog-form" data-specimen-no-submit>
 						<div class="specimen-grid">
 							<label>
@@ -295,7 +306,7 @@
 				</section>
 
 				<section class="specimen-section" aria-labelledby="chips-heading">
-					<h2 id="chips-heading">Chips</h2>
+					<h2 id="chips-heading">Chips</h2><p><strong>Accessibility:</strong> Selectable chips use aria-pressed and stable names; removal has a separate named button and deliberate focus restoration. Informational chips are text. <a href="https://www.w3.org/WAI/ARIA/apg/patterns/button/">APG toggle-button guidance</a>.</p>
 					<p>Use informational chips for labels, toggle buttons for filters, and a separate X for removing a selection. Informational chips stay 1.5rem high (24px at a 16px root). Interactive chips have compact 28px short faces inside targets at least 44×44 CSS pixels. Labels wrap rather than truncate.</p>
 					<p>The remove X shares the close/clear background-only treatment: a compact face with a 2px inset inside its own 44px-wide target. Only the X target removes the chip; its label is not clickable. The transparent area above and below a filter face or X is part of that button. Removing a selection does not delete the category or saved item. These examples keep all changes local.</p>
 					<p>Allow the target space in layout: rows are about 20px taller than 24px chips, and removable chips reserve extra width for the X. Use normal wrapping and gaps; do not enlarge targets with overlapping absolute hit areas or negative margins. Informational chips have no tab stop. Each filter uses a native button with <code>aria-pressed</code> and a child <code>span.chip-face</code>; the button owns state and the span draws the compact face.</p>
@@ -425,7 +436,7 @@
 					</div>
 				</section>
 				<section class="specimen-section" aria-labelledby="disclosures-heading">
-					<h2 id="disclosures-heading">Disclosures</h2>
+					<h2 id="disclosures-heading">Disclosures</h2><p><strong>Accessibility:</strong> Keep native details/summary semantics; avoid redundant roles, tabindex and aria-expanded. Required instructions must remain visible. <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/summary">MDN summary guidance</a>.</p>
 					<p>Use <code>details.disclosure</code> to group optional settings, filters, or supporting information. The full summary is clickable, with a trailing chevron, a medium-weight title, and a divider when open. Keep essential instructions visible outside collapsed sections.</p>
 					<p>Place the label in <code>disclosure-label</code>, its title in <code>disclosure-title</code>, optional supporting text in <code>disclosure-description</code>, and the body in <code>disclosure-content</code>. A heading can carry both label and title classes. Choose its level for the page hierarchy; the class only normalizes its appearance.</p>
 					<p>These examples use native disclosure behavior: Enter or Space opens a focused summary, and multiple sections can stay open. Checkboxes and Reset work locally without saving. Put links, inputs, and extra actions in the body, never inside the summary. Nest only when the content needs that hierarchy.</p>
@@ -626,7 +637,7 @@
 				</section>
 
 				<section class="specimen-section" aria-labelledby="inline-forms-heading">
-					<h2 id="inline-forms-heading">Inline forms and input actions</h2>
+					<h2 id="inline-forms-heading">Inline forms and input actions</h2><p><strong>Accessibility:</strong> Keep labels visible and use one naming source for each X. Synchronize clear visibility and move focus to the input before hiding the control. <a href="https://www.w3.org/WAI/tutorials/forms/labels/">WAI label guidance</a>.</p>
 					<p>Use an <code>inline-field</code> wrapper for a visible standard-size, medium-weight label above an <code>input-row</code>. The input grows; Add wraps to the right when space runs out. An optional <code>input-action</code> groups a text input with its X. Ordinary stacked forms keep their existing appearance.</p>
 					<p>The X is our shared close/clear icon action: a native button with <code>data-barba-variant<wbr>=&quot;icon&quot;</code> and <code>data-barba-shape<wbr>=&quot;icon&quot;</code>. It has a generous target, transparent resting face, a circular hover background inset by 2px, and a separate keyboard-focus outline. Disabled X actions use muted gray, retain the disabled opacity, and have no hover background. Its accessible name describes the action: “Clear item name” for an input, “Close dialog” for a modal. The icon is decorative; these actions do not delete saved data.</p>
 					<h3>Input and Add</h3>
@@ -739,7 +750,7 @@
 				</section>
 
 				<section class="specimen-section" aria-labelledby="buttons-heading">
-					<h2 id="buttons-heading">Buttons</h2>
+					<h2 id="buttons-heading">Buttons</h2><p><strong>Accessibility:</strong> Use native types and disabled states, stable accessible names and visible keyboard focus. Color does not explain destructive behavior. Applications own action feedback and confirmation. <a href="https://www.w3.org/WAI/ARIA/apg/patterns/button/">APG button guidance</a>.</p>
 					<p>Native submit, button, and reset types provide primary, secondary, and tertiary emphasis. Existing emphasis styles keep their text color on hover. Text and destructive actions below demonstrate the new optional treatments; their clicks only report local example state.</p>
 					<div class="specimen-grid">
 						<article class="specimen-theme specimen-theme-light">
@@ -797,7 +808,7 @@
 				</section>
 
 				<section class="specimen-section" aria-labelledby="motion-heading">
-					<h2 id="motion-heading">Motion and interaction</h2>
+					<h2 id="motion-heading">Motion and interaction</h2><p><strong>Accessibility:</strong> Keep meaning and operation available without animation or hover. Test reduced-motion preferences separately from static screenshots. <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion">MDN reduced-motion guidance</a>.</p>
 					<div class="specimen-grid">
 						<div class="specimen-demo scaleup-on-hover">
 							<strong>Hover or focus within</strong>
@@ -812,7 +823,7 @@
 				</section>
 
 				<section class="specimen-section" aria-labelledby="dialog-heading">
-					<h2 id="dialog-heading">Dialogs</h2>
+					<h2 id="dialog-heading">Dialogs</h2><p><a href="./editor.html">Try the maintained item editor</a> with Name, Notes, chips, disabled states, and long content.</p><p><strong>Accessibility:</strong> Name each native dialog, choose initial focus deliberately, support Escape/cancellation and restore focus to the invoker or a logical fallback. <a href="https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/">APG dialog guidance</a>.</p>
 					<p>Both dialogs start at the same viewport-relative top offset. Short content leaves the footer at the minimum-height bottom. Long content grows to the viewport cap, then only its body scrolls. Footer order is Reset, Cancel, Submit. Submit validates and closes; Cancel or clicking outside closes without validation; Reset restores initial values and stays open. Closing does not reset the form.</p>
 					<div class="specimen-actions">
 						<button type="button" command="show-modal" commandfor="specimen-dialog">Open short dialog</button>
