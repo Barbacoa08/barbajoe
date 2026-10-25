@@ -144,3 +144,34 @@ for (const panel of document.querySelectorAll("[data-chip-demo]")) {
 			"All sample selections restored.";
 	});
 }
+
+// Local demonstrations of hidden status text and contextual action names.
+for (const panel of document.querySelectorAll('[data-hidden-demo="status"]')) {
+	const select = panel.querySelector("select");
+	select.addEventListener("change", () => {
+		const items = [...panel.querySelectorAll("[data-category]")];
+		for (const item of items)
+			item.hidden =
+				select.value !== "all" && item.dataset.category !== select.value;
+		const count = items.filter((item) => !item.hidden).length;
+		panel.querySelector("[data-count]").textContent =
+			`${count} of ${items.length} items shown.`;
+		// The native select already exposes its chosen category. Announce only
+		// the result, and avoid rewriting an unchanged live-region message.
+		const message = `${count} of ${items.length} items shown.`;
+		const status = panel.querySelector("[data-hidden-status]");
+		if (status.textContent !== message) status.textContent = message;
+		panel.querySelector("[data-inspector]").textContent = message;
+	});
+}
+// Catalog-only feedback: a real editor should manage its own action and focus.
+for (const button of document.querySelectorAll(
+	'[data-hidden-demo="context"] [data-item]',
+))
+	button.addEventListener("click", () => {
+		button
+			.closest("article")
+			.querySelector(
+				"[data-action-result]",
+			).textContent = `${button.dataset.item} selected for editing. Local example only.`;
+	});

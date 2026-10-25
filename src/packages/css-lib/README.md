@@ -120,6 +120,35 @@ Keep the summary’s wording descriptive. Place extra buttons, links, and inputs
 
 **Compatibility and customization:** This is opt-in; unclassed disclosures retain native styling. Use existing `--barba-` color, spacing, and radius tokens or scoped application selectors. Existing app-specific summary spacing, heading borders, or icons should be removed when adopting these classes to avoid duplicate decoration. The disclosure styling does not supply a disabled state; choose static content instead when expansion is unavailable.
 
+## Visually hidden text
+
+Use `.visually-hidden` on supplemental, noninteractive text to remove it from visual layout while retaining it for assistive technology. It is opt-in, has no JavaScript, and does not itself supply an accessible name, live-region semantics, or focus behavior. See the [working light/dark examples and implementation guidance](https://lib-staging.barbajoe.tech/#visually-hidden-heading), including per-pattern requirements, primary references, and verification steps.
+
+```html
+<!-- The visible label remains at the start of the complete name. -->
+<button type="button">Edit<span class="visually-hidden"> Apples</span></button>
+
+<!-- Present before an application adds a result message; do not focus it. -->
+<p class="visually-hidden" role="status" aria-atomic="true"></p>
+
+<!-- Hidden text is an alternative naming source to aria-label. -->
+<button type="button" data-barba-variant="icon" data-barba-shape="icon">
+  <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+    <path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" />
+  </svg>
+  <span class="visually-hidden">Clear item name</span>
+</button>
+```
+
+- Keep essential information visible. Apply this utility only to the supplemental text, never a focusable control or its container. Do not combine it with `hidden`, `display:none`, `visibility:hidden`, `aria-hidden="true"`, or `inert` on text intended to remain accessible or its ancestors. Continue using `.skip-link` for links that must become visible on focus; `.visually-hidden` does not reveal itself.
+- Keep the visible action wording in its accessible name, preferably at the beginning. Choose one naming source: `aria-label`/`aria-labelledby` can override descendant text. Do not layer them over these hidden labels. Retain visible associated labels on inputs and hide decorative SVGs from assistive technology. Read [W3C label-in-name guidance](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html) and [APG naming guidance](https://www.w3.org/WAI/ARIA/apg/practices/names-and-descriptions/).
+- Prefer making an existing visible result message a status region when it contains the full message. Otherwise mount one initially empty hidden region before updating it. Use `role="status" aria-atomic="true"`; keep ordinary updates polite, concise, and result-focused. Avoid duplicate live regions, repeating the native control’s selected value, or live announcements of entire lists. See [W3C ARIA22](https://www.w3.org/WAI/WCAG21/Techniques/aria/ARIA22) and [status-message guidance](https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html).
+- Applications own update timing and focus. The catalog’s Edit feedback is a demonstration, not a second announcement to copy into a focused editor. Clear uses the documented input-action behavior: update application state, return focus before hiding, and synchronize visibility. Setting `input.value` alone does not fire an input event; use the consuming application’s normal update path. See [MDN input events](https://developer.mozilla.org/en-US/docs/Web/API/Element/input_event).
+
+**Verification:** Inspect accessible names and live-region ownership; test keyboard operation, clear focus/empty-state behavior, narrow layouts, zoom, and actual announcements with supported browser/screen-reader combinations. DOM tests do not establish speech output. Check settled and rapid results, no results, and equal-count changes in consuming applications. Avoid rewriting unchanged messages on rerenders, but assess feedback for distinct operations separately.
+
+**Migration:** Replace equivalent local hiding styles only after adopting the library release. Preserve semantics and application behavior; separately review status-region mounting and duplicate announcements. A CSS replacement does not correct timing. Existing correctly named `aria-label` icon buttons need no migration.
+
 ## Buttons, forms, and dialogs
 
 Native `button` and button-type `input` elements are styled automatically: `submit` is primary, `button` is secondary, and `reset` is tertiary. A button without a type receives primary styling to match its usual form-submit behavior; write `type="button"` for a non-submit action. Override emphasis independently of behavior with `data-barba-variant="primary"`, `"secondary"`, `"tertiary"`, or `"text"`. These attributes affect appearance only.
@@ -195,7 +224,7 @@ The shape supplies a 2.75rem square target and a 1.25rem SVG (44px/20px at a 16p
 
 This is opt-in: existing `data-barba-variant="text"` icon buttons retain their text-button appearance. Change the variant to `icon` for the new convention. Ordinary text actions and danger treatments are unchanged. Do not use this quiet X convention for deleting saved data; use a named danger action.
 
-Give each button a context-specific accessible name: **“Clear item name”** for a field, **“Close dialog”** for a modal, or **“Remove Produce”** for a chip selection. The SVG has `aria-hidden="true"`; the optional `title` provides an extra pointer hint and does not replace `aria-label`. The shared icon communicates a visual convention, not shared behavior: clear empties one field, while dialog close uses the same cancellation/request-close path as Cancel and Escape, including application cancellation guards. Use a separately labeled danger action for deletion. Avoid unlabeled X glyphs, clickable spans, or `type="reset"` as a field-clear shortcut.
+Give each button a context-specific accessible name: **“Clear item name”** for a field, **“Close dialog”** for a modal, or **“Remove Produce”** for a chip selection. The SVG has `aria-hidden="true"`; the optional `title` provides an extra pointer hint and does not replace an accessible name from `aria-label` or a `.visually-hidden` text label. The shared icon communicates a visual convention, not shared behavior: clear empties one field, while dialog close uses the same cancellation/request-close path as Cancel and Escape, including application cancellation guards. Use a separately labeled danger action for deletion. Avoid unlabeled X glyphs, clickable spans, or `type="reset"` as a field-clear shortcut.
 
 ### Chips
 
