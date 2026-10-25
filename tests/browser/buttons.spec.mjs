@@ -51,6 +51,7 @@ for (const packaged of [false, true]) {
 		browserName,
 	}, testInfo) => {
 		await fixture(page, packaged);
+		let previousControl = page.locator("#danger");
 		for (const control of await page.locator(".consumer-action").all()) {
 			await expect(control).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
 			await expect(control).toHaveCSS("border-top-color", "rgba(0, 0, 0, 0)");
@@ -62,18 +63,20 @@ for (const packaged of [false, true]) {
 				await page.mouse.down();
 				await expect(control).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
 				await page.mouse.up();
-				// Approach this control from its previous keyboard stop; tabbing
-				// past the final control can transfer focus to browser chrome.
+				// Start from a known different control, then use forward keyboard
+				// navigation. Reversing from the just-clicked target can retain a
+				// different sequential-navigation starting point in Linux WebKit.
 				const tab =
 					browserName === "webkit" && process.platform === "darwin"
 						? "Alt+Tab"
 						: "Tab";
-				await control.focus();
-				await page.keyboard.press(`Shift+${tab}`);
+				await previousControl.focus();
+				await expect(previousControl).toBeFocused();
 				await page.keyboard.press(tab);
 				await expect(control).toBeFocused();
 				await expect(control).toHaveCSS("border-top-color", "rgba(0, 0, 0, 0)");
 				await expect(control).toHaveCSS("outline-style", "solid");
+				previousControl = control;
 			}
 		}
 		await capture(
