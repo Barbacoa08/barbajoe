@@ -21,7 +21,7 @@
 						<li class="active">
 							<a href="./index.html" aria-current="page">Catalog</a>
 						</li>
-						<li><a href="./headers.html">Headers</a></li>
+						<li><a href="./headers.html">Headers</a></li><li><a href="./editor.html">Editor</a></li>
 						<li><a href="./layout-header.html">Header layout</a></li>
 						<li><a href="./layout-footer.html">Footer layout</a></li>
 						<li><a href="./layout-minimal.html">Minimal layout</a></li>
@@ -35,6 +35,17 @@
 					This page exercises the maintained selectors, semantic HTML defaults,
 					interactive states, and motion preferences.
 				</p>
+
+<nav aria-label="Catalog contents"><h2>Contents</h2><ul class="specimen-contents">
+<li><a href="#api-heading">API quick reference</a></li><li><a href="#typography-heading">Typography and links</a></li><li><a href="#tables-heading">Tables</a></li><li><a href="#color-heading">Colors and themes</a></li><li><a href="#forms-heading">Forms</a></li><li><a href="#chips-heading">Chips</a></li><li><a href="#disclosures-heading">Disclosures</a></li><li><a href="#visually-hidden-heading">Visually hidden text</a></li><li><a href="#inline-forms-heading">Inline fields and X actions</a></li><li><a href="#buttons-heading">Buttons</a></li><li><a href="#motion-heading">Motion</a></li><li><a href="#dialog-heading">Dialogs</a></li><li><a href="./editor.html">Working editor</a></li><li><a href="./headers.html">Headers</a></li></ul></nav>
+<section class="specimen-section" aria-labelledby="api-heading"><h2 id="api-heading">API quick reference</h2><p>The package supplies CSS only. Applications supply state, events, validation, focus, live announcements, and persistence. <a href="https://github.com/Barbacoa08/barbajoe/blob/main/src/packages/css-lib/README.md#api-quick-reference">Full markup, state, and customization reference</a>.</p>
+<dl><dt>Shell and navigation</dt><dd><code>.app-shell</code> has a direct main and optional header/footer. <code>.site-header</code>, <code>.site-header-brand</code>, <code>.site-header-links</code> arrange native links and buttons; use <code>aria-current="page"</code> for the current destination. <code>.skip-link</code> targets main.</dd>
+<dt>Buttons and X actions</dt><dd><code>data-barba-variant</code>: primary, secondary, tertiary, text, and icon. <code>data-barba-intent="danger"</code> supplies destructive appearance. Icon actions also use <code>data-barba-shape="icon"</code>; <code>data-barba-size="compact"</code> reduces the face, not the target. Native type, name, and disabled state remain required.</dd>
+<dt>Fields</dt><dd><code>.inline-field</code> has a direct visible label. <code>.input-row</code> wraps a field/group and action. <code>.input-action</code> requires a <strong>direct-child text/search input and icon button</strong>; nested component inputs and textareas need application layout. Hide clear when empty; restore focus before hiding it.</dd>
+<dt>Chips</dt><dd><code>.chip-list</code> wraps. Informational <code>.chip</code> stays noninteractive. A selectable button needs <code>aria-pressed</code> and a <code>.chip-face</code> child. <code>.chip-removable</code> contains a label span and separate compact X button; applications restore focus after removal.</dd>
+<dt>Disclosures</dt><dd><code>details.disclosure</code> has a direct summary with <code>.disclosure-label</code>, <code>.disclosure-title</code>, optional <code>.disclosure-description</code>, then <code>.disclosure-content</code>. Native <code>open</code> owns expansion.</dd>
+<dt>Dialogs</dt><dd>A named native dialog contains a direct <code>.dialog-content-container</code> with <code>.dialog-header</code>, <code>.dialog-body</code>, <code>.dialog-footer</code>. Add <code>.dialog-header-actions</code> for a close row. Optional <code>data-barba-dialog-*</code>: spacing=compact, height=content, room=extra, dividers=full. Applications own cancellation and initial/restored focus.</dd>
+<dt>Visibility and customization</dt><dd><code>.visually-hidden</code> retains supplemental text for assistive technology. Ordinary <code>hidden</code> suppresses rendering and tab stops; remove the attribute to reveal (the string “false” still hides). <code>hidden="until-found"</code> remains browser-managed. Customize public <code>--barba-</code> tokens; private <code>--_barba-</code> and compiler properties are not API. Decorative <code>.text-gradient</code> and <code>.scaleup-on-hover</code> are optional. Recheck contrast, focus, and target sizes after overrides.</dd></dl></section>
 
 				<section class="specimen-section" aria-labelledby="typography-heading">
 					<h2 id="typography-heading">Typography and links</h2>
@@ -98,7 +109,7 @@
 				</section>
 
 				<section class="specimen-section" aria-labelledby="color-heading">
-					<h2 id="color-heading">Semantic color contract</h2>
+					<h2 id="color-heading">Semantic color contract</h2><aside id="theme-guidance" class="specimen-demo"><p><strong>Source catalog themes differ from the installed package.</strong> These side-by-side examples force light and dark themes using source CSS. The compiled package selects its palette from the system preference; setting only <code>color-scheme</code> on a panel does not switch that palette. <a href="./package-theme.html">Inspect the packaged-CSS example</a>.</p><p>Applications forcing a theme must override semantic <code>--barba-color-*</code> tokens and review primary-button hover, as well as setting matching <code>color-scheme</code>. Do not copy compiler-private variables. Test contrast and native controls in the actual application build.</p></aside>
 					<p class="specimen-page-note">
 						Every named text role below is guaranteed against both the page and
 						surface backgrounds. Borders and focus rings have a separate non-text
@@ -202,7 +213,7 @@
 				</section>
 
 				<section class="specimen-section" aria-labelledby="forms-heading">
-					<h2 id="forms-heading">Form elements</h2>
+					<h2 id="forms-heading">Form elements</h2><p><strong>Accessibility:</strong> Use visible associated labels, connect hints/errors with aria-describedby and preserve native validation. <a href="https://www.w3.org/WAI/tutorials/forms/">WAI forms guidance</a>.</p>
 					<form id="catalog-form" data-specimen-no-submit>
 						<div class="specimen-grid">
 							<label>
@@ -294,9 +305,453 @@
 					</div>
 				</section>
 
+				<section class="specimen-section" aria-labelledby="chips-heading">
+					<h2 id="chips-heading">Chips</h2><p><strong>Accessibility:</strong> Selectable chips use aria-pressed and stable names; removal has a separate named button and deliberate focus restoration. Informational chips are text. <a href="https://www.w3.org/WAI/ARIA/apg/patterns/button/">APG toggle-button guidance</a>.</p>
+					<p>Use informational chips for labels, toggle buttons for filters, and a separate X for removing a selection. Informational chips stay 1.5rem high (24px at a 16px root). Interactive chips have compact 28px short faces inside targets at least 44×44 CSS pixels. Labels wrap rather than truncate.</p>
+					<p>The remove X shares the close/clear background-only treatment: a compact face with a 2px inset inside its own 44px-wide target. Only the X target removes the chip; its label is not clickable. The transparent area above and below a filter face or X is part of that button. Removing a selection does not delete the category or saved item. These examples keep all changes local.</p>
+					<p>Allow the target space in layout: rows are about 20px taller than 24px chips, and removable chips reserve extra width for the X. Use normal wrapping and gaps; do not enlarge targets with overlapping absolute hit areas or negative margins. Informational chips have no tab stop. Each filter uses a native button with <code>aria-pressed</code> and a child <code>span.chip-face</code>; the button owns state and the span draws the compact face.</p>
+					<label class="specimen-chip-boundaries"><input type="checkbox" data-chip-boundaries=""> Show actual chip target boundaries (inspection only)</label>
+					<p>Dashed boundaries include clickable padding. Gray boundaries mark disabled buttons. Tab shows focus around the full target; selection uses a thicker face border. Removing moves focus to the next enabled X, the previous X, or Restore selections when none remain.</p>
+					<div class="specimen-grid">
+						<article class="specimen-theme specimen-theme-light" data-chip-demo="">
+							<h3>Light mode</h3>
+							<h4>Informational</h4>
+							<p>Item category: <span class="chip">Produce</span></p>
+							<ul class="chip-list" aria-label="Item labels">
+								<li class="chip">
+									Produce
+								</li>
+								<li class="chip">
+									Pantry
+								</li>
+								<li class="chip">
+									Produce for the shared weekend shopping list
+								</li>
+							</ul>
+							<h4>Selectable filters</h4>
+							<fieldset>
+								<legend>Categories</legend>
+								<div class="chip-list">
+									<button type="button" class="chip" aria-pressed="true" data-chip-filter="Produce"><span class="chip-face">Produce</span></button>
+									<button type="button" class="chip" aria-pressed="false" data-chip-filter="Pantry"><span class="chip-face">Pantry</span></button>
+									<button type="button" class="chip" aria-pressed="false" data-chip-filter="Weekend"><span class="chip-face">Weekend shopping for the whole household</span></button>
+									<button type="button" class="chip" aria-pressed="false" disabled><span class="chip-face">Unavailable</span></button>
+								</div>
+							</fieldset>
+							<p data-chip-results="" role="status">Showing: Apples.</p>
+							<h4>Removable selections</h4>
+							<ul class="chip-list" data-chip-selections="" aria-label="Selected categories">
+								<li class="chip chip-removable">
+									<span>Produce</span>
+									<button type="button" data-barba-variant="icon" data-barba-shape="icon" data-barba-size="compact" data-chip-remove="" aria-label="Remove Produce" title="Remove Produce">
+										<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24">
+											<path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2"/>
+										</svg>
+									</button>
+								</li>
+								<li class="chip chip-removable">
+									<span>Pantry</span>
+									<button type="button" data-barba-variant="icon" data-barba-shape="icon" data-barba-size="compact" data-chip-remove="" aria-label="Remove Pantry" title="Remove Pantry">
+										<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24">
+											<path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2"/>
+										</svg>
+									</button>
+								</li>
+								<li class="chip chip-removable">
+									<span>Weekend shopping for the whole household</span>
+									<button type="button" data-barba-variant="icon" data-barba-shape="icon" data-barba-size="compact" data-chip-remove="" aria-label="Remove Weekend shopping for the whole household" title="Remove Weekend shopping for the whole household"><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
+								</li>
+								<li class="chip chip-removable">
+									<span>Locked</span>
+									<button type="button" data-barba-variant="icon" data-barba-shape="icon" data-barba-size="compact" data-chip-remove="" aria-label="Remove Locked" title="Remove Locked" disabled>
+										<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24">
+											<path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2"/>
+										</svg>
+									</button>
+								</li>
+							</ul>
+							<button type="button" data-chip-restore="">Restore selections</button>
+							<p data-chip-status="" role="status">All sample selections are present.</p>
+						</article>
+						<article class="specimen-theme specimen-theme-dark" data-chip-demo="">
+							<h3>Dark mode</h3>
+							<h4>Informational</h4>
+							<p>Item category: <span class="chip">Produce</span></p>
+							<ul class="chip-list" aria-label="Item labels">
+								<li class="chip">
+									Produce
+								</li>
+								<li class="chip">
+									Pantry
+								</li>
+								<li class="chip">
+									Produce for the shared weekend shopping list
+								</li>
+							</ul>
+							<h4>Selectable filters</h4>
+							<fieldset>
+								<legend>Categories</legend>
+								<div class="chip-list">
+									<button type="button" class="chip" aria-pressed="true" data-chip-filter="Produce"><span class="chip-face">Produce</span></button>
+									<button type="button" class="chip" aria-pressed="false" data-chip-filter="Pantry"><span class="chip-face">Pantry</span></button>
+									<button type="button" class="chip" aria-pressed="false" data-chip-filter="Weekend"><span class="chip-face">Weekend shopping for the whole household</span></button>
+									<button type="button" class="chip" aria-pressed="false" disabled><span class="chip-face">Unavailable</span></button>
+								</div>
+							</fieldset>
+							<p data-chip-results="" role="status">Showing: Apples.</p>
+							<h4>Removable selections</h4>
+							<ul class="chip-list" data-chip-selections="" aria-label="Selected categories">
+								<li class="chip chip-removable">
+									<span>Produce</span>
+									<button type="button" data-barba-variant="icon" data-barba-shape="icon" data-barba-size="compact" data-chip-remove="" aria-label="Remove Produce" title="Remove Produce">
+										<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24">
+											<path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2"/>
+										</svg>
+									</button>
+								</li>
+								<li class="chip chip-removable">
+									<span>Pantry</span>
+									<button type="button" data-barba-variant="icon" data-barba-shape="icon" data-barba-size="compact" data-chip-remove="" aria-label="Remove Pantry" title="Remove Pantry">
+										<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24">
+											<path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2"/>
+										</svg>
+									</button>
+								</li>
+								<li class="chip chip-removable">
+									<span>Weekend shopping for the whole household</span>
+									<button type="button" data-barba-variant="icon" data-barba-shape="icon" data-barba-size="compact" data-chip-remove="" aria-label="Remove Weekend shopping for the whole household" title="Remove Weekend shopping for the whole household"><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
+								</li>
+								<li class="chip chip-removable">
+									<span>Locked</span>
+									<button type="button" data-barba-variant="icon" data-barba-shape="icon" data-barba-size="compact" data-chip-remove="" aria-label="Remove Locked" title="Remove Locked" disabled>
+										<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24">
+											<path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2"/>
+										</svg>
+									</button>
+								</li>
+							</ul>
+							<button type="button" data-chip-restore="">Restore selections</button>
+							<p data-chip-status="" role="status">All sample selections are present.</p>
+						</article>
+					</div>
+				</section>
+				<section class="specimen-section" aria-labelledby="disclosures-heading">
+					<h2 id="disclosures-heading">Disclosures</h2><p><strong>Accessibility:</strong> Keep native details/summary semantics; avoid redundant roles, tabindex and aria-expanded. Required instructions must remain visible. <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/summary">MDN summary guidance</a>.</p>
+					<p>Use <code>details.disclosure</code> to group optional settings, filters, or supporting information. The full summary is clickable, with a trailing chevron, a medium-weight title, and a divider when open. Keep essential instructions visible outside collapsed sections.</p>
+					<p>Place the label in <code>disclosure-label</code>, its title in <code>disclosure-title</code>, optional supporting text in <code>disclosure-description</code>, and the body in <code>disclosure-content</code>. A heading can carry both label and title classes. Choose its level for the page hierarchy; the class only normalizes its appearance.</p>
+					<p>These examples use native disclosure behavior: Enter or Space opens a focused summary, and multiple sections can stay open. Checkboxes and Reset work locally without saving. Put links, inputs, and extra actions in the body, never inside the summary. Nest only when the content needs that hierarchy.</p>
+					<div class="specimen-grid">
+						<article class="specimen-theme specimen-theme-light" data-disclosure-demo="light">
+							<h3>Settings and filters · light</h3>
+							<div class="specimen-disclosure-stack">
+								<details class="disclosure">
+									<summary><h4 class="disclosure-label disclosure-title">Preferences</h4></summary>
+									<div class="disclosure-content"><p>Choose which local hints to show. Closing this section preserves your choices; Reset restores this example’s defaults.</p>
+										<form><label><input type="checkbox" name="show-hints" checked> Show hints</label><label><input type="checkbox" name="show-completed"> Include completed items</label><button type="reset">Reset preferences</button></form></div>
+								</details>
+								<details class="disclosure" open>
+									<summary><span class="disclosure-label"><span class="disclosure-title">Shopping filters</span><span class="disclosure-description">All stores · All categories</span></span></summary>
+									<div class="disclosure-content"><p>The supporting summary describes the current selection. An application updates it when its filters change.</p>
+										<p>Each section opens independently. The library does not save expansion state or require other sections to close.</p>
+										<details class="disclosure"><summary><span class="disclosure-label disclosure-title">How matching works</span></summary><div class="disclosure-content"><p>An item matches any selected store and any selected category. Both groups apply together.</p><p>See the <a href="#chips-heading">chip examples</a> for selectable filters.</p></div></details></div>
+								</details>
+								<details class="disclosure"><summary><span class="disclosure-label disclosure-title">Help with shopping preferences and shared lists across multiple devices</span></summary><div class="disclosure-content"><p>Long labels wrap while the chevron stays reachable. Allow room for translated text and increased text size.</p></div></details>
+							</div></article>
+						<article class="specimen-theme specimen-theme-dark" data-disclosure-demo="dark">
+							<h3>Settings and filters · dark</h3>
+							<div class="specimen-disclosure-stack">
+								<details class="disclosure">
+									<summary><h4 class="disclosure-label disclosure-title">Preferences</h4></summary>
+									<div class="disclosure-content"><p>Choose which local hints to show. Closing this section preserves your choices; Reset restores this example’s defaults.</p>
+										<form><label><input type="checkbox" name="show-hints" checked> Show hints</label><label><input type="checkbox" name="show-completed"> Include completed items</label><button type="reset">Reset preferences</button></form></div>
+								</details>
+								<details class="disclosure" open>
+									<summary><span class="disclosure-label"><span class="disclosure-title">Shopping filters</span><span class="disclosure-description">All stores · All categories</span></span></summary>
+									<div class="disclosure-content"><p>The supporting summary describes the current selection. An application updates it when its filters change.</p>
+										<p>Each section opens independently. The library does not save expansion state or require other sections to close.</p>
+										<details class="disclosure"><summary><span class="disclosure-label disclosure-title">How matching works</span></summary><div class="disclosure-content"><p>An item matches any selected store and any selected category. Both groups apply together.</p><p>See the <a href="#chips-heading">chip examples</a> for selectable filters.</p></div></details></div>
+								</details>
+								<details class="disclosure"><summary><span class="disclosure-label disclosure-title">Help with shopping preferences and shared lists across multiple devices</span></summary><div class="disclosure-content"><p>Long labels wrap while the chevron stays reachable. Allow room for translated text and increased text size.</p></div></details>
+							</div></article>
+					</div>
+					<p>The summary target is at least 2.75rem high (44px at a 16px root size). Keyboard focus uses the library’s separate outline; hover and press tint the summary. The same panel treatment applies in both themes.</p>
+					<p>Use the native <code>open</code> attribute for an initially expanded section. Leave off the native <code>name</code> attribute to allow independent expansion. Do not add a button role, <code>tabindex</code>, or manually maintained <code>aria-expanded</code> to the summary. Applications own persistence and control behavior; no JavaScript is needed for opening and closing. If heading navigation inside a summary matters, check it with your target assistive technology, or place a section heading outside the disclosure. See <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/summary#summaries_as_headings">summary heading guidance</a>.</p>
+					<p>Unclassed <code>details</code> keeps the browser’s native appearance. App layouts own spacing between panels; the examples use a grid gap. Customize through the existing color, spacing, and radius tokens or scoped application CSS.</p>
+					<pre class="specimen-disclosure-markup"><code>&lt;details class="disclosure"&gt;
+  &lt;summary&gt;
+    &lt;span class="disclosure-label disclosure-title"&gt;Preferences&lt;/span&gt;
+  &lt;/summary&gt;
+  &lt;div class="disclosure-content"&gt;
+    &lt;p&gt;Settings and controls go here.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/details&gt;</code></pre>
+				</section>
+				<section class="specimen-section specimen-hidden-examples" id="visually-hidden-examples" aria-labelledby="visually-hidden-heading">
+					<h2 id="visually-hidden-heading">Visually hidden text</h2>
+					<p>Use <code>.visually-hidden</code> to keep supplemental text available to assistive technology while removing it from the visual layout. The library supplies CSS only; the examples below use local catalog behavior.</p>
+					<p>Light and dark examples are identical. Shaded explanations mirror the hidden text for visual review; these noninteractive teaching aids are excluded from the accessibility tree to avoid repeating that text.</p>
+					<section class="specimen-section" id="hidden-status">
+						<h3>1. Announce filter results</h3>
+						<p>Use a persistent, initially empty status region to report the result of a user action without moving focus. The visible list and count remain available to everyone.</p>
+						<p>The native category menu already announces its selected option. Our message adds only the result, such as “1 of 3 items shown.” The menu’s option names and keyboard instructions come from the browser and screen reader, separately from this message.</p>
+						<p><strong>Choose one announcement source in an application:</strong> this catalog shows a hidden region for demonstration. If the visible result count already contains the complete message, give that visible element <code>role="status"</code> and omit the hidden duplicate. Use hidden status text when it adds a concise equivalent of information otherwise conveyed visually.</p>
+						<div class="specimen-grid">
+							<article class="specimen-theme specimen-theme-light" data-hidden-demo="status">
+								<h4>Light mode</h4>
+								<label for="hidden-filter-light">Category</label>
+								<select id="hidden-filter-light"><option value="all">All categories</option><option value="produce">Produce</option><option value="pantry">Pantry</option></select>
+								<p data-count>3 items shown.</p>
+								<ul>
+									<li data-category="produce">Apples</li>
+									<li data-category="produce">Carrots</li>
+									<li data-category="pantry">Oats</li>
+								</ul>
+								<p class="visually-hidden" role="status" aria-atomic="true" data-hidden-status></p>
+								<div class="specimen-hidden-mirror" aria-hidden="true"><strong>Hidden status message</strong>
+									<p data-inspector>No update yet. Choose a category.</p>
+								</div>
+							</article>
+							<article class="specimen-theme specimen-theme-dark" data-hidden-demo="status">
+								<h4>Dark mode</h4>
+								<label for="hidden-filter-dark">Category</label>
+								<select id="hidden-filter-dark"><option value="all">All categories</option><option value="produce">Produce</option><option value="pantry">Pantry</option></select>
+								<p data-count>3 items shown.</p>
+								<ul>
+									<li data-category="produce">Apples</li>
+									<li data-category="produce">Carrots</li>
+									<li data-category="pantry">Oats</li>
+								</ul>
+								<p class="visually-hidden" role="status" aria-atomic="true" data-hidden-status></p>
+								<div class="specimen-hidden-mirror" aria-hidden="true"><strong>Hidden status message</strong>
+									<p data-inspector>No update yet. Choose a category.</p>
+								</div>
+							</article>
+						</div>
+						<pre class="specimen-hidden-markup"><code>&lt;p class=&quot;visually-hidden&quot; role=&quot;status&quot; aria-atomic=&quot;true&quot;&gt;&lt;/p&gt;
+&lt;!-- Application code updates this existing node after filtering. --&gt;</code></pre>
+					</section>
+					<section class="specimen-section" id="hidden-context">
+						<h3>2. Give a repeated action context</h3>
+						<p>The button visibly says “Edit”; its text includes the item name for assistive technology. Keeping the visible wording at the beginning also helps people refer to the control by its visible label.</p>
+						<p><strong>Demo behavior:</strong> Edit only reports which item was chosen; it does not open an editor. That feedback region starts empty. In an application, implement the actual editing action and its focus behavior; do not copy this extra status announcement when the newly focused editor already communicates the change.</p>
+						<div class="specimen-grid">
+							<article class="specimen-theme specimen-theme-light" data-hidden-demo="context">
+								<h4>Light mode</h4>
+								<ul class="specimen-hidden-actions">
+									<li><span>Apples</span><button type="button" data-item="Apples" data-barba-variant="text">Edit<span class="visually-hidden"> Apples</span></button></li>
+									<li><span>Oats</span><button type="button" data-item="Oats" data-barba-variant="text">Edit<span class="visually-hidden"> Oats</span></button></li>
+								</ul>
+								<p role="status" aria-atomic="true" data-action-result></p>
+								<div class="specimen-hidden-mirror" aria-hidden="true"><strong>Button names</strong>
+									<p>Edit Apples<br>Edit Oats</p>
+									<p>Only “Edit” is visible on each button. The item name is hidden inside it.</p>
+								</div>
+							</article>
+							<article class="specimen-theme specimen-theme-dark" data-hidden-demo="context">
+								<h4>Dark mode</h4>
+								<ul class="specimen-hidden-actions">
+									<li><span>Apples</span><button type="button" data-item="Apples" data-barba-variant="text">Edit<span class="visually-hidden"> Apples</span></button></li>
+									<li><span>Oats</span><button type="button" data-item="Oats" data-barba-variant="text">Edit<span class="visually-hidden"> Oats</span></button></li>
+								</ul>
+								<p role="status" aria-atomic="true" data-action-result></p>
+								<div class="specimen-hidden-mirror" aria-hidden="true"><strong>Button names</strong>
+									<p>Edit Apples<br>Edit Oats</p>
+									<p>Only “Edit” is visible on each button. The item name is hidden inside it.</p>
+								</div>
+							</article>
+						</div>
+						<pre class="specimen-hidden-markup"><code>&lt;button type=&quot;button&quot;&gt;Edit&lt;span class=&quot;visually-hidden&quot;&gt; Apples&lt;/span&gt;&lt;/button&gt;</code></pre>
+					</section>
+					<section class="specimen-section" id="hidden-icon">
+						<h3>3. Name an icon-only action</h3>
+						<p>Hide only the label text inside the button. While the field has content, the clear button remains visible and keyboard accessible. This is an alternative to aria-label; existing close/clear buttons do not need to migrate just to use the utility.</p>
+						<div class="specimen-grid">
+							<article class="specimen-theme specimen-theme-light" data-hidden-demo="icon">
+								<h4>Light mode</h4>
+								<div class="inline-field">
+									<label for="hidden-item-light">Item name</label>
+									<div class="input-action"><input id="hidden-item-light" type="text" value="Weekend supplies"><button type="button" data-barba-variant="icon" data-barba-shape="icon" data-specimen-clear="" aria-controls="hidden-item-light"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2"/></svg><span class="visually-hidden">Clear item name</span></button></div>
+								</div>
+								<div class="specimen-hidden-mirror" aria-hidden="true"><strong>Button name: Clear item name</strong>
+									<p>The X is decorative. The hidden text names the button. Clear returns focus to the input, then hides the empty field’s clear button; typing brings it back.</p>
+								</div>
+							</article>
+							<article class="specimen-theme specimen-theme-dark" data-hidden-demo="icon">
+								<h4>Dark mode</h4>
+								<div class="inline-field">
+									<label for="hidden-item-dark">Item name</label>
+									<div class="input-action"><input id="hidden-item-dark" type="text" value="Weekend supplies"><button type="button" data-barba-variant="icon" data-barba-shape="icon" data-specimen-clear="" aria-controls="hidden-item-dark"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2"/></svg><span class="visually-hidden">Clear item name</span></button></div>
+								</div>
+								<div class="specimen-hidden-mirror" aria-hidden="true"><strong>Button name: Clear item name</strong>
+									<p>The X is decorative. The hidden text names the button. Clear returns focus to the input, then hides the empty field’s clear button; typing brings it back.</p>
+								</div>
+							</article>
+						</div>
+						<pre class="specimen-hidden-markup"><code>&lt;button type=&quot;button&quot; data-barba-variant=&quot;icon&quot; data-barba-shape=&quot;icon&quot;&gt;
+  &lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; viewBox=&quot;0 0 24 24&quot;&gt;…&lt;/svg&gt;
+  &lt;span class=&quot;visually-hidden&quot;&gt;Clear item name&lt;/span&gt;
+&lt;/button&gt;</code></pre>
+					</section>
+					<section class="specimen-section" id="hidden-guidance">
+						<h3>Implementation guidance</h3>
+						<p>These are implementation rules for this library’s examples, with links for the underlying accessibility requirements. The utility changes visual presentation only; it does not add naming, live announcements, focus management, or application behavior.</p>
+						<h4>Choose the right use</h4>
+						<ul>
+							<li>Keep field labels, instructions, errors, and essential status information visible. Use <code>.visually-hidden</code> for supplemental text or an equivalent of information already conveyed visually.</li>
+							<li>Apply the class to noninteractive text, never to a focusable control or a container holding controls. Do not add <code>hidden</code>, <code>display:none</code>, <code>visibility:hidden</code>, <code>aria-hidden="true"</code>, or <code>inert</code> to that text or its ancestors. The empty field’s clear button is intentionally hidden as a whole because its action is unavailable.</li>
+							<li>Use the existing <code>.skip-link</code> for a skip link that becomes visible on focus. This utility never reveals itself. See <a href="https://getbootstrap.com/docs/5.3/helpers/visually-hidden/">Bootstrap’s distinction between hidden and focus-revealed helpers</a>.</li>
+						</ul>
+						<h4>1. Status updates: one concise announcement</h4>
+						<ul>
+							<li>Prefer <code>role="status" aria-atomic="true"</code> on an existing visible result message when it already says everything needed. Otherwise keep one persistent, initially empty hidden status region in the DOM before updates. Do not conditionally mount a populated region and assume it will be announced.</li>
+							<li>Update that region’s text after the result is ready. Leave focus on the initiating control. The status role is already polite; do not add <code>role="alert"</code> or <code>aria-live="assertive"</code> for ordinary filtering.</li>
+							<li>Announce useful results with context, such as “1 of 3 items shown.” Do not repeat the native control’s selected option, or make the entire results list live. Use one live region per update; check ancestors and visible copies for accidental additional live regions.</li>
+							<li>Avoid identical rewrites caused by rerenders. This example suppresses an unchanged count; that is not a universal rule for distinct operations that happen to have the same result. Decide whether new feedback is needed for the actual action. For live search, coordinate announcements with settled results, including cancellation of stale requests, instead of speaking every keystroke.</li>
+						</ul>
+						<p>Read <a href="https://www.w3.org/WAI/WCAG21/Techniques/aria/ARIA22">W3C’s status-region technique and tests</a> and <a href="https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html">which changes qualify as status messages</a>. A focus change can already communicate a new context; it does not automatically need a second announcement.</p>
+						<h4>2. Repeated actions: name the item</h4>
+						<ul>
+							<li>Use a native <code>button type="button"</code> for an action, or a link with a real destination for navigation. For the Edit button, append the item’s name in a hidden span, including a separating space. Expected names here: “Edit Apples” and “Edit Oats”. Keep that context synchronized with the displayed item and translate the complete phrase appropriately.</li>
+							<li>Keep the visible label in the accessible name, preferably at the beginning. Prefer visible context when it would help everyone distinguish actions.</li>
+							<li>Use one deliberate naming source. Do not add <code>aria-label</code> or <code>aria-labelledby</code> on top of these button contents: they can override the content-derived name. Hidden text alone does not label an unrelated input; retain its associated visible <code>label</code>.</li>
+						</ul>
+						<p>Read <a href="https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html">W3C’s label-in-name guidance</a> and <a href="https://www.w3.org/WAI/ARIA/apg/practices/names-and-descriptions/">accessible naming techniques and precedence</a>.</p>
+						<h4>3. Icon actions: name the purpose and preserve focus</h4>
+						<ul>
+							<li>Give the visible native button a concise action name such as “Clear item name”, “Close settings”, or “Remove Apples”; do not name it “X”. Use either hidden text or <code>aria-label</code>. Existing correctly named icon buttons need no migration. Mark the decorative SVG <code>aria-hidden="true" focusable="false"</code>; do not rely on its appearance or a tooltip as the button’s only name.</li>
+							<li>Keep the standard close/clear target and focus treatment. On clear, return focus to the input before hiding the button. Hide it when the input is empty. For a populated disabled or read-only field, retain a disabled X as in the inline-form examples; it must not change the value.</li>
+							<li>Application code must clear the authoritative value and run the same validation, filtering, and state synchronization used by other value changes. Keep visibility synchronized after typing, reset, and programmatic updates. The catalog has no application state; its local clear handler assigns <code>input.value</code> and explicitly dispatches an <code>input</code> event to synchronize the example. Assigning the value alone does not fire that event. Framework applications should use their normal state-update path.</li>
+							<li>Do not add an automatic “cleared” announcement merely because the button disappears. First check what the focused field already communicates. Close and remove actions need their own appropriate focus destination; do not blindly reuse the clear handler.</li>
+						</ul>
+						<p>Read <a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-label">MDN’s icon-button naming guidance</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/input_event">how input events relate to programmatic changes</a>.</p>
+						<h4>Verify the implementation, not just the markup</h4>
+						<ol>
+							<li>Inspect the accessibility tree: confirm the expected button names, associated field labels, and no decorative SVG names or duplicate live regions. The hidden spans should remain available without adding keyboard stops.</li>
+							<li>Use keyboard activation for both Edit actions and Clear. After clearing, verify the value and application state are empty, focus is on the input, and Clear is absent from the tab order. Type again and verify it returns. Check disabled/read-only fields and reset paths when implementing them.</li>
+							<li>With a supported browser/screen-reader combination, change the filter and confirm the result is announced without moving focus or unnecessarily repeating the selected category. Check rapid changes, no results, and equal-count results in the consuming application. Record the browser, screen reader, and versions tested.</li>
+							<li>Check both themes, narrow layouts, zoom, and visible keyboard focus. Automated DOM checks cannot establish the actual speech sequence or guarantee accessibility. The shaded mirrors here are noninteractive teaching aids excluded from the accessibility tree; do not copy them into application markup.</li>
+						</ol>
+						<h4>Migration from Our List</h4>
+						<p>After adopting the library release, replace only the duplicated <code>sr-only</code> and <code>row-announcement</code> hiding styles. Preserve semantics and application behavior, then review status-region mounting and duplicate announcements separately. A CSS replacement does not fix announcement timing.</p>
+					</section>
+				</section>
+
+				<section class="specimen-section" aria-labelledby="inline-forms-heading">
+					<h2 id="inline-forms-heading">Inline forms and input actions</h2><p><strong>Accessibility:</strong> Keep labels visible and use one naming source for each X. Synchronize clear visibility and move focus to the input before hiding the control. <a href="https://www.w3.org/WAI/tutorials/forms/labels/">WAI label guidance</a>.</p>
+					<p>Use an <code>inline-field</code> wrapper for a visible standard-size, medium-weight label above an <code>input-row</code>. The input grows; Add wraps to the right when space runs out. An optional <code>input-action</code> groups a text input with its X. Ordinary stacked forms keep their existing appearance.</p>
+					<p>The X is our shared close/clear icon action: a native button with <code>data-barba-variant<wbr>=&quot;icon&quot;</code> and <code>data-barba-shape<wbr>=&quot;icon&quot;</code>. It has a generous target, transparent resting face, a circular hover background inset by 2px, and a separate keyboard-focus outline. Disabled X actions use muted gray, retain the disabled opacity, and have no hover background. Its accessible name describes the action: “Clear item name” for an input, “Close dialog” for a modal. The icon is decorative; these actions do not delete saved data.</p>
+					<h3>Input and Add</h3>
+					<p>Add validates and reports locally; no information is saved or sent.</p>
+					<form data-specimen-inline="">
+						<div class="inline-field">
+							<label for="inline-item">Item name</label>
+							<div class="input-row">
+								<input id="inline-item" name="inline-item" type="text" value="" required=""/>
+								<button type="submit">Add</button>
+							</div>
+						</div>
+						<p role="status">Nothing added yet.</p>
+					</form>
+					<h3>Input with an X</h3>
+					<p>Only show the X when there is content. Keep its space reserved, and return focus to the input before hiding it. Applications handle clearing and synchronize visibility after typing, resets and programmatic value changes.</p>
+					<form data-specimen-inline="">
+						<div class="inline-field">
+							<label for="inline-clear">Item to clear</label>
+							<div class="input-row">
+								<div class="input-action">
+									<input id="inline-clear" name="inline-clear" type="text" value="Weekend supplies" required=""/>
+									<button type="button" data-barba-variant="icon" data-barba-shape="icon" aria-label="Clear item to clear" title="Clear item to clear" aria-controls="inline-clear" data-specimen-clear="">
+										<svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24">
+											<path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2"/>
+										</svg>
+									</button>
+								</div>
+								<button type="submit">Add</button>
+							</div>
+						</div>
+						<div>
+							<button type="reset">Reset example</button>
+						</div>
+						<p role="status">Try the X, type again, or reset the example.</p>
+					</form>
+					<h3>Initially empty</h3>
+					<form data-specimen-inline="">
+						<div class="inline-field">
+							<label for="inline-empty">New item</label>
+							<div class="input-row">
+								<div class="input-action">
+									<input id="inline-empty" name="inline-empty" type="text" value="" required=""/>
+									<button type="button" data-barba-variant="icon" data-barba-shape="icon" aria-label="Clear new item" title="Clear new item" aria-controls="inline-empty" data-specimen-clear="" hidden="">
+										<svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24">
+											<path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2"/>
+										</svg>
+									</button>
+								</div>
+								<button type="submit">Add</button>
+							</div>
+						</div>
+						<p role="status">Type to reveal the X.</p>
+					</form>
+					<h3>Controls associated with a separate form</h3>
+					<p>Use the <code>form</code> attribute on both the input and its submit button. The label and row layout are identical.</p>
+					<form id="inline-owner" data-specimen-inline="" data-specimen-status="inline-associated-status"></form>
+					<div class="inline-field">
+						<label for="inline-associated">Alternative name</label>
+						<div class="input-row">
+							<input id="inline-associated" name="inline-associated" type="text" value="" form="inline-owner" required=""/>
+							<button type="submit" form="inline-owner">Add</button>
+						</div>
+					</div>
+					<p id="inline-associated-status" role="status">Nothing added yet.</p>
+					<h3>Outside a form</h3>
+					<p>A standalone field can use the same input-action layout without a submit button.</p>
+					<div class="inline-field">
+						<label for="inline-standalone">Filter text</label>
+						<div class="input-action">
+							<input id="inline-standalone" type="text" value="Weekend"/>
+							<button type="button" data-barba-variant="icon" data-barba-shape="icon" aria-label="Clear filter text" title="Clear filter text" aria-controls="inline-standalone" data-specimen-clear="">
+								<svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24">
+									<path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2"/>
+								</svg>
+							</button>
+						</div>
+					</div>
+					<h3>Unavailable actions</h3>
+					<p>For disabled or read-only inputs, a populated field retains a muted gray, disabled X instead of the enabled action color. It cannot change the value and has no hover background.</p>
+					<div class="inline-field">
+						<label for="inline-disabled">Disabled item</label>
+						<div class="input-row">
+							<div class="input-action">
+								<input id="inline-disabled" name="inline-disabled" type="text" value="Unavailable" disabled=""/>
+								<button type="button" data-barba-variant="icon" data-barba-shape="icon" aria-label="Clear disabled item" title="Clear disabled item" aria-controls="inline-disabled" data-specimen-clear="" disabled="">
+									<svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24">
+										<path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2"/>
+									</svg>
+								</button>
+							</div>
+							<button type="submit" disabled="">Add</button>
+						</div>
+					</div>
+					<div class="inline-field">
+						<label for="inline-readonly">Read-only item</label>
+						<div class="input-row">
+							<div class="input-action">
+								<input id="inline-readonly" name="inline-readonly" type="text" value="Fixed value" readonly=""/>
+								<button type="button" data-barba-variant="icon" data-barba-shape="icon" aria-label="Clear read-only item" title="Clear read-only item" aria-controls="inline-readonly" data-specimen-clear="" disabled="">
+									<svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24">
+										<path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2"/>
+									</svg>
+								</button>
+							</div>
+							<button type="submit" disabled="">Add</button>
+						</div>
+					</div>
+					<p>See the <a href="#dialog-heading">dialog examples</a> for the same X button used to close a modal through its cancellation path.</p>
+				</section>
+
 				<section class="specimen-section" aria-labelledby="buttons-heading">
-					<h2 id="buttons-heading">Buttons — Updated Soft</h2>
-					<p>Native submit, button, and reset types provide primary, secondary, and tertiary emphasis. Text color stays unchanged on hover. These type="button" examples use the optional emphasis override and perform no action.</p>
+					<h2 id="buttons-heading">Buttons</h2><p><strong>Accessibility:</strong> Use native types and disabled states, stable accessible names and visible keyboard focus. Color does not explain destructive behavior. Applications own action feedback and confirmation. <a href="https://www.w3.org/WAI/ARIA/apg/patterns/button/">APG button guidance</a>.</p>
+					<p>Native submit, button, and reset types provide primary, secondary, and tertiary emphasis. Existing emphasis styles keep their text color on hover. Text and destructive actions below demonstrate the new optional treatments; their clicks only report local example state.</p>
 					<div class="specimen-grid">
 						<article class="specimen-theme specimen-theme-light">
 							<h3>Light buttons</h3>
@@ -307,6 +762,19 @@
 							</div>
 							<p>Primary text contrast: 9.40:1 resting, 15.36:1 hovered.</p>
 							<button type="button" data-barba-variant="primary" disabled>Disabled primary</button>
+							<h4>Text and destructive actions</h4>
+							<div class="specimen-actions">
+								<button type="button" data-barba-variant="text" data-specimen-action>Edit</button>
+								<button type="button" data-barba-variant="text" data-specimen-action>View details</button>
+								<button type="button" data-barba-variant="text" disabled>Unavailable</button>
+								<button type="button" data-barba-intent="danger" data-specimen-action>Delete</button>
+								<button type="button" data-barba-intent="danger" disabled>Delete unavailable</button>
+							</div>
+							<p>Text actions reveal their face and border on hover or keyboard focus. Delete starts as red text; hover and disabled states use the red outline.</p>
+							<h4>One application class</h4>
+							<button type="button" class="specimen-custom-action" data-specimen-action>Custom action</button>
+							<p>Application styles own the properties they set, including hover. The global keyboard focus ring remains.</p>
+							<p role="status" data-action-status>Try an action. No data changes.</p>
 						</article>
 						<article class="specimen-theme specimen-theme-dark">
 							<h3>Dark buttons</h3>
@@ -317,6 +785,19 @@
 							</div>
 							<p>Primary text contrast: 7.98:1 resting, 10.79:1 hovered (existing light gray).</p>
 							<button type="button" data-barba-variant="primary" disabled>Disabled primary</button>
+							<h4>Text and destructive actions</h4>
+							<div class="specimen-actions">
+								<button type="button" data-barba-variant="text" data-specimen-action>Edit</button>
+								<button type="button" data-barba-variant="text" data-specimen-action>View details</button>
+								<button type="button" data-barba-variant="text" disabled>Unavailable</button>
+								<button type="button" data-barba-intent="danger" data-specimen-action>Delete</button>
+								<button type="button" data-barba-intent="danger" disabled>Delete unavailable</button>
+							</div>
+							<p>Text actions reveal their face and border on hover or keyboard focus. Delete starts as red text; hover and disabled states use the red outline.</p>
+							<h4>One application class</h4>
+							<button type="button" class="specimen-custom-action" data-specimen-action>Custom action</button>
+							<p>Application styles own the properties they set, including hover. The global keyboard focus ring remains.</p>
+							<p role="status" data-action-status>Try an action. No data changes.</p>
 						</article>
 					</div>
 					<article class="specimen-demo">
@@ -327,7 +808,7 @@
 				</section>
 
 				<section class="specimen-section" aria-labelledby="motion-heading">
-					<h2 id="motion-heading">Motion and interaction</h2>
+					<h2 id="motion-heading">Motion and interaction</h2><p><strong>Accessibility:</strong> Keep meaning and operation available without animation or hover. Test reduced-motion preferences separately from static screenshots. <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion">MDN reduced-motion guidance</a>.</p>
 					<div class="specimen-grid">
 						<div class="specimen-demo scaleup-on-hover">
 							<strong>Hover or focus within</strong>
@@ -342,7 +823,7 @@
 				</section>
 
 				<section class="specimen-section" aria-labelledby="dialog-heading">
-					<h2 id="dialog-heading">Dialogs</h2>
+					<h2 id="dialog-heading">Dialogs</h2><p><a href="./editor.html">Try the maintained item editor</a> with Name, Notes, chips, disabled states, and long content.</p><p><strong>Accessibility:</strong> Name each native dialog, choose initial focus deliberately, support Escape/cancellation and restore focus to the invoker or a logical fallback. <a href="https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/">APG dialog guidance</a>.</p>
 					<p>Both dialogs start at the same viewport-relative top offset. Short content leaves the footer at the minimum-height bottom. Long content grows to the viewport cap, then only its body scrolls. Footer order is Reset, Cancel, Submit. Submit validates and closes; Cancel or clicking outside closes without validation; Reset restores initial values and stays open. Closing does not reset the form.</p>
 					<div class="specimen-actions">
 						<button type="button" command="show-modal" commandfor="specimen-dialog">Open short dialog</button>
@@ -384,6 +865,57 @@
 								<button type="reset">Reset</button>
 								<button type="button" command="request-close" commandfor="specimen-long-dialog">Cancel</button>
 								<button type="submit" value="submit">Submit</button>
+							</footer>
+						</form>
+					</dialog>
+					<h3>Content-fit dialogs with a close action</h3>
+					<p>These examples keep the standard width and opt into compact padding, a content-fit minimum, and more vertical room. Full-width header and footer dividers meet the scrolling body. The close icon uses the background-only icon treatment and follows the same cancellation path as Cancel and Escape.</p>
+					<div class="specimen-actions">
+						<button type="button" command="show-modal" commandfor="content-fit-short">Open content-fit short dialog</button>
+						<button type="button" command="show-modal" commandfor="content-fit-long">Open content-fit long dialog</button>
+					</div>
+
+					<dialog id="content-fit-short" aria-labelledby="content-fit-short-title" closedby="any" data-barba-dialog-spacing="compact" data-barba-dialog-height="content" data-barba-dialog-room="extra" data-barba-dialog-dividers="full">
+						<form method="dialog" class="dialog-content-container">
+							<header class="dialog-header dialog-header-actions">
+								<h2 id="content-fit-short-title">Content-fit short dialog</h2>
+								<button type="button" data-barba-variant="icon" data-barba-shape="icon" aria-label="Close dialog" title="Close dialog" command="request-close" commandfor="content-fit-short"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" /></svg></button>
+							</header>
+							<div class="dialog-body">
+								<label>Item name <input name="item" value="Weekend supplies" required autofocus /></label>
+
+							</div>
+							<footer class="dialog-footer">
+								<button type="reset">Reset</button>
+								<button type="button" command="request-close" commandfor="content-fit-short">Cancel</button>
+								<button type="submit" value="saved">Save</button>
+							</footer>
+						</form>
+					</dialog>
+
+					<dialog id="content-fit-long" aria-labelledby="content-fit-long-title" closedby="any" data-barba-dialog-spacing="compact" data-barba-dialog-height="content" data-barba-dialog-room="extra" data-barba-dialog-dividers="full">
+						<form method="dialog" class="dialog-content-container">
+							<header class="dialog-header dialog-header-actions">
+								<h2 id="content-fit-long-title">Content-fit long dialog</h2>
+								<button type="button" data-barba-variant="icon" data-barba-shape="icon" aria-label="Close dialog" title="Close dialog" command="request-close" commandfor="content-fit-long"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" /></svg></button>
+							</header>
+							<div class="dialog-body">
+								<label>Item name <input name="item" value="Weekend supplies" required autofocus /></label>
+								<p>Scroll through this synthetic example. The header and actions stay in place while the body scrolls.</p>
+								<p>Section 1. Keep editing within the body while the close action and footer remain available. Longer content uses the available vertical room.</p>
+								<p>Section 2. Keep editing within the body while the close action and footer remain available. Longer content uses the available vertical room.</p>
+								<p>Section 3. Keep editing within the body while the close action and footer remain available. Longer content uses the available vertical room.</p>
+								<p>Section 4. Keep editing within the body while the close action and footer remain available. Longer content uses the available vertical room.</p>
+								<p>Section 5. Keep editing within the body while the close action and footer remain available. Longer content uses the available vertical room.</p>
+								<p>Section 6. Keep editing within the body while the close action and footer remain available. Longer content uses the available vertical room.</p>
+								<p>Section 7. Keep editing within the body while the close action and footer remain available. Longer content uses the available vertical room.</p>
+								<p>Section 8. Keep editing within the body while the close action and footer remain available. Longer content uses the available vertical room.</p>
+								<label>Final field <input value="End of the form" /></label>
+							</div>
+							<footer class="dialog-footer">
+								<button type="reset">Reset</button>
+								<button type="button" command="request-close" commandfor="content-fit-long">Cancel</button>
+								<button type="submit" value="saved">Save</button>
 							</footer>
 						</form>
 					</dialog>

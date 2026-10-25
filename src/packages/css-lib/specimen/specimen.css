@@ -133,3 +133,85 @@
 .specimen-primitive-inverse {
 	background: var(--barba-color-surface-inverse);
 }
+
+/* Example application override; not a library treatment. */
+.specimen-custom-action {
+	background-color: transparent;
+	color: var(--barba-color-link);
+	border-color: transparent;
+}
+.specimen-custom-action:enabled:is(:hover, :active) {
+	background-color: var(--barba-color-control-bg);
+	border-color: var(--barba-color-link-hover);
+}
+
+.specimen-disclosure-stack {
+	display: grid;
+	gap: var(--barba-space-4);
+}
+.specimen-disclosure-markup {
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+}
+
+/* Visually hidden teaching aids belong only to the catalog. */
+.specimen-hidden-examples .specimen-theme {
+	min-inline-size: 0;
+	overflow-wrap: anywhere;
+}
+.specimen-hidden-examples select {
+	max-inline-size: 100%;
+	box-sizing: border-box;
+}
+.specimen-hidden-mirror {
+	margin-block-start: var(--barba-space-4);
+	padding: var(--barba-space-3);
+	border-inline-start: 3px solid var(--barba-color-border);
+	background: var(--barba-color-surface);
+	font-size: var(--barba-font-size-sm);
+}
+.specimen-hidden-actions {
+	padding: 0;
+	list-style: none;
+}
+.specimen-hidden-actions li {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--barba-space-2);
+	margin-block: var(--barba-space-3);
+}
+.specimen-hidden-markup {
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+}
+#hidden-guidance li + li {
+	margin-block-start: var(--barba-space-3);
+}
+
+/* Inspect actual button edges; preserve the solid keyboard-focus outline. */
+.specimen-chip-boundaries {
+	display: flex;
+	align-items: center;
+	gap: var(--barba-space-2);
+	font-size: 1rem;
+	font-weight: 500;
+}
+.specimen-section:has([data-chip-boundaries]:checked)
+	.chip-list
+	button:not(:focus-visible) {
+	outline: 1px dashed var(--barba-color-link);
+	outline-offset: -1px;
+}
+.specimen-section:has([data-chip-boundaries]:checked)
+	.chip-list
+	button:disabled {
+	outline-color: var(--barba-color-text-muted);
+}
+
+/* Catalog navigation only; not shipped in the library. */
+.specimen-contents {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--barba-space-3) var(--barba-space-6);
+}

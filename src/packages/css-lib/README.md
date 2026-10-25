@@ -2,6 +2,37 @@
 
 One global stylesheet for personal applications. It gives ordinary semantic HTML a consistent foundation for typography, forms, links, dialogs, page layout, and a small set of reusable visual treatments.
 
+## Contents
+
+- [Installation](#installation-and-import) · [Compatibility and adoption](#040-compatibility-and-adoption)
+- [API quick reference](#api-quick-reference) · [Application responsibilities](#what-the-library-owns)
+- [Shell](#application-shell) · [Header navigation](#header-navigation) · [Tables](#data-tables)
+- [Disclosures](#disclosures) · [Visually hidden text](#visually-hidden-text)
+- [Buttons](#buttons-forms-and-dialogs) · [Inline fields](#inline-fields-and-input-actions) · [X actions](#shared-closeclearremove-icon-action) · [Chips](#chips) · [Dialogs](#dialogs)
+- [Working editor](#working-editor) · [Tokens and themes](#tokens-and-accessibility-contract)
+- [Development](#local-development) · [Browser review](#automated-browser-review) · [Release](#releasing-the-css-package)
+
+## API quick reference
+
+These are styling hooks, not JavaScript components. Read the linked pattern guidance before copying markup. Attributes not listed here retain their native HTML meaning.
+
+| Pattern / public hooks | Required structure and states | Application responsibilities / customization |
+| --- | --- | --- |
+| `.app-shell`, `.site-header`, `.site-header-brand`, `.site-header-links`, `.skip-link` | Direct `main` in shell; optional direct header/footer. Navigation list with links/buttons; `aria-current="page"` (legacy `.active` supported). Skip link targets main. | Landmarks, meaningful headings/destinations, update actions; retain visible focus and content wrapping. |
+| Native buttons; `data-barba-variant="primary\|secondary\|tertiary\|text"`; `data-barba-intent="danger"` | Explicit native type; `disabled` for unavailable actions. Variants change appearance, not submit/reset behavior. | State, events, confirmation, pending/error feedback. Custom classes may override zero-specificity defaults; supply all interaction states. |
+| `data-barba-variant="icon"`, `data-barba-shape="icon"`, optional `data-barba-size="compact"` | Native named button, decorative SVG hidden from AT. Compact is a smaller face within a generous target. | Context-specific name, native disabled/hidden, distinct close/clear/remove behavior and focus transitions. |
+| `.inline-field`, `.input-row`, `.input-action` | Direct associated label; row contains input or action group then button. **Input-action requires the input and icon button as direct children.** Text/search inputs only. | Value/clear visibility, form ownership, validation, focus before hiding; not a generic textarea or nested-component layout. |
+| `.chip-list`, `.chip`, `.chip-face`, `.chip-removable` | List of chips; informational span/list item; selectable `button.chip[aria-pressed] > .chip-face`; removable container with label span and separate compact icon button. | Selection/removal, disabled state, stable names, and next/previous/fallback focus. Keep 44×44px target space; don't add click handlers to information or whole removable containers. |
+| `details.disclosure`, `.disclosure-label`, `.disclosure-title`, `.disclosure-description`, `.disclosure-content` | Direct summary, label/title and optional description, then content wrapper. Native `open`; no invented disabled state. | Descriptive summary, optional persistence; keep required content visible. Avoid nested interactive summary content. |
+| `dialog`, `.dialog-content-container`, `.dialog-header`, `.dialog-header-actions`, `.dialog-body`, `.dialog-footer` | Direct structured form/container; header/body/footer children. Named native dialog. Optional `data-barba-dialog-spacing="compact"`, `-height="content"`, `-room="extra"`, `-dividers="full"` (all prefixed `data-barba-dialog`). | Open/close, validation, cancel guards, initial/restored focus, fallback browser behavior. Standard width is unchanged. |
+| `.visually-hidden` | Supplemental noninteractive text; optional empty persistent `role="status" aria-atomic="true"` region. | Naming source, live-region timing, and update ownership; not for focusable elements or essential instructions. Use `.skip-link` for focus-revealed navigation. |
+| Native `hidden` | Ordinary hidden values suppress layout and keyboard access, including invalid values. `hidden="until-found"` stays browser-managed. | Remove the attribute / set `hidden=false` to reveal; do not write `hidden="false"`. Hidden is not disabled: form submission and scripts remain active. |
+| Semantic HTML defaults; `.helper-text`, `.text-gradient`, `.scaleup-on-hover` | Forms/labels, tables, typography; helper text is scoped to forms. Decorative classes are optional; `.scaleup-on-hover.disabled` suppresses scaling, and legacy `li.disabled > a/span` supplies disabled appearance only. | Associate help via `aria-describedby`; table captions/header relationships and overflow are app-owned. Do not rely on hover/motion/color alone. |
+
+Customize with public `--barba-color-*`, `--barba-font-size-{sm,base,lg,xl}`, `--barba-space-{1,2,3,4,6,8}`, `--barba-radius-{sm,md}`, `--barba-shadow-raised`, `--barba-motion-duration-{fast,base,decorative}`, and `--barba-motion-easing-emphasized`. Private `--_barba-*` and compiler-generated `--lightningcss-*` properties are implementation details. Recheck contrast, target sizes, focus, and reflow after overrides. See [the theme contract](#tokens-and-accessibility-contract).
+
+Ordinary `hidden` deliberately wins over component display styles through one shared rule. It is distinct from `.visually-hidden`, which keeps text available to assistive technology. See [MDN hidden semantics](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/hidden).
+
 ## Installation and import
 
 Install the package, then import its stylesheet once from an application entry point. The package-root import is preferred:
@@ -17,6 +48,20 @@ import "@barbajoe/css-lib/dist/barbajoe.css";
 ```
 
 Both paths resolve to the same global stylesheet. The repository tracks the source in `lib/`; npm receives only the generated `dist/barbajoe.css` bundle, the package metadata, and this README.
+
+## 0.4.0 compatibility and adoption
+
+This minor release adds the reviewed navigation, button, dialog, inline-form, chip, disclosure, and visually hidden patterns. The catalog contains working examples and implementation guidance for each. The npm package remains CSS-only; applications own state, validation, focus transitions, announcements, and persistence.
+
+- **Header navigation changes by default:** padding now belongs to each link or action, so its whole padded area is clickable. Navigation wraps according to content and remains aligned to the inline end. Both `aria-current="page"` and the existing `.active` convention receive the active underline. Review headers with application-specific spacing overrides.
+- **Button specificity changes by default:** low-specificity defaults let a consumer class control appearance and interaction states. Existing application overrides may now win where library styles previously masked them; inspect those overrides during adoption. Explicitly use `type="button"` for non-submit actions. Text, danger, and icon treatments are optional.
+- **Forms and dialogs retain their base layouts:** inline-field/input-action classes and dialog sizing/divider options are opt-in. The dialog’s standard width is retained. Existing stacked fields keep their original label treatment. The opt-in inline label uses weight 500.
+- **Use the shared X intentionally:** `data-barba-variant="icon"` selects background-only feedback with a 2px inset. Close, clear, and chip removal retain generous targets; the compact size reduces the visible X face rather than its target. Existing text-style icon buttons retain their treatment until their variant changes. Close, clear, remove, and destructive deletion still have distinct semantics and application behavior.
+- **Chips, disclosures, and visually hidden text are opt-in:** adopt the documented markup and remove equivalent application styling only after verifying the replacement. Do not remove status semantics or assume CSS supplies interaction logic. Interactive chips reserve targets at least 44×44px around compact faces. Selectable buttons require a child `.chip-face`; informational chips remain noninteractive.
+
+No cascade layers, broad form-layout migration, JavaScript widget framework, popover, or spinner is introduced. Further changes to legacy header/form specificity and disabled-style ownership remain separate compatibility work.
+
+The PR’s Netlify Deploy Preview is the review environment. Merging the approved version increase stages the package through the existing release workflow; installation of `0.4.0` becomes possible only after npm approval with 2FA. The workflow and publishing security settings are unchanged.
 
 ## What the library owns
 
@@ -62,21 +107,212 @@ A `site-header` supports a brand or title with navigation, a brand or title alon
 
 Classes remain appropriate for roles that semantic HTML cannot express by itself, including `site-header`, `text-gradient`, `scaleup-on-hover`, and `dialog-content-container`.
 
+## Header navigation
+
+Use `site-header` on a header, `site-header-links` on its navigation list, and optionally `site-header-brand` on its direct brand/title child:
+
+```html
+<header class="site-header">
+  <a class="site-header-brand" href="/">Our List</a>
+  <nav aria-label="Main">
+    <ul class="site-header-links">
+      <li><a href="/manage/" aria-current="page">Manage</a></li>
+      <li><button type="button">Update now</button></li>
+      <li><a href="/settings/">Help &amp; settings</a></li>
+    </ul>
+  </nav>
+</header>
+```
+
+Brand and navigation share a row whenever their content fits. Navigation moves to the inline end (right in left-to-right layouts), including when it wraps or is the header's only child. Long navigation labels can wrap within their targets. There is no viewport breakpoint that forces a second row.
+
+Direct links and buttons in the list share the same transparent navigation treatment, with padding on the interactive element and targets at least 44 CSS pixels wide and high. Header navigation overrides ordinary button emphasis; use `type="button"` for an action. Applications supply that action's behavior. Current-page links use `aria-current="page"`; existing `li.active > a` markup also keeps its underline. Hover, active and keyboard focus retain feedback, and the global keyboard focus ring remains visible. Native `disabled` buttons stay disabled. For disabled links, `aria-disabled` still requires application prevention of activation as described below.
+
+The optional `site-header-brand` class preserves one brand appearance on an anchor, strong text or a heading. It does not require an `h1` in the header or change the element's semantics. Choose headings according to the page hierarchy, and give links meaningful destinations. Use public `--barba-` tokens and application styles to customize the header; example JavaScript in the [header specimen](https://lib-staging.barbajoe.tech/headers.html) is not shipped in the package.
+
+**Compatibility for the upcoming minor release:** Existing header markup and `.active` remain supported. Navigation that previously occupied a new row below 40rem can now stay beside the brand; navigation-only headers now align to the inline end. Padding and the underline move from the list item to its direct interactive element, and direct navigation buttons now match links. Consumers with list-item padding/border overrides should remove or move those overrides to the link/button to avoid double spacing. The brand class is opt-in; existing unclassed brand elements keep their typography.
+
+Accessibility: use meaningful navigation landmarks and current-page semantics; distinguish multiple navigation regions by name. See [APG navigation-landmark guidance](https://www.w3.org/WAI/ARIA/apg/patterns/landmarks/examples/navigation.html).
+
 ## Data tables
 
 Use a semantic `<table>` for tabular data, with a `<caption>` and `<th scope="col">` or `<th scope="row">` where appropriate. The library gives these elements collapsed borders, start-aligned captions and headings, modest cell spacing, and row dividers from the existing palette. No table class is required. See [MDN's table guidance](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/table) and the [compact and wide specimens](https://lib-staging.barbajoe.tech/#tables-heading).
 
 The library does not set table width, scrolling, stripes, sticky headings, sorting, or narrow-screen column behavior. Each application chooses how its data fits available space. The wide specimen's scroll container demonstrates one application choice; it is not part of the shipped CSS.
 
+## Disclosures
+
+Use `details.disclosure` for the bordered disclosure panel. Its full-width summary has a trailing chevron, a minimum 2.75rem target height (44px at a 16px root size), hover/press feedback, and the library’s keyboard focus outline. Opening adds a divider between summary and body. See the [light and dark catalog examples](https://lib-staging.barbajoe.tech/#disclosures-heading) for settings, supporting summaries, nested help, and long labels.
+
+```html
+<details class="disclosure" open>
+  <summary>
+    <span class="disclosure-label">
+      <span class="disclosure-title">Shopping filters</span>
+      <span class="disclosure-description">All stores · All categories</span>
+    </span>
+  </summary>
+  <div class="disclosure-content">
+    <p>Settings, controls, and links go here.</p>
+  </div>
+</details>
+```
+
+- `.disclosure-label` fills the available summary width and wraps long text without crowding the chevron. For a simple label, put both label and title classes on one element.
+- `.disclosure-title` uses medium weight 500 and normalizes heading margins, size, and borders. A heading at the correct page level may replace the title span, for example `<h2 class="disclosure-label disclosure-title">Preferences</h2>`. The class changes appearance, not semantics. Some browser/assistive-technology combinations expose summary descendants as part of the toggle rather than separate headings; verify your target combinations, or place a section heading outside the disclosure when independent heading navigation is important. See [MDN’s summary heading guidance](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/summary#summaries_as_headings).
+- `.disclosure-description` provides optional muted supporting text below the title. The application keeps selection/status summaries up to date.
+- `.disclosure-content` pads the body and removes its first/last child’s outer block margins. Applications own spacing between panels, internal content layouts, and wide tables/media; long text wraps. Nested disclosures use the same markup, but avoid unnecessary nesting.
+
+Keep the summary’s wording descriptive. Place extra buttons, links, and inputs in the body, not inside the summary. Use disclosures when users can choose which optional information or settings to reveal; keep required instructions and critical status visible. Native `details`/`summary` provides pointer and keyboard operation and expanded-state semantics. Do not add `role="button"`, `tabindex`, or duplicate `aria-expanded` state. Add `open` for initial expansion. Omit `name` for independently expandable sections, as in the catalog; the library does not force an exclusive accordion, animate expansion, or persist state. Applications own persistence and any enclosed controls’ behavior. No JavaScript ships with this treatment.
+
+**Compatibility and customization:** This is opt-in; unclassed disclosures retain native styling. Use existing `--barba-` color, spacing, and radius tokens or scoped application selectors. Existing app-specific summary spacing, heading borders, or icons should be removed when adopting these classes to avoid duplicate decoration. The disclosure styling does not supply a disabled state; choose static content instead when expansion is unavailable.
+
+## Visually hidden text
+
+Use `.visually-hidden` on supplemental, noninteractive text to remove it from visual layout while retaining it for assistive technology. It is opt-in, has no JavaScript, and does not itself supply an accessible name, live-region semantics, or focus behavior. See the [working light/dark examples and implementation guidance](https://lib-staging.barbajoe.tech/#visually-hidden-heading), including per-pattern requirements, primary references, and verification steps.
+
+```html
+<!-- The visible label remains at the start of the complete name. -->
+<button type="button">Edit<span class="visually-hidden"> Apples</span></button>
+
+<!-- Present before an application adds a result message; do not focus it. -->
+<p class="visually-hidden" role="status" aria-atomic="true"></p>
+
+<!-- Hidden text is an alternative naming source to aria-label. -->
+<button type="button" data-barba-variant="icon" data-barba-shape="icon">
+  <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+    <path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" />
+  </svg>
+  <span class="visually-hidden">Clear item name</span>
+</button>
+```
+
+- Keep essential information visible. Apply this utility only to the supplemental text, never a focusable control or its container. Do not combine it with `hidden`, `display:none`, `visibility:hidden`, `aria-hidden="true"`, or `inert` on text intended to remain accessible or its ancestors. Continue using `.skip-link` for links that must become visible on focus; `.visually-hidden` does not reveal itself.
+- Keep the visible action wording in its accessible name, preferably at the beginning. Choose one naming source: `aria-label`/`aria-labelledby` can override descendant text. Do not layer them over these hidden labels. Retain visible associated labels on inputs and hide decorative SVGs from assistive technology. Read [W3C label-in-name guidance](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html) and [APG naming guidance](https://www.w3.org/WAI/ARIA/apg/practices/names-and-descriptions/).
+- Prefer making an existing visible result message a status region when it contains the full message. Otherwise mount one initially empty hidden region before updating it. Use `role="status" aria-atomic="true"`; keep ordinary updates polite, concise, and result-focused. Avoid duplicate live regions, repeating the native control’s selected value, or live announcements of entire lists. See [W3C ARIA22](https://www.w3.org/WAI/WCAG21/Techniques/aria/ARIA22), and [status-message guidance](https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html).
+- Applications own update timing and focus. The catalog’s Edit feedback is a demonstration, not a second announcement to copy into a focused editor. Clear uses the documented input-action behavior: update application state, return focus before hiding, and synchronize visibility. Setting `input.value` alone does not fire an input event; use the consuming application’s normal update path. See [MDN input events](https://developer.mozilla.org/en-US/docs/Web/API/Element/input_event).
+
+**Verification:** Inspect accessible names and live-region ownership; test keyboard operation, clear focus/empty-state behavior, narrow layouts, zoom, and actual announcements with supported browser/screen-reader combinations. DOM tests do not establish speech output. Check settled and rapid results, no results, and equal-count changes in consuming applications. Avoid rewriting unchanged messages on rerenders, but assess feedback for distinct operations separately.
+
+**Migration:** Replace equivalent local hiding styles only after adopting the library release. Preserve semantics and application behavior; separately review status-region mounting and duplicate announcements. A CSS replacement does not correct timing. Existing correctly named `aria-label` icon buttons need no migration.
+
 ## Buttons, forms, and dialogs
 
-Native `button` and button-type `input` elements are styled automatically: `submit` is primary, `button` is secondary, and `reset` is tertiary. A button without a type receives primary styling to match its usual form-submit behavior; write `type="button"` for a non-submit action. Override emphasis independently of behavior with `data-barba-variant="primary"`, `"secondary"`, or `"tertiary"`. These attributes affect appearance only.
+Native `button` and button-type `input` elements are styled automatically: `submit` is primary, `button` is secondary, and `reset` is tertiary. A button without a type receives primary styling to match its usual form-submit behavior; write `type="button"` for a non-submit action. Override emphasis independently of behavior with `data-barba-variant="primary"`, `"secondary"`, `"tertiary"`, or `"text"`. These attributes affect appearance only.
 
-The Updated Soft treatment reuses the existing palette. Primary hover uses link-hover in light mode and inverse-surface (light gray) in dark mode. Secondary hover uses surface; tertiary hover uses control background. Text colors do not change on hover. Disabled controls retain their emphasis with reduced opacity and no hover treatment. The global keyboard focus ring applies to controls inside and outside forms.
+Use `data-barba-variant="text"` for a quiet action: link-colored text on a transparent face, with the same padded target as an ordinary button. Hover, press and keyboard focus reveal the control background and a visible link-hover border. Disabled text actions retain their transparent face without hover feedback.
+
+Use `data-barba-intent="danger"` for a destructive action. It starts as danger-colored text with a transparent face and border. Hover, press and keyboard focus reveal a surface-colored face and danger-colored border. Disabled danger actions keep that outlined appearance at the existing disabled opacity. Intent overrides the ordinary emphasis appearance, including when a variant is also present, and never changes native button behavior. Use a clear action label; color alone does not explain destruction. Applications own confirmation and deletion.
+
+```html
+<button type="button" data-barba-variant="text">Edit</button>
+<button type="button" data-barba-intent="danger">Delete</button>
+<button type="button" data-barba-intent="danger" disabled>Delete</button>
+```
+
+**Customization and compatibility:** Button defaults and their state rules use `:where()` to have zero specificity, including disabled appearance. A simple application class wins for the properties it sets, even when loaded before the library and while the button is hovered, pressed or keyboard-focused. Supply the desired interaction states for a custom appearance; overriding the background and border does not invent new hover feedback. Existing application selectors may now take precedence where the old library selectors won, so review consumer overrides when upgrading. Native primary/secondary/tertiary appearances remain the same, and the independent global focus outline stays visible unless an application explicitly overrides it. Other component rules, such as header navigation, still apply in their own contexts. Input-based button controls follow the same rules; text-field state styles remain unchanged.
+
+```css
+.my-action {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--barba-color-link);
+}
+.my-action:enabled:is(:hover, :active) {
+  background-color: var(--barba-color-control-bg);
+  border-color: var(--barba-color-link-hover);
+}
+```
+
+Button treatments use the existing palette. Primary hover uses link-hover in light mode and inverse-surface (light gray) in dark mode. Secondary hover uses surface; tertiary hover uses control background. Primary/secondary/tertiary text colors do not change on hover. Disabled controls retain their emphasis with reduced opacity and no hover treatment. The global keyboard focus ring applies to controls inside and outside forms.
 
 Text inputs (including omitted `type`), textarea, and select receive the same appearance regardless of form ancestry or the `form` attribute. Full-width sizing and additional top spacing remain specific to controls inside forms. Forms retain their stacked layout. Page-footer margin/alignment apply only to `.app-shell > footer`, not article or dialog footers.
 
 Input and textarea placeholders use the existing muted-text color and italics at full opacity, making examples distinct from entered values without introducing another color. Keep a visible label for each control; placeholder text disappears as the user types and is not a substitute for a label. Compare both schemes in the [form specimen](https://lib-staging.barbajoe.tech/#forms-heading).
+
+### Inline fields and input actions
+
+Use these opt-in classes for single-line text or search inputs. Existing stacked forms and label weights are unchanged without the classes. See the [working catalog examples](https://lib-staging.barbajoe.tech/#inline-forms-heading).
+
+- `.inline-field`: wrap a visible, explicitly associated label and its control row. A direct-child label uses the standard 1.3rem size with medium weight 500. Place hints outside the label and associate them with `aria-describedby` when needed.
+- `.input-row`: wrap the input (or input-action group) and its Add/submit button. They share a minimum 2.75rem height. The field grows from a 14rem preferred width, and the action wraps to the inline end when space runs out. Keep input before Add in DOM order; don't reverse keyboard order with CSS.
+- `.input-action`: group one text/search input and its clear icon button. The group reserves space for the icon even when hidden, so text cannot run beneath it and the field does not resize. It can be used inside a row or alone. This is a single-icon layout, not a container for arbitrary action text or multiple icons.
+
+The pattern works inside a form, outside a form, and with a separate form owner. For the last case, add the same `form="entry-form"` attribute to both the input and submit button; the label still points to the input's ID. The classes don't establish form ownership. Keep the label visible; a placeholder is not a label. Other control types retain their normal treatment.
+
+```html
+<form id="entry-form">
+  <div class="inline-field">
+    <label for="item-name">Item name</label>
+    <div class="input-row">
+      <div class="input-action">
+        <input id="item-name" name="item" type="text" required>
+        <button type="button" data-barba-variant="icon" data-barba-shape="icon"
+          aria-label="Clear item name" title="Clear item name"
+          aria-controls="item-name" hidden>
+          <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24">
+            <path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" />
+          </svg>
+        </button>
+      </div>
+      <button type="submit">Add</button>
+    </div>
+  </div>
+</form>
+```
+
+**Application behavior:** CSS only handles layout and the `hidden` state. Show the X only while `input.value.length > 0`; disable it if the field is disabled or read-only. Initialize that state on render, update it on input/change, after form reset, and whenever application code changes the value or editable state. Native reset completes after the reset event; synchronize after its default action. On clear, empty the value, return focus to the input **before** hiding/disabling the X, update application state and notify any dependent logic. Do not submit the form, reset unrelated fields, or delete persisted data. The specimen provides local example behavior in `specimen.js`; no JavaScript ships in the CSS package. The embedded pattern suppresses WebKit's native search-cancel decoration to avoid duplicate clear controls, so applications must supply the documented working X.
+
+### Shared close/clear/remove icon action
+
+The X shown above is the standard close/clear/remove icon in the examples. Use a native `button` with `data-barba-variant="icon"` and `data-barba-shape="icon"`. The variant supplies a transparent resting face and a circular background on hover/press; the icon color stays unchanged and no visible border appears. A 2 CSS pixel transparent inset keeps the background clear of surrounding input/chip edges. Keyboard focus uses the separate global outline. Disabled icon actions use `--barba-color-text-muted` instead of the enabled action color, retain the existing disabled opacity, and do not react to hover. Use the native `disabled` attribute; color alone does not disable an action.
+
+The shape supplies a 2.75rem square target and a 1.25rem SVG (44px/20px at a 16px root). For chip removal, `data-barba-size="compact"` keeps a target of `max(44px, 2.75rem)` while reducing the visible face to 1.5rem and the SVG to 1rem (24px/16px). Its hover background stays inset 2px inside that compact face; the rest of the target is transparent but clickable. Close and clear retain their standard face. Sizes scale with root text; the inset remains 2px. `hidden` removes an empty field's clear action from layout and keyboard navigation.
+
+This is opt-in: existing `data-barba-variant="text"` icon buttons retain their text-button appearance. Change the variant to `icon` for the new convention. Ordinary text actions and danger treatments are unchanged. Do not use this quiet X convention for deleting saved data; use a named danger action.
+
+Give each button a context-specific accessible name: **“Clear item name”** for a field, **“Close dialog”** for a modal, or **“Remove Produce”** for a chip selection. The SVG has `aria-hidden="true"`; the optional `title` provides an extra pointer hint and does not replace an accessible name from `aria-label` or a `.visually-hidden` text label. The shared icon communicates a visual convention, not shared behavior: clear empties one field, while dialog close uses the same cancellation/request-close path as Cancel and Escape, including application cancellation guards. Use a separately labeled danger action for deletion. Avoid unlabeled X glyphs, clickable spans, or `type="reset"` as a field-clear shortcut.
+
+### Chips
+
+See the [working light/dark catalog examples](https://lib-staging.barbajoe.tech/#chips-heading), including the target-boundary inspection toggle. `.chip` supplies typography; `.chip-list` supplies wrapping and an 8px-equivalent gap. Informational chips stay 1.5rem high. Selectable and removable chips have compact short faces (28px at a 16px root) inside targets at least 44×44 CSS pixels. Long labels wrap and grow; never fix their height. Use:
+
+- Informational: a noninteractive `span` or list item with `.chip`; vertically centered content and no keyboard stop.
+- Selectable: a native `button type="button"` with `.chip` and `aria-pressed="true|false"`, containing one `span.chip-face` for its label. Put state and event handling on the button, not the span. The transparent padding activates that same button. A thicker face border indicates selection; the separate keyboard outline encloses the full target. Keep the label stable while toggling, and use native `disabled` when unavailable.
+- Removable: `.chip.chip-removable` containing a label span and a separate icon button with `data-barba-size="compact"`. The button reserves its own full-size slot; only that button and its padding remove the selection. The label and surrounding chip are noninteractive. Do not make the containing chip another button or combine removal and selection on one target.
+
+```html
+<div class="chip-list" role="group" aria-label="Category filters">
+  <button type="button" class="chip" aria-pressed="false">
+    <span class="chip-face">Produce</span>
+  </button>
+</div>
+<ul class="chip-list" aria-label="Selected categories">
+  <li class="chip chip-removable">
+    <span>Produce</span>
+    <button type="button" data-barba-variant="icon" data-barba-shape="icon"
+      data-barba-size="compact" aria-label="Remove Produce" title="Remove Produce">
+      <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24">
+        <path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" />
+      </svg>
+    </button>
+  </li>
+</ul>
+```
+
+**Layout and adoption:** Compared with 24px targets, short interactive rows need about 20px more height; removable chips need about 20px more width for the X slot. Preserve this real layout space and allow wrapping. Do not extend hit areas over neighboring controls, shrink targets with negative margins, or put click handlers on the surrounding list item. When adopting from the earlier PR preview, wrap selectable labels in `.chip-face`; compact icon sizing now describes the visible face, not a 24px target. Informational markup is unchanged.
+
+Applications own selection, filtering and removal. Announce changed results when needed. Before removing a focused chip, move focus to the next enabled remove button, the previous one, or a stable nearby control if none remain. Removing a selection is distinct from deleting the underlying item. The catalog's filtering, removal and restore code is example-only; the package ships CSS, not JavaScript.
+
+### CSS organization and customization
+
+`barbajoe.css` imports tokens first, semantic defaults next, and optional component patterns last. There are no cascade layers. Button defaults, variants and states use zero-specificity `:where()` selectors so a consumer class can own the properties it sets even when loaded earlier. Chip appearance selectors carry one class of specificity; use a later consumer class to customize that appearance. Child layout selectors can include element types.
+
+Button appearance belongs in `buttons.css`; icon shape/size rules there supply geometry independently. `components/chips.css` owns chip labels, faces, selected states, target spacing, wrapping and placement. `components/inline-forms.css` owns input reservation/alignment, and `dialog.css` owns dialog layout and dividers. Neither layout module duplicates icon hover styles. Internal `--_barba-*` properties implement sizing and are not a public customization API; prefer the documented attributes and ordinary consumer CSS.
+
+Defaults followed by explicit variants are intentional specialization. Retain compatibility-sensitive legacy form/header rules until a separately reviewed migration; avoid appending stronger overrides to compensate for unclear ownership.
+
+### Dialogs
 
 For a three-region dialog, use this direct-child structure:
 
@@ -101,11 +337,58 @@ Dialogs grow with content from a 16rem minimum to an 80dvb maximum; available vi
 
 Dialogs share a top offset of 10% of the visible viewport, with a minimum 1rem gap. Their opening animation is anchored at the top, so different content heights do not change that position. Place footer actions in HTML order **Reset (if present), Cancel, Submit**: Submit is rightmost and Cancel immediately precedes it in left-to-right layouts. Use markup order rather than CSS reversal so keyboard and reading order match the visual order; actions may wrap on narrow screens.
 
+The dialog's single grid column is constrained to the available width, and headings can wrap long unbroken titles. For a title beside a close action, add `dialog-header-actions` to `.dialog-header`. This optional flex row wraps when needed and draws one inset divider below the heading and all actions; the plain header pattern keeps its existing appearance.
+
+Add `data-barba-dialog-dividers="full"` to a structured dialog for full-width header and footer borders directly adjoining its scrolling body. This replaces the heading underline and any inset action-row divider with one continuous header border. Both borders remain visible with short or long content; existing dialog defaults remain unchanged when the attribute is omitted.
+
+The following sizing options are independent. Omit an attribute for the existing default. None changes the standard width of `min(32em, 100vi - 2rem)`.
+
+| Dialog attribute | Effect |
+| --- | --- |
+| `data-barba-dialog-spacing="compact"` | Uses `--barba-space-3` padding instead of `--barba-space-4` for the header, body and footer (or an unstructured dialog's own padding). |
+| `data-barba-dialog-height="content"` | Removes the outer minimum height and lowers the structured body's minimum from 6rem to 3rem; short content uses only the room it needs. |
+| `data-barba-dialog-room="extra"` | Starts at 5% of the viewport rather than 10%, and permits up to 90% rather than 80% of its height, while preserving at least 1rem outer gutters. |
+
+Combine `data-barba-shape="icon"` with `data-barba-variant="icon"` for the shared close action. Its circular hover background is inset by 2px; the 2.75rem target and separate focus outline remain intact. Give the button an accessible name and hide its decorative SVG from assistive technology. See the shared icon guidance above for sizing and compatibility.
+
+```html
+<dialog id="compact-dialog" aria-labelledby="compact-title" closedby="any"
+  data-barba-dialog-spacing="compact"
+  data-barba-dialog-height="content"
+  data-barba-dialog-room="extra"
+  data-barba-dialog-dividers="full">
+  <form method="dialog" class="dialog-content-container">
+    <header class="dialog-header dialog-header-actions">
+      <h2 id="compact-title">Edit item</h2>
+      <button type="button" data-barba-variant="icon" data-barba-shape="icon"
+        aria-label="Close dialog" command="request-close" commandfor="compact-dialog">
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24">
+          <path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" />
+        </svg>
+      </button>
+    </header>
+    <div class="dialog-body">
+      <label>Item name <input name="item" required /></label>
+    </div>
+    <footer class="dialog-footer">
+      <button type="button" command="request-close" commandfor="compact-dialog">Cancel</button>
+      <button type="submit">Save</button>
+    </footer>
+  </form>
+</dialog>
+```
+
 `method="dialog"` submits and closes after native validation without a network request. Cancel is a non-submit button; `command="request-close"` follows the same cancellable dismissal path as native outside-click dismissal or Escape. Reset restores initial values without closing. Closing does not reset fields. Unless there is a strong reason otherwise, use `closedby="any"` to treat clicks outside the dialog as cancellation: no submission, validation, or reset. Applications with cancellation cleanup should share that behavior through the dialog's `cancel` event, not solely a Cancel-button click handler. Preventing that event can keep the dialog open when dismissal needs confirmation.
 
 Invoker commands and native light dismissal require browser support; CSS cannot supply those behaviors. Consumers targeting older browsers must provide appropriate open/close/dismissal behavior. The specimen includes feature-detected fallbacks (outside clicks invoke its Cancel button), not library JavaScript. See the [short and long dialog examples](https://lib-staging.barbajoe.tech/#dialog-heading) and [native light-dismiss documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog#closedby).
 
 An `aria-disabled="true"` link receives disabled appearance and ignores pointer interaction, but ARIA does not prevent keyboard activation. Consumers must remove its navigation target or prevent activation; the specimen prevents its click event for both pointer and keyboard activation.
+
+## Working editor
+
+The [maintained editor](https://lib-staging.barbajoe.tech/editor.html) composes Name, Notes, informational/selectable/removable chips, close, and Delete/Cancel/Save. Toggle read-only and long content to exercise disabled controls, wrapping and scrolling. It uses the existing stacked labels; no new compact-label API is implied. `specimen/editor.css` contains only application-like layout, and `editor.js` owns synthetic draft/save/cancel/delete state and focus restoration. Neither ships in npm. Applications must add their own persistence, permissions, pending/error handling, and deletion safeguards.
+
+See the [separate Our List adoption plan](https://github.com/Barbacoa08/barbajoe/blob/main/docs/our-list-adoption.md) in this repository for a component-by-component migration proposal. The plan does not change or deploy Our List.
 
 ## Tokens and accessibility contract
 
@@ -145,6 +428,8 @@ The following default pairings are guaranteed. Text roles meet at least 7:1 agai
 
 These guarantees apply only to the listed default pairings. Accent, inverse-surface, arbitrary token combinations, and consumer overrides do not carry a general contrast guarantee. The forced light and dark matrices in the [component catalog](https://lib-staging.barbajoe.tech/#color-heading) display the contract.
 
+The published Lightning CSS bundle selects its light/dark palette from the system `prefers-color-scheme` setting. Setting `color-scheme` on an element alone does not switch its compiled palette. Applications that force a theme should set matching `color-scheme`, override semantic `--barba-color-*` tokens, and review the primary-button hover rule, which also uses `light-dark()` directly. This pre-existing limitation differs from the source-based catalog, which can display forced light and dark panels together. The [packaged-CSS example](https://lib-staging.barbajoe.tech/package-theme.html) imports the generated release CSS and shows the distinction. Change system preference to verify it; do not copy compiler-private variables.
+
 ## Browser support
 
 The library targets the current stable releases of Chrome, Firefox, and Safari on desktop, plus Safari on iOS and Chrome on Android, at the time a package version is released. Edge is outside this support target. Older browser versions, beta releases, and embedded or in-app webviews are also outside this support target. A release-time target does not imply that every browser/device combination was manually checked.
@@ -159,7 +444,7 @@ From this package directory, install the repository dependencies and start the s
 pnpm dev
 ```
 
-Parcel opens the component catalog automatically and applies HTML, CSS, and dialog-fixture changes with hot module replacement. Use the navigation to review the component catalog, header compositions, and all four application shell structures in the same session.
+Parcel opens the component catalog automatically and applies HTML, CSS, and dialog-fixture changes with hot module replacement. Development startup also builds the package once for `package-theme.html`; after further library edits, run `pnpm build` to refresh that compiled example. `build:specimen` always regenerates the package before bundling all seven pages. Use the navigation to review the component catalog, header compositions, and all four application shell structures in the same session.
 
 Build the production package with Lightning CSS:
 
@@ -199,15 +484,15 @@ pnpm test:browser
 pnpm test:browser:report
 ```
 
-The review builds the CSS and optimized specimen, serves `.output/specimen` on `127.0.0.1:4173`, runs the tests, and stops its server. Leave that port free; an existing server is rejected so stale output cannot silently pass. No separate development server is needed. The specimen build imports library source CSS through Parcel; the release-helper checks separately validate the packaged Lightning CSS bundle.
+The review builds the CSS and optimized specimen, serves `.output/specimen` on `127.0.0.1:4173`, runs the tests, and stops its server. Leave that port free; an existing server is rejected so stale output cannot silently pass. No separate development server is needed. Most specimen pages import library source CSS through Parcel; `package-theme.html` imports the freshly generated release bundle. The editor and hidden-state regression checks also exercise both stylesheet builds. The release-helper checks separately validate the packaged Lightning CSS bundle.
 
-Playwright runs Chromium, Firefox, and WebKit at 1280×720 and 390×844 in light and dark schemes. It checks all five pages and asset loading, page overflow, form reset and inert catalog actions, dialog reset/validation/dismissal/focus, dialog sizing and body scrolling, keyboard reachability, and keyboard table scrolling. Focused table and dialog checks also use 320px layouts. Each run captures full-page views, buttons/hover, placeholders, forms, tables, and open-dialog states for human review. These images are evidence, with no stored image baselines or automatic pixel comparisons.
+Playwright runs Chromium, Firefox, and WebKit at 1280×720 and 390×844 in light and dark schemes. It checks all seven pages and asset loading, page overflow, form reset and inert catalog actions, dialog reset/validation/dismissal/focus, dialog sizing and body scrolling, keyboard reachability, and keyboard table scrolling. Focused header, table and dialog checks also use 320px layouts. Header checks cover content-based wrapping, right alignment, padded targets, current-page markup, disabled actions, semantic brand elements and long labels; a separate check exercises the packaged CSS and header text contrast. Each run captures full-page views, buttons/hover, placeholders, forms, tables, and open-dialog states for human review. These images are evidence, with no stored image baselines or automatic pixel comparisons.
 
 `playwright-report/` contains the HTML report, screenshots, environment attachments, and failure traces. `test-results/` contains individual test outputs. Both are ignored by Git and excluded from the npm package. Environment attachments identify the date, commit, browser build/version, OS, actual viewport, scheme, and build type. Test failures produce a nonzero exit code. Reports do not open automatically; the job can finish unattended.
 
 For a focused local run, use `pnpm test:browser --project=webkit-narrow-dark`; add `--headed` to watch it. The same command runs in the **Browser review** GitHub Actions workflow on PRs, pushes to `main`, or manual dispatch. Download its `browser-review-report` artifact, unzip it, then run `pnpm test:browser:report /path/to/unzipped-report` with the directory containing `index.html`. Reports are retained for 14 days. Behavioral failures fail that CI job; configuring it as a required merge check is a separate maintainer choice.
 
-These are Playwright's bundled test browsers, not a guarantee about the current installed Chrome, Firefox, or Safari releases. WebKit is sufficient for automated coverage here but is not branded Safari. Narrow desktop viewports do not test real iOS/Android browser behavior. Runs request reduced motion for repeatable capture; they do not assert motion behavior, real 200% browser zoom, or screen-reader usability. Use the manual guidance below for those checks when relevant; actual-device review remains recommended, not required. The 13 release-helper tests are separate from these browser tests.
+These are Playwright's bundled test browsers, not a guarantee about the current installed Chrome, Firefox, or Safari releases. WebKit is sufficient for automated coverage here but is not branded Safari. Narrow desktop viewports do not test real iOS/Android browser behavior. Runs request reduced motion for repeatable capture; they do not assert motion behavior, real 200% browser zoom, or screen-reader usability. Use the manual guidance below for those checks when relevant; actual-device review remains recommended, not required. Disclosure checks exercise source and packaged CSS, padded summary targets, native controls, keyboard focus, nested content, forced colors, and unbroken-label reflow at 320px with enlarged text. The 13 release-helper tests are separate from these browser tests.
 
 Focus-return checks open dialogs from a focused button using Enter. On macOS, WebKit's default Tab navigation skips buttons, so the footer check uses Option-Tab; no system preferences are changed. These checks exercise keyboard dismissal and restoration, without assuming pointer clicks focus buttons in every browser.
 
@@ -237,7 +522,7 @@ For live editing, run `pnpm css-lib dev` from the repository root. Parcel's watc
 
 ## Releasing the CSS package
 
-The package is currently at version `0.3.2`. Change the version only when there is an approved reason to release the CSS library. The staged-release workflow is specific to this package and accepts stable `MAJOR.MINOR.PATCH` versions only.
+The package is currently at version `0.4.0`. Change the version only when there is an approved reason to release the CSS library. The staged-release workflow is specific to this package and accepts stable `MAJOR.MINOR.PATCH` versions only.
 
 The npm trusted publisher for `@barbajoe/css-lib` identifies GitHub user `Barbacoa08`, repository `barbajoe`, and workflow `stage-css-release.yml`. It must allow **stage publishing only**, not direct publishing. Keep the npm maintainer account's 2FA enabled and the package's Publishing access set to **Require two-factor authentication and disallow tokens**. The workflow uses OIDC; it needs neither a bypass-2FA npm access token nor an `NPM_AUTH_TOKEN` GitHub secret. Enable GitHub email notifications for issue assignments if you want the staged-release reminder in your inbox.
 

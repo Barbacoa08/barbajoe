@@ -55,3 +55,10 @@ a[aria-disabled="true"] {
 	opacity: 0.5;
 	text-decoration: none;
 }
+
+/* Native hidden wins over component layout. Keep until-found browser-managed.
+   Invalid values (including "false") still mean hidden in HTML. */
+:where([hidden]:not([hidden="until-found" i])) {
+	/* biome-ignore lint/complexity/noImportantStyles: Native hidden must win over all component display rules. */
+	display: none !important;
+}

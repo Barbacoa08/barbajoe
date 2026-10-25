@@ -1,5 +1,10 @@
-/* Native behavior supplies the default emphasis; the BARBA hook is optional. */
-:is(button, input[type="button"], input[type="submit"], input[type="reset"]) {
+/* Zero-specificity defaults let an application class own its chosen properties. */
+:where(
+	button,
+	input[type="button"],
+	input[type="submit"],
+	input[type="reset"]
+) {
 	font: inherit;
 	font-weight: 600;
 	line-height: 1.25;
@@ -12,44 +17,170 @@
 	background-color: var(--barba-color-control-bg);
 	color: var(--barba-color-text);
 	align-self: start;
-
-	&:enabled {
-		cursor: pointer;
-	}
-
-	&:enabled:is(:hover, :active) {
-		background-color: var(--barba-color-surface);
-		border-color: var(--barba-color-link-hover);
-	}
+}
+:where(
+	:is(
+		button,
+		input[type="button"],
+		input[type="submit"],
+		input[type="reset"]
+	):enabled
+) {
+	cursor: pointer;
+}
+:where(
+	:is(
+		button,
+		input[type="button"],
+		input[type="submit"],
+		input[type="reset"]
+	):enabled:is(:hover, :active)
+) {
+	background-color: var(--barba-color-surface);
+	border-color: var(--barba-color-link-hover);
 }
 
-:is(button:not([type]), button[type="submit"], input[type="submit"]):not(
-	[data-barba-variant]
-),
-:is(button, input)[data-barba-variant="primary"] {
+/* Native behavior supplies emphasis unless an explicit variant overrides it. */
+:where(
+	:is(button:not([type]), button[type="submit"], input[type="submit"]):not(
+		[data-barba-variant]
+	),
+	:is(button, input)[data-barba-variant="primary"]
+) {
 	background-color: var(--barba-color-link);
 	border-color: var(--barba-color-link);
 	color: var(--barba-color-surface);
-
-	&:enabled:is(:hover, :active) {
-		background-color: light-dark(
-			var(--barba-color-link-hover),
-			var(--barba-color-surface-inverse)
-		);
-		border-color: light-dark(
-			var(--barba-color-link-hover),
-			var(--barba-color-surface-inverse)
-		);
-	}
 }
-
-:is(button[type="reset"], input[type="reset"]):not([data-barba-variant]),
-:is(button, input)[data-barba-variant="tertiary"] {
+:where(
+	:is(
+		:is(button:not([type]), button[type="submit"], input[type="submit"]):not(
+			[data-barba-variant]
+		),
+		:is(button, input)[data-barba-variant="primary"]
+	):enabled:is(:hover, :active)
+) {
+	background-color: light-dark(
+		var(--barba-color-link-hover),
+		var(--barba-color-surface-inverse)
+	);
+	border-color: light-dark(
+		var(--barba-color-link-hover),
+		var(--barba-color-surface-inverse)
+	);
+}
+:where(
+	:is(button[type="reset"], input[type="reset"]):not([data-barba-variant]),
+	:is(button, input)[data-barba-variant="tertiary"]
+) {
 	background-color: transparent;
 	border-color: transparent;
+}
+:where(
+	:is(
+		:is(button[type="reset"], input[type="reset"]):not([data-barba-variant]),
+		:is(button, input)[data-barba-variant="tertiary"]
+	):enabled:is(:hover, :active)
+) {
+	background-color: var(--barba-color-control-bg);
+	border-color: transparent;
+}
 
-	&:enabled:is(:hover, :active) {
-		background-color: var(--barba-color-control-bg);
-		border-color: transparent;
-	}
+:where(:is(button, input)[data-barba-variant="text"]) {
+	background-color: transparent;
+	border-color: transparent;
+	color: var(--barba-color-link);
+}
+:where(
+	:is(button, input)[data-barba-variant="text"]:enabled:is(
+		:hover,
+		:active,
+		:focus-visible
+	)
+) {
+	background-color: var(--barba-color-control-bg);
+	border-color: var(--barba-color-link-hover);
+	color: var(--barba-color-link-hover);
+}
+
+/* Close, clear and remove share appearance; shape/size own geometry below. */
+:where(button[data-barba-variant="icon"]) {
+	--_barba-icon-border: 2px;
+	border: var(--_barba-icon-border) solid transparent;
+	border-radius: 50%;
+	background-color: transparent;
+	background-clip: padding-box;
+	color: var(--barba-color-link);
+}
+:where(button[data-barba-variant="icon"]:disabled) {
+	color: var(--barba-color-text-muted);
+}
+:where(button[data-barba-variant="icon"]:enabled:is(:hover, :active)) {
+	background-color: color-mix(
+		in srgb,
+		var(--barba-color-link) 18%,
+		var(--barba-color-surface)
+	);
+}
+
+/* Intent is independent of submit/reset behavior and overrides emphasis. */
+:where(:is(button, input)[data-barba-intent="danger"]) {
+	background-color: transparent;
+	border-color: transparent;
+	color: var(--barba-color-danger);
+}
+:where(
+	:is(button, input)[data-barba-intent="danger"]:enabled:is(
+		:hover,
+		:active,
+		:focus-visible
+	),
+	:is(button, input)[data-barba-intent="danger"]:disabled
+) {
+	background-color: var(--barba-color-surface);
+	border-color: var(--barba-color-danger);
+	color: var(--barba-color-danger);
+}
+
+:where(
+	:is(
+		button,
+		input[type="button"],
+		input[type="submit"],
+		input[type="reset"]
+	):disabled
+) {
+	cursor: not-allowed;
+	opacity: 0.65;
+}
+/* The global :focus-visible outline remains independent of button appearance. */
+
+/* Combine icon geometry with any appearance; the control still needs a name. */
+:where(button[data-barba-shape="icon"]) {
+	display: inline-grid;
+	place-items: center;
+	inline-size: var(--_barba-icon-target, 2.75rem);
+	block-size: var(--_barba-icon-target, 2.75rem);
+	min-inline-size: var(--_barba-icon-target, 2.75rem);
+	min-block-size: var(--_barba-icon-target, 2.75rem);
+	padding: calc(
+		(var(--_barba-icon-target, 2.75rem) - var(--_barba-icon-glyph, 1.25rem)) /
+		2 -
+		var(--_barba-icon-border, 1px)
+	);
+}
+
+:where(button[data-barba-shape="icon"][data-barba-size="compact"]) {
+	--_barba-icon-target: max(44px, 2.75rem);
+	--_barba-icon-glyph: 1rem;
+}
+/* Compact describes the visible face, not a smaller interactive target. */
+:where(
+	button[data-barba-variant="icon"][data-barba-shape="icon"][data-barba-size="compact"]
+) {
+	--_barba-icon-border: calc((var(--_barba-icon-target) - 1.5rem) / 2 + 2px);
+}
+:where(button[data-barba-shape="icon"] > svg) {
+	display: block;
+	inline-size: var(--_barba-icon-glyph, 1.25rem);
+	block-size: var(--_barba-icon-glyph, 1.25rem);
 }

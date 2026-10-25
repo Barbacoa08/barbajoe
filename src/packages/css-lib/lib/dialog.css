@@ -26,6 +26,7 @@ dialog > .dialog-content-container {
 	min-block-size: inherit;
 	max-block-size: inherit;
 	display: grid;
+	grid-template-columns: minmax(0, 1fr);
 	/* Keep a readable body even when the outer dialog must scroll. */
 	grid-template-rows: auto minmax(6rem, 1fr) auto;
 	margin: 0;
@@ -39,6 +40,8 @@ dialog > .dialog-content-container > :is(.dialog-header, .dialog-footer) {
 
 dialog .dialog-header :is(h1, h2, h3) {
 	margin: 0;
+	min-inline-size: 0;
+	overflow-wrap: anywhere;
 }
 
 dialog > .dialog-content-container > .dialog-body {
@@ -54,6 +57,68 @@ dialog > .dialog-content-container > .dialog-footer {
 	flex-wrap: wrap;
 	justify-content: end;
 	gap: var(--barba-space-2);
+}
+
+/* Optional title/action row; the divider stays below every wrapped row. */
+dialog .dialog-header.dialog-header-actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: start;
+	gap: var(--barba-space-2);
+}
+dialog .dialog-header-actions > :is(h1, h2, h3) {
+	flex: 1 1 10ch;
+	align-self: center;
+	border-block-end: 0;
+}
+dialog .dialog-header-actions > button {
+	flex: 0 0 auto;
+}
+dialog .dialog-header-actions::after {
+	content: "";
+	flex-basis: 100%;
+	border-block-end: 1px solid var(--barba-color-border);
+}
+
+/* Full section borders meet the scrolling body without an inset gap. */
+dialog[data-barba-dialog-dividers="full"]
+	> .dialog-content-container
+	> .dialog-header {
+	border-block-end: 1px solid var(--barba-color-border);
+}
+dialog[data-barba-dialog-dividers="full"]
+	> .dialog-content-container
+	> .dialog-footer {
+	border-block-start: 1px solid var(--barba-color-border);
+}
+dialog[data-barba-dialog-dividers="full"] .dialog-header > :is(h1, h2, h3) {
+	border-block-end: 0;
+}
+dialog[data-barba-dialog-dividers="full"] .dialog-header-actions::after {
+	display: none;
+}
+
+/* Independent sizing options preserve the standard inline size. */
+dialog[data-barba-dialog-height="content"] {
+	min-block-size: 0;
+}
+dialog[data-barba-dialog-height="content"] > .dialog-content-container {
+	grid-template-rows: auto minmax(3rem, 1fr) auto;
+}
+dialog[data-barba-dialog-room="extra"] {
+	max-block-size: min(90dvb, calc(100dvb - 2rem));
+	margin-block-start: max(1rem, 5dvb);
+}
+dialog[data-barba-dialog-spacing="compact"] {
+	padding: var(--barba-space-3);
+}
+dialog[data-barba-dialog-spacing="compact"]:has(> .dialog-content-container) {
+	padding: 0;
+}
+dialog[data-barba-dialog-spacing="compact"]
+	> .dialog-content-container
+	> :is(.dialog-header, .dialog-body, .dialog-footer) {
+	padding: var(--barba-space-3);
 }
 
 @media (prefers-reduced-motion: no-preference) {

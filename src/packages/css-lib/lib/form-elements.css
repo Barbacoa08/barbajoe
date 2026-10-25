@@ -33,12 +33,16 @@
 	opacity: 1;
 }
 
-:is(input, textarea, select, button):disabled {
+:is(input, textarea, select):where(
+	:not([type="button"], [type="submit"], [type="reset"])
+):disabled {
 	cursor: not-allowed;
 	opacity: 0.65;
 }
 
-:is(input, textarea, select, button):focus-visible {
+:is(input, textarea, select):where(
+	:not([type="button"], [type="submit"], [type="reset"])
+):focus-visible {
 	border-color: var(--barba-color-focus-ring);
 }
 
