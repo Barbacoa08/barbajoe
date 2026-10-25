@@ -296,8 +296,11 @@
 
 				<section class="specimen-section" aria-labelledby="chips-heading">
 					<h2 id="chips-heading">Chips</h2>
-					<p>Use informational chips for labels, toggle buttons for filters, and a separate X for removing a selection. Short chips are 1.5rem high (24px at a 16px root). Labels wrap rather than truncate. Compact targets trade touch comfort for density; retain the larger close/clear targets elsewhere.</p>
-					<p>The remove X shares the close/clear background-only treatment, with a 2px inset that leaves the chip border visible. Removing a selection does not delete the category or saved item. These examples keep all changes local.</p>
+					<p>Use informational chips for labels, toggle buttons for filters, and a separate X for removing a selection. Informational chips stay 1.5rem high (24px at a 16px root). Interactive chips have compact 28px short faces inside targets at least 44×44 CSS pixels. Labels wrap rather than truncate.</p>
+					<p>The remove X shares the close/clear background-only treatment: a compact face with a 2px inset inside its own 44px-wide target. Only the X target removes the chip; its label is not clickable. The transparent area above and below a filter face or X is part of that button. Removing a selection does not delete the category or saved item. These examples keep all changes local.</p>
+					<p>Allow the target space in layout: rows are about 20px taller than 24px chips, and removable chips reserve extra width for the X. Use normal wrapping and gaps; do not enlarge targets with overlapping absolute hit areas or negative margins. Informational chips have no tab stop. Each filter uses a native button with <code>aria-pressed</code> and a child <code>span.chip-face</code>; the button owns state and the span draws the compact face.</p>
+					<label class="specimen-chip-boundaries"><input type="checkbox" data-chip-boundaries=""> Show actual chip target boundaries (inspection only)</label>
+					<p>Dashed boundaries include clickable padding. Gray boundaries mark disabled buttons. Tab shows focus around the full target; selection uses a thicker face border. Removing moves focus to the next enabled X, the previous X, or Restore selections when none remain.</p>
 					<div class="specimen-grid">
 						<article class="specimen-theme specimen-theme-light" data-chip-demo="">
 							<h3>Light mode</h3>
@@ -318,9 +321,10 @@
 							<fieldset>
 								<legend>Categories</legend>
 								<div class="chip-list">
-									<button type="button" class="chip" aria-pressed="true" data-chip-filter="Produce">Produce</button>
-									<button type="button" class="chip" aria-pressed="false" data-chip-filter="Pantry">Pantry</button>
-									<button type="button" class="chip" aria-pressed="false" disabled>Unavailable</button>
+									<button type="button" class="chip" aria-pressed="true" data-chip-filter="Produce"><span class="chip-face">Produce</span></button>
+									<button type="button" class="chip" aria-pressed="false" data-chip-filter="Pantry"><span class="chip-face">Pantry</span></button>
+									<button type="button" class="chip" aria-pressed="false" data-chip-filter="Weekend"><span class="chip-face">Weekend shopping for the whole household</span></button>
+									<button type="button" class="chip" aria-pressed="false" disabled><span class="chip-face">Unavailable</span></button>
 								</div>
 							</fieldset>
 							<p data-chip-results="" role="status">Showing: Apples.</p>
@@ -341,6 +345,10 @@
 											<path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2"/>
 										</svg>
 									</button>
+								</li>
+								<li class="chip chip-removable">
+									<span>Weekend shopping for the whole household</span>
+									<button type="button" data-barba-variant="icon" data-barba-shape="icon" data-barba-size="compact" data-chip-remove="" aria-label="Remove Weekend shopping for the whole household" title="Remove Weekend shopping for the whole household"><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
 								</li>
 								<li class="chip chip-removable">
 									<span>Locked</span>
@@ -373,9 +381,10 @@
 							<fieldset>
 								<legend>Categories</legend>
 								<div class="chip-list">
-									<button type="button" class="chip" aria-pressed="true" data-chip-filter="Produce">Produce</button>
-									<button type="button" class="chip" aria-pressed="false" data-chip-filter="Pantry">Pantry</button>
-									<button type="button" class="chip" aria-pressed="false" disabled>Unavailable</button>
+									<button type="button" class="chip" aria-pressed="true" data-chip-filter="Produce"><span class="chip-face">Produce</span></button>
+									<button type="button" class="chip" aria-pressed="false" data-chip-filter="Pantry"><span class="chip-face">Pantry</span></button>
+									<button type="button" class="chip" aria-pressed="false" data-chip-filter="Weekend"><span class="chip-face">Weekend shopping for the whole household</span></button>
+									<button type="button" class="chip" aria-pressed="false" disabled><span class="chip-face">Unavailable</span></button>
 								</div>
 							</fieldset>
 							<p data-chip-results="" role="status">Showing: Apples.</p>
@@ -396,6 +405,10 @@
 											<path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2"/>
 										</svg>
 									</button>
+								</li>
+								<li class="chip chip-removable">
+									<span>Weekend shopping for the whole household</span>
+									<button type="button" data-barba-variant="icon" data-barba-shape="icon" data-barba-size="compact" data-chip-remove="" aria-label="Remove Weekend shopping for the whole household" title="Remove Weekend shopping for the whole household"><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
 								</li>
 								<li class="chip chip-removable">
 									<span>Locked</span>

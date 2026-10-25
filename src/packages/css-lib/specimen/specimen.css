@@ -188,3 +188,23 @@
 #hidden-guidance li + li {
 	margin-block-start: var(--barba-space-3);
 }
+
+/* Inspect actual button edges; preserve the solid keyboard-focus outline. */
+.specimen-chip-boundaries {
+	display: flex;
+	align-items: center;
+	gap: var(--barba-space-2);
+	font-size: 1rem;
+	font-weight: 500;
+}
+.specimen-section:has([data-chip-boundaries]:checked)
+	.chip-list
+	button:not(:focus-visible) {
+	outline: 1px dashed var(--barba-color-link);
+	outline-offset: -1px;
+}
+.specimen-section:has([data-chip-boundaries]:checked)
+	.chip-list
+	button:disabled {
+	outline-color: var(--barba-color-text-muted);
+}

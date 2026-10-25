@@ -18,3 +18,11 @@ The baseline does not implement the optional text/danger attributes, so those co
 - The package's pre-existing system-preference theme selection differs from the catalog's forced-theme panels; see the package README for forced-theme adoption guidance.
 
 No JavaScript, screenshots, workshops or private planning records are included in the npm package. The package dry run permits only `dist/barbajoe.css`, `README.md`, and `package.json`.
+
+## Chip target review
+
+Joe selected the larger-target treatment for selectable and removable chips on October 25, 2026. Short interactive faces remain compact (28px at a 16px root), while buttons reserve targets at least 44×44px. Informational chips retain their compact noninteractive presentation. Removable chips reserve a separate X slot, so labels and adjacent chips are not part of that action's target.
+
+![Integrated chip targets in both themes](chip-targets.png)
+
+This local catalog capture shows the optional target-boundary inspector. Dashed outlines follow the real button edges; solid keyboard-focus outlines take precedence. The catalog includes long labels, disabled states, working filters, removal and restore, and guidance on target spacing. The temporary A/B workshop remains local and is excluded from the package and maintained catalog.

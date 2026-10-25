@@ -119,6 +119,7 @@ for (const panel of document.querySelectorAll("[data-chip-demo]")) {
 			const items = [
 				{ name: "Apples", category: "Produce" },
 				{ name: "Rice", category: "Pantry" },
+				{ name: "Oats", category: "Weekend" },
 			];
 			panel.querySelector("[data-chip-results]").textContent = `Showing: ${items
 				.filter((item) => !selected.length || selected.includes(item.category))

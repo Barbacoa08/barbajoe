@@ -25,8 +25,8 @@ This minor release adds the reviewed navigation, button, dialog, inline-form, ch
 - **Header navigation changes by default:** padding now belongs to each link or action, so its whole padded area is clickable. Navigation wraps according to content and remains aligned to the inline end. Both `aria-current="page"` and the existing `.active` convention receive the active underline. Review headers with application-specific spacing overrides.
 - **Button specificity changes by default:** low-specificity defaults let a consumer class control appearance and interaction states. Existing application overrides may now win where library styles previously masked them; inspect those overrides during adoption. Explicitly use `type="button"` for non-submit actions. Text, danger, and icon treatments are optional.
 - **Forms and dialogs retain their base layouts:** inline-field/input-action classes and dialog sizing/divider options are opt-in. The dialog’s standard width is retained. Existing stacked fields keep their original label treatment. The opt-in inline label uses weight 500.
-- **Use the shared X intentionally:** `data-barba-variant="icon"` selects background-only feedback with a 2px inset. Keep the larger target for close/clear; use the compact size for chip removal. Existing text-style icon buttons retain their treatment until their variant changes. Close, clear, remove, and destructive deletion still have distinct semantics and application behavior.
-- **Chips, disclosures, and visually hidden text are opt-in:** adopt the documented markup and remove equivalent application styling only after verifying the replacement. Do not remove status semantics or assume CSS supplies interaction logic. Compact chips trade touch comfort for density; use larger actions where needed.
+- **Use the shared X intentionally:** `data-barba-variant="icon"` selects background-only feedback with a 2px inset. Close, clear, and chip removal retain generous targets; the compact size reduces the visible X face rather than its target. Existing text-style icon buttons retain their treatment until their variant changes. Close, clear, remove, and destructive deletion still have distinct semantics and application behavior.
+- **Chips, disclosures, and visually hidden text are opt-in:** adopt the documented markup and remove equivalent application styling only after verifying the replacement. Do not remove status semantics or assume CSS supplies interaction logic. Interactive chips reserve targets at least 44×44px around compact faces. Selectable buttons require a child `.chip-face`; informational chips remain noninteractive.
 
 No cascade layers, broad form-layout migration, JavaScript widget framework, popover, or spinner is introduced. Further changes to legacy header/form specificity and disabled-style ownership remain separate compatibility work.
 
@@ -234,7 +234,7 @@ The pattern works inside a form, outside a form, and with a separate form owner.
 
 The X shown above is the standard close/clear/remove icon in the examples. Use a native `button` with `data-barba-variant="icon"` and `data-barba-shape="icon"`. The variant supplies a transparent resting face and a circular background on hover/press; the icon color stays unchanged and no visible border appears. A 2 CSS pixel transparent inset keeps the background clear of surrounding input/chip edges. Keyboard focus uses the separate global outline. Disabled icon actions use `--barba-color-text-muted` instead of the enabled action color, retain the existing disabled opacity, and do not react to hover. Use the native `disabled` attribute; color alone does not disable an action.
 
-The shape supplies a 2.75rem square target and a 1.25rem SVG (44px/20px at a 16px root). Add `data-barba-size="compact"` only for dense chip removal: a 1.5rem target and 1rem SVG (24px/16px). Compact targets are less forgiving, especially for touch; keep the larger size for close and clear. Sizes scale with root text; the inset remains 2px. `hidden` removes an empty field's clear action from layout and keyboard navigation.
+The shape supplies a 2.75rem square target and a 1.25rem SVG (44px/20px at a 16px root). For chip removal, `data-barba-size="compact"` keeps a target of `max(44px, 2.75rem)` while reducing the visible face to 1.5rem and the SVG to 1rem (24px/16px). Its hover background stays inset 2px inside that compact face; the rest of the target is transparent but clickable. Close and clear retain their standard face. Sizes scale with root text; the inset remains 2px. `hidden` removes an empty field's clear action from layout and keyboard navigation.
 
 This is opt-in: existing `data-barba-variant="text"` icon buttons retain their text-button appearance. Change the variant to `icon` for the new convention. Ordinary text actions and danger treatments are unchanged. Do not use this quiet X convention for deleting saved data; use a named danger action.
 
@@ -242,13 +242,18 @@ Give each button a context-specific accessible name: **“Clear item name”** f
 
 ### Chips
 
-See the [working light/dark catalog examples](https://lib-staging.barbajoe.tech/#chips-heading). `.chip` supplies dense typography and surface styling; `.chip-list` supplies wrapping and an 8px-equivalent gap. Short chips are 1.5rem high, including the remove target. Long labels wrap and may grow taller. Use:
+See the [working light/dark catalog examples](https://lib-staging.barbajoe.tech/#chips-heading), including the target-boundary inspection toggle. `.chip` supplies typography; `.chip-list` supplies wrapping and an 8px-equivalent gap. Informational chips stay 1.5rem high. Selectable and removable chips have compact short faces (28px at a 16px root) inside targets at least 44×44 CSS pixels. Long labels wrap and grow; never fix their height. Use:
 
 - Informational: a noninteractive `span` or list item with `.chip`; no keyboard stop.
-- Selectable: a native `button type="button"` with `.chip` and `aria-pressed="true|false"`. A thicker outline indicates selection without relying on color alone. Keep the label stable while toggling, and use native `disabled` when unavailable.
-- Removable: `.chip.chip-removable` containing a label span and a separate compact icon button. Do not make the containing chip another button or combine removal and selection on one target.
+- Selectable: a native `button type="button"` with `.chip` and `aria-pressed="true|false"`, containing one `span.chip-face` for its label. Put state and event handling on the button, not the span. The transparent padding activates that same button. A thicker face border indicates selection; the separate keyboard outline encloses the full target. Keep the label stable while toggling, and use native `disabled` when unavailable.
+- Removable: `.chip.chip-removable` containing a label span and a separate icon button with `data-barba-size="compact"`. The button reserves its own full-size slot; only that button and its padding remove the selection. The label and surrounding chip are noninteractive. Do not make the containing chip another button or combine removal and selection on one target.
 
 ```html
+<div class="chip-list" role="group" aria-label="Category filters">
+  <button type="button" class="chip" aria-pressed="false">
+    <span class="chip-face">Produce</span>
+  </button>
+</div>
 <ul class="chip-list" aria-label="Selected categories">
   <li class="chip chip-removable">
     <span>Produce</span>
@@ -262,13 +267,15 @@ See the [working light/dark catalog examples](https://lib-staging.barbajoe.tech/
 </ul>
 ```
 
+**Layout and adoption:** Compared with 24px targets, short interactive rows need about 20px more height; removable chips need about 20px more width for the X slot. Preserve this real layout space and allow wrapping. Do not extend hit areas over neighboring controls, shrink targets with negative margins, or put click handlers on the surrounding list item. When adopting from the earlier PR preview, wrap selectable labels in `.chip-face`; compact icon sizing now describes the visible face, not a 24px target. Informational markup is unchanged.
+
 Applications own selection, filtering and removal. Announce changed results when needed. Before removing a focused chip, move focus to the next enabled remove button, the previous one, or a stable nearby control if none remain. Removing a selection is distinct from deleting the underlying item. The catalog's filtering, removal and restore code is example-only; the package ships CSS, not JavaScript.
 
 ### CSS organization and customization
 
 `barbajoe.css` imports tokens first, semantic defaults next, and optional component patterns last. There are no cascade layers. Button defaults, variants and states use zero-specificity `:where()` selectors so a consumer class can own the properties it sets even when loaded earlier. Chip appearance selectors carry one class of specificity; use a later consumer class to customize that appearance. Child layout selectors can include element types.
 
-Button appearance belongs in `buttons.css`; icon shape/size rules there supply geometry independently. `components/chips.css` owns chip labels, selected states, wrapping and placement. `components/inline-forms.css` owns input reservation/alignment, and `dialog.css` owns dialog layout and dividers. Neither layout module duplicates icon hover styles. Internal `--_barba-*` properties implement sizing and are not a public customization API; prefer the documented attributes and ordinary consumer CSS.
+Button appearance belongs in `buttons.css`; icon shape/size rules there supply geometry independently. `components/chips.css` owns chip labels, faces, selected states, target spacing, wrapping and placement. `components/inline-forms.css` owns input reservation/alignment, and `dialog.css` owns dialog layout and dividers. Neither layout module duplicates icon hover styles. Internal `--_barba-*` properties implement sizing and are not a public customization API; prefer the documented attributes and ordinary consumer CSS.
 
 Defaults followed by explicit variants are intentional specialization. Retain compatibility-sensitive legacy form/header rules until a separately reviewed migration; avoid appending stronger overrides to compensate for unclear ownership.
 

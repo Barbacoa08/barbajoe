@@ -105,7 +105,7 @@
 /* Close, clear and remove share appearance; shape/size own geometry below. */
 :where(button[data-barba-variant="icon"]) {
 	--_barba-icon-border: 2px;
-	border: 2px solid transparent;
+	border: var(--_barba-icon-border) solid transparent;
 	border-radius: 50%;
 	background-color: transparent;
 	background-clip: padding-box;
@@ -170,8 +170,14 @@
 }
 
 :where(button[data-barba-shape="icon"][data-barba-size="compact"]) {
-	--_barba-icon-target: 1.5rem;
+	--_barba-icon-target: max(44px, 2.75rem);
 	--_barba-icon-glyph: 1rem;
+}
+/* Compact describes the visible face, not a smaller interactive target. */
+:where(
+	button[data-barba-variant="icon"][data-barba-shape="icon"][data-barba-size="compact"]
+) {
+	--_barba-icon-border: calc((var(--_barba-icon-target) - 1.5rem) / 2 + 2px);
 }
 :where(button[data-barba-shape="icon"] > svg) {
 	display: block;
