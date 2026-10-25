@@ -18,6 +18,20 @@ import "@barbajoe/css-lib/dist/barbajoe.css";
 
 Both paths resolve to the same global stylesheet. The repository tracks the source in `lib/`; npm receives only the generated `dist/barbajoe.css` bundle, the package metadata, and this README.
 
+## 0.4.0 compatibility and adoption
+
+This minor release adds the reviewed navigation, button, dialog, inline-form, chip, disclosure, and visually hidden patterns. The catalog contains working examples and implementation guidance for each. The npm package remains CSS-only; applications own state, validation, focus transitions, announcements, and persistence.
+
+- **Header navigation changes by default:** padding now belongs to each link or action, so its whole padded area is clickable. Navigation wraps according to content and remains aligned to the inline end. Both `aria-current="page"` and the existing `.active` convention receive the active underline. Review headers with application-specific spacing overrides.
+- **Button specificity changes by default:** low-specificity defaults let a consumer class control appearance and interaction states. Existing application overrides may now win where library styles previously masked them; inspect those overrides during adoption. Explicitly use `type="button"` for non-submit actions. Text, danger, and icon treatments are optional.
+- **Forms and dialogs retain their base layouts:** inline-field/input-action classes and dialog sizing/divider options are opt-in. The dialog’s standard width is retained. Existing stacked fields keep their original label treatment. The opt-in inline label uses weight 500.
+- **Use the shared X intentionally:** `data-barba-variant="icon"` selects background-only feedback with a 2px inset. Keep the larger target for close/clear; use the compact size for chip removal. Existing text-style icon buttons retain their treatment until their variant changes. Close, clear, remove, and destructive deletion still have distinct semantics and application behavior.
+- **Chips, disclosures, and visually hidden text are opt-in:** adopt the documented markup and remove equivalent application styling only after verifying the replacement. Do not remove status semantics or assume CSS supplies interaction logic. Compact chips trade touch comfort for density; use larger actions where needed.
+
+No cascade layers, broad form-layout migration, JavaScript widget framework, popover, or spinner is introduced. Further changes to legacy header/form specificity and disabled-style ownership remain separate compatibility work.
+
+The PR’s Netlify Deploy Preview is the review environment. Merging the approved version increase stages the package through the existing release workflow; installation of `0.4.0` becomes possible only after npm approval with 2FA. The workflow and publishing security settings are unchanged.
+
 ## What the library owns
 
 Start with semantic HTML and the single stylesheet. The library supplies global defaults for ordinary elements such as links, form controls, buttons, and dialogs. Use its documented classes for roles that HTML alone cannot identify, such as an application shell or a structured dialog, and for optional visual treatments.
@@ -368,6 +382,8 @@ The following default pairings are guaranteed. Text roles meet at least 7:1 agai
 
 These guarantees apply only to the listed default pairings. Accent, inverse-surface, arbitrary token combinations, and consumer overrides do not carry a general contrast guarantee. The forced light and dark matrices in the [component catalog](https://lib-staging.barbajoe.tech/#color-heading) display the contract.
 
+The published Lightning CSS bundle selects its light/dark palette from the system `prefers-color-scheme` setting. Setting `color-scheme` on an element alone does not switch its compiled palette. Applications that force a theme should set matching `color-scheme`, override semantic `--barba-color-*` tokens, and review the primary-button hover rule, which also uses `light-dark()` directly. This pre-existing limitation differs from the source-based catalog, which can display forced light and dark panels together.
+
 ## Browser support
 
 The library targets the current stable releases of Chrome, Firefox, and Safari on desktop, plus Safari on iOS and Chrome on Android, at the time a package version is released. Edge is outside this support target. Older browser versions, beta releases, and embedded or in-app webviews are also outside this support target. A release-time target does not imply that every browser/device combination was manually checked.
@@ -460,7 +476,7 @@ For live editing, run `pnpm css-lib dev` from the repository root. Parcel's watc
 
 ## Releasing the CSS package
 
-The package is currently at version `0.3.2`. Change the version only when there is an approved reason to release the CSS library. The staged-release workflow is specific to this package and accepts stable `MAJOR.MINOR.PATCH` versions only.
+The package is currently at version `0.4.0`. Change the version only when there is an approved reason to release the CSS library. The staged-release workflow is specific to this package and accepts stable `MAJOR.MINOR.PATCH` versions only.
 
 The npm trusted publisher for `@barbajoe/css-lib` identifies GitHub user `Barbacoa08`, repository `barbajoe`, and workflow `stage-css-release.yml`. It must allow **stage publishing only**, not direct publishing. Keep the npm maintainer account's 2FA enabled and the package's Publishing access set to **Require two-factor authentication and disallow tokens**. The workflow uses OIDC; it needs neither a bypass-2FA npm access token nor an `NPM_AUTH_TOKEN` GitHub secret. Enable GitHub email notifications for issue assignments if you want the staged-release reminder in your inbox.
 
