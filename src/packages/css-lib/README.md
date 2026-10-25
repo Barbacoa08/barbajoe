@@ -244,7 +244,7 @@ Give each button a context-specific accessible name: **“Clear item name”** f
 
 See the [working light/dark catalog examples](https://lib-staging.barbajoe.tech/#chips-heading), including the target-boundary inspection toggle. `.chip` supplies typography; `.chip-list` supplies wrapping and an 8px-equivalent gap. Informational chips stay 1.5rem high. Selectable and removable chips have compact short faces (28px at a 16px root) inside targets at least 44×44 CSS pixels. Long labels wrap and grow; never fix their height. Use:
 
-- Informational: a noninteractive `span` or list item with `.chip`; no keyboard stop.
+- Informational: a noninteractive `span` or list item with `.chip`; vertically centered content and no keyboard stop.
 - Selectable: a native `button type="button"` with `.chip` and `aria-pressed="true|false"`, containing one `span.chip-face` for its label. Put state and event handling on the button, not the span. The transparent padding activates that same button. A thicker face border indicates selection; the separate keyboard outline encloses the full target. Keep the label stable while toggling, and use native `disabled` when unavailable.
 - Removable: `.chip.chip-removable` containing a label span and a separate icon button with `data-barba-size="compact"`. The button reserves its own full-size slot; only that button and its padding remove the selection. The label and surrounding chip are noninteractive. Do not make the containing chip another button or combine removal and selection on one target.
 

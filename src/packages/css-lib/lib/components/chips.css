@@ -15,7 +15,8 @@
 	background-color: var(--barba-color-surface);
 }
 .chip:where(:not(button[aria-pressed], .chip-removable)) {
-	display: inline-block;
+	display: inline-flex;
+	align-items: center;
 	min-inline-size: 1.5rem;
 	min-block-size: 1.5rem;
 	padding: 0.0625rem 0.375rem;
