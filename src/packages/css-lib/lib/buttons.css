@@ -111,6 +111,9 @@
 	background-clip: padding-box;
 	color: var(--barba-color-link);
 }
+:where(button[data-barba-variant="icon"]:disabled) {
+	color: var(--barba-color-text-muted);
+}
 :where(button[data-barba-variant="icon"]:enabled:is(:hover, :active)) {
 	background-color: color-mix(
 		in srgb,

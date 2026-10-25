@@ -232,7 +232,7 @@ The pattern works inside a form, outside a form, and with a separate form owner.
 
 ### Shared close/clear/remove icon action
 
-The X shown above is the standard close/clear/remove icon in the examples. Use a native `button` with `data-barba-variant="icon"` and `data-barba-shape="icon"`. The variant supplies a transparent resting face and a circular background on hover/press; the icon color stays unchanged and no visible border appears. A 2 CSS pixel transparent inset keeps the background clear of surrounding input/chip edges. Keyboard focus uses the separate global outline. Disabled actions retain the existing opacity and do not react to hover.
+The X shown above is the standard close/clear/remove icon in the examples. Use a native `button` with `data-barba-variant="icon"` and `data-barba-shape="icon"`. The variant supplies a transparent resting face and a circular background on hover/press; the icon color stays unchanged and no visible border appears. A 2 CSS pixel transparent inset keeps the background clear of surrounding input/chip edges. Keyboard focus uses the separate global outline. Disabled icon actions use `--barba-color-text-muted` instead of the enabled action color, retain the existing disabled opacity, and do not react to hover. Use the native `disabled` attribute; color alone does not disable an action.
 
 The shape supplies a 2.75rem square target and a 1.25rem SVG (44px/20px at a 16px root). Add `data-barba-size="compact"` only for dense chip removal: a 1.5rem target and 1rem SVG (24px/16px). Compact targets are less forgiving, especially for touch; keep the larger size for close and clear. Sizes scale with root text; the inset remains 2px. `hidden` removes an empty field's clear action from layout and keyboard navigation.
 

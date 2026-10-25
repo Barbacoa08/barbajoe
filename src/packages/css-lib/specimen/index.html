@@ -615,7 +615,7 @@
 				<section class="specimen-section" aria-labelledby="inline-forms-heading">
 					<h2 id="inline-forms-heading">Inline forms and input actions</h2>
 					<p>Use an <code>inline-field</code> wrapper for a visible standard-size, medium-weight label above an <code>input-row</code>. The input grows; Add wraps to the right when space runs out. An optional <code>input-action</code> groups a text input with its X. Ordinary stacked forms keep their existing appearance.</p>
-					<p>The X is our shared close/clear icon action: a native button with <code>data-barba-variant<wbr>=&quot;icon&quot;</code> and <code>data-barba-shape<wbr>=&quot;icon&quot;</code>. It has a generous target, transparent resting face, a circular hover background inset by 2px, and a separate keyboard-focus outline. Its accessible name describes the action: “Clear item name” for an input, “Close dialog” for a modal. The icon is decorative; these actions do not delete saved data.</p>
+					<p>The X is our shared close/clear icon action: a native button with <code>data-barba-variant<wbr>=&quot;icon&quot;</code> and <code>data-barba-shape<wbr>=&quot;icon&quot;</code>. It has a generous target, transparent resting face, a circular hover background inset by 2px, and a separate keyboard-focus outline. Disabled X actions use muted gray, retain the disabled opacity, and have no hover background. Its accessible name describes the action: “Clear item name” for an input, “Close dialog” for a modal. The icon is decorative; these actions do not delete saved data.</p>
 					<h3>Input and Add</h3>
 					<p>Add validates and reports locally; no information is saved or sent.</p>
 					<form data-specimen-inline="">
@@ -693,7 +693,7 @@
 						</div>
 					</div>
 					<h3>Unavailable actions</h3>
-					<p>For disabled or read-only inputs, a populated field retains a disabled X. It cannot change the value.</p>
+					<p>For disabled or read-only inputs, a populated field retains a muted gray, disabled X instead of the enabled action color. It cannot change the value and has no hover background.</p>
 					<div class="inline-field">
 						<label for="inline-disabled">Disabled item</label>
 						<div class="input-row">
