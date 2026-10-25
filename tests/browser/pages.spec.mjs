@@ -68,3 +68,34 @@ test("buttons and placeholders are captured for visual review", async ({
 		"placeholders",
 	);
 });
+
+test("packaged primary example exposes resting, hover, and keyboard-focus states", async ({
+	page,
+	browserName,
+}) => {
+	await page.goto("/package-theme.html");
+	const primary = page.getByRole("button", {
+		name: "Primary action",
+		exact: true,
+	});
+	await expect(primary).toBeEnabled();
+	const resting = await primary.evaluate(
+		(el) => getComputedStyle(el).backgroundColor,
+	);
+	expect(resting).not.toBe("rgba(0, 0, 0, 0)");
+	await primary.hover();
+	expect(
+		await primary.evaluate((el) => getComputedStyle(el).backgroundColor),
+	).not.toBe(resting);
+	await page.mouse.move(0, 0);
+	await page.getByRole("link", { name: "Working editor", exact: true }).focus();
+	await page.keyboard.press(
+		browserName === "webkit" && process.platform === "darwin"
+			? "Alt+Tab"
+			: "Tab",
+	);
+	await expect(primary).toBeFocused();
+	await expect(primary).toHaveCSS("outline-style", "solid");
+	await primary.press("Space");
+	await expect(page).toHaveURL(/package-theme.html$/);
+});

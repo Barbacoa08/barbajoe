@@ -14,7 +14,7 @@ The baseline does not implement the optional text/danger attributes, so those co
 - Frozen-lockfile install; lint, CSS build, optimized specimen build, release-helper tests, browser matrix, and package contents check.
 - Browser matrix covers Chromium, Firefox and WebKit, desktop/narrow, light/dark; source and packaged CSS fixtures are included. Individual results are recorded in the PR and its CI reports.
 - Independent GPT-6 Sol review covered library CSS, catalog HTML/JS, public guidance, compatibility, and test coverage; no release-blocking issue found.
-- The earlier release pass did not verify actual speech, real zoom, branded Safari, or devices. The follow-up below adds actual Chrome 200% zoom evidence; speech, Safari, and devices remain outstanding. Root-font enlargement tests do not substitute for browser zoom.
+- The earlier release pass did not verify actual speech, real zoom, branded Safari, or devices. The follow-ups below add actual Chrome 200% zoom and installed Safari evidence; actual speech and physical-device checks remain outstanding. Root-font enlargement tests do not substitute for browser zoom.
 - The package's pre-existing system-preference theme selection differs from the catalog's forced-theme panels; see the package README for forced-theme adoption guidance.
 
 No JavaScript, screenshots, workshops or private planning records are included in the npm package. The package dry run permits only `dist/barbajoe.css`, `README.md`, and `package.json`.
@@ -55,6 +55,32 @@ Actual screen-reader speech was **not listened to or recorded** in this run; acc
 2. In **Give a repeated action context**, navigate to both Edit buttons: expect distinct names such as “Edit Apples” and “Edit Oats”, with no extra hidden-text tab stop. Activate one and listen to its local feedback.
 3. In **Name an icon-only action**, reach Clear item name. Activate it: focus returns to the empty named input and the X leaves the tab order. Type again; the X returns. Check the disabled/read-only examples cannot clear values.
 4. In **Working editor**, open Edit sample, hear its dialog name and focused Name field, edit Name/Notes, toggle a filter and remove a selection. Confirm the next removal action receives focus. Save and Cancel should each restore Edit sample and produce at most one useful result announcement. Delete restores focus to Restore sample; the locked selection cannot be removed. In read-only mode, changes are unavailable but Cancel/Close still work.
-5. On an actual phone, open the same preview and exercise padded filter taps, separate X targets, wrapped labels and editor scrolling/actions. Record iOS Safari or Android Chrome/device details. Device testing and branded Safari remain **not checked**, not passed.
+5. On an actual phone, open the same preview and exercise padded filter taps, separate X targets, wrapped labels and editor scrolling/actions. Record iOS Safari or Android Chrome/device details. Physical-phone testing remains **not checked**, not passed. Installed Safari desktop interaction was checked separately below; that is not mobile Safari or VoiceOver speech evidence.
 
 The consuming app still needs first/rapid/no-result/equal-count filter cases against real application state; this synthetic catalog cannot establish those outcomes.
+
+
+## Packaged primary and installed Safari follow-up — October 25, 2026
+
+The generated-package example now includes an enabled primary action. It is an intentionally inert appearance sample, using the existing public primary variant and the actual generated CSS, without library CSS or API changes. Automated checks exercise its resting fill, changed hover fill, visible keyboard-focus outline, and keyboard activation. The relevant page suite passed **120/120** across Chromium, Firefox, and WebKit, desktop/narrow layouts, and light/dark preferences. Repository lint and CSS build passed. Final-commit CI and deployment results are recorded in PR #279.
+
+### Installed Safari desktop interaction
+
+Tested **Safari 27.0.1 (22625.1.29.11.28)** on **macOS 27.0.1**, using the installed native application through computer-control tools, not Playwright WebKit. Local maintained pages were served at `http://127.0.0.1:1244/`. The native window measured 1324×940 pixels, with the system dark preference. The packaged example was explicitly reset to 100% browser zoom. Option+Tab provided full keyboard control traversal without changing Safari preferences.
+
+- **Editor:** opened the long-content dialog, edited Name, reached Notes with a visible keyboard outline, toggled Pantry with Space, and removed Produce with Space. Focus moved to the next removal action. Save preserved the locked category and restored Edit sample focus. Read-only mode disabled editing, filter/removal actions, Save, and Delete, while Close and Cancel remained available; Escape restored Edit sample focus. Scrolling the long body retained the header and footer. Delete moved focus to Restore sample, and Restore worked.
+- **Catalog:** native select interaction changed All categories → Produce → Pantry, with visible counts of 2/3 and 1/3 and focus retained on Category. Edit Apples produced the matching local feedback. Clear item name emptied its field and returned focus to it; typing restored the clear action. These are interaction and state observations, not claims about spoken output.
+- **Generated package:** the enabled primary action showed its normal colored face, changed to the existing neutral hover face with the pointer resting over it after a released click, and displayed a clear outline when reached using Option+Tab. Space did not navigate or alter data. Disabled actions were skipped on the way to the Name field.
+
+No confirmed defect was found in these bounded checks. This covers one installed desktop Safari version and system theme, not all Safari, screen-reader, or device combinations. The automated light/dark matrix provides additional coverage without substituting for those manual checks.
+
+![Installed Safari editor with scrolled body and persistent header/footer](safari-editor.png)
+
+[Safari packaged primary: resting](safari-package-rest.png) · [pointer hover](safari-package-hover.png) · [keyboard focus](safari-package-focus.png)
+
+### Checks still requiring a person
+
+The available tools expose neither screen-reader audio capture/listening nor a connected physical phone. No actual announcement or phone test is claimed. Use the existing five-step script above against the [Deploy Preview](https://deploy-preview-279--library-specimen.netlify.app/), recording device, OS, browser, and screen-reader versions plus any unexpected result:
+
+- **Listening:** with VoiceOver enabled, run catalog filter, contextual Edit, clear, and editor actions (steps 1–4). Listen for concise result messages, distinct action names, dialog context, and appropriate focus after clear/remove/close. Distinguish native control feedback from duplicated application announcements.
+- **Physical phone:** run step 5 in Safari on iOS or Chrome on Android. Tap the padded chip area and separate X targets, use long labels, open the long editor, bring up the on-screen keyboard, and check scrolling plus Save/Cancel/Delete access. Report any wrong-target activation, clipped content, or inaccessible action.
