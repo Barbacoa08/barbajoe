@@ -2,6 +2,7 @@ import { capture, expect, expectNoPageOverflow, test } from "./fixtures.mjs";
 
 for (const file of [
 	"index.html",
+	"disclosures.html",
 	"headers.html",
 	"layout-header.html",
 	"layout-footer.html",
