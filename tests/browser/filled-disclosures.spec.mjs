@@ -14,6 +14,66 @@ async function usePackage(page) {
 
 for (const packaged of [false, true]) {
 	const source = packaged ? "package" : "source";
+	test(`${source}: disclosure labels balance spare target height without clipping wrapped content`, async ({
+		page,
+	}) => {
+		await page.goto("/index.html");
+		if (packaged) await usePackage(page);
+		await page.locator("main").evaluate((el) => {
+			const labels = [
+				'<h2 class="disclosure-label disclosure-title">Preferences</h2>',
+				'<span class="disclosure-label disclosure-title">Preferences</span>',
+				'<span class="disclosure-label"><span class="disclosure-title">Preferences</span></span>',
+				'<span class="disclosure-label"><span class="disclosure-title">Preferences</span><span class="disclosure-description">Supporting information</span></span>',
+				'<span class="disclosure-label disclosure-title">Shopping preferences across multiple shared household devices</span>',
+			];
+			el.innerHTML = ["disclosure", "disclosure disclosure--filled"]
+				.flatMap((classes) =>
+					labels.map(
+						(label) =>
+							`<details class="${classes}" style="inline-size:100%;max-inline-size:280px"><summary>${label}</summary><div class="disclosure-content">Optional content</div></details>`,
+					),
+				)
+				.join("");
+		});
+		for (const fontSize of [16, 32]) {
+			await page.locator("html").evaluate((el, size) => {
+				el.style.fontSize = `${size}px`;
+			}, fontSize);
+			for (const open of [false, true]) {
+				for (const details of await page.locator("main details").all()) {
+					await details.evaluate((el, value) => {
+						el.open = value;
+					}, open);
+					const geometry = await details.locator("summary").evaluate((el) => {
+						const summary = el.getBoundingClientRect();
+						const label = el
+							.querySelector(".disclosure-label")
+							.getBoundingClientRect();
+						const style = getComputedStyle(el);
+						return {
+							top:
+								label.top -
+								summary.top -
+								Number.parseFloat(style.borderTopWidth),
+							bottom:
+								summary.bottom -
+								label.bottom -
+								Number.parseFloat(style.borderBottomWidth),
+							height: summary.height,
+							overflow: el.scrollWidth - el.clientWidth,
+						};
+					});
+					// Subpixel rounding is allowed; the original single-line defect is >6px.
+					expect(Math.abs(geometry.top - geometry.bottom)).toBeLessThan(1);
+					expect(geometry.top).toBeGreaterThanOrEqual(8);
+					expect(geometry.height).toBeGreaterThanOrEqual(44 - 0.01);
+					expect(geometry.overflow).toBeLessThanOrEqual(1);
+				}
+			}
+		}
+	});
+
 	test(`${source}: filled disclosure preserves native behavior and isolates nested bordered panels`, async ({
 		page,
 		browserName,

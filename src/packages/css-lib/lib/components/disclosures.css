@@ -11,8 +11,12 @@
 .disclosure > summary {
 	--_barba-disclosure-chevron-size: 0.45rem;
 	--_barba-disclosure-title-line-height: 1.35;
-	display: flex;
-	align-items: flex-start;
+	/* Center the whole row in spare target height; keep the chevron beside
+	   the first title line when the label wraps or includes a description. */
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+	align-content: center;
+	align-items: start;
 	gap: var(--barba-space-3);
 	box-sizing: border-box;
 	min-block-size: 2.75rem;
@@ -31,7 +35,6 @@
    glyph; direction changes its rotation, not which borders are painted. */
 .disclosure > summary::after {
 	content: "";
-	flex: none;
 	inline-size: var(--_barba-disclosure-chevron-size);
 	block-size: var(--_barba-disclosure-chevron-size);
 	border-right: 2px solid currentColor;
@@ -76,7 +79,6 @@
 	);
 }
 .disclosure-label {
-	flex: 1;
 	min-inline-size: 0;
 	overflow-wrap: anywhere;
 }
