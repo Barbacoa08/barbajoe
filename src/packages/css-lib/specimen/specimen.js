@@ -1,3 +1,5 @@
+import { initializeFilterExamples } from "./disclosure-filters.js";
+
 // Native commands need no JavaScript in supporting browsers. This fallback
 // belongs only to the specimen; the published package remains CSS-only.
 if (!("commandForElement" in HTMLButtonElement.prototype)) {
@@ -176,3 +178,5 @@ for (const button of document.querySelectorAll(
 				"[data-action-result]",
 			).textContent = `${button.dataset.item} selected for editing. Local example only.`;
 	});
+
+initializeFilterExamples();

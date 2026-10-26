@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Disclosure states · Barbajoe CSS specimen</title>
+<link rel="stylesheet" href="../lib/barbajoe.css" data-library>
+<link rel="stylesheet" href="./specimen.css">
+</head>
+<body>
+<div class="app-shell">
+<header class="site-header">
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<strong>Barbajoe CSS specimen</strong>
+<nav aria-label="Specimen pages">
+<ul class="site-header-links">
+<li>
+<a href="./index.html">Catalog</a>
+</li>
+<li>
+<a href="./disclosures.html" aria-current="page">Disclosures</a>
+</li>
+<li>
+<a href="./editor.html">Editor</a>
+</li>
+</ul>
+</nav>
+</header>
+<main id="main-content">
+<h1>Disclosure states</h1>
+<p>Use the bordered style for self-contained settings and help, or the filled style for compact controls with a useful collapsed summary. Both use native details/summary. <a href="./index.html#disclosures-heading">Markup and choosing a style</a>.</p>
+<p>These six filter states cover no selections, short selections, and wrapped selections, each collapsed and expanded. Clear stays inside the filled header before the chevron, aligned with the title. Examples are independent, synthetic, and never saved or sent.</p>
+<p>
+<strong>Theme comparison:</strong> These source examples force light and dark schemes. The compiled package follows system preference; see the <a href="./package-theme.html">generated-package example</a> and <a href="./index.html#color-heading">theme guidance</a>.</p>
+<nav aria-label="Disclosure examples">
+<a href="#empty-closed">No selections</a> · <a href="#selected-closed">Selected filters</a> · <a href="#many-closed">Many selections</a> · <a href="#bordered">Bordered sections</a>
+</nav>
+<div class="specimen-disclosure-controls">
+<button id="reset-examples" type="button">Reset examples</button>
+<button id="expand-all" type="button">Expand all</button>
+<button id="collapse-all" type="button">Collapse all</button>
+<label>
+<input id="narrow-panels" type="checkbox"> Narrow panels (320px)</label>
+</div>
+<noscript>
+<p>Enable JavaScript for the synthetic filter examples. Native bordered disclosures and the catalog markup remain available without it.</p>
+</noscript>
+<section class="specimen-section" id="empty-closed" aria-labelledby="empty-closed-heading">
+<h2 id="empty-closed-heading">No selections · collapsed</h2>
+<div class="specimen-disclosure-pair">
+<article class="specimen-theme specimen-theme-light" data-filled-filter-demo="light" data-filter-state="empty" data-filter-open="false" aria-label="No selections · collapsed, light mode">
+<h3>Light mode</h3>
+</article>
+<article class="specimen-theme specimen-theme-dark" data-filled-filter-demo="dark" data-filter-state="empty" data-filter-open="false" aria-label="No selections · collapsed, dark mode">
+<h3>Dark mode</h3>
+</article>
+</div>
+</section>
+<section class="specimen-section" id="empty-open" aria-labelledby="empty-open-heading">
+<h2 id="empty-open-heading">No selections · expanded</h2>
+<div class="specimen-disclosure-pair">
+<article class="specimen-theme specimen-theme-light" data-filled-filter-demo="light" data-filter-state="empty" data-filter-open="true" aria-label="No selections · expanded, light mode">
+<h3>Light mode</h3>
+</article>
+<article class="specimen-theme specimen-theme-dark" data-filled-filter-demo="dark" data-filter-state="empty" data-filter-open="true" aria-label="No selections · expanded, dark mode">
+<h3>Dark mode</h3>
+</article>
+</div>
+</section>
+<section class="specimen-section" id="selected-closed" aria-labelledby="selected-closed-heading">
+<h2 id="selected-closed-heading">Selected filters · collapsed</h2>
+<div class="specimen-disclosure-pair">
+<article class="specimen-theme specimen-theme-light" data-filled-filter-demo="light" data-filter-state="selected" data-filter-open="false" aria-label="Selected filters · collapsed, light mode">
+<h3>Light mode</h3>
+</article>
+<article class="specimen-theme specimen-theme-dark" data-filled-filter-demo="dark" data-filter-state="selected" data-filter-open="false" aria-label="Selected filters · collapsed, dark mode">
+<h3>Dark mode</h3>
+</article>
+</div>
+</section>
+<section class="specimen-section" id="selected-open" aria-labelledby="selected-open-heading">
+<h2 id="selected-open-heading">Selected filters · expanded</h2>
+<div class="specimen-disclosure-pair">
+<article class="specimen-theme specimen-theme-light" data-filled-filter-demo="light" data-filter-state="selected" data-filter-open="true" aria-label="Selected filters · expanded, light mode">
+<h3>Light mode</h3>
+</article>
+<article class="specimen-theme specimen-theme-dark" data-filled-filter-demo="dark" data-filter-state="selected" data-filter-open="true" aria-label="Selected filters · expanded, dark mode">
+<h3>Dark mode</h3>
+</article>
+</div>
+</section>
+<section class="specimen-section" id="many-closed" aria-labelledby="many-closed-heading">
+<h2 id="many-closed-heading">Many selections · collapsed</h2>
+<div class="specimen-disclosure-pair">
+<article class="specimen-theme specimen-theme-light" data-filled-filter-demo="light" data-filter-state="many" data-filter-open="false" aria-label="Many selections · collapsed, light mode">
+<h3>Light mode</h3>
+</article>
+<article class="specimen-theme specimen-theme-dark" data-filled-filter-demo="dark" data-filter-state="many" data-filter-open="false" aria-label="Many selections · collapsed, dark mode">
+<h3>Dark mode</h3>
+</article>
+</div>
+</section>
+<section class="specimen-section" id="many-open" aria-labelledby="many-open-heading">
+<h2 id="many-open-heading">Many selections · expanded</h2>
+<div class="specimen-disclosure-pair">
+<article class="specimen-theme specimen-theme-light" data-filled-filter-demo="light" data-filter-state="many" data-filter-open="true" aria-label="Many selections · expanded, light mode">
+<h3>Light mode</h3>
+</article>
+<article class="specimen-theme specimen-theme-dark" data-filled-filter-demo="dark" data-filter-state="many" data-filter-open="true" aria-label="Many selections · expanded, dark mode">
+<h3>Dark mode</h3>
+</article>
+</div>
+</section>
+<section id="bordered">
+<h2>Bordered sections · matching chevrons</h2>
+<h3>Collapsed</h3>
+<div class="specimen-disclosure-pair">
+<article class="specimen-theme specimen-theme-light" aria-label="Bordered collapsed, light mode">
+<h4>Light mode</h4>
+<details data-bordered-example class="disclosure" >
+<summary>
+<span class="disclosure-label">
+<span class="disclosure-title">Shopping preferences</span>
+<span class="disclosure-description">Choose how completed items are displayed and how your shopping list is organized.</span>
+</span>
+</summary>
+<div class="disclosure-content">
+<p>This bordered section uses the same inward/downward chevron and keeps it aligned with the title.</p>
+</div>
+</details>
+</article>
+<article class="specimen-theme specimen-theme-dark" aria-label="Bordered collapsed, dark mode">
+<h4>Dark mode</h4>
+<details data-bordered-example class="disclosure" >
+<summary>
+<span class="disclosure-label">
+<span class="disclosure-title">Shopping preferences</span>
+<span class="disclosure-description">Choose how completed items are displayed and how your shopping list is organized.</span>
+</span>
+</summary>
+<div class="disclosure-content">
+<p>This bordered section uses the same inward/downward chevron and keeps it aligned with the title.</p>
+</div>
+</details>
+</article>
+</div>
+<h3>Expanded</h3>
+<div class="specimen-disclosure-pair">
+<article class="specimen-theme specimen-theme-light" aria-label="Bordered expanded, light mode">
+<h4>Light mode</h4>
+<details data-bordered-example class="disclosure" open>
+<summary>
+<span class="disclosure-label">
+<span class="disclosure-title">Shopping preferences</span>
+<span class="disclosure-description">Choose how completed items are displayed and how your shopping list is organized.</span>
+</span>
+</summary>
+<div class="disclosure-content">
+<p>This bordered section uses the same inward/downward chevron and keeps it aligned with the title.</p>
+</div>
+</details>
+</article>
+<article class="specimen-theme specimen-theme-dark" aria-label="Bordered expanded, dark mode">
+<h4>Dark mode</h4>
+<details data-bordered-example class="disclosure" open>
+<summary>
+<span class="disclosure-label">
+<span class="disclosure-title">Shopping preferences</span>
+<span class="disclosure-description">Choose how completed items are displayed and how your shopping list is organized.</span>
+</span>
+</summary>
+<div class="disclosure-content">
+<p>This bordered section uses the same inward/downward chevron and keeps it aligned with the title.</p>
+</div>
+</details>
+</article>
+</div>
+</section>
+<section class="specimen-section" aria-labelledby="guidance-heading">
+<h2 id="guidance-heading">Composition and accessibility</h2>
+<ul>
+<li>Show “All items” when neither group is restricted. Otherwise, join selected labels with middle dots in stable group order. The whole summary may wrap beneath the title; keep Clear and the chevron on its first line. Do not add category prefixes when the labels already explain themselves.</li>
+<li>Clear is a named native button outside summary in the DOM, visually positioned in a reserved header slot. Its target must not cover the title or chevron. It clears both groups, returns focus to summary before hiding, and leaves expansion unchanged. In the keyboard order, it follows the visible filter controls when expanded and follows summary directly when collapsed.</li>
+<li>“All stores” and “All categories” reset only their own group. Native buttons use <code>aria-pressed</code>; closing preserves selections. Native summary exposes expansion without a duplicate role or ARIA state. See <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/summary">MDN summary guidance</a>.</li>
+<li>These controls add no live announcement duplicating pressed-state feedback. Applications own actual filtering, persistence, and concise result messages. Keep a result region mounted before updates; follow the catalog's <a href="./index.html#hidden-status">live-region timing and naming guidance</a>.</li>
+<li>
+<code>specimen-filter-*</code> and <code>specimen-disclosure-*</code> are example-only layout classes. <code>disclosure-filters.js</code> supplies one shared synthetic renderer/controller for this page and the catalog. Neither the layout hooks nor scripts are public library APIs or shipped package code.</li>
+<li>Verify target separation, native keyboard behavior, focus after clearing, long and translated labels, narrow layouts, real zoom, and actual screen-reader speech in your application. Browser assertions do not establish spoken output or physical-device behavior.</li>
+</ul>
+<p>
+<a href="./index.html#filled-disclosures-heading">Working catalog example and application responsibilities</a> · <a href="https://github.com/Barbacoa08/barbajoe/blob/main/src/packages/css-lib/README.md#disclosures">Package API and customization reference</a>
+</p>
+</section>
+</main>
+</div>
+<script type="module" src="./disclosures.js">
+</script>
+</body>
+</html>

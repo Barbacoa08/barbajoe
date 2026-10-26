@@ -215,3 +215,104 @@
 	flex-wrap: wrap;
 	gap: var(--barba-space-3) var(--barba-space-6);
 }
+
+/* Example application layout only: not part of the published disclosure API. */
+/* Application composition only: shared here by the catalog and state gallery.
+   These values explicitly match the title line and header padding below. */
+.specimen-filter-shell {
+	--specimen-filter-title-line-height: 1.35;
+	--specimen-filter-header-padding: var(--barba-space-3);
+	--specimen-filter-clear-size: 2.75rem;
+	position: relative;
+}
+.specimen-filter-shell > details > summary {
+	padding-block: var(--specimen-filter-header-padding);
+}
+.specimen-filter-shell .disclosure-title {
+	line-height: var(--specimen-filter-title-line-height);
+}
+.specimen-filter-clear {
+	position: absolute;
+	/* A separate sibling target in reserved space before the chevron. */
+	inset-inline-end: 2.5rem;
+	inset-block-start: calc(
+		var(--specimen-filter-header-padding) +
+		var(--specimen-filter-title-line-height) *
+		0.5em
+	);
+	transform: translateY(-50%);
+	inline-size: var(--specimen-filter-clear-size);
+	block-size: var(--specimen-filter-clear-size);
+}
+.specimen-filter-summary {
+	display: flex;
+	align-items: baseline;
+	flex-wrap: wrap;
+	gap: 0.25rem 0.5rem;
+}
+.specimen-filter-shell:has(> .specimen-filter-clear:not([hidden]))
+	.specimen-filter-summary {
+	margin-inline-end: var(--specimen-filter-clear-size);
+}
+.specimen-filter-summary > .disclosure-description {
+	margin-block-start: 0;
+}
+.specimen-filter-group {
+	min-inline-size: 0;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+.specimen-filter-group + .specimen-filter-group {
+	margin-block-start: 0.75rem;
+}
+.specimen-filter-group legend {
+	padding: 0;
+	font-size: var(--barba-font-size-sm);
+	font-weight: 500;
+}
+.specimen-filter-group .chip-list {
+	margin: 0;
+	gap: 0 0.375rem;
+}
+
+.specimen-disclosure-comparison {
+	inline-size: 100%;
+	table-layout: fixed;
+	overflow-wrap: anywhere;
+}
+
+/* Dedicated state gallery: keep paired themes and optional 320px panels. */
+.specimen-disclosure-controls {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--barba-space-3);
+	margin-block: var(--barba-space-6);
+}
+.specimen-disclosure-pair {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: var(--barba-space-4);
+	align-items: start;
+}
+.specimen-disclosure-pair > article {
+	min-inline-size: 0;
+}
+.specimen-disclosure-pair h3,
+.specimen-disclosure-pair h4 {
+	margin-block: 0 var(--barba-space-4);
+}
+.specimen-disclosure-pair[data-narrow] {
+	grid-template-columns: repeat(2, minmax(0, 320px));
+}
+@media (max-width: 45rem) {
+	.specimen-disclosure-pair,
+	.specimen-disclosure-pair[data-narrow] {
+		grid-template-columns: minmax(0, 1fr);
+	}
+	.specimen-disclosure-pair[data-narrow] > article {
+		inline-size: min(100%, 320px);
+		box-sizing: border-box;
+	}
+}

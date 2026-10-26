@@ -1,38 +1,72 @@
-/* Native details owns expansion; these classes provide the optional panel. */
+/* Native details owns expansion; variants share markup and keyboard behavior. */
 .disclosure {
 	min-inline-size: 0;
+	color: var(--barba-color-text);
+}
+.disclosure:where(:not(.disclosure--filled)) {
 	border: 1px solid var(--barba-color-border);
 	border-radius: var(--barba-radius-md);
 	background-color: var(--barba-color-surface);
-	color: var(--barba-color-text);
 }
 .disclosure > summary {
+	--_barba-disclosure-chevron-size: 0.45rem;
+	--_barba-disclosure-title-line-height: 1.35;
 	display: flex;
-	align-items: center;
+	align-items: flex-start;
 	gap: var(--barba-space-3);
 	box-sizing: border-box;
 	min-block-size: 2.75rem;
-	padding: var(--barba-space-2);
-	border-radius: var(--barba-radius-sm);
 	list-style: none;
 	cursor: pointer;
 	overflow-wrap: anywhere;
 }
+.disclosure:where(:not(.disclosure--filled)) > summary {
+	padding: var(--barba-space-2);
+	border-radius: var(--barba-radius-sm);
+}
 .disclosure > summary::-webkit-details-marker {
 	display: none;
 }
+/* One decorative chevron for both variants. Physical borders describe the
+   glyph; direction changes its rotation, not which borders are painted. */
 .disclosure > summary::after {
 	content: "";
 	flex: none;
-	inline-size: 0.45rem;
-	block-size: 0.45rem;
-	border-inline-end: 2px solid currentColor;
-	border-block-end: 2px solid currentColor;
+	inline-size: var(--_barba-disclosure-chevron-size);
+	block-size: var(--_barba-disclosure-chevron-size);
+	border-right: 2px solid currentColor;
+	border-bottom: 2px solid currentColor;
 	margin-inline: 0.25rem;
-	transform: rotate(-45deg);
+	/* Align the border box with the title's first line, not the whole label. */
+	margin-block-start: calc(
+		var(--_barba-disclosure-title-line-height) *
+		0.5em -
+		var(--_barba-disclosure-chevron-size) /
+		2 -
+		1px
+	);
+	transform: rotate(135deg);
+}
+.disclosure--filled > summary::after {
+	color: var(--barba-color-link);
 }
 .disclosure > summary:dir(rtl)::after {
-	transform: rotate(135deg);
+	transform: rotate(-45deg);
+}
+.disclosure[open] > summary::after {
+	/* The visible V sits below its rotated square's center. Lift its ink by
+    size / (2 * sqrt(2)), so it aligns with the title and adjacent actions. */
+	transform: translateY(calc(var(--_barba-disclosure-chevron-size) * -0.353553))
+		rotate(45deg);
+}
+.disclosure--filled > summary {
+	padding: var(--barba-space-3) var(--barba-space-4);
+	background-color: var(--barba-color-surface);
+}
+.disclosure:where(:not(.disclosure--filled))[open] > summary {
+	border-block-end: 1px solid var(--barba-color-border);
+	border-end-start-radius: 0;
+	border-end-end-radius: 0;
 }
 .disclosure > summary:is(:hover, :active) {
 	background-color: color-mix(
@@ -40,14 +74,6 @@
 		var(--barba-color-link) 8%,
 		var(--barba-color-surface)
 	);
-}
-.disclosure[open] > summary {
-	border-block-end: 1px solid var(--barba-color-border);
-	border-end-start-radius: 0;
-	border-end-end-radius: 0;
-}
-.disclosure[open] > summary::after {
-	transform: rotate(45deg);
 }
 .disclosure-label {
 	flex: 1;
@@ -62,7 +88,7 @@
 	border: 0;
 	font-size: inherit;
 	font-weight: 500;
-	line-height: 1.35;
+	line-height: var(--_barba-disclosure-title-line-height, 1.35);
 }
 .disclosure-description {
 	display: block;
@@ -72,12 +98,30 @@
 	line-height: 1.4;
 }
 .disclosure-content {
-	padding: var(--barba-space-3);
 	overflow-wrap: anywhere;
+}
+.disclosure:where(:not(.disclosure--filled)) > .disclosure-content {
+	padding: var(--barba-space-3);
+}
+.disclosure--filled > .disclosure-content {
+	border-inline-start: 3px solid var(--barba-color-link);
+	margin-block-start: var(--barba-space-2);
+	padding: var(--barba-space-3) var(--barba-space-4);
 }
 .disclosure-content > :first-child {
 	margin-block-start: 0;
 }
 .disclosure-content > :last-child {
 	margin-block-end: 0;
+}
+@media (forced-colors: active) {
+	.disclosure--filled > summary {
+		border: 1px solid ButtonText;
+	}
+	.disclosure--filled > summary::after {
+		color: ButtonText;
+	}
+	.disclosure--filled > .disclosure-content {
+		border-color: CanvasText;
+	}
 }

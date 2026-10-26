@@ -4,7 +4,7 @@ One global stylesheet for personal applications. It gives ordinary semantic HTML
 
 ## Contents
 
-- [Installation](#installation-and-import) · [Compatibility and adoption](#040-compatibility-and-adoption)
+- [Installation](#installation-and-import) · [0.4.1 changes](#041-disclosure-update) · [0.4.0 adoption](#040-compatibility-and-adoption)
 - [API quick reference](#api-quick-reference) · [Application responsibilities](#what-the-library-owns)
 - [Shell](#application-shell) · [Header navigation](#header-navigation) · [Tables](#data-tables)
 - [Disclosures](#disclosures) · [Visually hidden text](#visually-hidden-text)
@@ -23,7 +23,7 @@ These are styling hooks, not JavaScript components. Read the linked pattern guid
 | `data-barba-variant="icon"`, `data-barba-shape="icon"`, optional `data-barba-size="compact"` | Native named button, decorative SVG hidden from AT. Compact is a smaller face within a generous target. | Context-specific name, native disabled/hidden, distinct close/clear/remove behavior and focus transitions. |
 | `.inline-field`, `.input-row`, `.input-action` | Direct associated label; row contains input or action group then button. **Input-action requires the input and icon button as direct children.** Text/search inputs only. | Value/clear visibility, form ownership, validation, focus before hiding; not a generic textarea or nested-component layout. |
 | `.chip-list`, `.chip`, `.chip-face`, `.chip-removable` | List of chips; informational span/list item; selectable `button.chip[aria-pressed] > .chip-face`; removable container with label span and separate compact icon button. | Selection/removal, disabled state, stable names, and next/previous/fallback focus. Keep 44×44px target space; don't add click handlers to information or whole removable containers. |
-| `details.disclosure`, `.disclosure-label`, `.disclosure-title`, `.disclosure-description`, `.disclosure-content` | Direct summary, label/title and optional description, then content wrapper. Native `open`; no invented disabled state. | Descriptive summary, optional persistence; keep required content visible. Avoid nested interactive summary content. |
+| `details.disclosure`, `.disclosure--filled`, `.disclosure-label`, `.disclosure-title`, `.disclosure-description`, `.disclosure-content` | Direct summary, label/title and optional description, then content wrapper. Optional `.disclosure--filled` changes appearance; both share native `open` and have no invented disabled state. | Descriptive summary, optional persistence; keep required content visible. Avoid nested interactive summary content. |
 | `dialog`, `.dialog-content-container`, `.dialog-header`, `.dialog-header-actions`, `.dialog-body`, `.dialog-footer` | Direct structured form/container; header/body/footer children. Named native dialog. Optional `data-barba-dialog-spacing="compact"`, `-height="content"`, `-room="extra"`, `-dividers="full"` (all prefixed `data-barba-dialog`). | Open/close, validation, cancel guards, initial/restored focus, fallback browser behavior. Standard width is unchanged. |
 | `.visually-hidden` | Supplemental noninteractive text; optional empty persistent `role="status" aria-atomic="true"` region. | Naming source, live-region timing, and update ownership; not for focusable elements or essential instructions. Use `.skip-link` for focus-revealed navigation. |
 | Native `hidden` | Ordinary hidden values suppress layout and keyboard access, including invalid values. `hidden="until-found"` stays browser-managed. | Remove the attribute / set `hidden=false` to reveal; do not write `hidden="false"`. Hidden is not disabled: form submission and scripts remain active. |
@@ -48,6 +48,12 @@ import "@barbajoe/css-lib/dist/barbajoe.css";
 ```
 
 Both paths resolve to the same global stylesheet. The repository tracks the source in `lib/`; npm receives only the generated `dist/barbajoe.css` bundle, the package metadata, and this README.
+
+## 0.4.1 disclosure update
+
+This patch extends the opt-in disclosure pattern with `.disclosure--filled` and corrects shared indicator alignment. Existing disclosure markup remains valid. Both variants now use a trailing chevron pointing inward when collapsed (left in left-to-right content, right in right-to-left content), and down when expanded. The visible chevron aligns with the title’s first line, including when supporting text wraps. Existing bordered panels therefore receive an intentional icon direction/alignment change; unclassed details keep native styling.
+
+The filled variant adds a surface-colored header and a separated accent body border. Filter composition, including the inset clear action, stays application-owned. The [working filter example](https://lib-staging.barbajoe.tech/#filled-disclosures-heading) and [state gallery](https://lib-staging.barbajoe.tech/disclosures.html) show the approved combinations. No chip, form, dialog, or theme APIs change. Merging this version increase stages the package; npm approval remains a separate maintainer action.
 
 ## 0.4.0 compatibility and adoption
 
@@ -130,7 +136,7 @@ Direct links and buttons in the list share the same transparent navigation treat
 
 The optional `site-header-brand` class preserves one brand appearance on an anchor, strong text or a heading. It does not require an `h1` in the header or change the element's semantics. Choose headings according to the page hierarchy, and give links meaningful destinations. Use public `--barba-` tokens and application styles to customize the header; example JavaScript in the [header specimen](https://lib-staging.barbajoe.tech/headers.html) is not shipped in the package.
 
-**Compatibility for the upcoming minor release:** Existing header markup and `.active` remain supported. Navigation that previously occupied a new row below 40rem can now stay beside the brand; navigation-only headers now align to the inline end. Padding and the underline move from the list item to its direct interactive element, and direct navigation buttons now match links. Consumers with list-item padding/border overrides should remove or move those overrides to the link/button to avoid double spacing. The brand class is opt-in; existing unclassed brand elements keep their typography.
+**0.4.0 header compatibility:** Existing header markup and `.active` remain supported. Navigation that previously occupied a new row below 40rem can now stay beside the brand; navigation-only headers now align to the inline end. Padding and the underline move from the list item to its direct interactive element, and direct navigation buttons now match links. Consumers with list-item padding/border overrides should remove or move those overrides to the link/button to avoid double spacing. The brand class is opt-in; existing unclassed brand elements keep their typography.
 
 Accessibility: use meaningful navigation landmarks and current-page semantics; distinguish multiple navigation regions by name. See [APG navigation-landmark guidance](https://www.w3.org/WAI/ARIA/apg/patterns/landmarks/examples/navigation.html).
 
@@ -144,6 +150,15 @@ The library does not set table width, scrolling, stripes, sticky headings, sorti
 
 Use `details.disclosure` for the bordered disclosure panel. Its full-width summary has a trailing chevron, a minimum 2.75rem target height (44px at a 16px root size), hover/press feedback, and the library’s keyboard focus outline. Opening adds a divider between summary and body. See the [light and dark catalog examples](https://lib-staging.barbajoe.tech/#disclosures-heading) for settings, supporting summaries, nested help, and long labels.
 
+
+| Style | When to use it | Why |
+| --- | --- | --- |
+| Bordered: `.disclosure` | Self-contained settings, help, or supporting information. | The enclosing border groups header and body. |
+| Filled: `.disclosure.disclosure--filled` | Filters or compact controls whose state matters while collapsed. | A filled header emphasizes the summary; an accent left border connects expanded content. |
+
+These are recommendations, not restrictions. Both variants use the same markup and native behavior. Both variants use the same inward/downward chevron, aligned with the title’s first line. The filled variant adds a 3px border in `--barba-color-link` and a `--barba-space-2` gap above its body. It has no enclosing border or open-header divider. The indicator is decorative; native summary semantics convey expansion.
+
+**Bordered markup:**
 ```html
 <details class="disclosure" open>
   <summary>
@@ -158,12 +173,48 @@ Use `details.disclosure` for the bordered disclosure panel. Its full-width summa
 </details>
 ```
 
-- `.disclosure-label` fills the available summary width and wraps long text without crowding the chevron. For a simple label, put both label and title classes on one element.
+**Filled markup:** add the modifier to the same structure. The description is stacked by default; inline summary layout is an application choice.
+
+```html
+<details class="disclosure disclosure--filled" open>
+  <summary>
+    <span class="disclosure-label">
+      <span class="disclosure-title">Filters</span>
+      <span class="disclosure-description">All items</span>
+    </span>
+  </summary>
+  <div class="disclosure-content">
+    <!-- Filter controls belong here. -->
+  </div>
+</details>
+```
+
+The [working filter example](https://lib-staging.barbajoe.tech/#filled-disclosures-heading) shows selectable stores and categories in both themes. Its compact chip faces and generous targets use the existing [chip API](#chips). The [disclosure state gallery](https://lib-staging.barbajoe.tech/disclosures.html) adds six ready-to-inspect combinations: no selections, short selections, and many selections, each collapsed and expanded. It includes matching bordered examples, reset, and a narrow-panel control. The catalog covers basic title-only, supporting-description, long-title, and nested-help markup; use these representative cases instead of copying every combination into an application.
+
+| Composition | Required additions | Behavior to preserve |
+| --- | --- | --- |
+| Title only, either style | `.disclosure-label.disclosure-title` on one element | Native keyboard/pointer toggle and visible focus. |
+| Title with supporting text, either style | Title and description within `.disclosure-label` | Wrap text; keep the chevron beside the first title line. |
+| Filled filters without selections | Chip groups and application-maintained summary | “All items”; no clear action in layout or tab order. |
+| Filled filters with selections | Named sibling clear button and reserved header space | Join selected labels with dots; wrap the whole summary beneath the title when needed; keep Clear and chevron at the top. |
+
+
+**Application responsibilities for filters:**
+
+- Update the visible summary in both states: “All items” when neither group is restricted, otherwise selected labels joined with middle dots in stable group order. Let the whole summary move below the title when it no longer fits; avoid redundant category prefixes. Preserve selections when closing.
+- “All stores” and “All categories” reset only their own group. Reflect individual selection with `aria-pressed`; an unrestricted group selects its “All” control.
+- Put the named clear button outside `summary` in the DOM, even when it appears inside the filled header. The example makes it a sibling of `details`, positioned before the chevron in a reserved slot. It must not cover the title or chevron, and clicking its padded area must clear without toggling. Align it with the first title line, not the entire wrapped header. Move focus to summary before hiding Clear, and preserve expansion.
+- Keep DOM and keyboard behavior understandable: in this native composition, Clear follows the body controls when expanded and follows summary directly when collapsed. Do not nest a button in summary or use positive `tabindex` to reorder it. If an application needs a different focus order, design and verify that composition explicitly.
+- Own filtering, persistence, and any result announcements. This control-only example does not add a live message duplicating pressed-state feedback. For actual result updates, follow the [persistent status-region guidance](#visually-hidden-text), including timing and verification limits.
+
+The catalog's `specimen-filter-*` classes provide application layout for inline/wrapping text, field groups, and sibling clear placement. They are **not public library hooks**. The shared `disclosure-filters.js` implements synthetic selection/reset behavior for both pages; no JavaScript ships in the package. The shared accessibility guidance below applies to both styles.
+
+- `.disclosure-label` fills the available summary width and wraps long text without crowding the indicator. For a simple label, put both label and title classes on one element.
 - `.disclosure-title` uses medium weight 500 and normalizes heading margins, size, and borders. A heading at the correct page level may replace the title span, for example `<h2 class="disclosure-label disclosure-title">Preferences</h2>`. The class changes appearance, not semantics. Some browser/assistive-technology combinations expose summary descendants as part of the toggle rather than separate headings; verify your target combinations, or place a section heading outside the disclosure when independent heading navigation is important. See [MDN’s summary heading guidance](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/summary#summaries_as_headings).
 - `.disclosure-description` provides optional muted supporting text below the title. The application keeps selection/status summaries up to date.
 - `.disclosure-content` pads the body and removes its first/last child’s outer block margins. Applications own spacing between panels, internal content layouts, and wide tables/media; long text wraps. Nested disclosures use the same markup, but avoid unnecessary nesting.
 
-Keep the summary’s wording descriptive. Place extra buttons, links, and inputs in the body, not inside the summary. Use disclosures when users can choose which optional information or settings to reveal; keep required instructions and critical status visible. Native `details`/`summary` provides pointer and keyboard operation and expanded-state semantics. Do not add `role="button"`, `tabindex`, or duplicate `aria-expanded` state. Add `open` for initial expansion. Omit `name` for independently expandable sections, as in the catalog; the library does not force an exclusive accordion, animate expansion, or persist state. Applications own persistence and any enclosed controls’ behavior. No JavaScript ships with this treatment.
+Keep the summary’s wording descriptive. Place links and inputs in the body. Any extra header action must be outside summary in the DOM with its own hit area, clear name, and visible focus. Reserve space so it does not cover summary text or the chevron, as in the filter example. Use disclosures when users can choose which optional information or settings to reveal; keep required instructions and critical status visible. Native `details`/`summary` provides pointer and keyboard operation and expanded-state semantics. Do not add `role="button"`, `tabindex`, or duplicate `aria-expanded` state. Add `open` for initial expansion. Omit `name` for independently expandable sections, as in the catalog; the library does not force an exclusive accordion, animate expansion, or persist state. Applications own persistence and any enclosed controls’ behavior. No JavaScript ships with this treatment.
 
 **Compatibility and customization:** This is opt-in; unclassed disclosures retain native styling. Use existing `--barba-` color, spacing, and radius tokens or scoped application selectors. Existing app-specific summary spacing, heading borders, or icons should be removed when adopting these classes to avoid duplicate decoration. The disclosure styling does not supply a disabled state; choose static content instead when expansion is unavailable.
 
@@ -434,6 +485,8 @@ The published Lightning CSS bundle selects its light/dark palette from the syste
 
 The library targets the current stable releases of Chrome, Firefox, and Safari on desktop, plus Safari on iOS and Chrome on Android, at the time a package version is released. Edge is outside this support target. Older browser versions, beta releases, and embedded or in-app webviews are also outside this support target. A release-time target does not imply that every browser/device combination was manually checked.
 
+The build preserves native `:dir()` selectors so explicit, inherited, and automatic HTML direction work in the package as they do in source CSS. Current supported browsers implement this selector; language is not a substitute for direction. See [MDN direction semantics](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/:dir) and [Lightning CSS feature flags](https://lightningcss.dev/transpilation.html#feature-flags). Other compilation targets and the system-preference theme contract are unchanged.
+
 The Lightning CSS `>= 0.25%` build target controls CSS compilation; it is not a browser-support threshold or a polyfill for browser-native behavior. When a targeted browser lacks a CSS feature, provide a usable fallback or document the limitation before release. Dialog invoker commands and light dismissal are HTML features; applications using them own any needed behavioral fallback. The specimen's JavaScript fallback is not part of the CSS package.
 
 ## Local development
@@ -444,7 +497,7 @@ From this package directory, install the repository dependencies and start the s
 pnpm dev
 ```
 
-Parcel opens the component catalog automatically and applies HTML, CSS, and dialog-fixture changes with hot module replacement. Development startup also builds the package once for `package-theme.html`; after further library edits, run `pnpm build` to refresh that compiled example. `build:specimen` always regenerates the package before bundling all seven pages. Use the navigation to review the component catalog, header compositions, and all four application shell structures in the same session.
+Parcel opens the component catalog automatically and applies HTML, CSS, and dialog-fixture changes with hot module replacement. Development startup also builds the package once for `package-theme.html`; after further library edits, run `pnpm build` to refresh that compiled example. `build:specimen` always regenerates the package before bundling all eight pages. Use the navigation to review the component catalog, header compositions, and all four application shell structures in the same session.
 
 Build the production package with Lightning CSS:
 
@@ -486,13 +539,13 @@ pnpm test:browser:report
 
 The review builds the CSS and optimized specimen, serves `.output/specimen` on `127.0.0.1:4173`, runs the tests, and stops its server. Leave that port free; an existing server is rejected so stale output cannot silently pass. No separate development server is needed. Most specimen pages import library source CSS through Parcel; `package-theme.html` imports the freshly generated release bundle. The editor and hidden-state regression checks also exercise both stylesheet builds. The release-helper checks separately validate the packaged Lightning CSS bundle.
 
-Playwright runs Chromium, Firefox, and WebKit at 1280×720 and 390×844 in light and dark schemes. It checks all seven pages and asset loading, page overflow, form reset and inert catalog actions, dialog reset/validation/dismissal/focus, dialog sizing and body scrolling, keyboard reachability, and keyboard table scrolling. Focused header, table and dialog checks also use 320px layouts. Header checks cover content-based wrapping, right alignment, padded targets, current-page markup, disabled actions, semantic brand elements and long labels; a separate check exercises the packaged CSS and header text contrast. Each run captures full-page views, buttons/hover, placeholders, forms, tables, and open-dialog states for human review. These images are evidence, with no stored image baselines or automatic pixel comparisons.
+Playwright runs Chromium, Firefox, and WebKit at 1280×720 and 390×844 in light and dark schemes. It checks all eight pages and asset loading, page overflow, form reset and inert catalog actions, dialog reset/validation/dismissal/focus, dialog sizing and body scrolling, keyboard reachability, and keyboard table scrolling. Focused header, table and dialog checks also use 320px layouts. Header checks cover content-based wrapping, right alignment, padded targets, current-page markup, disabled actions, semantic brand elements and long labels; a separate check exercises the packaged CSS and header text contrast. Each run captures full-page views, buttons/hover, placeholders, forms, tables, and open-dialog states for human review. These images are evidence, with no stored image baselines or automatic pixel comparisons.
 
 `playwright-report/` contains the HTML report, screenshots, environment attachments, and failure traces. `test-results/` contains individual test outputs. Both are ignored by Git and excluded from the npm package. Environment attachments identify the date, commit, browser build/version, OS, actual viewport, scheme, and build type. Test failures produce a nonzero exit code. Reports do not open automatically; the job can finish unattended.
 
 For a focused local run, use `pnpm test:browser --project=webkit-narrow-dark`; add `--headed` to watch it. The same command runs in the **Browser review** GitHub Actions workflow on PRs, pushes to `main`, or manual dispatch. Download its `browser-review-report` artifact, unzip it, then run `pnpm test:browser:report /path/to/unzipped-report` with the directory containing `index.html`. Reports are retained for 14 days. Behavioral failures fail that CI job; configuring it as a required merge check is a separate maintainer choice.
 
-These are Playwright's bundled test browsers, not a guarantee about the current installed Chrome, Firefox, or Safari releases. WebKit is sufficient for automated coverage here but is not branded Safari. Narrow desktop viewports do not test real iOS/Android browser behavior. Runs request reduced motion for repeatable capture; they do not assert motion behavior, real 200% browser zoom, or screen-reader usability. Use the manual guidance below for those checks when relevant; actual-device review remains recommended, not required. Disclosure checks exercise source and packaged CSS, padded summary targets, native controls, keyboard focus, nested content, forced colors, and unbroken-label reflow at 320px with enlarged text. The 13 release-helper tests are separate from these browser tests.
+These are Playwright's bundled test browsers, not a guarantee about the current installed Chrome, Firefox, or Safari releases. WebKit is sufficient for automated coverage here but is not branded Safari. Narrow desktop viewports do not test real iOS/Android browser behavior. Runs request reduced motion for repeatable capture; they do not assert motion behavior, real 200% browser zoom, or screen-reader usability. Use the manual guidance below for those checks when relevant; actual-device review remains recommended, not required. Disclosure checks exercise both variants in source and packaged CSS, padded summary targets, native controls, keyboard focus, nested content, forced colors, and unbroken-label reflow. Filter checks cover selection summaries, independent groups, collapsed tab order, clear focus, and separate targets at 320px. Enlarged-root-text checks are not actual browser zoom. The 13 release-helper tests are separate from these browser tests.
 
 Focus-return checks open dialogs from a focused button using Enter. On macOS, WebKit's default Tab navigation skips buttons, so the footer check uses Option-Tab; no system preferences are changed. These checks exercise keyboard dismissal and restoration, without assuming pointer clicks focus buttons in every browser.
 
@@ -522,7 +575,7 @@ For live editing, run `pnpm css-lib dev` from the repository root. Parcel's watc
 
 ## Releasing the CSS package
 
-The package is currently at version `0.4.0`. Change the version only when there is an approved reason to release the CSS library. The staged-release workflow is specific to this package and accepts stable `MAJOR.MINOR.PATCH` versions only.
+The package is currently at version `0.4.1`. Change the version only when there is an approved reason to release the CSS library. The staged-release workflow is specific to this package and accepts stable `MAJOR.MINOR.PATCH` versions only.
 
 The npm trusted publisher for `@barbajoe/css-lib` identifies GitHub user `Barbacoa08`, repository `barbajoe`, and workflow `stage-css-release.yml`. It must allow **stage publishing only**, not direct publishing. Keep the npm maintainer account's 2FA enabled and the package's Publishing access set to **Require two-factor authentication and disallow tokens**. The workflow uses OIDC; it needs neither a bypass-2FA npm access token nor an `NPM_AUTH_TOKEN` GitHub secret. Enable GitHub email notifications for issue assignments if you want the staged-release reminder in your inbox.
 

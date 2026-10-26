@@ -8,7 +8,7 @@
 			content="Interactive development specimen for the Barbajoe CSS library."
 		/>
 		<title>Component catalog · Barbajoe CSS specimen</title>
-		<link rel="stylesheet" href="../lib/barbajoe.css" />
+		<link rel="stylesheet" href="../lib/barbajoe.css" data-library />
 		<link rel="stylesheet" href="./specimen.css" />
 	</head>
 	<body>
@@ -21,7 +21,7 @@
 						<li class="active">
 							<a href="./index.html" aria-current="page">Catalog</a>
 						</li>
-						<li><a href="./headers.html">Headers</a></li><li><a href="./editor.html">Editor</a></li>
+						<li><a href="./headers.html">Headers</a></li><li><a href="./editor.html">Editor</a></li><li><a href="./disclosures.html">Disclosures</a></li>
 						<li><a href="./layout-header.html">Header layout</a></li>
 						<li><a href="./layout-footer.html">Footer layout</a></li>
 						<li><a href="./layout-minimal.html">Minimal layout</a></li>
@@ -43,7 +43,7 @@
 <dt>Buttons and X actions</dt><dd><code>data-barba-variant</code>: primary, secondary, tertiary, text, and icon. <code>data-barba-intent="danger"</code> supplies destructive appearance. Icon actions also use <code>data-barba-shape="icon"</code>; <code>data-barba-size="compact"</code> reduces the face, not the target. Native type, name, and disabled state remain required.</dd>
 <dt>Fields</dt><dd><code>.inline-field</code> has a direct visible label. <code>.input-row</code> wraps a field/group and action. <code>.input-action</code> requires a <strong>direct-child text/search input and icon button</strong>; nested component inputs and textareas need application layout. Hide clear when empty; restore focus before hiding it.</dd>
 <dt>Chips</dt><dd><code>.chip-list</code> wraps. Informational <code>.chip</code> stays noninteractive. A selectable button needs <code>aria-pressed</code> and a <code>.chip-face</code> child. <code>.chip-removable</code> contains a label span and separate compact X button; applications restore focus after removal.</dd>
-<dt>Disclosures</dt><dd><code>details.disclosure</code> has a direct summary with <code>.disclosure-label</code>, <code>.disclosure-title</code>, optional <code>.disclosure-description</code>, then <code>.disclosure-content</code>. Native <code>open</code> owns expansion.</dd>
+<dt>Disclosures</dt><dd><code>details.disclosure</code> has a direct summary with <code>.disclosure-label</code>, <code>.disclosure-title</code>, optional <code>.disclosure-description</code>, then <code>.disclosure-content</code>. Add <code>.disclosure--filled</code> for a filled header, shared inward/downward chevron, and an accent body border. Native <code>open</code> owns expansion; both variants share markup.</dd>
 <dt>Dialogs</dt><dd>A named native dialog contains a direct <code>.dialog-content-container</code> with <code>.dialog-header</code>, <code>.dialog-body</code>, <code>.dialog-footer</code>. Add <code>.dialog-header-actions</code> for a close row. Optional <code>data-barba-dialog-*</code>: spacing=compact, height=content, room=extra, dividers=full. Applications own cancellation and initial/restored focus.</dd>
 <dt>Visibility and customization</dt><dd><code>.visually-hidden</code> retains supplemental text for assistive technology. Ordinary <code>hidden</code> suppresses rendering and tab stops; remove the attribute to reveal (the string “false” still hides). <code>hidden="until-found"</code> remains browser-managed. Customize public <code>--barba-</code> tokens; private <code>--_barba-</code> and compiler properties are not API. Decorative <code>.text-gradient</code> and <code>.scaleup-on-hover</code> are optional. Recheck contrast, focus, and target sizes after overrides.</dd></dl></section>
 
@@ -437,12 +437,15 @@
 				</section>
 				<section class="specimen-section" aria-labelledby="disclosures-heading">
 					<h2 id="disclosures-heading">Disclosures</h2><p><strong>Accessibility:</strong> Keep native details/summary semantics; avoid redundant roles, tabindex and aria-expanded. Required instructions must remain visible. <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/summary">MDN summary guidance</a>.</p>
-					<p>Use <code>details.disclosure</code> to group optional settings, filters, or supporting information. The full summary is clickable, with a trailing chevron, a medium-weight title, and a divider when open. Keep essential instructions visible outside collapsed sections.</p>
+					<p>Use <code>details.disclosure</code> to group optional settings, filters, or supporting information. Both variants use the same native disclosure markup and a full-width summary target. Keep essential instructions visible outside collapsed sections.</p>
 					<p>Place the label in <code>disclosure-label</code>, its title in <code>disclosure-title</code>, optional supporting text in <code>disclosure-description</code>, and the body in <code>disclosure-content</code>. A heading can carry both label and title classes. Choose its level for the page hierarchy; the class only normalizes its appearance.</p>
-					<p>These examples use native disclosure behavior: Enter or Space opens a focused summary, and multiple sections can stay open. Checkboxes and Reset work locally without saving. Put links, inputs, and extra actions in the body, never inside the summary. Nest only when the content needs that hierarchy.</p>
+					<p>These examples use native disclosure behavior: Enter or Space opens a focused summary, and multiple sections can stay open. Checkboxes and Reset work locally without saving. Put links and inputs in the body. Extra header actions must be siblings outside the summary with separate targets, as in the filled filter example below. Nest only when the content needs that hierarchy.</p>
+<table class="specimen-disclosure-comparison"><caption>Choose a disclosure style</caption><thead><tr><th scope="col">Style</th><th scope="col">Use when</th><th scope="col">Why</th></tr></thead><tbody><tr><th scope="row">Bordered</th><td>Grouping self-contained settings, help, or supporting information.</td><td>The surrounding border connects the header and body.</td></tr><tr><th scope="row">Filled</th><td>Showing filters or compact controls whose current state matters while collapsed.</td><td>The filled header emphasizes the summary; the accent border connects expanded content.</td></tr></tbody></table>
+<p>These are recommendations, not restrictions. Both styles support the same content and native behavior. Chevrons point inward when collapsed and down when expanded, aligned with the title’s first line. <a href="./disclosures.html">Compare all disclosure states</a>.</p>
+<h3 id="bordered-disclosures-heading">Bordered disclosure</h3><p>Use <code>.disclosure</code> for an enclosing border, trailing chevron, and divider when open.</p>
 					<div class="specimen-grid">
 						<article class="specimen-theme specimen-theme-light" data-disclosure-demo="light">
-							<h3>Settings and filters · light</h3>
+							<h4>Bordered · light</h4>
 							<div class="specimen-disclosure-stack">
 								<details class="disclosure">
 									<summary><h4 class="disclosure-label disclosure-title">Preferences</h4></summary>
@@ -458,7 +461,7 @@
 								<details class="disclosure"><summary><span class="disclosure-label disclosure-title">Help with shopping preferences and shared lists across multiple devices</span></summary><div class="disclosure-content"><p>Long labels wrap while the chevron stays reachable. Allow room for translated text and increased text size.</p></div></details>
 							</div></article>
 						<article class="specimen-theme specimen-theme-dark" data-disclosure-demo="dark">
-							<h3>Settings and filters · dark</h3>
+							<h4>Bordered · dark</h4>
 							<div class="specimen-disclosure-stack">
 								<details class="disclosure">
 									<summary><h4 class="disclosure-label disclosure-title">Preferences</h4></summary>
@@ -485,6 +488,27 @@
     &lt;p&gt;Settings and controls go here.&lt;/p&gt;
   &lt;/div&gt;
 &lt;/details&gt;</code></pre>
+<h3 id="filled-disclosures-heading">Filled disclosure · working filters</h3>
+<p>Add <code>.disclosure--filled</code> to <code>details.disclosure</code> for a filled header, shared chevron, and accent-colored body border with a gap below the header. Use a persistent summary when selections matter even while the controls are collapsed.</p>
+<p>Try selecting <strong>aldis</strong> and <strong>costco</strong>, then <strong>black</strong> and <strong>blue</strong>, and collapse Filters. “All stores” and “All categories” clear their own group; the X clears both. Each theme has independent, synthetic state. Nothing is saved or sent.</p>
+<div class="specimen-grid">
+<article class="specimen-theme specimen-theme-light" data-filled-filter-demo="light" aria-label="Filled filters, light mode"><h4>Filled · light</h4></article><article class="specimen-theme specimen-theme-dark" data-filled-filter-demo="dark" aria-label="Filled filters, dark mode"><h4>Filled · dark</h4></article></div>
+<p><strong>Application responsibilities:</strong> Keep the visible summary current in both states: show “All items” when neither group is restricted, otherwise join selected labels with middle dots in stable group order. Native <code>aria-pressed</code> buttons expose each selection; this example adds no duplicate live announcement. If filtering changes a results list, follow the <a href="#hidden-status">result-status guidance</a> for a persistent live region and concise counts.</p>
+<p><strong>Clear action:</strong> The X is a named button outside <code>summary</code> in the DOM, positioned inside the filled header before the chevron. Reserve its target space so it cannot cover the title or chevron. Clear and the chevron stay beside the first title line while the selected labels wrap together below it. Clear must not toggle expansion; focus summary before hiding the X. When expanded, keyboard navigation reaches Clear after the body controls; when collapsed, directly after summary. Empty groups select their “All” action. Applications own filtering, persistence, result announcements, and focus transitions.</p>
+<p><strong>Example-only code:</strong> The <code>specimen-filter-*</code> classes provide inline/wrapping summary text, field-group spacing, and sibling clear-action placement. They are not library APIs. <code>disclosure-filters.js</code> shares local selection/reset behavior with the state gallery; the CSS package contains no JavaScript. Reuse the public disclosure and chip hooks, then implement your application's layout and state.</p>
+<pre class="specimen-disclosure-markup"><code>&lt;details class=&quot;disclosure disclosure--filled&quot; open&gt;
+  &lt;summary&gt;
+    &lt;span class=&quot;disclosure-label&quot;&gt;
+      &lt;span class=&quot;disclosure-title&quot;&gt;Filters&lt;/span&gt;
+      &lt;span class=&quot;disclosure-description&quot;&gt;All items&lt;/span&gt;
+    &lt;/span&gt;
+  &lt;/summary&gt;
+  &lt;div class=&quot;disclosure-content&quot;&gt;
+    &lt;!-- Filter controls belong here. --&gt;
+  &lt;/div&gt;
+&lt;/details&gt;</code></pre>
+<p><a href="./disclosures.html"><strong>Full state gallery:</strong> no selections, short selections, and many selections, each collapsed and expanded, in both themes</a>. The gallery includes reset, narrow panels, and bordered examples. The working controls are generated by example-only JavaScript; the markup and library styling remain reusable separately.</p>
+<p>This minimal snippet stacks the description below the title. The working example adds application layout for the inline summary and clear button. The <a href="#disclosures-heading">shared accessibility guidance above</a> applies to both variants.</p>
 				</section>
 				<section class="specimen-section specimen-hidden-examples" id="visually-hidden-examples" aria-labelledby="visually-hidden-heading">
 					<h2 id="visually-hidden-heading">Visually hidden text</h2>
