@@ -23,24 +23,15 @@ Reviewed October 25, 2026, against main `964307931323c61305138df8522905ac5631e1e
 
 Matched fixtures use identical markup and widths, with main's source CSS for “before” and 0.4.1 source CSS for “after.” Captured in the local in-app review browser at 100% zoom; the embedded browser version was not separately identified. This is visual evidence, not a supported-browser certification. The filled variant did not exist on main, so the matched comparison isolates the existing bordered pattern.
 
-| Viewport | Before | After |
-| --- | --- | --- |
-| 1280 × 720 | [Before desktop](before-desktop.png) | [After desktop](after-desktop.png) |
-| 390 × 844 | [Before narrow](before-narrow.png) | [After narrow](after-narrow.png) |
+The matched desktop (1280 × 720) and narrow (390 × 844) captures, gallery capture, and manual-browser screenshots are retained as local review artifacts, outside Git and the npm package.
 
-The maintained gallery shows the integrated filled treatment and wrapped selection summaries:
-
-![Filled filter states, light and dark](filter-states-desktop.png)
+For interactive review, use the [deployed disclosure state gallery](https://deploy-preview-282--library-specimen.netlify.app/disclosures.html#many-closed). Automated screenshots and the browser report are available in the `browser-review-report` artifact on the [verified implementation run](https://github.com/Barbacoa08/barbajoe/actions/runs/40260858824). That artifact is retained for 14 days; it does not contain the local manual-browser captures. The written findings below remain the durable review record.
 
 ## Actual desktop browser checks
 
 **Chrome 155.0.8059.85, macOS 27.0.1:** source gallery at `http://127.0.0.1:1245/disclosures.html#selected-open`, system dark preference with both forced-theme panels. Native Chrome zoom was increased to **200%**, confirmed by Chrome's “Zoom: 200%” UI. At the 1679 × 1029 captured window size, headers, targets, and chip wrapping remained usable. Clear hid after activation, retained expansion, and returned focus to summary; Tab reached the chips, and Space selected aldis with a visible focus outline. Chrome zoom was reset to 100%, and the temporary tab was closed. This is actual browser zoom, not an enlarged root font.
 
-![Chrome at actual 200% zoom](chrome-zoom-200.png)
-
 **Installed Safari 27.0.1, macOS 27.0.1:** optimized Parcel specimen at `http://127.0.0.1:4173/disclosures.html#selected-closed`, 100% zoom, system dark preference with both forced-theme panels. Clearing a collapsed selection kept it collapsed and focused summary. Space expanded it, Option+Tab reached All stores and then aldis, and Space selected aldis and restored the clear action. The keyboard focus outline and aligned header controls were visually inspected. This used the installed application, not Playwright WebKit. The temporary tab was closed afterward.
-
-![Installed Safari keyboard review](safari-keyboard.png)
 
 ## Verification limits
 
