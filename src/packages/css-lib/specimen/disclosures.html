@@ -33,7 +33,7 @@
 <p>
 <strong>Theme comparison:</strong> These source examples force light and dark schemes. The compiled package follows system preference; see the <a href="./package-theme.html">generated-package example</a> and <a href="./index.html#color-heading">theme guidance</a>.</p>
 <nav aria-label="Disclosure examples">
-<a href="#motion-preview">Disclosure animation</a> · <a href="#empty-closed">No selections</a> · <a href="#selected-closed">Selected filters</a> · <a href="#many-closed">Many selections</a> · <a href="#bordered">Bordered sections</a>
+<a href="#motion-preview">Disclosure animation</a> · <a href="#empty-closed">No selections</a> · <a href="#selected-closed">Selected filters</a> · <a href="#many-closed">Many selections</a> · <a href="#edge-content">Content to the edge</a> · <a href="#bordered">Bordered sections</a>
 </nav>
 <section class="specimen-section" id="motion-preview" aria-labelledby="motion-heading">
 <h2 id="motion-heading">Disclosure animation</h2>
@@ -49,7 +49,7 @@
 <input id="narrow-panels" type="checkbox"> Narrow panels (320px)</label>
 </div>
 <noscript>
-<p>Enable JavaScript for the synthetic filter examples. Native bordered disclosures and the catalog markup remain available without it.</p>
+<p>Enable JavaScript for the synthetic filter examples. Native shopping-list and bordered disclosures, and the catalog markup remain available without it.</p>
 </noscript>
 <section class="specimen-section" id="empty-closed" aria-labelledby="empty-closed-heading">
 <h2 id="empty-closed-heading">No selections · collapsed</h2>
@@ -114,6 +114,50 @@
 </article>
 <article class="specimen-theme specimen-theme-dark" data-filled-filter-demo="dark" data-filter-state="many" data-filter-open="true" aria-label="Many selections · expanded, dark mode">
 <h3>Dark mode</h3>
+</article>
+</div>
+</section>
+<section class="specimen-section" id="edge-content" aria-labelledby="edge-content-heading">
+<h2 id="edge-content-heading">Filled disclosure · content to the edge</h2>
+<p>The shaded shopping-list rows reach the same right edge as the header. The accent border and left inset stay in place; each row supplies its own text padding.</p>
+<div class="specimen-disclosure-pair">
+<article class="specimen-theme specimen-theme-light" aria-label="Content to the edge, light mode">
+<h3>Light mode</h3>
+<details data-static-example class="disclosure disclosure--filled" open>
+<summary>
+<span class="disclosure-label">
+<span class="disclosure-title">Shopping list</span>
+<span class="disclosure-description">Three essentials for the week</span>
+</span>
+</summary>
+<div class="disclosure-content">
+<!-- biome-ignore lint/a11y/noRedundantRoles: Preserve list semantics in Safari when list-style is none. -->
+<ul class="specimen-disclosure-edge-list" role="list">
+<li>Apples · 6 loose</li>
+<li>Rolled oats · 1 large bag</li>
+<li>Whole-grain bread · 1 loaf for the freezer</li>
+</ul>
+</div>
+</details>
+</article>
+<article class="specimen-theme specimen-theme-dark" aria-label="Content to the edge, dark mode">
+<h3>Dark mode</h3>
+<details data-static-example class="disclosure disclosure--filled" open>
+<summary>
+<span class="disclosure-label">
+<span class="disclosure-title">Shopping list</span>
+<span class="disclosure-description">Three essentials for the week</span>
+</span>
+</summary>
+<div class="disclosure-content">
+<!-- biome-ignore lint/a11y/noRedundantRoles: Preserve list semantics in Safari when list-style is none. -->
+<ul class="specimen-disclosure-edge-list" role="list">
+<li>Apples · 6 loose</li>
+<li>Rolled oats · 1 large bag</li>
+<li>Whole-grain bread · 1 loaf for the freezer</li>
+</ul>
+</div>
+</details>
 </article>
 </div>
 </section>

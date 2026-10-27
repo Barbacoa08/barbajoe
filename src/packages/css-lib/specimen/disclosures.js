@@ -1,12 +1,14 @@
 import { initializeFilterExamples } from "./disclosure-filters.js";
 
 const resetFilters = initializeFilterExamples();
-const bordered = [...document.querySelectorAll("[data-bordered-example]")].map(
-	(details) => ({ details, open: details.open }),
-);
+const staticExamples = [
+	...document.querySelectorAll(
+		"[data-bordered-example], [data-static-example]",
+	),
+].map((details) => ({ details, open: details.open }));
 document.querySelector("#reset-examples").addEventListener("click", () => {
 	resetFilters();
-	for (const item of bordered) item.details.open = item.open;
+	for (const item of staticExamples) item.details.open = item.open;
 });
 for (const [id, open] of [
 	["expand-all", true],

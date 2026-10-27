@@ -4,7 +4,7 @@ One global stylesheet for personal applications. It gives ordinary semantic HTML
 
 ## Contents
 
-- [Installation](#installation-and-import) · [0.4.3 changes](#043-disclosure-animation) · [0.4.1 changes](#041-disclosure-update) · [0.4.0 adoption](#040-compatibility-and-adoption)
+- [Installation](#installation-and-import) · [0.4.4 changes](#044-filled-disclosure-edge) · [0.4.3 changes](#043-disclosure-animation) · [0.4.1 changes](#041-disclosure-update) · [0.4.0 adoption](#040-compatibility-and-adoption)
 - [API quick reference](#api-quick-reference) · [Application responsibilities](#what-the-library-owns)
 - [Shell](#application-shell) · [Header navigation](#header-navigation) · [Tables](#data-tables)
 - [Disclosures](#disclosures) · [Visually hidden text](#visually-hidden-text)
@@ -48,6 +48,10 @@ import "@barbajoe/css-lib/dist/barbajoe.css";
 ```
 
 Both paths resolve to the same global stylesheet. The repository tracks the source in `lib/`; npm receives only the generated `dist/barbajoe.css` bundle, the package metadata, and this README.
+
+## 0.4.4 filled disclosure edge
+
+Filled disclosure bodies now have no inline-end padding, allowing child backgrounds to reach the header’s trailing edge. Block/start padding, header spacing, and the accent border are preserved. The rule mirrors in right-to-left content. Add padding inside child rows when their text needs an inset; see the [shaded shopping-list example](https://lib-staging.barbajoe.tech/disclosures.html#edge-content). Version 0.4.3’s disclosure animation is retained.
 
 ## 0.4.3 disclosure animation
 
@@ -220,7 +224,7 @@ The catalog's `specimen-filter-*` classes provide application layout for inline/
 - `.disclosure-label` fills the available summary width and wraps long text without crowding the indicator. For a simple label, put both label and title classes on one element.
 - `.disclosure-title` uses medium weight 500 and normalizes heading margins, size, and borders. A heading at the correct page level may replace the title span, for example `<h2 class="disclosure-label disclosure-title">Preferences</h2>`. The class changes appearance, not semantics. Some browser/assistive-technology combinations expose summary descendants as part of the toggle rather than separate headings; verify your target combinations, or place a section heading outside the disclosure when independent heading navigation is important. See [MDN’s summary heading guidance](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/summary#summaries_as_headings).
 - `.disclosure-description` provides optional muted supporting text below the title. The application keeps selection/status summaries up to date.
-- `.disclosure-content` pads the body and removes its first/last child’s outer block margins. Applications own spacing between panels, internal content layouts, and wide tables/media; long text wraps. Nested disclosures use the same markup, but avoid unnecessary nesting.
+- `.disclosure-content` pads the body and removes its first/last child’s outer block margins. The filled variant preserves block and inline-start padding but has no inline-end padding, so child backgrounds can reach the header’s trailing edge (right in left-to-right content, left in right-to-left content). Its header and the bordered variant keep their padding. Applications own spacing between panels, internal content layouts, and wide tables/media; long text wraps. Add padding within child rows when their text needs breathing room. See the [shaded shopping-list example](https://lib-staging.barbajoe.tech/disclosures.html#edge-content); its row colors and layout are specimen-only styles. Nested disclosures use the same markup, but avoid unnecessary nesting.
 
 Keep the summary’s wording descriptive. Place links and inputs in the body. Any extra header action must be outside summary in the DOM with its own hit area, clear name, and visible focus. Reserve space so it does not cover summary text or the chevron, as in the filter example. Use disclosures when users can choose which optional information or settings to reveal; keep required instructions and critical status visible. Native `details`/`summary` provides pointer and keyboard operation and expanded-state semantics. Do not add `role="button"`, `tabindex`, or duplicate `aria-expanded` state. Add `open` for initial expansion. Omit `name` for independently expandable sections, as in the catalog; the library does not force an exclusive accordion or persist state. Expansion animation is a guarded progressive enhancement; see the [motion guidance](#disclosure-animation-and-review). Applications own persistence and any enclosed controls’ behavior. No JavaScript ships with this treatment.
 
@@ -607,7 +611,7 @@ For live editing, run `pnpm css-lib dev` from the repository root. Parcel's watc
 
 ## Releasing the CSS package
 
-The package is currently at version `0.4.3`. Change the version only when there is an approved reason to release the CSS library. The staged-release workflow is specific to this package and accepts stable `MAJOR.MINOR.PATCH` versions only.
+The package is currently at version `0.4.4`. Change the version only when there is an approved reason to release the CSS library. The staged-release workflow is specific to this package and accepts stable `MAJOR.MINOR.PATCH` versions only.
 
 The npm trusted publisher for `@barbajoe/css-lib` identifies GitHub user `Barbacoa08`, repository `barbajoe`, and workflow `stage-css-release.yml`. It must allow **stage publishing only**, not direct publishing. Keep the npm maintainer account's 2FA enabled and the package's Publishing access set to **Require two-factor authentication and disallow tokens**. The workflow uses OIDC; it needs neither a bypass-2FA npm access token nor an `NPM_AUTH_TOKEN` GitHub secret. Enable GitHub email notifications for issue assignments if you want the staged-release reminder in your inbox.
 

@@ -108,7 +108,8 @@
 .disclosure--filled > .disclosure-content {
 	border-inline-start: 3px solid var(--barba-color-link);
 	margin-block-start: var(--barba-space-2);
-	padding: var(--barba-space-3) var(--barba-space-4);
+	padding-block: var(--barba-space-3);
+	padding-inline: var(--barba-space-4) 0;
 }
 .disclosure-content > :first-child {
 	margin-block-start: 0;

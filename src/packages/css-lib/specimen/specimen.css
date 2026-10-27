@@ -174,6 +174,22 @@
 	padding: 0;
 	list-style: none;
 }
+.specimen-disclosure-edge-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.specimen-disclosure-edge-list > li {
+	padding: var(--barba-space-3) var(--barba-space-4);
+	background-color: var(--barba-color-surface);
+}
+.specimen-disclosure-edge-list > li:nth-child(even) {
+	background-color: color-mix(
+		in srgb,
+		var(--barba-color-link) 8%,
+		var(--barba-color-surface)
+	);
+}
 .specimen-hidden-actions li {
 	display: flex;
 	align-items: center;
