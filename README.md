@@ -17,6 +17,8 @@ The former library-staging Netlify site now hosts the [CSS specimen](https://lib
 
 ## Development
 
+For interface work, [check modern CSS first](src/packages/css-lib/README.md#check-modern-css-first): verify current support, preserve a usable baseline, and consider native HTML and CSS before adding JavaScript for layout or presentation.
+
 Install the locked dependencies and run the repository checks:
 
 ```sh
@@ -27,6 +29,8 @@ pnpm check
 The individual commands are `pnpm lint`, `pnpm build`, and `pnpm test:release` for the release-workflow helpers.
 
 For unattended specimen review, install the test browsers once with `pnpm exec playwright install chromium firefox webkit`, then run `pnpm test:browser`. The command builds and serves the specimen, checks it in three browser engines, and saves a report with screenshots. Open the report with `pnpm test:browser:report`. See the [browser-review instructions](src/packages/css-lib/README.md#automated-browser-review) for coverage and limitations.
+
+Review explanations and selected screenshots belong with the relevant PR. Keep lasting guidance in the maintained documentation and specimen; follow the [review-evidence instructions](AGENTS.md#review-evidence).
 
 ## Future publishable libraries
 

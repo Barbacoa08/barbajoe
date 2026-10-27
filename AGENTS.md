@@ -15,3 +15,13 @@ Read the root README and the CSS package README for the active package, supporte
 - Check both the source specimen and built-package behavior when relevant. Verify narrow layouts, wrapping, themes, directionality, zoom, targets, focus, accessible names, keyboard behavior, and disabled states affected by the change. Screenshots demonstrate appearance; they do not establish interaction correctness or actual screen-reader speech.
 - Follow the README's build, browser, and release checks appropriate to the changed surface. Use meaningful regressions for behavior changes; documentation-only edits need content, link, and diff checks rather than wording-mirroring tests. Report actual evidence and distinguish automated browsers from installed-browser, assistive-technology, and physical-device acceptance.
 - Keep application adoption separate from library publication. Preserve the existing PR review and staged package-release boundaries; completing a review does not authorize merging, npm publication, or consumer deployment.
+
+## Review evidence
+
+- Keep change explanations, tradeoffs, reviewer findings, verification results, and testing limits in the relevant PR description or conversation. Preserve historical dates and actual reviewer attributions when moving an existing report.
+- Upload selected before/after screenshots directly as GitHub PR attachments, and verify their links. Do not commit review screenshots or per-change review reports to the repository, recreate `docs/reviews/`, or introduce an equivalent archive elsewhere in the source tree.
+- If attachment upload is unavailable, retain the files locally and report the limitation; do not use a source commit as an upload workaround.
+- Keep temporary notes and captures in an ignored, numbered `.project/` directory. Bulk automated reports remain CI artifacts with the configured retention period; selected PR attachments must not depend on those expiring artifacts or branch-hosted files.
+- Put lasting API, compatibility, accessibility, and design guidance in the relevant maintained README, code comments, or specimen. Keep historical execution logs with the PR.
+
+These storage rules do not reduce the required review scope, tests, browser checks, or release approvals.
