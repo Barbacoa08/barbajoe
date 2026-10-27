@@ -4,7 +4,7 @@ One global stylesheet for personal applications. It gives ordinary semantic HTML
 
 ## Contents
 
-- [Installation](#installation-and-import) · [0.4.1 changes](#041-disclosure-update) · [0.4.0 adoption](#040-compatibility-and-adoption)
+- [Installation](#installation-and-import) · [0.4.3 changes](#043-disclosure-animation) · [0.4.1 changes](#041-disclosure-update) · [0.4.0 adoption](#040-compatibility-and-adoption)
 - [API quick reference](#api-quick-reference) · [Application responsibilities](#what-the-library-owns)
 - [Shell](#application-shell) · [Header navigation](#header-navigation) · [Tables](#data-tables)
 - [Disclosures](#disclosures) · [Visually hidden text](#visually-hidden-text)
@@ -48,6 +48,14 @@ import "@barbajoe/css-lib/dist/barbajoe.css";
 ```
 
 Both paths resolve to the same global stylesheet. The repository tracks the source in `lib/`; npm receives only the generated `dist/barbajoe.css` bundle, the package metadata, and this README.
+
+## 0.4.3 disclosure animation
+
+Existing `details.disclosure` panels, including the filled style, now animate opening and closing by default in browsers that support all required CSS features and when reduced motion is not requested. Other browsers retain instant native behavior. No markup migration or JavaScript is required; unclassed `details` stays native. Version 0.4.2's title-spacing correction is retained.
+
+The default duration is `--barba-motion-duration-base` (300ms). Set that token to `0s` on an individual disclosure when it should remain instant. If customizing the animation itself, keep the closing guard and content transition durations synchronized. Controls stop accepting input during closing, and closed text becomes available to browser search when the transition finishes. Native Find can then reveal the matching panel. See [disclosure animation and review](#disclosure-animation-and-review) for safeguards, comparison controls, and verification limits.
+
+Merging this version increase prepares the staged npm release; maintainer approval with 2FA remains separate.
 
 ## 0.4.1 disclosure update
 
@@ -214,7 +222,7 @@ The catalog's `specimen-filter-*` classes provide application layout for inline/
 - `.disclosure-description` provides optional muted supporting text below the title. The application keeps selection/status summaries up to date.
 - `.disclosure-content` pads the body and removes its first/last child’s outer block margins. Applications own spacing between panels, internal content layouts, and wide tables/media; long text wraps. Nested disclosures use the same markup, but avoid unnecessary nesting.
 
-Keep the summary’s wording descriptive. Place links and inputs in the body. Any extra header action must be outside summary in the DOM with its own hit area, clear name, and visible focus. Reserve space so it does not cover summary text or the chevron, as in the filter example. Use disclosures when users can choose which optional information or settings to reveal; keep required instructions and critical status visible. Native `details`/`summary` provides pointer and keyboard operation and expanded-state semantics. Do not add `role="button"`, `tabindex`, or duplicate `aria-expanded` state. Add `open` for initial expansion. Omit `name` for independently expandable sections, as in the catalog; the library does not force an exclusive accordion, animate expansion, or persist state. Applications own persistence and any enclosed controls’ behavior. No JavaScript ships with this treatment.
+Keep the summary’s wording descriptive. Place links and inputs in the body. Any extra header action must be outside summary in the DOM with its own hit area, clear name, and visible focus. Reserve space so it does not cover summary text or the chevron, as in the filter example. Use disclosures when users can choose which optional information or settings to reveal; keep required instructions and critical status visible. Native `details`/`summary` provides pointer and keyboard operation and expanded-state semantics. Do not add `role="button"`, `tabindex`, or duplicate `aria-expanded` state. Add `open` for initial expansion. Omit `name` for independently expandable sections, as in the catalog; the library does not force an exclusive accordion or persist state. Expansion animation is a guarded progressive enhancement; see the [motion guidance](#disclosure-animation-and-review). Applications own persistence and any enclosed controls’ behavior. No JavaScript ships with this treatment.
 
 **Compatibility and customization:** This is opt-in; unclassed disclosures retain native styling. Use existing `--barba-` color, spacing, and radius tokens or scoped application selectors. Existing app-specific summary spacing, heading borders, or icons should be removed when adopting these classes to avoid duplicate decoration. The disclosure styling does not supply a disabled state; choose static content instead when expansion is unavailable.
 
@@ -491,6 +499,30 @@ The Lightning CSS `>= 0.25%` build target controls CSS compilation; it is not a 
 
 ## Local development
 
+### Check modern CSS first
+
+Before adding JavaScript for interface positioning, height measurement, or scroll effects, check whether native HTML and modern CSS solve the actual requirement. Prefer the simplest maintainable solution that meets the application's browser and accessibility needs; use JavaScript when behavior requires it.
+
+- Verify current compatibility in MDN, browser documentation, and the browsers the application supports. An Interop proposal, selection, or successful build is not evidence of universal support. Record the date and relevant limitations when adopting a feature.
+- Start with usable semantic HTML. Add optional effects behind feature queries, and gate the complete effect, including transition timing, so unsupported browsers retain immediate interaction. Essential controls, content, and keyboard access must work without the enhancement.
+- Scope experimental properties to the relevant component; inherited properties such as `interpolate-size` should not be enabled globally by default. Respect `prefers-reduced-motion`, and check both motion-enabled and reduced-motion behavior explicitly.
+- Keep application state, focus management, and announcements with the application. Maintain a sensible DOM order; do not rely on an experimental reading-order feature to repair an otherwise inaccessible layout.
+- Consider anchor positioning when a floating control is needed, scroll-state queries when overflow or sticky-state cues help, and `reading-flow` when responsive visual order creates a real navigation problem. Recheck support at implementation time; this is a watchlist, not a requirement to adopt them.
+
+Context: [Josh W. Comeau's Interop 2027 proposals](https://www.joshwcomeau.com/css/interop-2027/), [MDN interpolate-size](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/interpolate-size), and [the Interop selection process](https://github.com/web-platform-tests/interop/blob/main/2027/selection-process.md).
+
+### Disclosure animation and review
+
+On the [disclosure gallery](https://lib-staging.barbajoe.tech/disclosures.html#motion-preview), **Animate opening and closing** starts enabled. Clear the checkbox to compare the instant baseline. For unmerged changes, use the local specimen or deploy preview. The comparison override lives in `specimen.css`; the animation is part of the source and packaged library CSS and does not depend on the gallery.
+
+The component scopes `interpolate-size` to `.disclosure`, animates `::details-content` between zero and its natural height, and transitions discrete `content-visibility` over the same 300ms base motion token. A CSS keyframe guard makes closing content `interactivity: inert` for that interval only. It has no forwards fill: afterward, native details hides controls and the closed text becomes searchable again. Reopening, reduced motion, or a zero-duration token cancels or completes the guard. The entire enhancement requires support for all four features and `prefers-reduced-motion: no-preference`; no JavaScript measures heights or controls expansion. See [MDN interactivity](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/interactivity) for the additional experimental dependency. A browser that supports only part of the feature set retains the instant baseline.
+
+Compare opening and closing, rapid reversal, nested disclosures, long selections, both themes and styles, narrow layouts, and keyboard focus. Test the instant baseline, reduced motion, and a browser without support. Automated motion checks exercise the library source and generated package with specimen styles removed; the ordinary reduced-motion suite alone does not establish animation behavior.
+
+**Search verification:** With animation enabled, collapse all panels and use the browser's Find command for `inward/downward`, which occurs only inside the bordered panels. Find must locate the text and reveal the matching disclosure after closing finishes. Chromium regressions check searchability through `window.find`, immediate closing-focus protection, settled closed focus, rapid reopening, and guard cancellation. That API does not itself verify the browser's Find toolbar or automatic expansion; check those separately. Record browser versions and any untested device or assistive-technology behavior. Real-device and screen-reader acceptance remains separate from browser assertions.
+
+### Commands
+
 From this package directory, install the repository dependencies and start the specimen:
 
 ```bash
@@ -545,7 +577,7 @@ Playwright runs Chromium, Firefox, and WebKit at 1280×720 and 390×844 in light
 
 For a focused local run, use `pnpm test:browser --project=webkit-narrow-dark`; add `--headed` to watch it. The same command runs in the **Browser review** GitHub Actions workflow on PRs, pushes to `main`, or manual dispatch. Download its `browser-review-report` artifact, unzip it, then run `pnpm test:browser:report /path/to/unzipped-report` with the directory containing `index.html`. Reports are retained for 14 days. Behavioral failures fail that CI job; configuring it as a required merge check is a separate maintainer choice.
 
-These are Playwright's bundled test browsers, not a guarantee about the current installed Chrome, Firefox, or Safari releases. WebKit is sufficient for automated coverage here but is not branded Safari. Narrow desktop viewports do not test real iOS/Android browser behavior. Runs request reduced motion for repeatable capture; they do not assert motion behavior, real 200% browser zoom, or screen-reader usability. Use the manual guidance below for those checks when relevant; actual-device review remains recommended, not required. Disclosure checks exercise both variants in source and packaged CSS, padded summary targets, native controls, keyboard focus, nested content, forced colors, and unbroken-label reflow. Filter checks cover selection summaries, independent groups, collapsed tab order, clear focus, and separate targets at 320px. Enlarged-root-text checks are not actual browser zoom. The 13 release-helper tests are separate from these browser tests.
+These are Playwright's bundled test browsers, not a guarantee about the current installed Chrome, Firefox, or Safari releases. WebKit is sufficient for automated coverage here but is not branded Safari. Narrow desktop viewports do not test real iOS/Android browser behavior. Runs request reduced motion for repeatable capture, except for the focused disclosure-motion regressions, which enable motion to check source/package animation, fallbacks, and the temporary guard. The general suite does not assess visual animation quality, real 200% browser zoom, or screen-reader usability. Use the manual guidance below for those checks when relevant; actual-device review remains recommended, not required. Disclosure checks exercise both variants in source and packaged CSS, padded summary targets, native controls, keyboard focus, nested content, forced colors, and unbroken-label reflow. Filter checks cover selection summaries, independent groups, collapsed tab order, clear focus, and separate targets at 320px. Enlarged-root-text checks are not actual browser zoom. The 13 release-helper tests are separate from these browser tests.
 
 Focus-return checks open dialogs from a focused button using Enter. On macOS, WebKit's default Tab navigation skips buttons, so the footer check uses Option-Tab; no system preferences are changed. These checks exercise keyboard dismissal and restoration, without assuming pointer clicks focus buttons in every browser.
 
@@ -575,7 +607,7 @@ For live editing, run `pnpm css-lib dev` from the repository root. Parcel's watc
 
 ## Releasing the CSS package
 
-The package is currently at version `0.4.2`. Change the version only when there is an approved reason to release the CSS library. The staged-release workflow is specific to this package and accepts stable `MAJOR.MINOR.PATCH` versions only.
+The package is currently at version `0.4.3`. Change the version only when there is an approved reason to release the CSS library. The staged-release workflow is specific to this package and accepts stable `MAJOR.MINOR.PATCH` versions only.
 
 The npm trusted publisher for `@barbajoe/css-lib` identifies GitHub user `Barbacoa08`, repository `barbajoe`, and workflow `stage-css-release.yml`. It must allow **stage publishing only**, not direct publishing. Keep the npm maintainer account's 2FA enabled and the package's Publishing access set to **Require two-factor authentication and disallow tokens**. The workflow uses OIDC; it needs neither a bypass-2FA npm access token nor an `NPM_AUTH_TOKEN` GitHub secret. Enable GitHub email notifications for issue assignments if you want the staged-release reminder in your inbox.
 

@@ -127,3 +127,40 @@
 		border-color: CanvasText;
 	}
 }
+
+/* Progressive enhancement: keep every effect and its timing behind the same
+   support and motion gates. Native details owns the instant fallback. */
+@supports (interpolate-size: allow-keywords) and
+	(transition-behavior: allow-discrete) and
+	/* biome-ignore lint/correctness/noUnknownProperty: CSS UI 4 interactivity is browser-tested here, but not yet known to this linter. */
+	(interactivity: inert) and
+	selector(details::details-content) {
+	@media (prefers-reduced-motion: no-preference) {
+		.disclosure {
+			interpolate-size: allow-keywords;
+		}
+		.disclosure::details-content {
+			block-size: 0;
+			overflow: hidden;
+			transition:
+				block-size var(--barba-motion-duration-base) ease,
+				content-visibility var(--barba-motion-duration-base) allow-discrete;
+		}
+		.disclosure[open]::details-content {
+			block-size: auto;
+		}
+		/* Guard only the closing interval. No forwards fill: after it finishes,
+		   native details hides controls while closed text remains searchable.
+		   Reopening or enabling reduced motion cancels the guard immediately. */
+		.disclosure:not([open])::details-content {
+			animation: barba-disclosure-closing-guard
+				var(--barba-motion-duration-base) step-end;
+		}
+		@keyframes barba-disclosure-closing-guard {
+			from,
+			to {
+				interactivity: inert;
+			}
+		}
+	}
+}
