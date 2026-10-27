@@ -451,8 +451,6 @@ An `aria-disabled="true"` link receives disabled appearance and ignores pointer 
 
 The [maintained editor](https://lib-staging.barbajoe.tech/editor.html) composes Name, Notes, informational/selectable/removable chips, close, and Delete/Cancel/Save. Toggle read-only and long content to exercise disabled controls, wrapping and scrolling. It uses the existing stacked labels; no new compact-label API is implied. `specimen/editor.css` contains only application-like layout, and `editor.js` owns synthetic draft/save/cancel/delete state and focus restoration. Neither ships in npm. Applications must add their own persistence, permissions, pending/error handling, and deletion safeguards.
 
-See the [separate Our List adoption plan](https://github.com/Barbacoa08/barbajoe/blob/main/docs/our-list-adoption.md) in this repository for a component-by-component migration proposal. The plan does not change or deploy Our List.
-
 ## Tokens and accessibility contract
 
 All public tokens use the `--barba-` prefix. The semantic color roles are:
@@ -591,7 +589,7 @@ For CSS-changing pull requests, review the affected examples in the source speci
 
 For the affected examples, check a narrow viewport (including 320px where layout matters), keyboard focus and navigation, 200% browser zoom, and light and dark schemes. Reduced-motion review is recommended when motion-related CSS changes; if skipped, record it as *not checked*, not *passed*. A desktop window resized to phone width checks layout but not a mobile browser. **Recommended, not required:** occasionally review on an actual device in current iOS Safari and Android Chrome. Include this reminder in PR review, but do not block a PR or release solely because these device checks were skipped; record them as *not checked*, never *passed*.
 
-For visual CSS changes, keep a small before/after screenshot set of the affected specimen at the same desktop (1280×720) and narrow (390×844) viewport sizes; include an open-dialog state when dialog layout changes. Attach review screenshots to the PR rather than the CSS package. No automated visual-regression service is required.
+For visual CSS changes, keep a small before/after screenshot set of the affected specimen at the same desktop (1280×720) and narrow (390×844) viewport sizes; include an open-dialog state when dialog layout changes. Upload these selected screenshots directly as GitHub PR attachments and verify the resulting links. Do not commit them or per-change review reports to the repository, including under `docs/reviews/`. Keep the explanation, reviewer findings, results, and testing limits in the PR description or conversation; retain temporary working files in ignored `.project/` directories. If attachment upload is unavailable, keep the files locally and report the limitation instead of committing them. The selected attachments should remain with the PR independently of branch deletion or the 14-day CI artifact retention. Put lasting API, compatibility, and design guidance in this README, code comments, or maintained specimens. These storage rules do not change the review and testing requirements above. No automated visual-regression service is required.
 
 When buttons, forms, or dialogs change, use these focused checks:
 

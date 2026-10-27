@@ -28,3 +28,6 @@ package-lock.json
 # local project plans and decision records
 .project/*
 !.project/README.md
+
+# Review reports and screenshots belong on PRs, not in the source tree.
+/docs/reviews/
