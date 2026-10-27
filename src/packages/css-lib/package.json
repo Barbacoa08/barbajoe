@@ -38,7 +38,7 @@
 		"build:specimen": "pnpm build && parcel build specimen/index.html specimen/headers.html specimen/layout-header.html specimen/layout-footer.html specimen/layout-minimal.html specimen/editor.html specimen/package-theme.html specimen/disclosures.html --dist-dir .output/specimen --no-cache"
 	},
 	"devDependencies": {
-		"browserslist": "4.29.0",
+		"browserslist": "4.29.4",
 		"lightningcss": "1.33.0",
 		"parcel": "2.16.4"
 	}
