@@ -14,6 +14,62 @@ async function usePackage(page) {
 
 for (const packaged of [false, true]) {
 	const source = packaged ? "package" : "source";
+	test(`${source}: shaded list rows reach the filled disclosure edge in both directions`, async ({
+		page,
+	}, testInfo) => {
+		await page.goto("/disclosures.html#edge-content");
+		if (packaged) await usePackage(page);
+		await page.locator("html").evaluate((el) => {
+			el.style.fontSize = "16px";
+		});
+		const examples = page.locator("#edge-content details");
+		await expect(examples).toHaveCount(2);
+		await page
+			.getByRole("button", { name: "Collapse all", exact: true })
+			.click();
+		for (const details of await examples.all())
+			await expect(details).not.toHaveAttribute("open");
+		await page
+			.getByRole("button", { name: "Reset examples", exact: true })
+			.click();
+		for (const details of await examples.all())
+			await expect(details).toHaveAttribute("open", "");
+		for (const width of [1280, 390, 320]) {
+			await page.setViewportSize({ width, height: 844 });
+			for (const dir of ["ltr", "rtl"]) {
+				await page.locator("#edge-content").evaluate((el, direction) => {
+					el.dir = direction;
+				}, dir);
+				for (const details of await examples.all()) {
+					const summary = await details.locator("summary").boundingBox();
+					for (const row of await details.getByRole("listitem").all()) {
+						const box = await row.boundingBox();
+						const gap =
+							dir === "ltr"
+								? summary.x + summary.width - box.x - box.width
+								: box.x - summary.x;
+						expect(Math.abs(gap)).toBeLessThan(1);
+					}
+					await expect(details.locator(".disclosure-content")).toHaveCSS(
+						"padding-inline-start",
+						"16px",
+					);
+					await expect(details.locator("summary")).toHaveCSS(
+						"padding-inline-end",
+						"16px",
+					);
+				}
+				await expectNoPageOverflow(page);
+				if (dir === "ltr" && width !== 320)
+					await capture(
+						testInfo,
+						page.locator("#edge-content"),
+						`${source}-edge-${width}`,
+					);
+			}
+		}
+	});
+
 	test(`${source}: disclosure labels balance spare target height without clipping wrapped content`, async ({
 		page,
 	}) => {
