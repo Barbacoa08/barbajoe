@@ -1,6 +1,6 @@
 # Filled disclosure edge review
 
-Reviewed October 26, 2026, against main `3db8de9`. This change removes the filled body's inline-end padding so child backgrounds can reach the header's trailing edge. Block/start padding, the accent border, header padding, and bordered disclosures retain their existing styling. The rule mirrors in right-to-left content. The package version is unchanged; this PR does not stage an npm release.
+Reviewed October 26, 2026, against main `3db8de9`. This change removes the filled body's inline-end padding so child backgrounds can reach the header's trailing edge. Block/start padding, the accent border, header padding, and bordered disclosures retain their existing styling. The rule mirrors in right-to-left content. At the initial review, the package version was unchanged. The October 27 release follow-up below supersedes that decision.
 
 The disclosure gallery includes native shopping-list examples in both themes. Alternating row backgrounds show the edge alignment, and each row provides its own text padding. Gallery reset restores the examples to their initially expanded state. These row styles and controls remain outside the published CSS.
 
@@ -34,3 +34,11 @@ Installed **Chrome 156.0.8078.48**: visually inspected the raw source at `http:/
 Installed **Safari 27.0.1**: visually inspected the optimized specimen at 100% zoom in a 1324×940 window. Both themes retained the trailing edge, accent border, and wrapped row text.
 
 Physical iOS/Android devices, actual screen-reader speech, and installed desktop Firefox were not manually checked. Physical-device review remains recommended, not required. Bundled WebKit and narrow desktop viewports do not establish Safari-device acceptance. No animation was introduced; motion was not separately reviewed.
+
+## October 27 merge and patch release follow-up
+
+At Joe’s request, merged latest main `4279479` (version 0.4.3, native disclosure animation), then bumped the package to **0.4.4**. The single merge conflict was in gallery navigation; both the animation and edge-content links were retained. The library diff against the merged main remains only the filled-body padding adjustment, preserving main’s animation rules.
+
+Post-merge verification passed: **13/13 release-helper tests**, lint across **54 files**, package build, optimized eight-page specimen build, and the release package-content validator for **0.4.4**. The dry-run package contains only `README.md`, `package.json`, and `dist/barbajoe.css`. Local tools were Node 24.21.0 and pnpm 12.4.1. The existing term-size helper warning remained nonfatal.
+
+**Browser tests were not rerun, as explicitly requested.** The 876-case matrix, screenshots, and independent reviews above describe the original change before this merge, not new verification of the merged release. A merge of this version bump into main will enter the existing staged npm release workflow; publication still requires maintainer 2FA approval.
