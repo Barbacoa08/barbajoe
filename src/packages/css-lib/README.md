@@ -451,8 +451,6 @@ An `aria-disabled="true"` link receives disabled appearance and ignores pointer 
 
 The [maintained editor](https://lib-staging.barbajoe.tech/editor.html) composes Name, Notes, informational/selectable/removable chips, close, and Delete/Cancel/Save. Toggle read-only and long content to exercise disabled controls, wrapping and scrolling. It uses the existing stacked labels; no new compact-label API is implied. `specimen/editor.css` contains only application-like layout, and `editor.js` owns synthetic draft/save/cancel/delete state and focus restoration. Neither ships in npm. Applications must add their own persistence, permissions, pending/error handling, and deletion safeguards.
 
-See the [separate Our List adoption plan](https://github.com/Barbacoa08/barbajoe/blob/main/docs/our-list-adoption.md) in this repository for a component-by-component migration proposal. The plan does not change or deploy Our List.
-
 ## Tokens and accessibility contract
 
 All public tokens use the `--barba-` prefix. The semantic color roles are:
