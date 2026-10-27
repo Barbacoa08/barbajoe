@@ -3,7 +3,7 @@ import { test as base, expect } from "@playwright/test";
 
 export const test = base.extend({
 	reviewEvidence: [
-		async ({ page, browser, browserName }, use, testInfo) => {
+		async ({ page, browser, browserName, reducedMotion }, use, testInfo) => {
 			const errors = [];
 			page.on("pageerror", (error) => errors.push(error.message));
 			page.on("requestfailed", (request) =>
@@ -26,7 +26,7 @@ export const test = base.extend({
 						configuredViewport: testInfo.project.use.viewport,
 						viewport: page.viewportSize(),
 						colorScheme: testInfo.project.use.colorScheme,
-						reducedMotion: testInfo.project.use.reducedMotion,
+						reducedMotion,
 						url: page.url(),
 						pageErrors: errors,
 					},

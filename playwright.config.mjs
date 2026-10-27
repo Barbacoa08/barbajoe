@@ -28,11 +28,11 @@ export default defineConfig({
 		),
 		build: "Parcel optimized specimen (source CSS imports)",
 		limitations:
-			"Bundled test browsers; WebKit is not installed Safari. Narrow desktop viewports are not mobile-device tests. Real browser zoom, screen readers, and motion behavior are not assessed.",
+			"Bundled test browsers; WebKit is not installed Safari. Narrow desktop viewports are not mobile-device tests. Real browser zoom and screen readers are not assessed. Motion is disabled except in the focused disclosure animation regressions.",
 	},
 	use: {
 		baseURL,
-		// Stable captures; motion behavior remains a separate recommended review.
+		// Stable captures; disclosure-motion.spec.mjs overrides this for motion and guard checks.
 		reducedMotion: "reduce",
 		trace: "retain-on-failure",
 		screenshot: "only-on-failure",

@@ -17,6 +17,8 @@ The former library-staging Netlify site now hosts the [CSS specimen](https://lib
 
 ## Development
 
+For interface work, [check modern CSS first](src/packages/css-lib/README.md#check-modern-css-first): verify current support, preserve a usable baseline, and consider native HTML and CSS before adding JavaScript for layout or presentation.
+
 Install the locked dependencies and run the repository checks:
 
 ```sh
