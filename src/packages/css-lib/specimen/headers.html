@@ -11,16 +11,65 @@
 <body><div class="app-shell">
 <header class="site-header">
 <a class="skip-link" href="#main-content">Skip to main content</a>
-<strong class="site-header-brand">Barbajoe CSS</strong>
-<nav aria-label="Documentation"><ul class="site-header-links">
-<li><a href="./index.html">Home</a></li>
+<a class="site-header-brand" href="./index.html">Barbajoe CSS</a>
+<nav aria-label="Documentation" data-documentation-nav>
+<ul class="site-header-links">
+<li>
+<button type="button" popovertarget="docs-guides">Guides</button>
+<ul class="site-header-menu" id="docs-guides" popover="auto" aria-label="Guides">
 <li><a href="./getting-started.html">Getting started</a></li>
-</ul></nav>
+<li><a href="./foundations.html">Foundations</a></li>
+<li><a href="./headers.html" aria-current="page">Layout and navigation</a></li>
+<li><a href="./accessibility.html">Accessibility patterns</a></li>
+</ul>
+</li>
+<li>
+<button type="button" popovertarget="docs-components">Components</button>
+<ul class="site-header-menu" id="docs-components" popover="auto" aria-label="Components">
+<li><a href="./buttons.html">Buttons and actions</a></li>
+<li><a href="./forms.html">Forms and input actions</a></li>
+<li><a href="./chips.html">Chips</a></li>
+<li><a href="./disclosures.html">Disclosures</a></li>
+<li><a href="./dialogs.html">Dialogs</a></li>
+</ul>
+</li>
+<li>
+<button type="button" popovertarget="docs-examples">Examples</button>
+<ul class="site-header-menu" id="docs-examples" popover="auto" aria-label="Examples">
+<li><a href="./editor.html">Working editor</a></li>
+<li><a href="./layout-header.html">Header-and-main layout</a></li>
+<li><a href="./layout-footer.html">Main-and-footer layout</a></li>
+<li><a href="./layout-minimal.html">Main-only layout</a></li>
+<li><a href="./package-theme.html">Packaged themes</a></li>
+</ul>
+</li>
+</ul>
+</nav>
 </header>
 <main id="main-content">
 <h1>Layout and navigation</h1>
 <p class="specimen-page-note">Application shells, header compositions, and navigation that wraps with its content.</p>
-<details class="specimen-topic-nav"><summary>Browse topics</summary><nav aria-label="Documentation topics" class="specimen-grid"><div><strong>Start here</strong><ul><li><a href="./getting-started.html">Getting started</a></li><li><a href="./foundations.html">Foundations</a></li><li><a href="./headers.html" aria-current="page">Layout and navigation</a></li></ul></div><div><strong>Components</strong><ul><li><a href="./buttons.html">Buttons and actions</a></li><li><a href="./forms.html">Forms and input actions</a></li><li><a href="./chips.html">Chips</a></li><li><a href="./disclosures.html">Disclosures</a></li><li><a href="./dialogs.html">Dialogs</a></li></ul></div><div><strong>Guidance and examples</strong><ul><li><a href="./accessibility.html">Accessibility patterns</a></li><li><a href="./editor.html">Working editor</a></li></ul></div></nav></details>
+<section class="specimen-section" aria-labelledby="category-navigation">
+<h2 id="category-navigation">Category dropdown navigation</h2>
+<p>This page’s header is a working example: Guides, Components, and Examples group ordinary links into click-to-open panels. Use Tab to move through controls and links, Enter or Space to open a category, and Escape to close it and return to its button. Clicking outside closes the panel. The current page and its category are underlined.</p>
+<pre class="specimen-markup"><code>&lt;header class=&quot;site-header&quot;&gt;
+  &lt;a class=&quot;site-header-brand&quot; href=&quot;./index.html&quot;&gt;Barbajoe CSS&lt;/a&gt;
+  &lt;nav aria-label=&quot;Main&quot;&gt;
+    &lt;ul class=&quot;site-header-links&quot;&gt;
+      &lt;li&gt;
+        &lt;button type=&quot;button&quot; popovertarget=&quot;guide-pages&quot;&gt;Guides&lt;/button&gt;
+        &lt;ul class=&quot;site-header-menu&quot; id=&quot;guide-pages&quot; popover=&quot;auto&quot; aria-label=&quot;Guides&quot;&gt;
+          &lt;li&gt;&lt;a href=&quot;./getting-started.html&quot;&gt;Getting started&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;./headers.html&quot; aria-current=&quot;page&quot;&gt;Layout and navigation&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/nav&gt;
+&lt;/header&gt;</code></pre>
+<p>The reusable <code>.site-header-menu</code> style is part of this branch’s library build. The published 0.4.5 package does not yet include it. Keep each button’s <code>popovertarget</code> matched to a unique menu ID. Native <code>popover="auto"</code> handles toggling, one-open-at-a-time behavior, and light dismissal without JavaScript. These are ordinary navigation lists, not ARIA menu widgets.</p>
+<p>CSS positions panels below their buttons when space permits, with a viewport-aligned fallback for narrow or short screens. Browsers without anchor positioning get centered panels; browsers without popovers get visible links. The documentation’s optional script closes a panel when focus leaves its list item. Consumer applications own that extra behavior, destinations, and current-page state; the package ships CSS only.</p>
+<p>See the <a href="https://github.com/Barbacoa08/barbajoe/blob/main/src/packages/css-lib/README.md#category-dropdowns">complete markup, compatibility, and accessibility guidance</a>.</p>
+</section>
 <section class="specimen-section" aria-labelledby="application-shell"><h2 id="application-shell">Application shell</h2><p>An <code>.app-shell</code> has a direct <code>main</code> and independently optional direct header and footer regions. This documentation page demonstrates the full shell.</p><ul><li><a href="./layout-header.html">Header and main</a></li><li><a href="./layout-footer.html">Main and footer</a></li><li><a href="./layout-minimal.html">Main only</a></li></ul><pre class="specimen-markup"><code>&lt;div class="app-shell"&gt;
   &lt;header class="site-header"&gt;...&lt;/header&gt;
   &lt;main id="main-content"&gt;...&lt;/main&gt;
@@ -74,4 +123,5 @@
 </div>
 <script type="module" src="./specimen.js"></script>
 <script type="module" src="./headers.js"></script>
+<script type="module" src="./navigation.js"></script>
 </body></html>

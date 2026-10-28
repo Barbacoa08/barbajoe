@@ -20,7 +20,8 @@
 		"./specimen/headers.js",
 		"./specimen/editor.js",
 		"./specimen/disclosures.js",
-		"./specimen/catalog-links.js"
+		"./specimen/catalog-links.js",
+		"./specimen/navigation.js"
 	],
 	"publishConfig": {
 		"access": "public",

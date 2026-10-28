@@ -19,6 +19,7 @@ These are styling hooks, not JavaScript components. Read the linked pattern guid
 | Pattern / public hooks | Required structure and states | Application responsibilities / customization |
 | --- | --- | --- |
 | `.app-shell`, `.site-header`, `.site-header-brand`, `.site-header-links`, `.skip-link` | Direct `main` in shell; optional direct header/footer. Navigation list with links/buttons; `aria-current="page"` (legacy `.active` supported). Skip link targets main. | Landmarks, meaningful headings/destinations, update actions; retain visible focus and content wrapping. |
+| `.site-header-menu` | Sibling native `button[popovertarget]` and named `ul[popover="auto"]` within a `.site-header-links` item; unique target IDs and ordinary links. | Destinations, current-page state, routing, and optional focus-exit handling. Native popovers own toggling and light dismissal; [fallbacks and usage](#category-dropdowns). |
 | Native buttons; `data-barba-variant="primary\|secondary\|tertiary\|text"`; `data-barba-intent="danger"` | Explicit native type; `disabled` for unavailable actions. Variants change appearance, not submit/reset behavior. | State, events, confirmation, pending/error feedback. Custom classes may override zero-specificity defaults; supply all interaction states. |
 | `data-barba-variant="icon"`, `data-barba-shape="icon"`, optional `data-barba-size="compact"` | Native named button, decorative SVG hidden from AT. Compact is a smaller face within a generous target. | Context-specific name, native disabled/hidden, distinct close/clear/remove behavior and focus transitions. |
 | `.inline-field`, `.input-row`, `.input-action` | Direct associated label; row contains input or action group then button. **Input-action requires the input and icon button as direct children.** Text/search inputs only. | Value/clear visibility, form ownership, validation, focus before hiding; not a generic textarea or nested-component layout. |
@@ -159,6 +160,35 @@ The optional `site-header-brand` class preserves one brand appearance on an anch
 **0.4.0 header compatibility:** Existing header markup and `.active` remain supported. Navigation that previously occupied a new row below 40rem can now stay beside the brand; navigation-only headers now align to the inline end. Padding and the underline move from the list item to its direct interactive element, and direct navigation buttons now match links. Consumers with list-item padding/border overrides should remove or move those overrides to the link/button to avoid double spacing. The brand class is opt-in; existing unclassed brand elements keep their typography.
 
 Accessibility: use meaningful navigation landmarks and current-page semantics; distinguish multiple navigation regions by name. See [APG navigation-landmark guidance](https://www.w3.org/WAI/ARIA/apg/patterns/landmarks/examples/navigation.html).
+
+### Category dropdowns
+
+The documentation header demonstrates the opt-in `.site-header-menu` pattern. Put a native `button[popovertarget]` and its named `ul.site-header-menu[popover="auto"]` together in a `.site-header-links` list item. Every menu needs a unique ID matching its button's target. Use `aria-current="page"` only on the destination link; its category receives an underline automatically.
+
+```html
+<header class="site-header">
+  <a class="site-header-brand" href="./index.html">Barbajoe CSS</a>
+  <nav aria-label="Main">
+    <ul class="site-header-links">
+      <li>
+        <button type="button" popovertarget="guide-pages">Guides</button>
+        <ul class="site-header-menu" id="guide-pages" popover="auto" aria-label="Guides">
+          <li><a href="./getting-started.html">Getting started</a></li>
+          <li><a href="./headers.html" aria-current="page">Layout and navigation</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+</header>
+```
+
+These are ordinary navigation lists and links, not ARIA `menu`/`menuitem` widgets. Do not add `aria-haspopup="menu"`. Native popover targeting supplies the expanded relationship; do not maintain a second, potentially stale `aria-expanded` attribute. Tab and Shift+Tab follow ordinary controls and links; Enter/Space toggles the button. Auto popovers allow one sibling menu at a time, close on outside activation or Escape, and restore keyboard focus to the invoking button on Escape. Opening does not move focus into the panel or trap it. Use a native disabled button for an unavailable category, or omit unavailable destinations.
+
+**Progressive enhancement:** popovers work without site JavaScript in supporting browsers. CSS anchor positioning places the panel below its button, flips it inward near an edge, and falls back to a viewport-aligned panel when space is limited. Panels scroll on short screens. Without anchor positioning, the panel is centered in the viewport. Without native popover support, category buttons are hidden and ordinary lists stay visible. Keep the documented list/trigger structure and avoid overriding the native closed display state. Public color, spacing, radius, and shadow tokens remain the customization points; `--_barba-header-*` position-try names are private.
+
+Support checked on October 28, 2026: [native popover](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/popover) supplies light dismissal and exclusivity; [CSS position-area](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/position-area) is Baseline 2026 and needs a fallback for older browsers. The [APG disclosure navigation guidance](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/) explains ordinary site-navigation semantics. Recheck keyboard behavior, overflow, themes, and assistive technology in each consumer.
+
+**Application ownership:** the CSS package ships no navigation script. The documentation site's `specimen/navigation.js` additionally closes a menu when focus moves outside its list item; consumers wanting that behavior must implement it without stealing focus. Supply meaningful destinations, unique IDs, current-page state, and any routing behavior. No nested menu or arrow-key widget behavior is implied. This pattern is additive; existing flat header links and action buttons retain their behavior. It is available in this branch's build and deploy preview; the existing published 0.4.5 package does not yet include it.
 
 ## Data tables
 
@@ -617,7 +647,7 @@ When buttons, forms, or dialogs change, use these focused checks:
 
 The documentation home is a short topic directory. Getting started covers installation and the API quick reference; Foundations covers typography, links, tables, themes, and motion. Buttons, forms, chips, disclosures, dialogs, and accessibility patterns each have a focused page. Layout and navigation retains `headers.html`, and the working editor remains a composed example. The three minimal layout pages and compiled-package theme example remain standalone demonstrations.
 
-Use Browse topics on each reading page to navigate without JavaScript. Old catalog fragments redirect to their topic page when JavaScript is available; the homepage's Previous catalog section links provide ordinary fallback links. Preserve existing example IDs when editing pages, update cross-topic links directly, and add any new HTML page to both Parcel entry lists and the browser page/link checks. Development, testing, and release guidance stays in this README.
+Use Guides, Components, and Examples in the header to reach every page, including without JavaScript in browsers supporting native popovers. Older browsers show the links directly. Minimal shell demonstrations retain their intentional layouts and return links. Old catalog fragments redirect to their topic page when JavaScript is available; the homepage's Previous catalog section links provide ordinary fallback links. Preserve existing example IDs when editing pages, update cross-topic links directly, and add any new HTML page to both Parcel entry lists and the browser page/link checks. Development, testing, and release guidance stays in this README.
 
 The specimen is hosted at https://lib-staging.barbajoe.tech/ on the existing library-staging Netlify site. Production deploys from `main`, and pull requests receive Netlify Deploy Previews for review before merging. Netlify publishes the static output of `pnpm build:specimen`.
 

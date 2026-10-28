@@ -1,2 +1,39 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>Packaged CSS themes · Barbajoe CSS specimen</title><link rel="stylesheet" href="../dist/barbajoe.css" /></head><body><div class="app-shell"><header class="site-header"><a class="skip-link" href="#main-content">Skip to main content</a><strong>Barbajoe CSS specimen</strong><nav aria-label="Specimen pages"><ul class="site-header-links"><li><a href="./foundations.html#theme-guidance">Catalog theme guidance</a></li><li><a href="./editor.html">Working editor</a></li></ul></nav></header><main id="main-content"><h1>Packaged CSS follows system preference</h1><p>This page imports the freshly generated <code>dist/barbajoe.css</code>, the same CSS file included in the npm package. Change your system or browser color preference to compare the palette. It does not force a page theme.</p><p>The source catalog can force light and dark panels side by side. In this compiled build, <code>color-scheme</code> alone can change native controls but does not switch the library's semantic palette. Applications forcing a theme need matching semantic color-token overrides and a review of primary-button hover. Compiler-generated variables are not a public API.</p><p><span class="chip">Informational chip</span></p><button type="button" id="packaged-primary" data-barba-variant="primary">Primary action</button><p>Enabled appearance sample: inspect the resting face, hover with a pointer, and use Tab to see keyboard focus. Activation intentionally does not change data.</p><button type="button" disabled>Unavailable action</button><button type="button" data-barba-intent="danger" disabled>Delete</button><form><label for="packaged-name">Name</label><input id="packaged-name" value="Synthetic sample" readonly /><label for="packaged-notes">Notes</label><textarea id="packaged-notes" readonly>A read-only packaged-CSS example.</textarea></form><details class="disclosure"><summary><span class="disclosure-label disclosure-title">Native disclosure</span></summary><div class="disclosure-content"><p>Check focus, text, controls, and borders in both system preferences.</p></div></details></main></div></body></html>
+<html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>Packaged CSS themes · Barbajoe CSS specimen</title><link rel="stylesheet" href="../dist/barbajoe.css" /></head><body><div class="app-shell"><header class="site-header">
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<a class="site-header-brand" href="./index.html">Barbajoe CSS</a>
+<nav aria-label="Documentation" data-documentation-nav>
+<ul class="site-header-links">
+<li>
+<button type="button" popovertarget="docs-guides">Guides</button>
+<ul class="site-header-menu" id="docs-guides" popover="auto" aria-label="Guides">
+<li><a href="./getting-started.html">Getting started</a></li>
+<li><a href="./foundations.html">Foundations</a></li>
+<li><a href="./headers.html">Layout and navigation</a></li>
+<li><a href="./accessibility.html">Accessibility patterns</a></li>
+</ul>
+</li>
+<li>
+<button type="button" popovertarget="docs-components">Components</button>
+<ul class="site-header-menu" id="docs-components" popover="auto" aria-label="Components">
+<li><a href="./buttons.html">Buttons and actions</a></li>
+<li><a href="./forms.html">Forms and input actions</a></li>
+<li><a href="./chips.html">Chips</a></li>
+<li><a href="./disclosures.html">Disclosures</a></li>
+<li><a href="./dialogs.html">Dialogs</a></li>
+</ul>
+</li>
+<li>
+<button type="button" popovertarget="docs-examples">Examples</button>
+<ul class="site-header-menu" id="docs-examples" popover="auto" aria-label="Examples">
+<li><a href="./editor.html">Working editor</a></li>
+<li><a href="./layout-header.html">Header-and-main layout</a></li>
+<li><a href="./layout-footer.html">Main-and-footer layout</a></li>
+<li><a href="./layout-minimal.html">Main-only layout</a></li>
+<li><a href="./package-theme.html" aria-current="page">Packaged themes</a></li>
+</ul>
+</li>
+</ul>
+</nav>
+</header><main id="main-content"><h1>Packaged CSS follows system preference</h1><p>This page imports the freshly generated <code>dist/barbajoe.css</code>, the same CSS file included in the npm package. Change your system or browser color preference to compare the palette. It does not force a page theme.</p><p>The source catalog can force light and dark panels side by side. In this compiled build, <code>color-scheme</code> alone can change native controls but does not switch the library's semantic palette. Applications forcing a theme need matching semantic color-token overrides and a review of primary-button hover. Compiler-generated variables are not a public API.</p><p><span class="chip">Informational chip</span></p><button type="button" id="packaged-primary" data-barba-variant="primary">Primary action</button><p>Enabled appearance sample: inspect the resting face, hover with a pointer, and use Tab to see keyboard focus. Activation intentionally does not change data.</p><button type="button" disabled>Unavailable action</button><button type="button" data-barba-intent="danger" disabled>Delete</button><form><label for="packaged-name">Name</label><input id="packaged-name" value="Synthetic sample" readonly /><label for="packaged-notes">Notes</label><textarea id="packaged-notes" readonly>A read-only packaged-CSS example.</textarea></form><details class="disclosure"><summary><span class="disclosure-label disclosure-title">Native disclosure</span></summary><div class="disclosure-content"><p>Check focus, text, controls, and borders in both system preferences.</p></div></details></main></div><script type="module" src="./navigation.js"></script>
+</body></html>

@@ -97,7 +97,7 @@ test("packaged primary example exposes resting, hover, and keyboard-focus states
 		await primary.evaluate((el) => getComputedStyle(el).backgroundColor),
 	).not.toBe(resting);
 	await page.mouse.move(0, 0);
-	await page.getByRole("link", { name: "Working editor", exact: true }).focus();
+	await page.getByRole("button", { name: "Examples", exact: true }).focus();
 	await page.keyboard.press(
 		browserName === "webkit" && process.platform === "darwin"
 			? "Alt+Tab"

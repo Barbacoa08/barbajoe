@@ -37,11 +37,11 @@ test("topic navigation works by keyboard without JavaScript", async ({
 	});
 	const page = await context.newPage();
 	await page.goto("http://127.0.0.1:4173/forms.html");
-	const summary = page.locator(".specimen-topic-nav > summary");
+	const summary = page.getByRole("button", { name: "Components", exact: true });
 	await summary.focus();
 	await summary.press("Enter");
 	const nav = page.getByRole("navigation", {
-		name: "Documentation topics",
+		name: "Documentation",
 		exact: true,
 	});
 	await expect(

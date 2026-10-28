@@ -12,16 +12,44 @@
 <body><div class="app-shell">
 <header class="site-header">
 <a class="skip-link" href="#main-content">Skip to main content</a>
-<strong class="site-header-brand">Barbajoe CSS</strong>
-<nav aria-label="Documentation"><ul class="site-header-links">
-<li><a href="./index.html">Home</a></li>
+<a class="site-header-brand" href="./index.html">Barbajoe CSS</a>
+<nav aria-label="Documentation" data-documentation-nav>
+<ul class="site-header-links">
+<li>
+<button type="button" popovertarget="docs-guides">Guides</button>
+<ul class="site-header-menu" id="docs-guides" popover="auto" aria-label="Guides">
 <li><a href="./getting-started.html">Getting started</a></li>
-</ul></nav>
+<li><a href="./foundations.html">Foundations</a></li>
+<li><a href="./headers.html">Layout and navigation</a></li>
+<li><a href="./accessibility.html">Accessibility patterns</a></li>
+</ul>
+</li>
+<li>
+<button type="button" popovertarget="docs-components">Components</button>
+<ul class="site-header-menu" id="docs-components" popover="auto" aria-label="Components">
+<li><a href="./buttons.html">Buttons and actions</a></li>
+<li><a href="./forms.html">Forms and input actions</a></li>
+<li><a href="./chips.html">Chips</a></li>
+<li><a href="./disclosures.html">Disclosures</a></li>
+<li><a href="./dialogs.html">Dialogs</a></li>
+</ul>
+</li>
+<li>
+<button type="button" popovertarget="docs-examples">Examples</button>
+<ul class="site-header-menu" id="docs-examples" popover="auto" aria-label="Examples">
+<li><a href="./editor.html" aria-current="page">Working editor</a></li>
+<li><a href="./layout-header.html">Header-and-main layout</a></li>
+<li><a href="./layout-footer.html">Main-and-footer layout</a></li>
+<li><a href="./layout-minimal.html">Main-only layout</a></li>
+<li><a href="./package-theme.html">Packaged themes</a></li>
+</ul>
+</li>
+</ul>
+</nav>
 </header>
 <main id="main-content">
 <h1>Working item editor</h1>
 <p class="specimen-page-note">Compose dialog, field, chip, and action patterns. All data is synthetic and local to this page; reloading restores the sample.</p>
-<details class="specimen-topic-nav"><summary>Browse topics</summary><nav aria-label="Documentation topics" class="specimen-grid"><div><strong>Start here</strong><ul><li><a href="./getting-started.html">Getting started</a></li><li><a href="./foundations.html">Foundations</a></li><li><a href="./headers.html">Layout and navigation</a></li></ul></div><div><strong>Components</strong><ul><li><a href="./buttons.html">Buttons and actions</a></li><li><a href="./forms.html">Forms and input actions</a></li><li><a href="./chips.html">Chips</a></li><li><a href="./disclosures.html">Disclosures</a></li><li><a href="./dialogs.html">Dialogs</a></li></ul></div><div><strong>Guidance and examples</strong><ul><li><a href="./accessibility.html">Accessibility patterns</a></li><li><a href="./editor.html" aria-current="page">Working editor</a></li></ul></div></nav></details>
 
 <p id="editor-theme-note">This source example follows your system theme. The catalog's side-by-side panels force themes; the compiled package instead selects its palette from system preference. <a href="./foundations.html#theme-guidance">Theme guidance</a>.</p>
 <div class="editor-options"><label><input type="checkbox" id="editor-readonly" /> Read-only example</label><label><input type="checkbox" id="editor-long" /> Long content</label></div>
@@ -45,4 +73,5 @@
 
 <script type="module" src="./specimen.js"></script>
 <script type="module" src="./editor.js"></script>
+<script type="module" src="./navigation.js"></script>
 </body></html>

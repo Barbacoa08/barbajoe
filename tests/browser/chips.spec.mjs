@@ -178,7 +178,10 @@ for (const packaged of [false, true]) {
 						".chip-removable button",
 					]) {
 						const button = page.locator(`#dense-chips ${selector}`).first();
-						await button.scrollIntoViewIfNeeded();
+						// Center the border box so its extended hit area is also in the viewport.
+						await button.evaluate((el) =>
+							el.scrollIntoView({ block: "center", inline: "nearest" }),
+						);
 						const [hit] = await targetBoxes(button);
 						// Sample a full CSS pixel inside: engines round fractional hit coordinates
 						// differently at touching edges. Geometry above still forbids overlap.

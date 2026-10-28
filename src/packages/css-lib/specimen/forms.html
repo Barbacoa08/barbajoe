@@ -11,16 +11,44 @@
 <body><div class="app-shell">
 <header class="site-header">
 <a class="skip-link" href="#main-content">Skip to main content</a>
-<strong class="site-header-brand">Barbajoe CSS</strong>
-<nav aria-label="Documentation"><ul class="site-header-links">
-<li><a href="./index.html">Home</a></li>
+<a class="site-header-brand" href="./index.html">Barbajoe CSS</a>
+<nav aria-label="Documentation" data-documentation-nav>
+<ul class="site-header-links">
+<li>
+<button type="button" popovertarget="docs-guides">Guides</button>
+<ul class="site-header-menu" id="docs-guides" popover="auto" aria-label="Guides">
 <li><a href="./getting-started.html">Getting started</a></li>
-</ul></nav>
+<li><a href="./foundations.html">Foundations</a></li>
+<li><a href="./headers.html">Layout and navigation</a></li>
+<li><a href="./accessibility.html">Accessibility patterns</a></li>
+</ul>
+</li>
+<li>
+<button type="button" popovertarget="docs-components">Components</button>
+<ul class="site-header-menu" id="docs-components" popover="auto" aria-label="Components">
+<li><a href="./buttons.html">Buttons and actions</a></li>
+<li><a href="./forms.html" aria-current="page">Forms and input actions</a></li>
+<li><a href="./chips.html">Chips</a></li>
+<li><a href="./disclosures.html">Disclosures</a></li>
+<li><a href="./dialogs.html">Dialogs</a></li>
+</ul>
+</li>
+<li>
+<button type="button" popovertarget="docs-examples">Examples</button>
+<ul class="site-header-menu" id="docs-examples" popover="auto" aria-label="Examples">
+<li><a href="./editor.html">Working editor</a></li>
+<li><a href="./layout-header.html">Header-and-main layout</a></li>
+<li><a href="./layout-footer.html">Main-and-footer layout</a></li>
+<li><a href="./layout-minimal.html">Main-only layout</a></li>
+<li><a href="./package-theme.html">Packaged themes</a></li>
+</ul>
+</li>
+</ul>
+</nav>
 </header>
 <main id="main-content">
 <h1>Forms and input actions</h1>
 <p class="specimen-page-note">Native form controls, visible labels, inline fields, and input actions.</p>
-<details class="specimen-topic-nav"><summary>Browse topics</summary><nav aria-label="Documentation topics" class="specimen-grid"><div><strong>Start here</strong><ul><li><a href="./getting-started.html">Getting started</a></li><li><a href="./foundations.html">Foundations</a></li><li><a href="./headers.html">Layout and navigation</a></li></ul></div><div><strong>Components</strong><ul><li><a href="./buttons.html">Buttons and actions</a></li><li><a href="./forms.html" aria-current="page">Forms and input actions</a></li><li><a href="./chips.html">Chips</a></li><li><a href="./disclosures.html">Disclosures</a></li><li><a href="./dialogs.html">Dialogs</a></li></ul></div><div><strong>Guidance and examples</strong><ul><li><a href="./accessibility.html">Accessibility patterns</a></li><li><a href="./editor.html">Working editor</a></li></ul></div></nav></details>
 <nav aria-label="On this page"><ul class="specimen-contents"><li><a href="#forms-heading">Form elements</a></li><li><a href="#inline-forms-heading">Inline forms and input actions</a></li></ul></nav>
 <section class="specimen-section" aria-labelledby="forms-heading">
 					<h2 id="forms-heading">Form elements</h2><p><strong>Accessibility:</strong> Use visible associated labels, connect hints/errors with aria-describedby and preserve native validation. <a href="https://www.w3.org/WAI/tutorials/forms/">WAI forms guidance</a>.</p>
@@ -230,4 +258,5 @@
 <footer><a href="./index.html">Documentation home</a> · <a href="https://github.com/Barbacoa08/barbajoe/blob/main/src/packages/css-lib/README.md">Package reference</a></footer>
 </div>
 <script type="module" src="./specimen.js"></script>
+<script type="module" src="./navigation.js"></script>
 </body></html>
