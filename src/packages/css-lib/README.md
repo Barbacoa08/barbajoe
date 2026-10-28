@@ -4,7 +4,7 @@ One global stylesheet for personal applications. It gives ordinary semantic HTML
 
 ## Contents
 
-- [Installation](#installation-and-import) · [0.4.5 changes](#045-compact-chips) · [0.4.4 changes](#044-filled-disclosure-edge) · [0.4.3 changes](#043-disclosure-animation) · [0.4.1 changes](#041-disclosure-update) · [0.4.0 adoption](#040-compatibility-and-adoption)
+- [Installation](#installation-and-import) · [0.5.0 changes](#050-category-navigation) · [0.4.5 changes](#045-compact-chips) · [0.4.4 changes](#044-filled-disclosure-edge) · [0.4.3 changes](#043-disclosure-animation) · [0.4.1 changes](#041-disclosure-update) · [0.4.0 adoption](#040-compatibility-and-adoption)
 - [API quick reference](#api-quick-reference) · [Application responsibilities](#what-the-library-owns)
 - [Shell](#application-shell) · [Header navigation](#header-navigation) · [Tables](#data-tables)
 - [Disclosures](#disclosures) · [Visually hidden text](#visually-hidden-text)
@@ -49,6 +49,14 @@ import "@barbajoe/css-lib/dist/barbajoe.css";
 ```
 
 Both paths resolve to the same global stylesheet. The repository tracks the source in `lib/`; npm receives only the generated `dist/barbajoe.css` bundle, the package metadata, and this README.
+
+## 0.5.0 category navigation
+
+This minor release adds the opt-in `.site-header-menu` pattern for categorized header navigation. Native HTML popovers provide activation, exclusive opening, outside-click dismissal, and Escape focus return. CSS supplies readable panels, current-page indicators, anchor positioning, and usable fallbacks. Existing flat header links and buttons remain supported. Skip-link positioning now respects right-to-left text direction.
+
+The documentation uses the new pattern across focused topic pages. See [category dropdowns](#category-dropdowns) for reusable markup, browser compatibility, and application responsibilities. The package remains CSS-only; the documentation's optional focus-exit script is not shipped.
+
+Merging this version increase prepares the staged npm release. Version 0.5.0 becomes installable only after maintainer approval with npm 2FA.
 
 ## 0.4.5 compact chips
 
@@ -188,7 +196,7 @@ These are ordinary navigation lists and links, not ARIA `menu`/`menuitem` widget
 
 Support checked on October 28, 2026: [native popover](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/popover) supplies light dismissal and exclusivity; [CSS position-area](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/position-area) is Baseline 2026 and needs a fallback for older browsers. The [APG disclosure navigation guidance](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/) explains ordinary site-navigation semantics. Recheck keyboard behavior, overflow, themes, and assistive technology in each consumer.
 
-**Application ownership:** the CSS package ships no navigation script. The documentation site's `specimen/navigation.js` additionally closes a menu when focus moves outside its list item; consumers wanting that behavior must implement it without stealing focus. Supply meaningful destinations, unique IDs, current-page state, and any routing behavior. No nested menu or arrow-key widget behavior is implied. This pattern is additive; existing flat header links and action buttons retain their behavior. It is available in this branch's build and deploy preview; the existing published 0.4.5 package does not yet include it.
+**Application ownership:** the CSS package ships no navigation script. The documentation site's `specimen/navigation.js` additionally closes a menu when focus moves outside its list item; consumers wanting that behavior must implement it without stealing focus. Supply meaningful destinations, unique IDs, current-page state, and any routing behavior. No nested menu or arrow-key widget behavior is implied. This pattern is additive; existing flat header links and action buttons retain their behavior. It is introduced in 0.5.0; the deploy preview is available before npm publication.
 
 ## Data tables
 
@@ -655,7 +663,7 @@ For live editing, run `pnpm css-lib dev` from the repository root. Parcel's watc
 
 ## Releasing the CSS package
 
-The package is currently at version `0.4.5`. Change the version only when there is an approved reason to release the CSS library. The staged-release workflow is specific to this package and accepts stable `MAJOR.MINOR.PATCH` versions only.
+The package is currently at version `0.5.0`. Change the version only when there is an approved reason to release the CSS library. The staged-release workflow is specific to this package and accepts stable `MAJOR.MINOR.PATCH` versions only.
 
 The npm trusted publisher for `@barbajoe/css-lib` identifies GitHub user `Barbacoa08`, repository `barbajoe`, and workflow `stage-css-release.yml`. It must allow **stage publishing only**, not direct publishing. Keep the npm maintainer account's 2FA enabled and the package's Publishing access set to **Require two-factor authentication and disallow tokens**. The workflow uses OIDC; it needs neither a bypass-2FA npm access token nor an `NPM_AUTH_TOKEN` GitHub secret. Enable GitHub email notifications for issue assignments if you want the staged-release reminder in your inbox.
 

@@ -66,7 +66,7 @@
     &lt;/ul&gt;
   &lt;/nav&gt;
 &lt;/header&gt;</code></pre>
-<p>The reusable <code>.site-header-menu</code> style is part of this branch’s library build. The published 0.4.5 package does not yet include it. Keep each button’s <code>popovertarget</code> matched to a unique menu ID. Native <code>popover="auto"</code> handles toggling, one-open-at-a-time behavior, and light dismissal without JavaScript. These are ordinary navigation lists, not ARIA menu widgets.</p>
+<p>The reusable <code>.site-header-menu</code> style is introduced in CSS library 0.5.0. This preview is available before npm publication. Keep each button’s <code>popovertarget</code> matched to a unique menu ID. Native <code>popover="auto"</code> handles toggling, one-open-at-a-time behavior, and light dismissal without JavaScript. These are ordinary navigation lists, not ARIA menu widgets.</p>
 <p>CSS positions panels below their buttons when space permits, with a viewport-aligned fallback for narrow or short screens. Browsers without anchor positioning get centered panels; browsers without popovers get visible links. The documentation’s optional script closes a panel when focus leaves its list item. Consumer applications own that extra behavior, destinations, and current-page state; the package ships CSS only.</p>
 <p>See the <a href="https://github.com/Barbacoa08/barbajoe/blob/main/src/packages/css-lib/README.md#category-dropdowns">complete markup, compatibility, and accessibility guidance</a>.</p>
 </section>
