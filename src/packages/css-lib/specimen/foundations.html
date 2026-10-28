@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Typography, links, tables, themes, and motion for semantic HTML." />
+<title>Foundations · Barbajoe CSS documentation</title>
+<link rel="stylesheet" href="../lib/barbajoe.css" data-library />
+<link rel="stylesheet" href="./specimen.css" />
+</head>
+<body><div class="app-shell">
+<header class="site-header">
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<a class="site-header-brand" href="./index.html">Barbajoe CSS</a>
+<nav aria-label="Documentation" data-documentation-nav>
+<ul class="site-header-links">
+<li>
+<button type="button" popovertarget="docs-guides">Guides</button>
+<ul class="site-header-menu" id="docs-guides" popover="auto" aria-label="Guides">
+<li><a href="./getting-started.html">Getting started</a></li>
+<li><a href="./foundations.html" aria-current="page">Foundations</a></li>
+<li><a href="./headers.html">Layout and navigation</a></li>
+<li><a href="./accessibility.html">Accessibility patterns</a></li>
+</ul>
+</li>
+<li>
+<button type="button" popovertarget="docs-components">Components</button>
+<ul class="site-header-menu" id="docs-components" popover="auto" aria-label="Components">
+<li><a href="./buttons.html">Buttons and actions</a></li>
+<li><a href="./forms.html">Forms and input actions</a></li>
+<li><a href="./chips.html">Chips</a></li>
+<li><a href="./disclosures.html">Disclosures</a></li>
+<li><a href="./dialogs.html">Dialogs</a></li>
+</ul>
+</li>
+<li>
+<button type="button" popovertarget="docs-examples">Examples</button>
+<ul class="site-header-menu" id="docs-examples" popover="auto" aria-label="Examples">
+<li><a href="./editor.html">Working editor</a></li>
+<li><a href="./layout-header.html">Header-and-main layout</a></li>
+<li><a href="./layout-footer.html">Main-and-footer layout</a></li>
+<li><a href="./layout-minimal.html">Main-only layout</a></li>
+<li><a href="./package-theme.html">Packaged themes</a></li>
+</ul>
+</li>
+</ul>
+</nav>
+</header>
+<main id="main-content">
+<h1>Foundations</h1>
+<p class="specimen-page-note">Typography, links, tables, themes, and motion for semantic HTML.</p>
+<nav aria-label="On this page"><ul class="specimen-contents"><li><a href="#typography-heading">Typography and links</a></li><li><a href="#tables-heading">Data tables</a></li><li><a href="#color-heading">Semantic color contract</a></li><li><a href="#motion-heading">Motion and interaction</a></li></ul></nav>
+<section class="specimen-section" aria-labelledby="typography-heading">
+					<h2 id="typography-heading">Typography and links</h2>
+					<div class="specimen-grid">
+						<div class="specimen-demo">
+							<h1>First-level heading</h1>
+							<h2>Second-level heading</h2>
+							<p>
+								Body text with <code>inline code</code>, a
+								<a href="#link-target">regular link</a>, and a
+								<a href="#disabled-link" aria-disabled="true" tabindex="-1"
+									>disabled link</a
+								>.
+							</p>
+						</div>
+						<div class="specimen-demo" id="link-target">
+							<p>Lists retain the library's dash treatment:</p>
+							<ul>
+								<li>Semantic defaults</li>
+								<li>Keyboard-visible focus</li>
+								<li>Light and dark schemes</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+<section class="specimen-section" aria-labelledby="tables-heading">
+					<h2 id="tables-heading">Data tables</h2>
+					<p class="specimen-page-note">Semantic tables receive only a readable foundation. The wide example's scrolling belongs to this specimen, not the library.</p>
+					<div class="specimen-grid">
+						<article class="specimen-theme specimen-theme-light">
+							<h3>Compact table · light</h3>
+							<table>
+								<caption>Sample issue totals</caption>
+								<thead>
+									<tr><th scope="col">State</th><th scope="col">Count</th><th scope="col">Owner</th></tr>
+								</thead>
+								<tbody>
+									<tr><th scope="row">Open</th><td>8</td><td>Joe</td></tr>
+									<tr><th scope="row">Closed</th><td>12</td><td>Joe</td></tr>
+								</tbody>
+							</table>
+						</article>
+						<article class="specimen-theme specimen-theme-dark">
+							<h3>Wide table · dark</h3>
+							<!-- biome-ignore lint/a11y/noNoninteractiveTabindex: Keyboard users need to focus and scroll this wide table. -->
+							<section class="specimen-table-scroll" aria-label="Wide data table" tabindex="0">
+								<table>
+									<caption>Sample release checklist</caption>
+									<thead>
+										<tr><th scope="col">Release</th><th scope="col">Status</th><th scope="col">CSS build</th><th scope="col">Specimen build</th><th scope="col">Manual review</th><th scope="col">Owner</th></tr>
+									</thead>
+									<tbody>
+										<tr><th scope="row">Sample A</th><td>Ready</td><td>Complete</td><td>Complete</td><td>Pending</td><td>Joe</td></tr>
+										<tr><th scope="row">Sample B</th><td>Draft</td><td>Complete</td><td>Pending</td><td>Pending</td><td>Joe</td></tr>
+									</tbody>
+								</table>
+							</section>
+						</article>
+					</div>
+				</section>
+<section class="specimen-section" aria-labelledby="color-heading">
+					<h2 id="color-heading">Semantic color contract</h2><aside id="theme-guidance" class="specimen-demo"><p><strong>Source catalog themes differ from the installed package.</strong> These side-by-side examples force light and dark themes using source CSS. The compiled package selects its palette from the system preference; setting only <code>color-scheme</code> on a panel does not switch that palette. <a href="./package-theme.html">Inspect the packaged-CSS example</a>.</p><p>Applications forcing a theme must override semantic <code>--barba-color-*</code> tokens and review primary-button hover, as well as setting matching <code>color-scheme</code>. Do not copy compiler-private variables. Test contrast and native controls in the actual application build.</p></aside>
+					<p class="specimen-page-note">
+						Every named text role below is guaranteed against both the page and
+						surface backgrounds. Borders and focus rings have a separate non-text
+						contrast guarantee.
+					</p>
+					<div class="specimen-grid">
+						<article class="specimen-theme specimen-theme-light">
+							<h3>Forced light scheme</h3>
+							<div class="specimen-theme-surfaces">
+								<div class="specimen-token-surface specimen-token-surface-bg">
+									<strong>Page background</strong>
+									<ul class="specimen-token-list">
+										<li>Text</li>
+										<li class="specimen-token-muted">Muted text</li>
+										<li class="specimen-token-link">Link</li>
+										<li class="specimen-token-link-hover">Link hover / focus</li>
+										<li class="specimen-token-danger">Danger</li>
+									</ul>
+									<div class="specimen-token-border">Border sample</div>
+									<div class="specimen-token-focus">Focus-ring sample</div>
+								</div>
+								<div class="specimen-token-surface specimen-token-surface-raised">
+									<strong>Surface background</strong>
+									<ul class="specimen-token-list">
+										<li>Text</li>
+										<li class="specimen-token-muted">Muted text</li>
+										<li class="specimen-token-link">Link</li>
+										<li class="specimen-token-link-hover">Link hover / focus</li>
+										<li class="specimen-token-danger">Danger</li>
+									</ul>
+									<div class="specimen-token-border">Border sample</div>
+									<div class="specimen-token-focus">Focus-ring sample</div>
+								</div>
+							</div>
+							<p><small>Primitive swatches; no foreground guarantee</small></p>
+							<div class="specimen-primitives">
+								<div class="specimen-primitive">
+									<span
+										class="specimen-primitive-swatch specimen-primitive-accent"
+										aria-hidden="true"
+									></span>
+									<span>Accent</span>
+								</div>
+								<div class="specimen-primitive">
+									<span
+										class="specimen-primitive-swatch specimen-primitive-inverse"
+										aria-hidden="true"
+									></span>
+									<span>Inverse surface</span>
+								</div>
+							</div>
+						</article>
+
+						<article class="specimen-theme specimen-theme-dark">
+							<h3>Forced dark scheme</h3>
+							<div class="specimen-theme-surfaces">
+								<div class="specimen-token-surface specimen-token-surface-bg">
+									<strong>Page background</strong>
+									<ul class="specimen-token-list">
+										<li>Text</li>
+										<li class="specimen-token-muted">Muted text</li>
+										<li class="specimen-token-link">Link</li>
+										<li class="specimen-token-link-hover">Link hover / focus</li>
+										<li class="specimen-token-danger">Danger</li>
+									</ul>
+									<div class="specimen-token-border">Border sample</div>
+									<div class="specimen-token-focus">Focus-ring sample</div>
+								</div>
+								<div class="specimen-token-surface specimen-token-surface-raised">
+									<strong>Surface background</strong>
+									<ul class="specimen-token-list">
+										<li>Text</li>
+										<li class="specimen-token-muted">Muted text</li>
+										<li class="specimen-token-link">Link</li>
+										<li class="specimen-token-link-hover">Link hover / focus</li>
+										<li class="specimen-token-danger">Danger</li>
+									</ul>
+									<div class="specimen-token-border">Border sample</div>
+									<div class="specimen-token-focus">Focus-ring sample</div>
+								</div>
+							</div>
+							<p><small>Primitive swatches; no foreground guarantee</small></p>
+							<div class="specimen-primitives">
+								<div class="specimen-primitive">
+									<span
+										class="specimen-primitive-swatch specimen-primitive-accent"
+										aria-hidden="true"
+									></span>
+									<span>Accent</span>
+								</div>
+								<div class="specimen-primitive">
+									<span
+										class="specimen-primitive-swatch specimen-primitive-inverse"
+										aria-hidden="true"
+									></span>
+									<span>Inverse surface</span>
+								</div>
+							</div>
+						</article>
+					</div>
+				</section>
+<section class="specimen-section" aria-labelledby="motion-heading">
+					<h2 id="motion-heading">Motion and interaction</h2><p><strong>Accessibility:</strong> Keep meaning and operation available without animation or hover. Test reduced-motion preferences separately from static screenshots. <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion">MDN reduced-motion guidance</a>.</p>
+					<div class="specimen-grid">
+						<div class="specimen-demo scaleup-on-hover">
+							<strong>Hover or focus within</strong>
+							<p>This surface scales only when motion is acceptable.</p>
+							<a href="#motion-heading">Focus this link</a>
+						</div>
+						<div class="specimen-demo scaleup-on-hover disabled">
+							<strong>Disabled scale surface</strong>
+							<p>This example remains static.</p>
+						</div>
+					</div>
+				</section><p><a href="https://github.com/Barbacoa08/barbajoe/blob/main/src/packages/css-lib/README.md#tokens-and-accessibility-contract">Full markup, options, and customization reference</a></p>
+</main>
+<footer><a href="./index.html">Documentation home</a> · <a href="https://github.com/Barbacoa08/barbajoe/blob/main/src/packages/css-lib/README.md">Package reference</a></footer>
+</div>
+<script type="module" src="./specimen.js"></script>
+<script type="module" src="./navigation.js"></script>
+</body></html>

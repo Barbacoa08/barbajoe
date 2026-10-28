@@ -149,6 +149,7 @@
 	display: grid;
 	gap: var(--barba-space-4);
 }
+.specimen-markup,
 .specimen-disclosure-markup {
 	white-space: pre-wrap;
 	overflow-wrap: anywhere;

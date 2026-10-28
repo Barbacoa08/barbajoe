@@ -9,7 +9,7 @@ for (const packaged of [false, true]) {
 		page,
 		browserName,
 	}, testInfo) => {
-		await page.goto("/index.html");
+		await page.goto("/disclosures.html");
 		if (packaged) {
 			await page.locator('link[rel="stylesheet"], style').evaluateAll((els) => {
 				for (const el of els) el.remove();

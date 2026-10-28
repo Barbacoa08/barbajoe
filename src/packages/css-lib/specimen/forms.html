@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Native form controls, visible labels, inline fields, and input actions." />
+<title>Forms and input actions · Barbajoe CSS documentation</title>
+<link rel="stylesheet" href="../lib/barbajoe.css" data-library />
+<link rel="stylesheet" href="./specimen.css" />
+</head>
+<body><div class="app-shell">
+<header class="site-header">
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<a class="site-header-brand" href="./index.html">Barbajoe CSS</a>
+<nav aria-label="Documentation" data-documentation-nav>
+<ul class="site-header-links">
+<li>
+<button type="button" popovertarget="docs-guides">Guides</button>
+<ul class="site-header-menu" id="docs-guides" popover="auto" aria-label="Guides">
+<li><a href="./getting-started.html">Getting started</a></li>
+<li><a href="./foundations.html">Foundations</a></li>
+<li><a href="./headers.html">Layout and navigation</a></li>
+<li><a href="./accessibility.html">Accessibility patterns</a></li>
+</ul>
+</li>
+<li>
+<button type="button" popovertarget="docs-components">Components</button>
+<ul class="site-header-menu" id="docs-components" popover="auto" aria-label="Components">
+<li><a href="./buttons.html">Buttons and actions</a></li>
+<li><a href="./forms.html" aria-current="page">Forms and input actions</a></li>
+<li><a href="./chips.html">Chips</a></li>
+<li><a href="./disclosures.html">Disclosures</a></li>
+<li><a href="./dialogs.html">Dialogs</a></li>
+</ul>
+</li>
+<li>
+<button type="button" popovertarget="docs-examples">Examples</button>
+<ul class="site-header-menu" id="docs-examples" popover="auto" aria-label="Examples">
+<li><a href="./editor.html">Working editor</a></li>
+<li><a href="./layout-header.html">Header-and-main layout</a></li>
+<li><a href="./layout-footer.html">Main-and-footer layout</a></li>
+<li><a href="./layout-minimal.html">Main-only layout</a></li>
+<li><a href="./package-theme.html">Packaged themes</a></li>
+</ul>
+</li>
+</ul>
+</nav>
+</header>
+<main id="main-content">
+<h1>Forms and input actions</h1>
+<p class="specimen-page-note">Native form controls, visible labels, inline fields, and input actions.</p>
+<nav aria-label="On this page"><ul class="specimen-contents"><li><a href="#forms-heading">Form elements</a></li><li><a href="#inline-forms-heading">Inline forms and input actions</a></li></ul></nav>
+<section class="specimen-section" aria-labelledby="forms-heading">
+					<h2 id="forms-heading">Form elements</h2><p><strong>Accessibility:</strong> Use visible associated labels, connect hints/errors with aria-describedby and preserve native validation. <a href="https://www.w3.org/WAI/tutorials/forms/">WAI forms guidance</a>.</p>
+					<form id="catalog-form" data-specimen-no-submit>
+						<div class="specimen-grid">
+							<label>
+								Text
+								<input type="text" value="Barbajoe" />
+								<small class="helper-text">Helper text for a text field.</small>
+							</label>
+							<label>
+								Password
+								<input type="password" value="password" />
+							</label>
+							<label>
+								Email
+								<input type="email" value="hello@example.com" />
+							</label>
+							<label>
+								Number
+								<input type="number" value="8" />
+							</label>
+							<label>
+								Telephone
+								<input type="tel" value="555-0100" />
+							</label>
+							<label>
+								URL
+								<input type="url" value="https://barbajoe.tech" />
+							</label>
+							<label>
+								Search
+								<input type="search" value="CSS" />
+							</label>
+							<label>
+								Select
+								<select>
+									<option>Semantic HTML</option>
+									<option>Custom class</option>
+								</select>
+							</label>
+						</div>
+
+						<label>
+							Textarea
+							<textarea rows="3">A multiline value.</textarea>
+						</label>
+
+						<fieldset>
+							<legend>Choices</legend>
+							<label><input type="checkbox" checked /> Checked option</label>
+							<label><input type="checkbox" /> Unchecked option</label>
+							<label><input type="radio" name="choice" checked /> First choice</label>
+							<label><input type="radio" name="choice" /> Second choice</label>
+						</fieldset>
+
+						<div class="specimen-actions">
+							<button type="submit">Submit</button>
+							<button type="button">Cancel</button>
+							<button type="reset">Reset</button>
+							<button type="button" disabled>Disabled button</button>
+							<label>
+								Disabled field
+								<input type="text" value="Unavailable" disabled />
+							</label>
+						</div>
+					</form>
+					<p>Submit is prevented in this non-networked example. Cancel is intentionally inert; Reset restores the initial values.</p>
+					<div class="specimen-grid">
+						<label>Outside-form implicit text input <input value="Outside the form" /></label>
+						<label>Associated by form attribute <input type="text" form="catalog-form" value="Associated with catalog form" /></label>
+						<label>Outside-form disabled input <input value="Unavailable" disabled /></label>
+						<label>Read-only input <input value="Read only" readonly /></label>
+					</div>
+					<div class="specimen-grid specimen-placeholder-examples">
+						<article class="specimen-theme specimen-theme-light">
+							<h3>Placeholder text · light</h3>
+							<form data-specimen-no-submit>
+								<label>Example title <input type="text" placeholder="Enter a title" /></label>
+								<label>Entered title <input type="text" value="An entered title" /></label>
+								<label>Example notes <textarea rows="2" placeholder="Add optional notes"></textarea></label>
+							</form>
+						</article>
+						<article class="specimen-theme specimen-theme-dark">
+							<h3>Placeholder text · dark</h3>
+							<form data-specimen-no-submit>
+								<label>Example title <input type="text" placeholder="Enter a title" /></label>
+								<label>Entered title <input type="text" value="An entered title" /></label>
+								<label>Example notes <textarea rows="2" placeholder="Add optional notes"></textarea></label>
+							</form>
+						</article>
+					</div>
+				</section>
+<section class="specimen-section" aria-labelledby="inline-forms-heading">
+					<h2 id="inline-forms-heading">Inline forms and input actions</h2><p><strong>Accessibility:</strong> Keep labels visible and use one naming source for each X. Synchronize clear visibility and move focus to the input before hiding the control. <a href="https://www.w3.org/WAI/tutorials/forms/labels/">WAI label guidance</a>.</p>
+					<p>Use an <code>inline-field</code> wrapper for a visible standard-size, medium-weight label above an <code>input-row</code>. The input grows; Add wraps to the right when space runs out. An optional <code>input-action</code> groups a text input with its X. Ordinary stacked forms keep their existing appearance.</p>
+					<p>The X is our shared close/clear icon action: a native button with <code>data-barba-variant<wbr>=&quot;icon&quot;</code> and <code>data-barba-shape<wbr>=&quot;icon&quot;</code>. It has a generous target, transparent resting face, a circular hover background inset by 2px, and a separate keyboard-focus outline. Disabled X actions use muted gray, retain the disabled opacity, and have no hover background. Its accessible name describes the action: “Clear item name” for an input, “Close dialog” for a modal. The icon is decorative; these actions do not delete saved data.</p>
+					<h3>Input and Add</h3>
+					<p>Add validates and reports locally; no information is saved or sent.</p>
+					<form data-specimen-inline="">
+						<div class="inline-field">
+							<label for="inline-item">Item name</label>
+							<div class="input-row">
+								<input id="inline-item" name="inline-item" type="text" value="" required=""/>
+								<button type="submit">Add</button>
+							</div>
+						</div>
+						<p role="status">Nothing added yet.</p>
+					</form>
+					<h3>Input with an X</h3>
+					<p>Only show the X when there is content. Keep its space reserved, and return focus to the input before hiding it. Applications handle clearing and synchronize visibility after typing, resets and programmatic value changes.</p>
+					<form data-specimen-inline="">
+						<div class="inline-field">
+							<label for="inline-clear">Item to clear</label>
+							<div class="input-row">
+								<div class="input-action">
+									<input id="inline-clear" name="inline-clear" type="text" value="Weekend supplies" required=""/>
+									<button type="button" data-barba-variant="icon" data-barba-shape="icon" aria-label="Clear item to clear" title="Clear item to clear" aria-controls="inline-clear" data-specimen-clear="">
+										<svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24">
+											<path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2"/>
+										</svg>
+									</button>
+								</div>
+								<button type="submit">Add</button>
+							</div>
+						</div>
+						<div>
+							<button type="reset">Reset example</button>
+						</div>
+						<p role="status">Try the X, type again, or reset the example.</p>
+					</form>
+					<h3>Initially empty</h3>
+					<form data-specimen-inline="">
+						<div class="inline-field">
+							<label for="inline-empty">New item</label>
+							<div class="input-row">
+								<div class="input-action">
+									<input id="inline-empty" name="inline-empty" type="text" value="" required=""/>
+									<button type="button" data-barba-variant="icon" data-barba-shape="icon" aria-label="Clear new item" title="Clear new item" aria-controls="inline-empty" data-specimen-clear="" hidden="">
+										<svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24">
+											<path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2"/>
+										</svg>
+									</button>
+								</div>
+								<button type="submit">Add</button>
+							</div>
+						</div>
+						<p role="status">Type to reveal the X.</p>
+					</form>
+					<h3>Controls associated with a separate form</h3>
+					<p>Use the <code>form</code> attribute on both the input and its submit button. The label and row layout are identical.</p>
+					<form id="inline-owner" data-specimen-inline="" data-specimen-status="inline-associated-status"></form>
+					<div class="inline-field">
+						<label for="inline-associated">Alternative name</label>
+						<div class="input-row">
+							<input id="inline-associated" name="inline-associated" type="text" value="" form="inline-owner" required=""/>
+							<button type="submit" form="inline-owner">Add</button>
+						</div>
+					</div>
+					<p id="inline-associated-status" role="status">Nothing added yet.</p>
+					<h3>Outside a form</h3>
+					<p>A standalone field can use the same input-action layout without a submit button.</p>
+					<div class="inline-field">
+						<label for="inline-standalone">Filter text</label>
+						<div class="input-action">
+							<input id="inline-standalone" type="text" value="Weekend"/>
+							<button type="button" data-barba-variant="icon" data-barba-shape="icon" aria-label="Clear filter text" title="Clear filter text" aria-controls="inline-standalone" data-specimen-clear="">
+								<svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24">
+									<path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2"/>
+								</svg>
+							</button>
+						</div>
+					</div>
+					<h3>Unavailable actions</h3>
+					<p>For disabled or read-only inputs, a populated field retains a muted gray, disabled X instead of the enabled action color. It cannot change the value and has no hover background.</p>
+					<div class="inline-field">
+						<label for="inline-disabled">Disabled item</label>
+						<div class="input-row">
+							<div class="input-action">
+								<input id="inline-disabled" name="inline-disabled" type="text" value="Unavailable" disabled=""/>
+								<button type="button" data-barba-variant="icon" data-barba-shape="icon" aria-label="Clear disabled item" title="Clear disabled item" aria-controls="inline-disabled" data-specimen-clear="" disabled="">
+									<svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24">
+										<path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2"/>
+									</svg>
+								</button>
+							</div>
+							<button type="submit" disabled="">Add</button>
+						</div>
+					</div>
+					<div class="inline-field">
+						<label for="inline-readonly">Read-only item</label>
+						<div class="input-row">
+							<div class="input-action">
+								<input id="inline-readonly" name="inline-readonly" type="text" value="Fixed value" readonly=""/>
+								<button type="button" data-barba-variant="icon" data-barba-shape="icon" aria-label="Clear read-only item" title="Clear read-only item" aria-controls="inline-readonly" data-specimen-clear="" disabled="">
+									<svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24">
+										<path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2"/>
+									</svg>
+								</button>
+							</div>
+							<button type="submit" disabled="">Add</button>
+						</div>
+					</div>
+					<p>See the <a href="./dialogs.html#dialog-heading">dialog examples</a> for the same X button used to close a modal through its cancellation path.</p>
+				</section><p><a href="https://github.com/Barbacoa08/barbajoe/blob/main/src/packages/css-lib/README.md#inline-fields-and-input-actions">Full markup, options, and customization reference</a></p>
+</main>
+<footer><a href="./index.html">Documentation home</a> · <a href="https://github.com/Barbacoa08/barbajoe/blob/main/src/packages/css-lib/README.md">Package reference</a></footer>
+</div>
+<script type="module" src="./specimen.js"></script>
+<script type="module" src="./navigation.js"></script>
+</body></html>

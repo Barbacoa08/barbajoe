@@ -5,7 +5,7 @@ for (const kind of ["short", "long"]) {
 	test(`${kind} dialog resets, validates, cancels, and submits`, async ({
 		page,
 	}, testInfo) => {
-		await page.goto("/index.html");
+		await page.goto("/dialogs.html");
 		const opener = page.getByRole("button", { name: `Open ${kind} dialog` });
 		const dialog = page.getByRole("dialog", {
 			name: `${label} dialog`,
@@ -60,7 +60,7 @@ for (const kind of ["short", "long"]) {
 	test(`${kind} dialog cancels outside and with Escape, retaining inside gestures`, async ({
 		page,
 	}) => {
-		await page.goto("/index.html");
+		await page.goto("/dialogs.html");
 		const opener = page.getByRole("button", { name: `Open ${kind} dialog` });
 		const dialog = page.getByRole("dialog", {
 			name: `${label} dialog`,
@@ -90,7 +90,7 @@ for (const kind of ["short", "long"]) {
 test("short and long dialogs share a top anchor and keep long scrolling in the body", async ({
 	page,
 }, testInfo) => {
-	await page.goto("/index.html");
+	await page.goto("/dialogs.html");
 	const short = page.getByRole("dialog", { name: "Short dialog", exact: true });
 	const long = page.getByRole("dialog", { name: "Long dialog", exact: true });
 	await page.getByRole("button", { name: "Open short dialog" }).click();
@@ -132,7 +132,7 @@ test("dialog keyboard navigation reaches the final field and footer actions at 3
 	page,
 	browserName,
 }) => {
-	await page.goto("/index.html");
+	await page.goto("/dialogs.html");
 	await page.setViewportSize({ width: 320, height: 568 });
 	await page.getByRole("button", { name: "Open long dialog" }).click();
 	const dialog = page.getByRole("dialog", { name: "Long dialog", exact: true });

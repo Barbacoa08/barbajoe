@@ -96,7 +96,7 @@ header.site-header
 .skip-link {
 	position: absolute;
 	top: -1000px;
-	left: -1000px;
+	inset-inline-start: -1000px;
 	width: 1px;
 	height: 1px;
 	overflow: hidden;
@@ -109,8 +109,133 @@ header.site-header
 }
 .skip-link:focus {
 	top: auto;
-	left: auto;
+	inset-inline-start: auto;
 	width: auto;
 	height: auto;
 	overflow: visible;
+}
+
+/* Opt-in navigation lists. Native popovers own state and light dismissal. */
+header.site-header ul.site-header-menu {
+	box-sizing: border-box;
+	inline-size: min(20rem, calc(100vw - 2rem));
+	max-inline-size: 100%;
+	margin: 0;
+	padding: var(--barba-space-2);
+	list-style: none;
+	border: 1px solid var(--barba-color-border);
+	border-radius: var(--barba-radius-md);
+	background: var(--barba-color-surface);
+	color: var(--barba-color-text);
+	box-shadow: var(--barba-shadow-raised);
+}
+
+header.site-header ul.site-header-menu > li {
+	margin: 0;
+	padding: 0;
+}
+
+/* biome-ignore lint/style/noDescendingSpecificity: Menu links and direct header links occupy separate lists. */
+header.site-header ul.site-header-menu > li > a {
+	display: flex;
+	align-items: center;
+	box-sizing: border-box;
+	min-block-size: max(44px, 2.75rem);
+	padding: var(--barba-space-2) var(--barba-space-3);
+	border-radius: var(--barba-radius-sm);
+	color: var(--barba-color-link);
+	text-decoration: none;
+	overflow-wrap: anywhere;
+}
+
+header.site-header ul.site-header-menu > li > a:is(:hover, :focus-visible) {
+	color: var(--barba-color-link-hover);
+	text-decoration: underline;
+}
+
+header.site-header ul.site-header-menu > li > a[aria-current="page"] {
+	font-weight: 700;
+	text-decoration: underline;
+	text-underline-offset: 0.2em;
+}
+
+header.site-header
+	ul.site-header-links
+	> li:has(> .site-header-menu [aria-current="page"])
+	> button {
+	border-block-end-color: currentColor;
+}
+
+@supports selector(:popover-open) {
+	header.site-header ul.site-header-menu[popover] {
+		position: fixed;
+		min-inline-size: min(20rem, calc(100vw - 2rem));
+		inset: 0;
+		margin: auto;
+		block-size: fit-content;
+		max-block-size: calc(100dvh - 2rem);
+		overflow: auto;
+		overscroll-behavior: contain;
+	}
+
+	header.site-header
+		ul.site-header-links
+		> li:has(> .site-header-menu)
+		> button {
+		gap: var(--barba-space-2);
+	}
+
+	header.site-header
+		ul.site-header-links
+		> li:has(> .site-header-menu)
+		> button::after {
+		content: "";
+		inline-size: 0.4em;
+		block-size: 0.4em;
+		flex: 0 0 auto;
+		/* Physical edges keep the decorative chevron pointing down in RTL too. */
+		border-right: 2px solid currentColor;
+		border-bottom: 2px solid currentColor;
+		transform: translateY(-0.1em) rotate(45deg);
+	}
+
+	header.site-header
+		ul.site-header-links
+		> li:has(> .site-header-menu:popover-open)
+		> button::after {
+		transform: translateY(0.1em) rotate(225deg);
+	}
+}
+
+/* No popover support: show ordinary links instead of nonfunctional controls. */
+@supports not selector(:popover-open) {
+	header.site-header
+		ul.site-header-links
+		> li:has(> .site-header-menu)
+		> button {
+		display: none;
+	}
+}
+
+/* The invoking button is the implicit anchor. Wide/short layouts can fall
+   back to a viewport-aligned panel; no JavaScript measurements are needed. */
+@supports (position-area: block-end span-inline-end) {
+	@position-try --_barba-header-wide {
+		position-area: block-end span-all;
+		justify-self: center;
+	}
+
+	@position-try --_barba-header-centered {
+		position-area: none;
+		inset: 0;
+		margin: auto;
+	}
+
+	header.site-header ul.site-header-menu[popover] {
+		inset: auto;
+		margin: var(--barba-space-1) 0;
+		position-area: block-end span-inline-end;
+		position-try-fallbacks:
+			flip-inline, --_barba-header-wide, --_barba-header-centered;
+	}
 }

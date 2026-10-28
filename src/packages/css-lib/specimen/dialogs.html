@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Native dialogs with predictable sizing, scrolling, validation, and focus." />
+<title>Dialogs · Barbajoe CSS documentation</title>
+<link rel="stylesheet" href="../lib/barbajoe.css" data-library />
+<link rel="stylesheet" href="./specimen.css" />
+</head>
+<body><div class="app-shell">
+<header class="site-header">
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<a class="site-header-brand" href="./index.html">Barbajoe CSS</a>
+<nav aria-label="Documentation" data-documentation-nav>
+<ul class="site-header-links">
+<li>
+<button type="button" popovertarget="docs-guides">Guides</button>
+<ul class="site-header-menu" id="docs-guides" popover="auto" aria-label="Guides">
+<li><a href="./getting-started.html">Getting started</a></li>
+<li><a href="./foundations.html">Foundations</a></li>
+<li><a href="./headers.html">Layout and navigation</a></li>
+<li><a href="./accessibility.html">Accessibility patterns</a></li>
+</ul>
+</li>
+<li>
+<button type="button" popovertarget="docs-components">Components</button>
+<ul class="site-header-menu" id="docs-components" popover="auto" aria-label="Components">
+<li><a href="./buttons.html">Buttons and actions</a></li>
+<li><a href="./forms.html">Forms and input actions</a></li>
+<li><a href="./chips.html">Chips</a></li>
+<li><a href="./disclosures.html">Disclosures</a></li>
+<li><a href="./dialogs.html" aria-current="page">Dialogs</a></li>
+</ul>
+</li>
+<li>
+<button type="button" popovertarget="docs-examples">Examples</button>
+<ul class="site-header-menu" id="docs-examples" popover="auto" aria-label="Examples">
+<li><a href="./editor.html">Working editor</a></li>
+<li><a href="./layout-header.html">Header-and-main layout</a></li>
+<li><a href="./layout-footer.html">Main-and-footer layout</a></li>
+<li><a href="./layout-minimal.html">Main-only layout</a></li>
+<li><a href="./package-theme.html">Packaged themes</a></li>
+</ul>
+</li>
+</ul>
+</nav>
+</header>
+<main id="main-content">
+<h1>Dialogs</h1>
+<p class="specimen-page-note">Native dialogs with predictable sizing, scrolling, validation, and focus.</p>
+
+<section class="specimen-section" aria-labelledby="dialog-heading">
+					<h2 id="dialog-heading">Dialogs</h2><p><a href="./editor.html">Try the maintained item editor</a> with Name, Notes, chips, disabled states, and long content.</p><p><strong>Accessibility:</strong> Name each native dialog, choose initial focus deliberately, support Escape/cancellation and restore focus to the invoker or a logical fallback. <a href="https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/">APG dialog guidance</a>.</p>
+					<p>Both dialogs start at the same viewport-relative top offset. Short content leaves the footer at the minimum-height bottom. Long content grows to the viewport cap, then only its body scrolls. Footer order is Reset, Cancel, Submit. Submit validates and closes; Cancel or clicking outside closes without validation; Reset restores initial values and stays open. Closing does not reset the form.</p>
+					<div class="specimen-actions">
+						<button type="button" command="show-modal" commandfor="specimen-dialog">Open short dialog</button>
+						<button type="button" command="show-modal" commandfor="specimen-long-dialog">Open long dialog</button>
+					</div>
+					<dialog id="specimen-dialog" aria-labelledby="specimen-dialog-title" closedby="any">
+						<form method="dialog" class="dialog-content-container">
+							<header class="dialog-header"><h2 id="specimen-dialog-title">Short dialog</h2></header>
+							<div class="dialog-body">
+								<label>Short title <input name="title" value="Initial short title" required autofocus /></label>
+								<small class="helper-text">Clear the title to exercise native required-field validation.</small>
+							</div>
+							<footer class="dialog-footer">
+								<button type="reset">Reset</button>
+								<button type="button" command="request-close" commandfor="specimen-dialog">Cancel</button>
+								<button type="submit" value="submit">Submit</button>
+							</footer>
+						</form>
+					</dialog>
+					<dialog id="specimen-long-dialog" aria-labelledby="specimen-long-dialog-title" closedby="any">
+						<form method="dialog" class="dialog-content-container">
+							<header class="dialog-header"><h2 id="specimen-long-dialog-title">Long dialog</h2></header>
+							<div class="dialog-body">
+								<label>Long title <input name="title" value="Initial long title" required autofocus /></label>
+								<p>Edit the values, then use Reset to restore them. Submit and Cancel close the dialog without making a network request.</p>
+								<h3>Content-driven sizing</h3>
+								<p>The dialog grows with its contents rather than reserving a fixed preferred height. Its minimum leaves space for a useful short form.</p>
+								<h3>Viewport limits</h3>
+								<p>The maximum is eighty percent of the visible viewport, with outer gutters retained on exceptionally short screens. The minimum shrinks when the viewport cannot accommodate it.</p>
+								<h3>Scroll ownership</h3>
+								<p>The header and footer remain visible while this body scrolls. Move through these fields with Tab or scroll with your pointer to review the whole form.</p>
+								<label>Notes <textarea name="notes" rows="5">Initial notes to restore with Reset.</textarea></label>
+								<h3>Keyboard and validation</h3>
+								<p>Clear the required title and try Submit. Native validation keeps the dialog open. Cancel does not submit or validate the form. Escape also dismisses the native modal.</p>
+								<label>Final field <input name="final" value="Initial final value" /></label>
+								<p>This is the end of the scrolling body. Footer actions remain independently accessible.</p>
+							</div>
+							<footer class="dialog-footer">
+								<button type="reset">Reset</button>
+								<button type="button" command="request-close" commandfor="specimen-long-dialog">Cancel</button>
+								<button type="submit" value="submit">Submit</button>
+							</footer>
+						</form>
+					</dialog>
+					<h3>Content-fit dialogs with a close action</h3>
+					<p>These examples keep the standard width and opt into compact padding, a content-fit minimum, and more vertical room. Full-width header and footer dividers meet the scrolling body. The close icon uses the background-only icon treatment and follows the same cancellation path as Cancel and Escape.</p>
+					<div class="specimen-actions">
+						<button type="button" command="show-modal" commandfor="content-fit-short">Open content-fit short dialog</button>
+						<button type="button" command="show-modal" commandfor="content-fit-long">Open content-fit long dialog</button>
+					</div>
+
+					<dialog id="content-fit-short" aria-labelledby="content-fit-short-title" closedby="any" data-barba-dialog-spacing="compact" data-barba-dialog-height="content" data-barba-dialog-room="extra" data-barba-dialog-dividers="full">
+						<form method="dialog" class="dialog-content-container">
+							<header class="dialog-header dialog-header-actions">
+								<h2 id="content-fit-short-title">Content-fit short dialog</h2>
+								<button type="button" data-barba-variant="icon" data-barba-shape="icon" aria-label="Close dialog" title="Close dialog" command="request-close" commandfor="content-fit-short"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" /></svg></button>
+							</header>
+							<div class="dialog-body">
+								<label>Item name <input name="item" value="Weekend supplies" required autofocus /></label>
+
+							</div>
+							<footer class="dialog-footer">
+								<button type="reset">Reset</button>
+								<button type="button" command="request-close" commandfor="content-fit-short">Cancel</button>
+								<button type="submit" value="saved">Save</button>
+							</footer>
+						</form>
+					</dialog>
+
+					<dialog id="content-fit-long" aria-labelledby="content-fit-long-title" closedby="any" data-barba-dialog-spacing="compact" data-barba-dialog-height="content" data-barba-dialog-room="extra" data-barba-dialog-dividers="full">
+						<form method="dialog" class="dialog-content-container">
+							<header class="dialog-header dialog-header-actions">
+								<h2 id="content-fit-long-title">Content-fit long dialog</h2>
+								<button type="button" data-barba-variant="icon" data-barba-shape="icon" aria-label="Close dialog" title="Close dialog" command="request-close" commandfor="content-fit-long"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" /></svg></button>
+							</header>
+							<div class="dialog-body">
+								<label>Item name <input name="item" value="Weekend supplies" required autofocus /></label>
+								<p>Scroll through this synthetic example. The header and actions stay in place while the body scrolls.</p>
+								<p>Section 1. Keep editing within the body while the close action and footer remain available. Longer content uses the available vertical room.</p>
+								<p>Section 2. Keep editing within the body while the close action and footer remain available. Longer content uses the available vertical room.</p>
+								<p>Section 3. Keep editing within the body while the close action and footer remain available. Longer content uses the available vertical room.</p>
+								<p>Section 4. Keep editing within the body while the close action and footer remain available. Longer content uses the available vertical room.</p>
+								<p>Section 5. Keep editing within the body while the close action and footer remain available. Longer content uses the available vertical room.</p>
+								<p>Section 6. Keep editing within the body while the close action and footer remain available. Longer content uses the available vertical room.</p>
+								<p>Section 7. Keep editing within the body while the close action and footer remain available. Longer content uses the available vertical room.</p>
+								<p>Section 8. Keep editing within the body while the close action and footer remain available. Longer content uses the available vertical room.</p>
+								<label>Final field <input value="End of the form" /></label>
+							</div>
+							<footer class="dialog-footer">
+								<button type="reset">Reset</button>
+								<button type="button" command="request-close" commandfor="content-fit-long">Cancel</button>
+								<button type="submit" value="saved">Save</button>
+							</footer>
+						</form>
+					</dialog>
+				</section><p><a href="https://github.com/Barbacoa08/barbajoe/blob/main/src/packages/css-lib/README.md#dialogs">Full markup, options, and customization reference</a></p>
+</main>
+<footer><a href="./index.html">Documentation home</a> · <a href="https://github.com/Barbacoa08/barbajoe/blob/main/src/packages/css-lib/README.md">Package reference</a></footer>
+</div>
+<script type="module" src="./specimen.js"></script>
+<script type="module" src="./navigation.js"></script>
+</body></html>

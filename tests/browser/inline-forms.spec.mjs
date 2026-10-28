@@ -1,8 +1,8 @@
 import { readFile } from "node:fs/promises";
 import { capture, expect, test } from "./fixtures.mjs";
 
-async function load(page, packaged) {
-	await page.goto("/index.html");
+async function load(page, packaged, url = "/forms.html") {
+	await page.goto(url);
 	if (packaged) {
 		await page.locator('link[rel="stylesheet"], style').evaluateAll((els) => {
 			for (const el of els) el.remove();
@@ -171,6 +171,11 @@ for (const packaged of [false, true]) {
 		expect(
 			await section.evaluate((el) => el.scrollWidth - el.clientWidth),
 		).toBeLessThanOrEqual(1);
+		const clearPath = await page
+			.locator('[aria-controls="inline-clear"] path')
+			.getAttribute("d");
+		await load(page, packaged, "/dialogs.html");
+		await page.locator("html").evaluate((el) => (el.style.fontSize = "200%"));
 		await page
 			.getByRole("button", {
 				name: "Open content-fit short dialog",
@@ -180,9 +185,6 @@ for (const packaged of [false, true]) {
 		const close = page
 			.locator("#content-fit-short")
 			.getByRole("button", { name: "Close dialog", exact: true });
-		const clearPath = await page
-			.locator('[aria-controls="inline-clear"] path')
-			.getAttribute("d");
 		expect(await close.locator("path").getAttribute("d")).toBe(clearPath);
 		await close.click();
 		await expect(page.locator("#content-fit-short")).not.toBeVisible();

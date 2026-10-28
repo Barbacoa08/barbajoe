@@ -8,7 +8,7 @@ for (const packaged of [false, true]) {
 	test(`${source}: hidden context names the visible action without enlarging it`, async ({
 		page,
 	}) => {
-		await page.goto("/index.html");
+		await page.goto("/accessibility.html");
 		if (packaged) {
 			await page.locator('link[rel="stylesheet"], style').evaluateAll((els) => {
 				for (const el of els) el.remove();
@@ -58,7 +58,7 @@ test("catalog: hidden-text examples preserve names, concise results and clear fo
 	page,
 	browserName,
 }) => {
-	await page.goto("/index.html#visually-hidden-heading");
+	await page.goto("/accessibility.html#visually-hidden-heading");
 	const examples = page.locator("#visually-hidden-examples");
 	for (const theme of ["light", "dark"]) {
 		const statusPanel = examples.locator(

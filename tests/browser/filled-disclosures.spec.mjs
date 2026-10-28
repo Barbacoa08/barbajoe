@@ -73,7 +73,7 @@ for (const packaged of [false, true]) {
 	test(`${source}: disclosure labels balance spare target height without clipping wrapped content`, async ({
 		page,
 	}) => {
-		await page.goto("/index.html");
+		await page.goto("/disclosures.html");
 		if (packaged) await usePackage(page);
 		await page.locator("main").evaluate((el) => {
 			const labels = [
@@ -134,7 +134,7 @@ for (const packaged of [false, true]) {
 		page,
 		browserName,
 	}, testInfo) => {
-		await page.goto("/index.html");
+		await page.goto("/disclosures.html");
 		if (packaged) {
 			// Fixture checks do not depend on catalog layout.
 			await page.locator('link[rel="stylesheet"], style').evaluateAll((els) => {
@@ -238,9 +238,11 @@ for (const packaged of [false, true]) {
 		page,
 		browserName,
 	}, testInfo) => {
-		await page.goto("/index.html#filled-disclosures-heading");
+		await page.goto("/disclosures.html#filled-disclosures-heading");
 		if (packaged) await usePackage(page);
-		const panel = page.locator('[data-filled-filter-demo="light"]');
+		const panel = page.locator(
+			'section[aria-labelledby="disclosures-heading"] [data-filled-filter-demo="light"]',
+		);
 		const summary = panel.locator("summary");
 		const details = panel.locator("details");
 		const clear = panel.getByRole("button", {
@@ -338,7 +340,9 @@ for (const packaged of [false, true]) {
 		);
 		await capture(testInfo, panel, `${source}-filter-long`);
 		await expect(
-			page.locator('[data-filled-filter-demo="dark"] summary'),
+			page.locator(
+				'section[aria-labelledby="disclosures-heading"] [data-filled-filter-demo="dark"] summary',
+			),
 		).toHaveText("FiltersAll items");
 	});
 }
@@ -348,7 +352,7 @@ for (const packaged of [false, true]) {
 	test(`${source}: shared chevrons point inward/down and center their visible strokes on the title`, async ({
 		page,
 	}) => {
-		await page.goto("/index.html");
+		await page.goto("/disclosures.html");
 		if (packaged) await usePackage(page);
 		await page.locator("main").evaluate((el) => {
 			el.innerHTML = ["disclosure", "disclosure disclosure--filled"]
@@ -475,7 +479,7 @@ for (const packaged of [false, true]) {
 	}, testInfo) => {
 		await page.goto("/disclosures.html");
 		if (packaged) await usePackage(page);
-		const panels = page.locator("[data-filled-filter-demo]");
+		const panels = page.locator("[data-filled-filter-demo][data-filter-state]");
 		await expect(panels).toHaveCount(12);
 		for (const panel of await panels.all()) {
 			const state = await panel.getAttribute("data-filter-state");

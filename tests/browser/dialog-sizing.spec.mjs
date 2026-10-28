@@ -2,7 +2,7 @@ import { readFile } from "node:fs/promises";
 import { capture, expect, test } from "./fixtures.mjs";
 
 async function fixture(page, packaged) {
-	await page.goto("/index.html");
+	await page.goto("/dialogs.html");
 	if (packaged) {
 		await page.locator('link[rel="stylesheet"], style').evaluateAll((els) => {
 			for (const el of els) el.remove();
@@ -173,7 +173,7 @@ test("maintained content-fit dialogs validate and close through their icon", asy
 	page,
 	browserName,
 }) => {
-	await page.goto("/index.html");
+	await page.goto("/dialogs.html");
 	for (const kind of ["short", "long"]) {
 		const opener = page.getByRole("button", {
 			name: `Open content-fit ${kind} dialog`,

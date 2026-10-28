@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Install the stylesheet, understand its boundaries, and find the public styling hooks." />
+<title>Getting started · Barbajoe CSS documentation</title>
+<link rel="stylesheet" href="../lib/barbajoe.css" data-library />
+<link rel="stylesheet" href="./specimen.css" />
+</head>
+<body><div class="app-shell">
+<header class="site-header">
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<a class="site-header-brand" href="./index.html">Barbajoe CSS</a>
+<nav aria-label="Documentation" data-documentation-nav>
+<ul class="site-header-links">
+<li>
+<button type="button" popovertarget="docs-guides">Guides</button>
+<ul class="site-header-menu" id="docs-guides" popover="auto" aria-label="Guides">
+<li><a href="./getting-started.html" aria-current="page">Getting started</a></li>
+<li><a href="./foundations.html">Foundations</a></li>
+<li><a href="./headers.html">Layout and navigation</a></li>
+<li><a href="./accessibility.html">Accessibility patterns</a></li>
+</ul>
+</li>
+<li>
+<button type="button" popovertarget="docs-components">Components</button>
+<ul class="site-header-menu" id="docs-components" popover="auto" aria-label="Components">
+<li><a href="./buttons.html">Buttons and actions</a></li>
+<li><a href="./forms.html">Forms and input actions</a></li>
+<li><a href="./chips.html">Chips</a></li>
+<li><a href="./disclosures.html">Disclosures</a></li>
+<li><a href="./dialogs.html">Dialogs</a></li>
+</ul>
+</li>
+<li>
+<button type="button" popovertarget="docs-examples">Examples</button>
+<ul class="site-header-menu" id="docs-examples" popover="auto" aria-label="Examples">
+<li><a href="./editor.html">Working editor</a></li>
+<li><a href="./layout-header.html">Header-and-main layout</a></li>
+<li><a href="./layout-footer.html">Main-and-footer layout</a></li>
+<li><a href="./layout-minimal.html">Main-only layout</a></li>
+<li><a href="./package-theme.html">Packaged themes</a></li>
+</ul>
+</li>
+</ul>
+</nav>
+</header>
+<main id="main-content">
+<h1>Getting started</h1>
+<p class="specimen-page-note">Install the stylesheet, understand its boundaries, and find the public styling hooks.</p>
+<section class="specimen-section" aria-labelledby="installation"><h2 id="installation">Install and import</h2><p>Install the package in your application:</p><pre class="specimen-markup"><code>pnpm add @barbajoe/css-lib</code></pre><p>Import the stylesheet once from your application entry point:</p><pre class="specimen-markup"><code>import "@barbajoe/css-lib";</code></pre><p>The explicit <code>@barbajoe/css-lib/dist/barbajoe.css</code> import remains supported. Both imports use the same global stylesheet.</p></section>
+<p>The new <a href="./headers.html#category-navigation">category dropdown navigation</a> is introduced in CSS library 0.5.0. This preview is available before npm publication.</p>
+<section class="specimen-section" aria-labelledby="responsibilities"><h2 id="responsibilities">What the library owns</h2><p>Start with semantic HTML. The library supplies typography, colors, form controls, and documented visual patterns. Applications own state, events, validation, focus transitions, announcements, and persistence. Working examples on this site use synthetic, local data; their scripts and specimen layout styles do not ship in the package.</p><p>Customize public <code>--barba-</code> tokens and application selectors. Applications choose table overflow, image sizing, and content-specific layout. Read <a href="./foundations.html#theme-guidance">the source versus installed-package theme guidance</a> before copying a theme example.</p></section>
+<section class="specimen-section" aria-labelledby="api-heading"><h2 id="api-heading">API quick reference</h2><p>The package supplies CSS only. Applications supply state, events, validation, focus, live announcements, and persistence. <a href="https://github.com/Barbacoa08/barbajoe/blob/main/src/packages/css-lib/README.md#api-quick-reference">Full markup, state, and customization reference</a>.</p>
+<dl><dt>Shell and navigation</dt><dd><code>.app-shell</code> has a direct main and optional header/footer. <code>.site-header</code>, <code>.site-header-brand</code>, <code>.site-header-links</code> arrange native links and buttons; use <code>aria-current="page"</code> for the current destination. <code>.skip-link</code> targets main.</dd>
+<dt>Buttons and X actions</dt><dd><code>data-barba-variant</code>: primary, secondary, tertiary, text, and icon. <code>data-barba-intent="danger"</code> supplies destructive appearance. Icon actions also use <code>data-barba-shape="icon"</code>; <code>data-barba-size="compact"</code> reduces the face. Removable chips use the expanded target described in the Chips section; standalone compact icons retain their 44px minimum target. Native type, name, and disabled state remain required.</dd>
+<dt>Fields</dt><dd><code>.inline-field</code> has a direct visible label. <code>.input-row</code> wraps a field/group and action. <code>.input-action</code> requires a <strong>direct-child text/search input and icon button</strong>; nested component inputs and textareas need application layout. Hide clear when empty; restore focus before hiding it.</dd>
+<dt>Chips</dt><dd><code>.chip-list</code> wraps. Informational <code>.chip</code> stays noninteractive. A selectable button needs <code>aria-pressed</code> and a <code>.chip-face</code> child. <code>.chip-removable</code> contains a label span and separate compact X button; applications restore focus after removal.</dd>
+<dt>Disclosures</dt><dd><code>details.disclosure</code> has a direct summary with <code>.disclosure-label</code>, <code>.disclosure-title</code>, optional <code>.disclosure-description</code>, then <code>.disclosure-content</code>. Add <code>.disclosure--filled</code> for a filled header, shared inward/downward chevron, and an accent body border. Native <code>open</code> owns expansion; both variants share markup.</dd>
+<dt>Dialogs</dt><dd>A named native dialog contains a direct <code>.dialog-content-container</code> with <code>.dialog-header</code>, <code>.dialog-body</code>, <code>.dialog-footer</code>. Add <code>.dialog-header-actions</code> for a close row. Optional <code>data-barba-dialog-*</code>: spacing=compact, height=content, room=extra, dividers=full. Applications own cancellation and initial/restored focus.</dd>
+<dt>Visibility and customization</dt><dd><code>.visually-hidden</code> retains supplemental text for assistive technology. Ordinary <code>hidden</code> suppresses rendering and tab stops; remove the attribute to reveal (the string “false” still hides). <code>hidden="until-found"</code> remains browser-managed. Customize public <code>--barba-</code> tokens; private <code>--_barba-</code> and compiler properties are not API. Decorative <code>.text-gradient</code> and <code>.scaleup-on-hover</code> are optional. Recheck contrast, focus, and target sizes after overrides.</dd></dl></section><p>For adoption notes, browser support, development, testing, and releases, see the <a href="https://github.com/Barbacoa08/barbajoe/blob/main/src/packages/css-lib/README.md">maintained package README</a>.</p>
+</main>
+<footer><a href="./index.html">Documentation home</a> · <a href="https://github.com/Barbacoa08/barbajoe/blob/main/src/packages/css-lib/README.md">Package reference</a></footer>
+</div>
+<script type="module" src="./specimen.js"></script>
+<script type="module" src="./navigation.js"></script>
+</body></html>
