@@ -4,7 +4,7 @@ One global stylesheet for personal applications. It gives ordinary semantic HTML
 
 ## Contents
 
-- [Installation](#installation-and-import) · [0.4.4 changes](#044-filled-disclosure-edge) · [0.4.3 changes](#043-disclosure-animation) · [0.4.1 changes](#041-disclosure-update) · [0.4.0 adoption](#040-compatibility-and-adoption)
+- [Installation](#installation-and-import) · [0.4.5 changes](#045-compact-chips) · [0.4.4 changes](#044-filled-disclosure-edge) · [0.4.3 changes](#043-disclosure-animation) · [0.4.1 changes](#041-disclosure-update) · [0.4.0 adoption](#040-compatibility-and-adoption)
 - [API quick reference](#api-quick-reference) · [Application responsibilities](#what-the-library-owns)
 - [Shell](#application-shell) · [Header navigation](#header-navigation) · [Tables](#data-tables)
 - [Disclosures](#disclosures) · [Visually hidden text](#visually-hidden-text)
@@ -22,7 +22,7 @@ These are styling hooks, not JavaScript components. Read the linked pattern guid
 | Native buttons; `data-barba-variant="primary\|secondary\|tertiary\|text"`; `data-barba-intent="danger"` | Explicit native type; `disabled` for unavailable actions. Variants change appearance, not submit/reset behavior. | State, events, confirmation, pending/error feedback. Custom classes may override zero-specificity defaults; supply all interaction states. |
 | `data-barba-variant="icon"`, `data-barba-shape="icon"`, optional `data-barba-size="compact"` | Native named button, decorative SVG hidden from AT. Compact is a smaller face within a generous target. | Context-specific name, native disabled/hidden, distinct close/clear/remove behavior and focus transitions. |
 | `.inline-field`, `.input-row`, `.input-action` | Direct associated label; row contains input or action group then button. **Input-action requires the input and icon button as direct children.** Text/search inputs only. | Value/clear visibility, form ownership, validation, focus before hiding; not a generic textarea or nested-component layout. |
-| `.chip-list`, `.chip`, `.chip-face`, `.chip-removable` | List of chips; informational span/list item; selectable `button.chip[aria-pressed] > .chip-face`; removable container with label span and separate compact icon button. | Selection/removal, disabled state, stable names, and next/previous/fallback focus. Keep 44×44px target space; don't add click handlers to information or whole removable containers. |
+| `.chip-list`, `.chip`, `.chip-face`, `.chip-removable` | List of chips; informational span/list item; selectable `button.chip[aria-pressed] > .chip-face`; removable container with label span and separate compact icon button. | Selection/removal, disabled state, stable names, and next/previous/fallback focus. Preserve chip-list gaps and outer hit-area clearance; do not clip targets or make informational/removable labels actionable. |
 | `details.disclosure`, `.disclosure--filled`, `.disclosure-label`, `.disclosure-title`, `.disclosure-description`, `.disclosure-content` | Direct summary, label/title and optional description, then content wrapper. Optional `.disclosure--filled` changes appearance; both share native `open` and have no invented disabled state. | Descriptive summary, optional persistence; keep required content visible. Avoid nested interactive summary content. |
 | `dialog`, `.dialog-content-container`, `.dialog-header`, `.dialog-header-actions`, `.dialog-body`, `.dialog-footer` | Direct structured form/container; header/body/footer children. Named native dialog. Optional `data-barba-dialog-spacing="compact"`, `-height="content"`, `-room="extra"`, `-dividers="full"` (all prefixed `data-barba-dialog`). | Open/close, validation, cancel guards, initial/restored focus, fallback browser behavior. Standard width is unchanged. |
 | `.visually-hidden` | Supplemental noninteractive text; optional empty persistent `role="status" aria-atomic="true"` region. | Naming source, live-region timing, and update ownership; not for focusable elements or essential instructions. Use `.skip-link` for focus-revealed navigation. |
@@ -48,6 +48,14 @@ import "@barbajoe/css-lib/dist/barbajoe.css";
 ```
 
 Both paths resolve to the same global stylesheet. The repository tracks the source in `lib/`; npm receives only the generated `dist/barbajoe.css` bundle, the package metadata, and this README.
+
+## 0.4.5 compact chips
+
+Informational, selectable, and removable chips now share 28px short faces and 8px visible gaps at a 16px root. The X sits closer to its label. Transparent extensions provide at least 36×36px chip targets in the default layout without changing faces or wrapping. This deliberately meets the size requirement of WCAG 2.2 SC 2.5.8 (AA), not the 44×44px requirement of SC 2.5.5 (AAA); it is not a claim of full-page conformance.
+
+Existing chip markup remains valid. This supersedes 0.4.0's chip-specific 44px layout reservation: review consumers that override chip spacing, position controls beside chips, or clip overflowing content. Keep the documented [chip clearance](#chips), including space outside the list. Standalone compact icon buttons and ordinary close/clear actions retain their previous targets. Selection, removal, focus management, and persistence remain application-owned. There is no mouse/touch differentiation.
+
+The specimen includes few/many chips in both themes and an inspection toggle for the actual extended targets. Merging the patch increase stages the package; npm publication still requires maintainer approval with 2FA.
 
 ## 0.4.4 filled disclosure edge
 
@@ -330,7 +338,7 @@ The pattern works inside a form, outside a form, and with a separate form owner.
 
 The X shown above is the standard close/clear/remove icon in the examples. Use a native `button` with `data-barba-variant="icon"` and `data-barba-shape="icon"`. The variant supplies a transparent resting face and a circular background on hover/press; the icon color stays unchanged and no visible border appears. A 2 CSS pixel transparent inset keeps the background clear of surrounding input/chip edges. Keyboard focus uses the separate global outline. Disabled icon actions use `--barba-color-text-muted` instead of the enabled action color, retain the existing disabled opacity, and do not react to hover. Use the native `disabled` attribute; color alone does not disable an action.
 
-The shape supplies a 2.75rem square target and a 1.25rem SVG (44px/20px at a 16px root). For chip removal, `data-barba-size="compact"` keeps a target of `max(44px, 2.75rem)` while reducing the visible face to 1.5rem and the SVG to 1rem (24px/16px). Its hover background stays inset 2px inside that compact face; the rest of the target is transparent but clickable. Close and clear retain their standard face. Sizes scale with root text; the inset remains 2px. `hidden` removes an empty field's clear action from layout and keyboard navigation.
+The shape supplies a 2.75rem square target and a 1.25rem SVG (44px/20px at a 16px root). Outside removable chips, `data-barba-size="compact"` keeps a target of `max(44px, 2.75rem)` while reducing the visible face to 1.5rem and the SVG to 1rem (24px/16px). Inside `.chip-removable`, the documented compact icon button instead occupies `max(28px, 1.75rem)` and extends its clickable area into the chip-list gaps (36×36px at the default 16px root). Its hover background stays inset 2px inside the 24px compact face; the extra hit area is transparent. Close and clear retain their standard face. Sizes scale with root text; the inset remains 2px. `hidden` removes an empty field's clear action from layout and keyboard navigation.
 
 This is opt-in: existing `data-barba-variant="text"` icon buttons retain their text-button appearance. Change the variant to `icon` for the new convention. Ordinary text actions and danger treatments are unchanged. Do not use this quiet X convention for deleting saved data; use a named danger action.
 
@@ -338,11 +346,13 @@ Give each button a context-specific accessible name: **“Clear item name”** f
 
 ### Chips
 
-See the [working light/dark catalog examples](https://lib-staging.barbajoe.tech/#chips-heading), including the target-boundary inspection toggle. `.chip` supplies typography; `.chip-list` supplies wrapping and an 8px-equivalent gap. Informational chips stay 1.5rem high. Selectable and removable chips have compact short faces (28px at a 16px root) inside targets at least 44×44 CSS pixels. Long labels wrap and grow; never fix their height. Use:
+See the [working light/dark catalog examples](https://lib-staging.barbajoe.tech/#chips-heading), including few/many chips and the target-boundary inspection toggle. All three types share a short face height of `max(28px, 1.75rem)` (28px at a 16px root) and `.chip-list` supplies an 8px-equivalent gap through `--barba-space-2`. Long labels wrap and grow; never fix their height. Use:
 
-- Informational: a noninteractive `span` or list item with `.chip`; vertically centered content and no keyboard stop.
-- Selectable: a native `button type="button"` with `.chip` and `aria-pressed="true|false"`, containing one `span.chip-face` for its label. Put state and event handling on the button, not the span. The transparent padding activates that same button. A thicker face border indicates selection; the separate keyboard outline encloses the full target. Keep the label stable while toggling, and use native `disabled` when unavailable.
-- Removable: `.chip.chip-removable` containing a label span and a separate icon button with `data-barba-size="compact"`. The button reserves its own full-size slot; only that button and its padding remove the selection. The label and surrounding chip are noninteractive. Do not make the containing chip another button or combine removal and selection on one target.
+- Informational: a noninteractive `span` or list item with `.chip`; no keyboard stop or actionable area.
+- Selectable: a native `button type="button"` with `.chip` and `aria-pressed="true|false"`, containing one `span.chip-face`. Keep its name stable while toggling, and use native `disabled` when unavailable. The button's transparent `::after` extends half the list gap on each side, making default targets at least 36px in both dimensions. A thicker face border indicates selection; the global keyboard outline stays around the visible button.
+- Removable: `.chip.chip-removable` containing a label span and a separate named icon button with `data-barba-shape="icon"` and `data-barba-size="compact"`. Only the button removes the selection. Its transparent `::after` extends half the gap above and below, and the full gap toward inline end (right in LTR, left in RTL). It never extends over its own label. At the default root and gap, the target is 36×36px. Do not make the container another button or combine removal and selection on one target.
+
+**Target sizing:** Default chip targets exceed the 24×24 CSS-pixel size requirement of [WCAG 2.2 SC 2.5.8 (AA)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum) without relying on an exception. They do not meet [SC 2.5.5 (AAA)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-enhanced)'s 44×44px size requirement. This covers target size, not full-page accessibility. Informational chips are not targets. No input-device media query changes the design.
 
 ```html
 <div class="chip-list" role="group" aria-label="Category filters">
@@ -363,7 +373,9 @@ See the [working light/dark catalog examples](https://lib-staging.barbajoe.tech/
 </ul>
 ```
 
-**Layout and adoption:** Compared with 24px targets, short interactive rows need about 20px more height; removable chips need about 20px more width for the X slot. Preserve this real layout space and allow wrapping. Do not extend hit areas over neighboring controls, shrink targets with negative margins, or put click handlers on the surrounding list item. When adopting from the earlier PR preview, wrap selectable labels in `.chip-face`; compact icon sizing now describes the visible face, not a 24px target. Informational markup is unchanged.
+**Layout and adoption:** Use `.chip-list` for wrapping groups; both direct selectable buttons and buttons wrapped in list items are supported. Its gap and the target extensions share `--barba-space-2`. At defaults, visible rows have an 8px gap, while 36px-high targets may meet at their edges without overlapping. In lists containing removable chips, selectable targets also use the full trailing gap instead of splitting the horizontal gap, so mixed types cannot claim the same space.
+
+The extensions do not reserve layout space outside the list. Leave at least half the gap above/below and at inline start, and a full gap at inline end, between the list (or standalone interactive chip) and other content or clipping edges: 4px/8px at defaults. Keep overflow visible around the targets; a scroll container needs equivalent internal padding. Do not shrink `gap`, overlap rows with negative margins, or override the buttons' `::after` independently. To customize spacing, set `--barba-space-2` on the list so both layout and targets change together, then recheck target size, reflow, directionality, focus, and nearby controls. Compact icon buttons outside `.chip-removable` retain their 44px target. Consumers relying on the old chip heights or reserved X width should review adoption before updating.
 
 Applications own selection, filtering and removal. Announce changed results when needed. Before removing a focused chip, move focus to the next enabled remove button, the previous one, or a stable nearby control if none remain. Removing a selection is distinct from deleting the underlying item. The catalog's filtering, removal and restore code is example-only; the package ships CSS, not JavaScript.
 
@@ -609,7 +621,7 @@ For live editing, run `pnpm css-lib dev` from the repository root. Parcel's watc
 
 ## Releasing the CSS package
 
-The package is currently at version `0.4.4`. Change the version only when there is an approved reason to release the CSS library. The staged-release workflow is specific to this package and accepts stable `MAJOR.MINOR.PATCH` versions only.
+The package is currently at version `0.4.5`. Change the version only when there is an approved reason to release the CSS library. The staged-release workflow is specific to this package and accepts stable `MAJOR.MINOR.PATCH` versions only.
 
 The npm trusted publisher for `@barbajoe/css-lib` identifies GitHub user `Barbacoa08`, repository `barbajoe`, and workflow `stage-css-release.yml`. It must allow **stage publishing only**, not direct publishing. Keep the npm maintainer account's 2FA enabled and the package's Publishing access set to **Require two-factor authentication and disallow tokens**. The workflow uses OIDC; it needs neither a bypass-2FA npm access token nor an `NPM_AUTH_TOKEN` GitHub secret. Enable GitHub email notifications for issue assignments if you want the staged-release reminder in your inbox.
 
