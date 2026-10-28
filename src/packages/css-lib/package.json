@@ -19,7 +19,8 @@
 		"./specimen/specimen.js",
 		"./specimen/headers.js",
 		"./specimen/editor.js",
-		"./specimen/disclosures.js"
+		"./specimen/disclosures.js",
+		"./specimen/catalog-links.js"
 	],
 	"publishConfig": {
 		"access": "public",
@@ -28,14 +29,14 @@
 	"files": ["dist/barbajoe.css"],
 	"scripts": {
 		"all": "pnpm i && pnpm clean && pnpm style-check && pnpm build",
-		"dev": "pnpm build && parcel serve specimen/index.html specimen/headers.html specimen/layout-header.html specimen/layout-footer.html specimen/layout-minimal.html specimen/editor.html specimen/package-theme.html specimen/disclosures.html --open",
+		"dev": "pnpm build && parcel serve specimen/index.html specimen/accessibility.html specimen/buttons.html specimen/chips.html specimen/dialogs.html specimen/disclosures.html specimen/editor.html specimen/forms.html specimen/foundations.html specimen/getting-started.html specimen/headers.html specimen/layout-footer.html specimen/layout-header.html specimen/layout-minimal.html specimen/package-theme.html --open",
 		"clean": "rm -rf dist",
 		"lint": "biome ci ./lib ./specimen --error-on-warnings",
 		"format": "biome format --write ./lib",
 		"style-check": "biome check --write ./lib",
 		"build": "pnpm build:prod",
 		"build:prod": "node build.mjs",
-		"build:specimen": "pnpm build && parcel build specimen/index.html specimen/headers.html specimen/layout-header.html specimen/layout-footer.html specimen/layout-minimal.html specimen/editor.html specimen/package-theme.html specimen/disclosures.html --dist-dir .output/specimen --no-cache"
+		"build:specimen": "pnpm build && parcel build specimen/accessibility.html specimen/buttons.html specimen/chips.html specimen/dialogs.html specimen/disclosures.html specimen/editor.html specimen/forms.html specimen/foundations.html specimen/getting-started.html specimen/headers.html specimen/index.html specimen/layout-footer.html specimen/layout-header.html specimen/layout-minimal.html specimen/package-theme.html --dist-dir .output/specimen --no-cache"
 	},
 	"devDependencies": {
 		"browserslist": "4.29.4",

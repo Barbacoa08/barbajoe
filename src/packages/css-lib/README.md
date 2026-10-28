@@ -73,7 +73,7 @@ Merging this version increase prepares the staged npm release; maintainer approv
 
 This patch extends the opt-in disclosure pattern with `.disclosure--filled` and corrects shared indicator alignment. Existing disclosure markup remains valid. Both variants now use a trailing chevron pointing inward when collapsed (left in left-to-right content, right in right-to-left content), and down when expanded. The visible chevron aligns with the title’s first line, including when supporting text wraps. Existing bordered panels therefore receive an intentional icon direction/alignment change; unclassed details keep native styling.
 
-The filled variant adds a surface-colored header and a separated accent body border. Filter composition, including the inset clear action, stays application-owned. The [working filter example](https://lib-staging.barbajoe.tech/#filled-disclosures-heading) and [state gallery](https://lib-staging.barbajoe.tech/disclosures.html) show the approved combinations. No chip, form, dialog, or theme APIs change. Merging this version increase stages the package; npm approval remains a separate maintainer action.
+The filled variant adds a surface-colored header and a separated accent body border. Filter composition, including the inset clear action, stays application-owned. The [working filter example](https://lib-staging.barbajoe.tech/disclosures.html#filled-disclosures-heading) and [state gallery](https://lib-staging.barbajoe.tech/disclosures.html) show the approved combinations. No chip, form, dialog, or theme APIs change. Merging this version increase stages the package; npm approval remains a separate maintainer action.
 
 ## 0.4.0 compatibility and adoption
 
@@ -162,13 +162,13 @@ Accessibility: use meaningful navigation landmarks and current-page semantics; d
 
 ## Data tables
 
-Use a semantic `<table>` for tabular data, with a `<caption>` and `<th scope="col">` or `<th scope="row">` where appropriate. The library gives these elements collapsed borders, start-aligned captions and headings, modest cell spacing, and row dividers from the existing palette. No table class is required. See [MDN's table guidance](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/table) and the [compact and wide specimens](https://lib-staging.barbajoe.tech/#tables-heading).
+Use a semantic `<table>` for tabular data, with a `<caption>` and `<th scope="col">` or `<th scope="row">` where appropriate. The library gives these elements collapsed borders, start-aligned captions and headings, modest cell spacing, and row dividers from the existing palette. No table class is required. See [MDN's table guidance](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/table) and the [compact and wide specimens](https://lib-staging.barbajoe.tech/foundations.html#tables-heading).
 
 The library does not set table width, scrolling, stripes, sticky headings, sorting, or narrow-screen column behavior. Each application chooses how its data fits available space. The wide specimen's scroll container demonstrates one application choice; it is not part of the shipped CSS.
 
 ## Disclosures
 
-Use `details.disclosure` for the bordered disclosure panel. Its full-width summary has a trailing chevron, a minimum 2.75rem target height (44px at a 16px root size), hover/press feedback, and the library’s keyboard focus outline. Opening adds a divider between summary and body. See the [light and dark catalog examples](https://lib-staging.barbajoe.tech/#disclosures-heading) for settings, supporting summaries, nested help, and long labels.
+Use `details.disclosure` for the bordered disclosure panel. Its full-width summary has a trailing chevron, a minimum 2.75rem target height (44px at a 16px root size), hover/press feedback, and the library’s keyboard focus outline. Opening adds a divider between summary and body. See the [light and dark catalog examples](https://lib-staging.barbajoe.tech/disclosures.html#disclosures-heading) for settings, supporting summaries, nested help, and long labels.
 
 
 | Style | When to use it | Why |
@@ -209,7 +209,7 @@ These are recommendations, not restrictions. Both variants use the same markup a
 </details>
 ```
 
-The [working filter example](https://lib-staging.barbajoe.tech/#filled-disclosures-heading) shows selectable stores and categories in both themes. Its compact chip faces and generous targets use the existing [chip API](#chips). The [disclosure state gallery](https://lib-staging.barbajoe.tech/disclosures.html) adds six ready-to-inspect combinations: no selections, short selections, and many selections, each collapsed and expanded. It includes matching bordered examples, reset, and a narrow-panel control. The catalog covers basic title-only, supporting-description, long-title, and nested-help markup; use these representative cases instead of copying every combination into an application.
+The [working filter example](https://lib-staging.barbajoe.tech/disclosures.html#filled-disclosures-heading) shows selectable stores and categories in both themes. Its compact chip faces and generous targets use the existing [chip API](#chips). The [disclosure state gallery](https://lib-staging.barbajoe.tech/disclosures.html) adds six ready-to-inspect combinations: no selections, short selections, and many selections, each collapsed and expanded. It includes matching bordered examples, reset, and a narrow-panel control. The catalog covers basic title-only, supporting-description, long-title, and nested-help markup; use these representative cases instead of copying every combination into an application.
 
 | Composition | Required additions | Behavior to preserve |
 | --- | --- | --- |
@@ -240,7 +240,7 @@ Keep the summary’s wording descriptive. Place links and inputs in the body. An
 
 ## Visually hidden text
 
-Use `.visually-hidden` on supplemental, noninteractive text to remove it from visual layout while retaining it for assistive technology. It is opt-in, has no JavaScript, and does not itself supply an accessible name, live-region semantics, or focus behavior. See the [working light/dark examples and implementation guidance](https://lib-staging.barbajoe.tech/#visually-hidden-heading), including per-pattern requirements, primary references, and verification steps.
+Use `.visually-hidden` on supplemental, noninteractive text to remove it from visual layout while retaining it for assistive technology. It is opt-in, has no JavaScript, and does not itself supply an accessible name, live-region semantics, or focus behavior. See the [working light/dark examples and implementation guidance](https://lib-staging.barbajoe.tech/accessibility.html#visually-hidden-heading), including per-pattern requirements, primary references, and verification steps.
 
 ```html
 <!-- The visible label remains at the start of the complete name. -->
@@ -299,11 +299,11 @@ Button treatments use the existing palette. Primary hover uses link-hover in lig
 
 Text inputs (including omitted `type`), textarea, and select receive the same appearance regardless of form ancestry or the `form` attribute. Full-width sizing and additional top spacing remain specific to controls inside forms. Forms retain their stacked layout. Page-footer margin/alignment apply only to `.app-shell > footer`, not article or dialog footers.
 
-Input and textarea placeholders use the existing muted-text color and italics at full opacity, making examples distinct from entered values without introducing another color. Keep a visible label for each control; placeholder text disappears as the user types and is not a substitute for a label. Compare both schemes in the [form specimen](https://lib-staging.barbajoe.tech/#forms-heading).
+Input and textarea placeholders use the existing muted-text color and italics at full opacity, making examples distinct from entered values without introducing another color. Keep a visible label for each control; placeholder text disappears as the user types and is not a substitute for a label. Compare both schemes in the [form specimen](https://lib-staging.barbajoe.tech/forms.html#forms-heading).
 
 ### Inline fields and input actions
 
-Use these opt-in classes for single-line text or search inputs. Existing stacked forms and label weights are unchanged without the classes. See the [working catalog examples](https://lib-staging.barbajoe.tech/#inline-forms-heading).
+Use these opt-in classes for single-line text or search inputs. Existing stacked forms and label weights are unchanged without the classes. See the [working catalog examples](https://lib-staging.barbajoe.tech/forms.html#inline-forms-heading).
 
 - `.inline-field`: wrap a visible, explicitly associated label and its control row. A direct-child label uses the standard 1.3rem size with medium weight 500. Place hints outside the label and associate them with `aria-describedby` when needed.
 - `.input-row`: wrap the input (or input-action group) and its Add/submit button. They share a minimum 2.75rem height. The field grows from a 14rem preferred width, and the action wraps to the inline end when space runs out. Keep input before Add in DOM order; don't reverse keyboard order with CSS.
@@ -346,7 +346,7 @@ Give each button a context-specific accessible name: **“Clear item name”** f
 
 ### Chips
 
-See the [working light/dark catalog examples](https://lib-staging.barbajoe.tech/#chips-heading), including few/many chips and the target-boundary inspection toggle. All three types share a short face height of `max(28px, 1.75rem)` (28px at a 16px root) and `.chip-list` supplies an 8px-equivalent gap through `--barba-space-2`. Long labels wrap and grow; never fix their height. Use:
+See the [working light/dark catalog examples](https://lib-staging.barbajoe.tech/chips.html#chips-heading), including few/many chips and the target-boundary inspection toggle. All three types share a short face height of `max(28px, 1.75rem)` (28px at a 16px root) and `.chip-list` supplies an 8px-equivalent gap through `--barba-space-2`. Long labels wrap and grow; never fix their height. Use:
 
 - Informational: a noninteractive `span` or list item with `.chip`; no keyboard stop or actionable area.
 - Selectable: a native `button type="button"` with `.chip` and `aria-pressed="true|false"`, containing one `span.chip-face`. Keep its name stable while toggling, and use native `disabled` when unavailable. The button's transparent `::after` extends half the list gap on each side, making default targets at least 36px in both dimensions. A thicker face border indicates selection; the global keyboard outline stays around the visible button.
@@ -455,7 +455,7 @@ Combine `data-barba-shape="icon"` with `data-barba-variant="icon"` for the share
 
 `method="dialog"` submits and closes after native validation without a network request. Cancel is a non-submit button; `command="request-close"` follows the same cancellable dismissal path as native outside-click dismissal or Escape. Reset restores initial values without closing. Closing does not reset fields. Unless there is a strong reason otherwise, use `closedby="any"` to treat clicks outside the dialog as cancellation: no submission, validation, or reset. Applications with cancellation cleanup should share that behavior through the dialog's `cancel` event, not solely a Cancel-button click handler. Preventing that event can keep the dialog open when dismissal needs confirmation.
 
-Invoker commands and native light dismissal require browser support; CSS cannot supply those behaviors. Consumers targeting older browsers must provide appropriate open/close/dismissal behavior. The specimen includes feature-detected fallbacks (outside clicks invoke its Cancel button), not library JavaScript. See the [short and long dialog examples](https://lib-staging.barbajoe.tech/#dialog-heading) and [native light-dismiss documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog#closedby).
+Invoker commands and native light dismissal require browser support; CSS cannot supply those behaviors. Consumers targeting older browsers must provide appropriate open/close/dismissal behavior. The specimen includes feature-detected fallbacks (outside clicks invoke its Cancel button), not library JavaScript. See the [short and long dialog examples](https://lib-staging.barbajoe.tech/dialogs.html#dialog-heading) and [native light-dismiss documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog#closedby).
 
 An `aria-disabled="true"` link receives disabled appearance and ignores pointer interaction, but ARIA does not prevent keyboard activation. Consumers must remove its navigation target or prevent activation; the specimen prevents its click event for both pointer and keyboard activation.
 
@@ -499,7 +499,7 @@ The following default pairings are guaranteed. Text roles meet at least 7:1 agai
 | Dark | Danger | 7.16:1 | 7.49:1 |
 | Dark | Border | 3.01:1 | 3.15:1 |
 
-These guarantees apply only to the listed default pairings. Accent, inverse-surface, arbitrary token combinations, and consumer overrides do not carry a general contrast guarantee. The forced light and dark matrices in the [component catalog](https://lib-staging.barbajoe.tech/#color-heading) display the contract.
+These guarantees apply only to the listed default pairings. Accent, inverse-surface, arbitrary token combinations, and consumer overrides do not carry a general contrast guarantee. The forced light and dark matrices in the [component catalog](https://lib-staging.barbajoe.tech/foundations.html#color-heading) display the contract.
 
 The published Lightning CSS bundle selects its light/dark palette from the system `prefers-color-scheme` setting. Setting `color-scheme` on an element alone does not switch its compiled palette. Applications that force a theme should set matching `color-scheme`, override semantic `--barba-color-*` tokens, and review the primary-button hover rule, which also uses `light-dark()` directly. This pre-existing limitation differs from the source-based catalog, which can display forced light and dark panels together. The [packaged-CSS example](https://lib-staging.barbajoe.tech/package-theme.html) imports the generated release CSS and shows the distinction. Change system preference to verify it; do not copy compiler-private variables.
 
@@ -543,7 +543,7 @@ From this package directory, install the repository dependencies and start the s
 pnpm dev
 ```
 
-Parcel opens the component catalog automatically and applies HTML, CSS, and dialog-fixture changes with hot module replacement. Development startup also builds the package once for `package-theme.html`; after further library edits, run `pnpm build` to refresh that compiled example. `build:specimen` always regenerates the package before bundling all eight pages. Use the navigation to review the component catalog, header compositions, and all four application shell structures in the same session.
+Parcel opens the documentation home automatically and applies HTML, CSS, and dialog-fixture changes with hot module replacement. Development startup also builds the package once for `package-theme.html`; after further library edits, run `pnpm build` to refresh that compiled example. `build:specimen` always regenerates the package before bundling all documentation and demonstration pages. Use the navigation to review the topic pages, header compositions, and all four application shell structures in the same session.
 
 Build the production package with Lightning CSS:
 
@@ -585,7 +585,7 @@ pnpm test:browser:report
 
 The review builds the CSS and optimized specimen, serves `.output/specimen` on `127.0.0.1:4173`, runs the tests, and stops its server. Leave that port free; an existing server is rejected so stale output cannot silently pass. No separate development server is needed. Most specimen pages import library source CSS through Parcel; `package-theme.html` imports the freshly generated release bundle. The editor and hidden-state regression checks also exercise both stylesheet builds. The release-helper checks separately validate the packaged Lightning CSS bundle.
 
-Playwright runs Chromium, Firefox, and WebKit at 1280×720 and 390×844 in light and dark schemes. It checks all eight pages and asset loading, page overflow, form reset and inert catalog actions, dialog reset/validation/dismissal/focus, dialog sizing and body scrolling, keyboard reachability, and keyboard table scrolling. Focused header, table and dialog checks also use 320px layouts. Header checks cover content-based wrapping, right alignment, padded targets, current-page markup, disabled actions, semantic brand elements and long labels; a separate check exercises the packaged CSS and header text contrast. Each run captures full-page views, buttons/hover, placeholders, forms, tables, and open-dialog states for human review. These images are evidence, with no stored image baselines or automatic pixel comparisons.
+Playwright runs Chromium, Firefox, and WebKit at 1280×720 and 390×844 in light and dark schemes. It checks all documentation and demonstration pages and asset loading, page overflow, form reset and inert catalog actions, dialog reset/validation/dismissal/focus, dialog sizing and body scrolling, keyboard reachability, and keyboard table scrolling. Focused header, table and dialog checks also use 320px layouts. Header checks cover content-based wrapping, right alignment, padded targets, current-page markup, disabled actions, semantic brand elements and long labels; a separate check exercises the packaged CSS and header text contrast. Each run captures full-page views, buttons/hover, placeholders, forms, tables, and open-dialog states for human review. These images are evidence, with no stored image baselines or automatic pixel comparisons.
 
 `playwright-report/` contains the HTML report, screenshots, environment attachments, and failure traces. `test-results/` contains individual test outputs. Both are ignored by Git and excluded from the npm package. Environment attachments identify the date, commit, browser build/version, OS, actual viewport, scheme, and build type. Test failures produce a nonzero exit code. Reports do not open automatically; the job can finish unattended.
 
@@ -614,6 +614,10 @@ When buttons, forms, or dialogs change, use these focused checks:
 - A successful build or one browser's measurements are not a cross-browser accessibility guarantee. Record any browser or device you did not check.
 
 ## Hosted specimen
+
+The documentation home is a short topic directory. Getting started covers installation and the API quick reference; Foundations covers typography, links, tables, themes, and motion. Buttons, forms, chips, disclosures, dialogs, and accessibility patterns each have a focused page. Layout and navigation retains `headers.html`, and the working editor remains a composed example. The three minimal layout pages and compiled-package theme example remain standalone demonstrations.
+
+Use Browse topics on each reading page to navigate without JavaScript. Old catalog fragments redirect to their topic page when JavaScript is available; the homepage's Previous catalog section links provide ordinary fallback links. Preserve existing example IDs when editing pages, update cross-topic links directly, and add any new HTML page to both Parcel entry lists and the browser page/link checks. Development, testing, and release guidance stays in this README.
 
 The specimen is hosted at https://lib-staging.barbajoe.tech/ on the existing library-staging Netlify site. Production deploys from `main`, and pull requests receive Netlify Deploy Previews for review before merging. Netlify publishes the static output of `pnpm build:specimen`.
 

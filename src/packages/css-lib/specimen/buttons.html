@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Button emphasis, destructive actions, and shared icon actions." />
+<title>Buttons and actions · Barbajoe CSS documentation</title>
+<link rel="stylesheet" href="../lib/barbajoe.css" data-library />
+<link rel="stylesheet" href="./specimen.css" />
+</head>
+<body><div class="app-shell">
+<header class="site-header">
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<strong class="site-header-brand">Barbajoe CSS</strong>
+<nav aria-label="Documentation"><ul class="site-header-links">
+<li><a href="./index.html">Home</a></li>
+<li><a href="./getting-started.html">Getting started</a></li>
+</ul></nav>
+</header>
+<main id="main-content">
+<h1>Buttons and actions</h1>
+<p class="specimen-page-note">Button emphasis, destructive actions, and shared icon actions.</p>
+<details class="specimen-topic-nav"><summary>Browse topics</summary><nav aria-label="Documentation topics" class="specimen-grid"><div><strong>Start here</strong><ul><li><a href="./getting-started.html">Getting started</a></li><li><a href="./foundations.html">Foundations</a></li><li><a href="./headers.html">Layout and navigation</a></li></ul></div><div><strong>Components</strong><ul><li><a href="./buttons.html" aria-current="page">Buttons and actions</a></li><li><a href="./forms.html">Forms and input actions</a></li><li><a href="./chips.html">Chips</a></li><li><a href="./disclosures.html">Disclosures</a></li><li><a href="./dialogs.html">Dialogs</a></li></ul></div><div><strong>Guidance and examples</strong><ul><li><a href="./accessibility.html">Accessibility patterns</a></li><li><a href="./editor.html">Working editor</a></li></ul></div></nav></details>
+
+<section class="specimen-section" aria-labelledby="buttons-heading">
+					<h2 id="buttons-heading">Buttons</h2><p><strong>Accessibility:</strong> Use native types and disabled states, stable accessible names and visible keyboard focus. Color does not explain destructive behavior. Applications own action feedback and confirmation. <a href="https://www.w3.org/WAI/ARIA/apg/patterns/button/">APG button guidance</a>.</p>
+					<p>Native submit, button, and reset types provide primary, secondary, and tertiary emphasis. Existing emphasis styles keep their text color on hover. Text and destructive actions below demonstrate the new optional treatments; their clicks only report local example state.</p>
+					<div class="specimen-grid">
+						<article class="specimen-theme specimen-theme-light">
+							<h3>Light buttons</h3>
+							<div class="specimen-actions">
+								<button type="button" data-barba-variant="primary">Primary</button>
+								<button type="button" data-barba-variant="secondary">Secondary</button>
+								<button type="button" data-barba-variant="tertiary">Tertiary</button>
+							</div>
+							<p>Primary text contrast: 9.40:1 resting, 15.36:1 hovered.</p>
+							<button type="button" data-barba-variant="primary" disabled>Disabled primary</button>
+							<h4>Text and destructive actions</h4>
+							<div class="specimen-actions">
+								<button type="button" data-barba-variant="text" data-specimen-action>Edit</button>
+								<button type="button" data-barba-variant="text" data-specimen-action>View details</button>
+								<button type="button" data-barba-variant="text" disabled>Unavailable</button>
+								<button type="button" data-barba-intent="danger" data-specimen-action>Delete</button>
+								<button type="button" data-barba-intent="danger" disabled>Delete unavailable</button>
+							</div>
+							<p>Text actions reveal their face and border on hover or keyboard focus. Delete starts as red text; hover and disabled states use the red outline.</p>
+							<h4>One application class</h4>
+							<button type="button" class="specimen-custom-action" data-specimen-action>Custom action</button>
+							<p>Application styles own the properties they set, including hover. The global keyboard focus ring remains.</p>
+							<p role="status" data-action-status>Try an action. No data changes.</p>
+						</article>
+						<article class="specimen-theme specimen-theme-dark">
+							<h3>Dark buttons</h3>
+							<div class="specimen-actions">
+								<button type="button" data-barba-variant="primary">Primary</button>
+								<button type="button" data-barba-variant="secondary">Secondary</button>
+								<button type="button" data-barba-variant="tertiary">Tertiary</button>
+							</div>
+							<p>Primary text contrast: 7.98:1 resting, 10.79:1 hovered (existing light gray).</p>
+							<button type="button" data-barba-variant="primary" disabled>Disabled primary</button>
+							<h4>Text and destructive actions</h4>
+							<div class="specimen-actions">
+								<button type="button" data-barba-variant="text" data-specimen-action>Edit</button>
+								<button type="button" data-barba-variant="text" data-specimen-action>View details</button>
+								<button type="button" data-barba-variant="text" disabled>Unavailable</button>
+								<button type="button" data-barba-intent="danger" data-specimen-action>Delete</button>
+								<button type="button" data-barba-intent="danger" disabled>Delete unavailable</button>
+							</div>
+							<p>Text actions reveal their face and border on hover or keyboard focus. Delete starts as red text; hover and disabled states use the red outline.</p>
+							<h4>One application class</h4>
+							<button type="button" class="specimen-custom-action" data-specimen-action>Custom action</button>
+							<p>Application styles own the properties they set, including hover. The global keyboard focus ring remains.</p>
+							<p role="status" data-action-status>Try an action. No data changes.</p>
+						</article>
+					</div>
+					<article class="specimen-demo">
+						<h3>Article footer</h3>
+						<p>Only the application-shell footer receives page-specific margin and alignment.</p>
+						<footer>Article metadata stays in the article's normal flow.</footer>
+					</article>
+				</section><section class="specimen-section" aria-labelledby="icon-actions"><h2 id="icon-actions">Shared close, clear, and remove actions</h2><p>Use a named native button with <code>data-barba-variant="icon"</code> and <code>data-barba-shape="icon"</code>. Add <code>data-barba-size="compact"</code> for a smaller face. Hide decorative icon SVGs from assistive technology. The accessible name describes the actual action; close, clear, remove, and destructive deletion have different meanings.</p><p>Applications own visibility, disabled states, and focus transitions. Try <a href="./forms.html#inline-forms-heading">clearing a field</a>, <a href="./chips.html#chips-heading">removing a chip</a>, or <a href="./dialogs.html#dialog-heading">closing a dialog</a>. See the <a href="https://github.com/Barbacoa08/barbajoe/blob/main/src/packages/css-lib/README.md#shared-closeclearremove-icon-action">shared icon-action markup and target guidance</a>.</p></section><p><a href="https://github.com/Barbacoa08/barbajoe/blob/main/src/packages/css-lib/README.md#buttons-forms-and-dialogs">Full markup, options, and customization reference</a></p>
+</main>
+<footer><a href="./index.html">Documentation home</a> · <a href="https://github.com/Barbacoa08/barbajoe/blob/main/src/packages/css-lib/README.md">Package reference</a></footer>
+</div>
+<script type="module" src="./specimen.js"></script>
+</body></html>

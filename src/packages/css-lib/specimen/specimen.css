@@ -2,6 +2,14 @@
 	max-inline-size: 42rem;
 }
 
+.specimen-topic-nav {
+	margin-block: var(--barba-space-4);
+}
+
+.specimen-topic-nav > summary {
+	padding-block: var(--barba-space-3);
+}
+
 .specimen-section {
 	margin-block: var(--barba-space-8);
 }
@@ -149,6 +157,7 @@
 	display: grid;
 	gap: var(--barba-space-4);
 }
+.specimen-markup,
 .specimen-disclosure-markup {
 	white-space: pre-wrap;
 	overflow-wrap: anywhere;

@@ -1,8 +1,8 @@
 import { readFile } from "node:fs/promises";
 import { capture, expect, test } from "./fixtures.mjs";
 
-async function load(page, packaged) {
-	await page.goto("/index.html");
+async function load(page, packaged, url = "/chips.html") {
+	await page.goto(url);
 	if (packaged) {
 		await page.locator('link[rel="stylesheet"], style').evaluateAll((els) => {
 			for (const el of els) el.remove();
@@ -56,7 +56,7 @@ for (const packaged of [false, true]) {
 		page,
 	}) => {
 		await page.emulateMedia({ reducedMotion: "no-preference" });
-		await page.goto("/index.html");
+		await page.goto("/disclosures.html");
 		if (packaged) {
 			await page.locator("link[data-library]").evaluate((el) => el.remove());
 			await page.addStyleTag({
@@ -76,7 +76,9 @@ for (const packaged of [false, true]) {
 					el.dir = direction;
 				}, dir);
 				for (const button of await page
-					.locator(".specimen-filter-group button.chip")
+					.locator(
+						'section[aria-labelledby="disclosures-heading"] .specimen-filter-group button.chip',
+					)
 					.all()) {
 					await button.evaluate((el) =>
 						el.scrollIntoView({ block: "center", inline: "nearest" }),
@@ -95,7 +97,9 @@ for (const packaged of [false, true]) {
 					).toBe(true);
 				}
 				const red = page
-					.locator(".specimen-filter-group")
+					.locator(
+						'section[aria-labelledby="disclosures-heading"] .specimen-filter-group',
+					)
 					.getByRole("button", { name: "red", exact: true })
 					.first();
 				await red.evaluate((el) =>
@@ -479,6 +483,7 @@ for (const packaged of [false, true]) {
 		await expect(
 			panel.getByRole("button", { name: "Remove Pantry", exact: true }),
 		).toBeFocused();
+		await load(page, packaged, "/forms.html");
 		const clear = page.getByRole("button", {
 			name: "Clear item to clear",
 			exact: true,

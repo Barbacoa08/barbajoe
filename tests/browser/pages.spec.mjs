@@ -2,6 +2,13 @@ import { capture, expect, expectNoPageOverflow, test } from "./fixtures.mjs";
 
 for (const file of [
 	"index.html",
+	"getting-started.html",
+	"foundations.html",
+	"forms.html",
+	"buttons.html",
+	"chips.html",
+	"dialogs.html",
+	"accessibility.html",
 	"disclosures.html",
 	"headers.html",
 	"layout-header.html",
@@ -32,7 +39,7 @@ for (const file of [
 test("wide table stays contained and scrolls from the keyboard", async ({
 	page,
 }, testInfo) => {
-	await page.goto("/index.html");
+	await page.goto("/foundations.html");
 	await page.setViewportSize({ width: 320, height: 844 });
 	await expectNoPageOverflow(page);
 	const scroller = page.getByRole("region", { name: "Wide data table" });
@@ -54,7 +61,7 @@ test("wide table stays contained and scrolls from the keyboard", async ({
 test("buttons and placeholders are captured for visual review", async ({
 	page,
 }, testInfo) => {
-	await page.goto("/index.html");
+	await page.goto("/buttons.html");
 	for (const scheme of ["light", "dark"]) {
 		const buttons = page.locator(
 			`section[aria-labelledby="buttons-heading"] .specimen-theme-${scheme}`,
@@ -63,6 +70,7 @@ test("buttons and placeholders are captured for visual review", async ({
 		await buttons.getByRole("button", { name: "Primary", exact: true }).hover();
 		await capture(testInfo, buttons, `${scheme}-primary-hover`);
 	}
+	await page.goto("/forms.html");
 	await capture(
 		testInfo,
 		page.locator(".specimen-placeholder-examples"),

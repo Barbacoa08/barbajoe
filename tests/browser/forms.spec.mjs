@@ -3,7 +3,7 @@ import { capture, expect, test } from "./fixtures.mjs";
 test("catalog reset restores fields inside and associated with the form", async ({
 	page,
 }, testInfo) => {
-	await page.goto("/index.html");
+	await page.goto("/forms.html");
 	const form = page.locator("#catalog-form");
 	const text = form.getByRole("textbox", { name: /^Text\b/ });
 	const associated = page.getByLabel("Associated by form attribute");
@@ -25,7 +25,7 @@ test("catalog reset restores fields inside and associated with the form", async 
 test("catalog submit and cancel keep the non-networked example intact", async ({
 	page,
 }) => {
-	await page.goto("/index.html");
+	await page.goto("/forms.html");
 	const form = page.locator("#catalog-form");
 	const text = form.getByRole("textbox", { name: /^Text\b/ });
 	await text.fill("Keep this value");
@@ -37,5 +37,5 @@ test("catalog submit and cancel keep the non-networked example intact", async ({
 	await form.getByRole("button", { name: "Cancel", exact: true }).click();
 	await expect(text).toHaveValue("Keep this value");
 	expect(requests, "Cancel must not make a network request").toEqual([]);
-	await expect(page).toHaveURL(/\/index\.html$/);
+	await expect(page).toHaveURL(/\/forms\.html$/);
 });

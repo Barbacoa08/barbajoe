@@ -2,7 +2,7 @@ import { readFile } from "node:fs/promises";
 import { capture, expect, expectNoPageOverflow, test } from "./fixtures.mjs";
 
 async function fixture(page, packaged) {
-	await page.goto("/index.html");
+	await page.goto("/buttons.html");
 	if (packaged) {
 		await page
 			.locator('link[rel="stylesheet"], style')
@@ -153,7 +153,7 @@ for (const packaged of [false, true]) {
 }
 
 test("built specimen actions provide local feedback", async ({ page }) => {
-	await page.goto("/index.html");
+	await page.goto("/buttons.html");
 	for (const panel of await page
 		.locator(".specimen-theme")
 		.filter({ has: page.locator("[data-action-status]") })
