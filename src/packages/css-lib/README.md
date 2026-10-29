@@ -7,7 +7,7 @@ One global stylesheet for personal applications. It gives ordinary semantic HTML
 - [Installation](#installation-and-import) · [0.5.0 changes](#050-category-navigation) · [0.4.5 changes](#045-compact-chips) · [0.4.4 changes](#044-filled-disclosure-edge) · [0.4.3 changes](#043-disclosure-animation) · [0.4.1 changes](#041-disclosure-update) · [0.4.0 adoption](#040-compatibility-and-adoption)
 - [API quick reference](#api-quick-reference) · [Application responsibilities](#what-the-library-owns)
 - [Shell](#application-shell) · [Header navigation](#header-navigation) · [Tables](#data-tables)
-- [Disclosures](#disclosures) · [Visually hidden text](#visually-hidden-text)
+- [Disclosures](#disclosures) · [Accessible names](#accessible-names-and-descriptions) · [Visually hidden text](#visually-hidden-text)
 - [Buttons](#buttons-forms-and-dialogs) · [Inline fields](#inline-fields-and-input-actions) · [X actions](#shared-closeclearremove-icon-action) · [Chips](#chips) · [Dialogs](#dialogs)
 - [Working editor](#working-editor) · [Tokens and themes](#tokens-and-accessibility-contract)
 - [Development](#local-development) · [Browser review](#automated-browser-review) · [Release](#releasing-the-css-package)
@@ -22,7 +22,7 @@ These are styling hooks, not JavaScript components. Read the linked pattern guid
 | `.site-header-menu` | Sibling native `button[popovertarget]` and named `ul[popover="auto"]` within a `.site-header-links` item; unique target IDs and ordinary links. | Destinations, current-page state, routing, and optional focus-exit handling. Native popovers own toggling and light dismissal; [fallbacks and usage](#category-dropdowns). |
 | Native buttons; `data-barba-variant="primary\|secondary\|tertiary\|text"`; `data-barba-intent="danger"` | Explicit native type; `disabled` for unavailable actions. Variants change appearance, not submit/reset behavior. | State, events, confirmation, pending/error feedback. Custom classes may override zero-specificity defaults; supply all interaction states. |
 | `data-barba-variant="icon"`, `data-barba-shape="icon"`, optional `data-barba-size="compact"` | Native named button, decorative SVG hidden from AT. Compact is a smaller face within a generous target. | Context-specific name, native disabled/hidden, distinct close/clear/remove behavior and focus transitions. |
-| `.inline-field`, `.input-row`, `.input-action` | Direct associated label; row contains input or action group then button. **Input-action requires the input and icon button as direct children.** Text/search inputs only. | Value/clear visibility, form ownership, validation, focus before hiding; not a generic textarea or nested-component layout. |
+| `.inline-field`, `.input-row`, `.input-action` | Visible associated label for `.inline-field`; row contains input or action group then button. See the [compact naming exception](#compact-controls-in-persistent-context) for `.input-row` in persistent context. **Input-action requires the input and icon button as direct children.** Text/search inputs only. | Value/clear visibility, form ownership, validation, focus before hiding; not a generic textarea or nested-component layout. |
 | `.chip-list`, `.chip`, `.chip-face`, `.chip-removable` | List of chips; informational span/list item; selectable `button.chip[aria-pressed] > .chip-face`; removable container with label span and separate compact icon button. | Selection/removal, disabled state, stable names, and next/previous/fallback focus. Preserve chip-list gaps and outer hit-area clearance; do not clip targets or make informational/removable labels actionable. |
 | `details.disclosure`, `.disclosure--filled`, `.disclosure-label`, `.disclosure-title`, `.disclosure-description`, `.disclosure-content` | Direct summary, label/title and optional description, then content wrapper. Optional `.disclosure--filled` changes appearance; both share native `open` and have no invented disabled state. | Descriptive summary, optional persistence; keep required content visible. Avoid nested interactive summary content. |
 | `dialog`, `.dialog-content-container`, `.dialog-header`, `.dialog-header-actions`, `.dialog-body`, `.dialog-footer` | Direct structured form/container; header/body/footer children. Named native dialog. Optional `data-barba-dialog-spacing="compact"`, `-height="content"`, `-room="extra"`, `-dividers="full"` (all prefixed `data-barba-dialog`). | Open/close, validation, cancel guards, initial/restored focus, fallback browser behavior. Standard width is unchanged. |
@@ -276,6 +276,57 @@ Keep the summary’s wording descriptive. Place links and inputs in the body. An
 
 **Compatibility and customization:** This is opt-in; unclassed disclosures retain native styling. Use existing `--barba-` color, spacing, and radius tokens or scoped application selectors. Existing app-specific summary spacing, heading borders, or icons should be removed when adopting these classes to avoid duplicate decoration. The disclosure styling does not supply a disabled state; choose static content instead when expansion is unavailable.
 
+## Accessible names and descriptions
+
+An accessible name identifies a control; a description supplies instructions or errors, and a live region reports a result. These serve different purposes. The library supplies styling and HTML patterns; applications own the behavior and timing.
+
+Use these defaults consistently:
+
+1. **Prefer native visible labels for ordinary form controls.** Associate a `<label>` with its control using matching `for` and `id` values, or wrap the control in the label. Visible labels remain useful after entry and provide a larger clickable area. Keep ordinary buttons named by their visible text.
+2. **Reuse suitable visible text.** When existing visible text already identifies a control and the relationship is clear, `aria-labelledby` can reference its ID. Prefer a native label when one fits; do not use a generic section heading as the name of several controls with different purposes.
+3. **Use concise `aria-label` names for icon-only buttons and the limited compact-control exception below.** This is a library authoring convention, not a claim that ARIA is more accessible than valid hidden labels. Compact controls qualify only when persistent surrounding content makes each control's purpose visually clear, including after entry or selection. A title alone is not sufficient when the controls remain ambiguous. Otherwise, retain visible labels.
+4. **Keep visible identifying wording in the accessible name, preferably at its beginning.** For example, visible “Create” can have the name “Create category”. When a placeholder is the visible identifying text, preserve that wording too, such as “Category name”. Do not rely on placeholders alone: they disappear during entry. A select's accessible name identifies its purpose; its selected option is a separate value, so do not rewrite the name to repeat each selection.
+5. **Choose a deliberate naming source.** `aria-labelledby` takes precedence over `aria-label`, and ARIA naming can override a native label or a button's descendant text. Avoid redundant or competing names. Keep names synchronized with visible wording and translations; do not add ARIA when native text already supplies the intended name.
+
+Use `aria-describedby` to associate useful instructions and errors with a control; it does not replace the name. Keep necessary instructions and errors visible, and use an optional help disclosure for additional detail. Preserve existing error associations and application validation. Avoid repetitive explanations of native dropdown operation.
+
+For images, use appropriate `alt` text; use `alt=""` for decorative images when the surrounding control already has a name. An `alt` attribute on an ordinary text input, select, or button does not label it. Image submit controls (`input type="image"`) use `alt`, and an image's alternative text can contribute to a containing button or link's name. For the library's icon buttons, hide decorative SVGs with `aria-hidden="true" focusable="false"` and name the button itself.
+
+Follow [W3C's form-label guidance](https://www.w3.org/WAI/tutorials/forms/labels/), [APG naming techniques and precedence](https://www.w3.org/WAI/ARIA/apg/practices/names-and-descriptions/), and [Label in Name guidance](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html). Existing valid hidden-label implementations do not require automatic migration.
+
+### Compact controls in persistent context
+
+This limited exception keeps a compact editor's appearance while naming its controls explicitly. The disclosure title and visible instruction together identify the actions even after the placeholder or initial “Quick add” option disappears. Retain ordinary visible-label examples as the default; do not remove their labels just to copy this pattern. See the [forms guidance and copyable example](https://lib-staging.barbajoe.tech/forms.html#compact-controls).
+
+```html
+<details class="disclosure" open>
+  <summary>
+    <span class="disclosure-label disclosure-title">Categories</span>
+  </summary>
+  <div class="disclosure-content">
+    <p id="category-help">Quick add an existing category, or enter a category
+      name and choose Create.</p>
+    <select aria-label="Quick add an existing category"
+      aria-describedby="category-help">
+      <option value="">Quick add</option>
+      <option value="produce">Produce</option>
+      <option value="frozen" disabled>Frozen — selected</option>
+    </select>
+    <div class="input-row">
+      <input id="new-category" type="text" aria-label="Category name"
+        placeholder="Category name" aria-describedby="category-help">
+      <button type="button" aria-label="Create category">Create</button>
+    </div>
+  </div>
+</details>
+```
+
+This is a markup example, not a working editor. It uses `.input-row` for the input/action layout; `.inline-field` remains the documented visible-label wrapper. Use unique IDs for each editor instance. For a Stores editor, update the persistent context, names, placeholder, and references together.
+
+Application code owns dropdown selection/reset, disabled choices, Create/Enter behavior, validation, focus, and announcement timing. `type="button"` does not submit or implement Enter-to-create; choose form ownership and handlers to fit the application. The CSS package supplies none of that logic. Keep useful draft/Save instructions available in the application's help, and keep instructions needed to identify or operate these controls visible.
+
+Changing a control's `aria-label` is not a substitute for a live-region announcement. Prefer an existing visible status message when suitable; otherwise use one persistent, initially empty status region, mounted before its text changes. Avoid duplicate announcements. See [visually hidden text](#visually-hidden-text) for the supported status markup and [W3C status-message guidance](https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html).
+
 ## Visually hidden text
 
 Use `.visually-hidden` on supplemental, noninteractive text to remove it from visual layout while retaining it for assistive technology. It is opt-in, has no JavaScript, and does not itself supply an accessible name, live-region semantics, or focus behavior. See the [working light/dark examples and implementation guidance](https://lib-staging.barbajoe.tech/accessibility.html#visually-hidden-heading), including per-pattern requirements, primary references, and verification steps.
@@ -287,7 +338,7 @@ Use `.visually-hidden` on supplemental, noninteractive text to remove it from vi
 <!-- Present before an application adds a result message; do not focus it. -->
 <p class="visually-hidden" role="status" aria-atomic="true"></p>
 
-<!-- Hidden text is an alternative naming source to aria-label. -->
+<!-- Supported alternative; prefer aria-label for new icon-only examples. -->
 <button type="button" data-barba-variant="icon" data-barba-shape="icon">
   <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
     <path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" />
@@ -297,13 +348,13 @@ Use `.visually-hidden` on supplemental, noninteractive text to remove it from vi
 ```
 
 - Keep essential information visible. Apply this utility only to the supplemental text, never a focusable control or its container. Do not combine it with `hidden`, `display:none`, `visibility:hidden`, `aria-hidden="true"`, or `inert` on text intended to remain accessible or its ancestors. Continue using `.skip-link` for links that must become visible on focus; `.visually-hidden` does not reveal itself.
-- Keep the visible action wording in its accessible name, preferably at the beginning. Choose one naming source: `aria-label`/`aria-labelledby` can override descendant text. Do not layer them over these hidden labels. Retain visible associated labels on inputs and hide decorative SVGs from assistive technology. Read [W3C label-in-name guidance](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html) and [APG naming guidance](https://www.w3.org/WAI/ARIA/apg/practices/names-and-descriptions/).
+- Keep the visible action wording in its accessible name, preferably at the beginning. Choose one naming source: `aria-label`/`aria-labelledby` can override descendant text. Do not layer them over these hidden labels. Prefer visible associated labels on inputs, with only the [documented compact exception](#compact-controls-in-persistent-context); hide decorative SVGs from assistive technology. Read [W3C label-in-name guidance](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html) and [APG naming guidance](https://www.w3.org/WAI/ARIA/apg/practices/names-and-descriptions/).
 - Prefer making an existing visible result message a status region when it contains the full message. Otherwise mount one initially empty hidden region before updating it. Use `role="status" aria-atomic="true"`; keep ordinary updates polite, concise, and result-focused. Avoid duplicate live regions, repeating the native control’s selected value, or live announcements of entire lists. See [W3C ARIA22](https://www.w3.org/WAI/WCAG21/Techniques/aria/ARIA22), and [status-message guidance](https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html).
 - Applications own update timing and focus. The catalog’s Edit feedback is a demonstration, not a second announcement to copy into a focused editor. Clear uses the documented input-action behavior: update application state, return focus before hiding, and synchronize visibility. Setting `input.value` alone does not fire an input event; use the consuming application’s normal update path. See [MDN input events](https://developer.mozilla.org/en-US/docs/Web/API/Element/input_event).
 
 **Verification:** Inspect accessible names and live-region ownership; test keyboard operation, clear focus/empty-state behavior, narrow layouts, zoom, and actual announcements with supported browser/screen-reader combinations. DOM tests do not establish speech output. Check settled and rapid results, no results, and equal-count changes in consuming applications. Avoid rewriting unchanged messages on rerenders, but assess feedback for distinct operations separately.
 
-**Migration:** Replace equivalent local hiding styles only after adopting the library release. Preserve semantics and application behavior; separately review status-region mounting and duplicate announcements. A CSS replacement does not correct timing. Existing correctly named `aria-label` icon buttons need no migration.
+**Migration:** Replace equivalent local hiding styles only after adopting the library release. Preserve semantics and application behavior; separately review status-region mounting and duplicate announcements. A CSS replacement does not correct timing. Existing correctly named controls, including hidden labels and `aria-label` icon buttons, need no automatic migration. Changing a control name is not a live announcement.
 
 ## Buttons, forms, and dialogs
 
@@ -337,7 +388,7 @@ Button treatments use the existing palette. Primary hover uses link-hover in lig
 
 Text inputs (including omitted `type`), textarea, and select receive the same appearance regardless of form ancestry or the `form` attribute. Full-width sizing and additional top spacing remain specific to controls inside forms. Forms retain their stacked layout. Page-footer margin/alignment apply only to `.app-shell > footer`, not article or dialog footers.
 
-Input and textarea placeholders use the existing muted-text color and italics at full opacity, making examples distinct from entered values without introducing another color. Keep a visible label for each control; placeholder text disappears as the user types and is not a substitute for a label. Compare both schemes in the [form specimen](https://lib-staging.barbajoe.tech/forms.html#forms-heading).
+Input and textarea placeholders use the existing muted-text color and italics at full opacity, making examples distinct from entered values without introducing another color. Prefer a visible associated label for each ordinary form control; placeholder text disappears as the user types and is not a substitute. Only use the [compact-control exception](#compact-controls-in-persistent-context) when persistent visible context identifies each control. Compare both schemes in the [form specimen](https://lib-staging.barbajoe.tech/forms.html#forms-heading).
 
 ### Inline fields and input actions
 
@@ -347,7 +398,7 @@ Use these opt-in classes for single-line text or search inputs. Existing stacked
 - `.input-row`: wrap the input (or input-action group) and its Add/submit button. They share a minimum 2.75rem height. The field grows from a 14rem preferred width, and the action wraps to the inline end when space runs out. Keep input before Add in DOM order; don't reverse keyboard order with CSS.
 - `.input-action`: group one text/search input and its clear icon button. The group reserves space for the icon even when hidden, so text cannot run beneath it and the field does not resize. It can be used inside a row or alone. This is a single-icon layout, not a container for arbitrary action text or multiple icons.
 
-The pattern works inside a form, outside a form, and with a separate form owner. For the last case, add the same `form="entry-form"` attribute to both the input and submit button; the label still points to the input's ID. The classes don't establish form ownership. Keep the label visible; a placeholder is not a label. Other control types retain their normal treatment.
+The pattern works inside a form, outside a form, and with a separate form owner. For the last case, add the same `form="entry-form"` attribute to both the input and submit button; the label still points to the input's ID. The classes don't establish form ownership. Keep this pattern's label visible; a placeholder is not a label. The separate [compact example](#compact-controls-in-persistent-context) uses `.input-row` in persistent context without changing `.inline-field`'s visible-label convention. Other control types retain their normal treatment.
 
 ```html
 <form id="entry-form">
@@ -380,7 +431,7 @@ The shape supplies a 2.75rem square target and a 1.25rem SVG (44px/20px at a 16p
 
 This is opt-in: existing `data-barba-variant="text"` icon buttons retain their text-button appearance. Change the variant to `icon` for the new convention. Ordinary text actions and danger treatments are unchanged. Do not use this quiet X convention for deleting saved data; use a named danger action.
 
-Give each button a context-specific accessible name: **“Clear item name”** for a field, **“Close dialog”** for a modal, or **“Remove Produce”** for a chip selection. The SVG has `aria-hidden="true"`; the optional `title` provides an extra pointer hint and does not replace an accessible name from `aria-label` or a `.visually-hidden` text label. The shared icon communicates a visual convention, not shared behavior: clear empties one field, while dialog close uses the same cancellation/request-close path as Cancel and Escape, including application cancellation guards. Use a separately labeled danger action for deletion. Avoid unlabeled X glyphs, clickable spans, or `type="reset"` as a field-clear shortcut.
+Give each button a context-specific accessible name: **“Clear item name”** for a field, **“Close dialog”** for a modal, or **“Remove Produce”** for a chip selection. Prefer a concise `aria-label` for new icon-only examples; a `.visually-hidden` text label remains a supported alternative and needs no automatic migration. Use one naming source. The SVG has `aria-hidden="true" focusable="false"`; the optional `title` provides an extra pointer hint and does not replace an accessible name. Keep visible button wording within the name when present; see [accessible naming guidance](#accessible-names-and-descriptions). The shared icon communicates a visual convention, not shared behavior: clear empties one field, while dialog close uses the same cancellation/request-close path as Cancel and Escape, including application cancellation guards. Use a separately labeled danger action for deletion. Avoid unlabeled X glyphs, clickable spans, or `type="reset"` as a field-clear shortcut.
 
 ### Chips
 

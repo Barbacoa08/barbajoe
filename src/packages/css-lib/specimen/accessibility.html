@@ -50,10 +50,24 @@
 <h1>Accessibility patterns</h1>
 <p class="specimen-page-note">Accessible names, visually hidden text, and concise status announcements.</p>
 
+<section class="specimen-section" aria-labelledby="naming-choices">
+<h2 id="naming-choices">Choose an accessible name</h2>
+<p>A name identifies a control, a description supplies instructions or errors, and a status region reports a result. The library supplies presentation and HTML patterns; applications own behavior and announcement timing.</p>
+<ol>
+<li>Prefer native visible <code>label</code> elements for ordinary form controls, and visible button text for ordinary actions. Labels remain useful after entry and provide a larger clickable area.</li>
+<li>Use <code>aria-labelledby</code> when suitable existing visible text supplies the name and its relationship to the control is clear. Prefer a native label when one fits; do not reuse a generic heading as the name of several different controls.</li>
+<li>Prefer concise <code>aria-label</code> attributes for new icon-only buttons and compact controls whose purposes are visually clear from persistent surrounding context. This is a library convention, not an accessibility upgrade over valid hidden labels. See the <a href="./forms.html#compact-controls">limited compact exception</a>; it does not authorize removing ordinary form labels.</li>
+<li>Preserve visible identifying wording within the accessible name, preferably at its beginning. If a placeholder is the visible identifying text, preserve that wording too. Placeholders alone are insufficient because they disappear during entry. A dropdown’s name identifies its purpose; its selected option remains a separate value.</li>
+<li>Choose one deliberate naming source. <code>aria-labelledby</code> takes precedence over <code>aria-label</code>, and ARIA naming can override native labels or descendant text. Avoid redundant or competing names, and keep names and translations consistent with visible text.</li>
+</ol>
+<p>Associate useful instructions and errors with <code>aria-describedby</code>; it does not replace the name. Keep necessary instructions and errors visible. Additional help can live in a disclosure, and existing error associations must remain intact.</p>
+<p>Use appropriate <code>alt</code> text for images, or <code>alt=""</code> for decorative images when their surrounding control is already named. An <code>alt</code> attribute does not label an ordinary text input, select, or button. Image submit controls (<code>input type="image"</code>) use <code>alt</code>, and an image’s alternative text can contribute to its containing button or link’s name. In the library’s icon examples, name the button and hide the decorative SVG with <code>aria-hidden="true" focusable="false"</code>.</p>
+<p>Read <a href="https://www.w3.org/WAI/tutorials/forms/labels/">W3C form-label guidance</a>, <a href="https://www.w3.org/WAI/ARIA/apg/practices/names-and-descriptions/">APG naming techniques and precedence</a>, and <a href="https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html">Label in Name guidance</a>. Existing valid hidden-label implementations do not require automatic migration.</p>
+</section>
 <section class="specimen-section specimen-hidden-examples" id="visually-hidden-examples" aria-labelledby="visually-hidden-heading">
 					<h2 id="visually-hidden-heading">Visually hidden text</h2>
 					<p>Use <code>.visually-hidden</code> to keep supplemental text available to assistive technology while removing it from the visual layout. The library supplies CSS only; the examples below use local catalog behavior.</p>
-					<p>Light and dark examples are identical. Shaded explanations mirror the hidden text for visual review; these noninteractive teaching aids are excluded from the accessibility tree to avoid repeating that text.</p>
+					<p>Light and dark examples are identical. The hidden-text naming examples are supported alternatives, not the default for every icon button. Shaded explanations mirror the hidden text for visual review; these noninteractive teaching aids are excluded from the accessibility tree to avoid repeating that text.</p>
 					<section class="specimen-section" id="hidden-status">
 						<h3>1. Announce filter results</h3>
 						<p>Use a persistent, initially empty status region to report the result of a user action without moving focus. The visible list and count remain available to everyone.</p>
@@ -128,7 +142,7 @@
 					</section>
 					<section class="specimen-section" id="hidden-icon">
 						<h3>3. Name an icon-only action</h3>
-						<p>Hide only the label text inside the button. While the field has content, the clear button remains visible and keyboard accessible. This is an alternative to aria-label; existing close/clear buttons do not need to migrate just to use the utility.</p>
+						<p>For new icon-only examples, prefer a concise aria-label on the button. This working example deliberately demonstrates the supported hidden-text alternative: hide only the label text, while the clear button remains visible and keyboard accessible when the field has content. Existing valid implementations of either technique need no migration.</p>
 						<div class="specimen-grid">
 							<article class="specimen-theme specimen-theme-light" data-hidden-demo="icon">
 								<h4>Light mode</h4>
@@ -161,14 +175,14 @@
 						<p>These are implementation rules for this library’s examples, with links for the underlying accessibility requirements. The utility changes visual presentation only; it does not add naming, live announcements, focus management, or application behavior.</p>
 						<h4>Choose the right use</h4>
 						<ul>
-							<li>Keep field labels, instructions, errors, and essential status information visible. Use <code>.visually-hidden</code> for supplemental text or an equivalent of information already conveyed visually.</li>
+							<li>Prefer visible field labels for ordinary forms, with only the <a href="./forms.html#compact-controls">documented compact exception</a>. Keep necessary instructions, errors, and essential status information visible. Use <code>.visually-hidden</code> for supplemental text or an equivalent of information already conveyed visually.</li>
 							<li>Apply the class to noninteractive text, never to a focusable control or a container holding controls. Do not add <code>hidden</code>, <code>display:none</code>, <code>visibility:hidden</code>, <code>aria-hidden="true"</code>, or <code>inert</code> to that text or its ancestors. The empty field’s clear button is intentionally hidden as a whole because its action is unavailable.</li>
 							<li>Use the existing <code>.skip-link</code> for a skip link that becomes visible on focus. This utility never reveals itself. See <a href="https://getbootstrap.com/docs/5.3/helpers/visually-hidden/">Bootstrap’s distinction between hidden and focus-revealed helpers</a>.</li>
 						</ul>
 						<h4>1. Status updates: one concise announcement</h4>
 						<ul>
 							<li>Prefer <code>role="status" aria-atomic="true"</code> on an existing visible result message when it already says everything needed. Otherwise keep one persistent, initially empty hidden status region in the DOM before updates. Do not conditionally mount a populated region and assume it will be announced.</li>
-							<li>Update that region’s text after the result is ready. Leave focus on the initiating control. The status role is already polite; do not add <code>role="alert"</code> or <code>aria-live="assertive"</code> for ordinary filtering.</li>
+							<li>Update that region’s text after the result is ready. Changing a control’s <code>aria-label</code> is not a substitute for a live-region announcement. Leave focus on the initiating control. The status role is already polite; do not add <code>role="alert"</code> or <code>aria-live="assertive"</code> for ordinary filtering.</li>
 							<li>Announce useful results with context, such as “1 of 3 items shown.” Do not repeat the native control’s selected option, or make the entire results list live. Use one live region per update; check ancestors and visible copies for accidental additional live regions.</li>
 							<li>Avoid identical rewrites caused by rerenders. This example suppresses an unchanged count; that is not a universal rule for distinct operations that happen to have the same result. Decide whether new feedback is needed for the actual action. For live search, coordinate announcements with settled results, including cancellation of stale requests, instead of speaking every keystroke.</li>
 						</ul>
@@ -177,12 +191,12 @@
 						<ul>
 							<li>Use a native <code>button type="button"</code> for an action, or a link with a real destination for navigation. For the Edit button, append the item’s name in a hidden span, including a separating space. Expected names here: “Edit Apples” and “Edit Oats”. Keep that context synchronized with the displayed item and translate the complete phrase appropriately.</li>
 							<li>Keep the visible label in the accessible name, preferably at the beginning. Prefer visible context when it would help everyone distinguish actions.</li>
-							<li>Use one deliberate naming source. Do not add <code>aria-label</code> or <code>aria-labelledby</code> on top of these button contents: they can override the content-derived name. Hidden text alone does not label an unrelated input; retain its associated visible <code>label</code>.</li>
+							<li>Use one deliberate naming source. Do not add <code>aria-label</code> or <code>aria-labelledby</code> on top of these button contents: they can override the content-derived name. Hidden text alone does not label an unrelated input; use an associated native label by default, or the explicit naming technique in the <a href="./forms.html#compact-controls">compact exception</a>.</li>
 						</ul>
 						<p>Read <a href="https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html">W3C’s label-in-name guidance</a> and <a href="https://www.w3.org/WAI/ARIA/apg/practices/names-and-descriptions/">accessible naming techniques and precedence</a>.</p>
 						<h4>3. Icon actions: name the purpose and preserve focus</h4>
 						<ul>
-							<li>Give the visible native button a concise action name such as “Clear item name”, “Close settings”, or “Remove Apples”; do not name it “X”. Use either hidden text or <code>aria-label</code>. Existing correctly named icon buttons need no migration. Mark the decorative SVG <code>aria-hidden="true" focusable="false"</code>; do not rely on its appearance or a tooltip as the button’s only name.</li>
+							<li>Give the visible native button a concise action name such as “Clear item name”, “Close settings”, or “Remove Apples”; do not name it “X”. Prefer <code>aria-label</code> for new icon-only examples; hidden text remains a supported alternative. Existing correctly named icon buttons need no migration. Mark the decorative SVG <code>aria-hidden="true" focusable="false"</code>; do not rely on its appearance or a tooltip as the button’s only name.</li>
 							<li>Keep the standard close/clear target and focus treatment. On clear, return focus to the input before hiding the button. Hide it when the input is empty. For a populated disabled or read-only field, retain a disabled X as in the inline-form examples; it must not change the value.</li>
 							<li>Application code must clear the authoritative value and run the same validation, filtering, and state synchronization used by other value changes. Keep visibility synchronized after typing, reset, and programmatic updates. The catalog has no application state; its local clear handler assigns <code>input.value</code> and explicitly dispatches an <code>input</code> event to synchronize the example. Assigning the value alone does not fire that event. Framework applications should use their normal state-update path.</li>
 							<li>Do not add an automatic “cleared” announcement merely because the button disappears. First check what the focused field already communicates. Close and remove actions need their own appropriate focus destination; do not blindly reuse the clear handler.</li>
@@ -195,8 +209,8 @@
 							<li>With a supported browser/screen-reader combination, change the filter and confirm the result is announced without moving focus or unnecessarily repeating the selected category. Check rapid changes, no results, and equal-count results in the consuming application. Record the browser, screen reader, and versions tested.</li>
 							<li>Check both themes, narrow layouts, zoom, and visible keyboard focus. Automated DOM checks cannot establish the actual speech sequence or guarantee accessibility. The shaded mirrors here are noninteractive teaching aids excluded from the accessibility tree; do not copy them into application markup.</li>
 						</ol>
-						<h4>Migration from Our List</h4>
-						<p>After adopting the library release, replace only the duplicated <code>sr-only</code> and <code>row-announcement</code> hiding styles. Preserve semantics and application behavior, then review status-region mounting and duplicate announcements separately. A CSS replacement does not fix announcement timing.</p>
+						<h4>Adoption and existing implementations</h4>
+						<p>Existing valid hidden labels and named icon buttons do not need automatic migration. If adopting <code>.visually-hidden</code> to replace equivalent application hiding styles, preserve semantics and behavior, and review status-region mounting and duplicate announcements separately. A CSS replacement does not fix timing. Application adoption is a separate decision; this guidance does not require changes to Our List.</p>
 					</section>
 				</section><p><a href="https://github.com/Barbacoa08/barbajoe/blob/main/src/packages/css-lib/README.md#visually-hidden-text">Full markup, options, and customization reference</a></p>
 </main>
