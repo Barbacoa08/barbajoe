@@ -124,6 +124,8 @@ for (const build of ["source", "package"]) {
 		page,
 	}) => {
 		await page.goto("/forms.html");
+		// Isolate the header from documentation examples that require specimen styles.
+		await page.locator("main").evaluate((el) => el.remove());
 		if (build === "package") {
 			await page.locator('link[rel="stylesheet"], style').evaluateAll((els) => {
 				for (const el of els) el.remove();
@@ -173,6 +175,8 @@ test("menu fallbacks remain usable without anchors or native popovers", async ({
 	page,
 }) => {
 	await page.goto("/forms.html");
+	// This fixture loads header CSS only; unrelated examples have no layout contract.
+	await page.locator("main").evaluate((el) => el.remove());
 	const css = await readFile(
 		new URL(
 			"../../src/packages/css-lib/lib/components/header.css",

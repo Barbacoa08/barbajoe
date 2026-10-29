@@ -1,6 +1,6 @@
 {
 	"name": "@barbajoe/css-lib",
-	"version": "0.5.0",
+	"version": "0.6.0",
 	"license": "MIT",
 	"author": "Barbacoa08",
 	"repository": {
@@ -21,7 +21,8 @@
 		"./specimen/editor.js",
 		"./specimen/disclosures.js",
 		"./specimen/catalog-links.js",
-		"./specimen/navigation.js"
+		"./specimen/navigation.js",
+		"./specimen/suggestions.js"
 	],
 	"publishConfig": {
 		"access": "public",
