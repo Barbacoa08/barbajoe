@@ -65,7 +65,7 @@ jobs:
           node .github/scripts/check-browser-inventory.mjs .projects/ci/light.json .projects/ci/heavy.json
       - name: Install test browsers and system dependencies
         if: steps.tier.outputs.tier != 'none'
-        run: pnpm exec playwright install --with-deps chromium firefox webkit
+        run: pnpm exec playwright install --with-deps --only-shell chromium firefox webkit
       - name: Run selected browser suite
         id: browser
         if: steps.tier.outputs.tier != 'none'
