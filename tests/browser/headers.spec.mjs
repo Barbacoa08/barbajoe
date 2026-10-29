@@ -216,6 +216,28 @@ test("@light packaged header preserves wrapping, current page and text contrast"
 					surface,
 				),
 			).toBeGreaterThanOrEqual(7);
+			await page.mouse.move(0, 0);
+			await page.keyboard.press("Tab");
+			await action.focus();
+			await expect(action).toBeFocused();
+			const ring = await action.evaluate((el) => {
+				const style = getComputedStyle(el);
+				return {
+					style: style.outlineStyle,
+					width: parseFloat(style.outlineWidth),
+					offset: parseFloat(style.outlineOffset),
+					color: style.outlineColor,
+					opacity: parseFloat(style.opacity),
+					visible: el.matches(":focus-visible"),
+				};
+			});
+			expect(ring.visible).toBe(true);
+			expect(ring.style).toBe("solid");
+			expect(ring.width).toBeGreaterThanOrEqual(2);
+			expect(ring.offset).toBeGreaterThanOrEqual(0);
+			expect(ring.opacity).toBe(1);
+			expect(contrast(ring.color, surface)).toBeGreaterThanOrEqual(3);
+			expect(ring.color).not.toMatch(/rgba\([^)]*,\s*0\)/);
 		}
 	}
 	await page.setViewportSize({ width: 320, height: 844 });

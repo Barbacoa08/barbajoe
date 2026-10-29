@@ -17,8 +17,9 @@ permissions:
   contents: read
 
 concurrency:
-  group: ${{ github.event_name == 'push' && 'css-staged-release' || format('ci-{0}', github.event.pull_request.number || github.run_id) }}
-  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+  group: ${{ github.event_name == 'push' && 'css-staged-release' || format('ci-{0}', github.run_id) }}
+  # Preserve pending main releases; only superseded PR runs may be replaced.
+  queue: max
 
 jobs:
   check:
@@ -26,6 +27,9 @@ jobs:
     name: Lint and build CSS library
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    concurrency:
+      group: validation-${{ github.event.pull_request.number || github.run_id }}
+      cancel-in-progress: ${{ github.event_name == 'pull_request' }}
     outputs:
       release: ${{ steps.tier.outputs.release }}
       before: ${{ steps.tier.outputs.before }}
