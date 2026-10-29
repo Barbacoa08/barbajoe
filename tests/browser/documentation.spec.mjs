@@ -13,7 +13,7 @@ const topics = [
 	"editor.html",
 ];
 
-test("home links to every topic and keeps full demonstrations on their pages", async ({
+test("@once home links to every topic and keeps full demonstrations on their pages", async ({
 	page,
 }) => {
 	await page.goto("/index.html");
@@ -28,7 +28,7 @@ test("home links to every topic and keeps full demonstrations on their pages", a
 	await expectNoPageOverflow(page);
 });
 
-test("topic navigation works by keyboard without JavaScript", async ({
+test("@once topic navigation works by keyboard without JavaScript", async ({
 	browser,
 }) => {
 	const context = await browser.newContext({
@@ -54,41 +54,35 @@ test("topic navigation works by keyboard without JavaScript", async ({
 	await context.close();
 });
 
-test.describe("legacy catalog bookmarks", () => {
-	test.use({ cancelledNavigationSourcePaths: ["/", "/index.html"] });
-	test("old catalog bookmarks preserve sections and queries on load and hash changes", async ({
-		page,
-	}) => {
-		for (const [old, target] of [
-			["/index.html#chips-heading", "chips.html#chips-heading"],
-			[
-				"/?review=old#inline-forms-heading",
-				"forms.html?review=old#inline-forms-heading",
-			],
-			["/index.html#hidden-status", "accessibility.html#hidden-status"],
-			["/index.html#%64ialog-heading", "dialogs.html#dialog-heading"],
-			["/index.html#motion-heading", "foundations.html#motion-heading"],
-		]) {
-			await page.goto(old);
-			await expect(page).toHaveURL(`http://127.0.0.1:4173/${target}`);
-			await expect(page.locator(`[id="${target.split("#")[1]}"]`)).toHaveCount(
-				1,
-			);
-			// The redirected DOM can appear before its styles and modules finish loading.
-			await page.waitForLoadState("load");
-		}
-		await page.goto("/index.html");
-		await page.evaluate(() => {
-			location.hash = "forms-heading";
-		});
-		await expect(page).toHaveURL(/forms\.html#forms-heading$/);
+test("@once old catalog bookmarks preserve sections and queries on load and hash changes", async ({
+	page,
+}) => {
+	for (const [old, target] of [
+		["/index.html#chips-heading", "chips.html#chips-heading"],
+		[
+			"/?review=old#inline-forms-heading",
+			"forms.html?review=old#inline-forms-heading",
+		],
+		["/index.html#hidden-status", "accessibility.html#hidden-status"],
+		["/index.html#%64ialog-heading", "dialogs.html#dialog-heading"],
+		["/index.html#motion-heading", "foundations.html#motion-heading"],
+	]) {
+		await page.goto(old);
+		await expect(page).toHaveURL(`http://127.0.0.1:4173/${target}`);
+		await expect(page.locator(`[id="${target.split("#")[1]}"]`)).toHaveCount(1);
 		await page.waitForLoadState("load");
-		await page.goto("/index.html#%broken");
-		await expect(page.locator("main h1")).toBeVisible();
+	}
+	await page.goto("/index.html");
+	await page.evaluate(() => {
+		location.hash = "forms-heading";
 	});
+	await expect(page).toHaveURL(/forms\.html#forms-heading$/);
+	await page.waitForLoadState("load");
+	await page.goto("/index.html#%broken");
+	await expect(page.locator("main h1")).toBeVisible();
 });
 
-test("every documentation link and fragment resolves in the built site", async ({
+test("@once every documentation link and fragment resolves in the built site", async ({
 	page,
 }) => {
 	for (const file of [

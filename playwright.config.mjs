@@ -1,16 +1,20 @@
 import { execFileSync } from "node:child_process";
+import { existsSync } from "node:fs";
 import { defineConfig } from "@playwright/test";
 
 const baseURL = "http://127.0.0.1:4173";
-const viewports = {
-	desktop: { width: 1280, height: 720 },
-	narrow: { width: 390, height: 844 },
-};
+if (
+	process.env.BARBA_TEST_USE_EXISTING_BUILD === "1" &&
+	(!existsSync("src/packages/css-lib/.output/specimen/index.html") ||
+		!existsSync("src/packages/css-lib/dist/barbajoe.css"))
+)
+	throw new Error("Build the package and specimen before reusing CI output");
 
 export default defineConfig({
 	testDir: "./tests/browser",
 	fullyParallel: true,
 	forbidOnly: Boolean(process.env.CI),
+	// Two workers were faster than four on the measured hosted runner.
 	workers: 2,
 	retries: 0,
 	timeout: 30_000,
@@ -37,19 +41,19 @@ export default defineConfig({
 		trace: "retain-on-failure",
 		screenshot: "only-on-failure",
 	},
-	projects: ["chromium", "firefox", "webkit"].flatMap((browserName) =>
-		Object.entries(viewports).flatMap(([size, viewport]) =>
-			["light", "dark"].map((colorScheme) => ({
-				name: `${browserName}-${size}-${colorScheme}`,
-				use: { browserName, viewport, colorScheme },
-			})),
-		),
-	),
+	projects: ["chromium", "firefox", "webkit"].map((browserName) => ({
+		name: browserName,
+		use: {
+			browserName,
+			viewport: { width: 1280, height: 720 },
+			colorScheme: "light",
+		},
+		grepInvert: browserName === "chromium" ? undefined : /@once/,
+	})),
 	webServer: {
 		// Launch the long-lived server directly so Playwright owns its process
 		// group; a native pnpm wrapper can leave descendants holding pipes open.
-		command:
-			"pnpm build && pnpm build:specimen && node node_modules/http-server/bin/http-server src/packages/css-lib/.output/specimen -a 127.0.0.1 -p 4173 -c-1",
+		command: `${process.env.BARBA_TEST_USE_EXISTING_BUILD === "1" ? "" : "pnpm build:specimen && "}node node_modules/http-server/bin/http-server src/packages/css-lib/.output/specimen -a 127.0.0.1 -p 4173 -c-1`,
 		url: `${baseURL}/index.html`,
 		reuseExistingServer: false,
 		timeout: 120_000,

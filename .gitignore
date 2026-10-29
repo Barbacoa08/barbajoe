@@ -31,3 +31,6 @@ package-lock.json
 
 # Review reports and screenshots belong on PRs, not in the source tree.
 /docs/reviews/
+
+# Temporary execution and CI investigation data
+.projects/

@@ -1,59 +1,20 @@
+import { readFile } from "node:fs/promises";
 import { platform, release } from "node:os";
 import { test as base, expect } from "@playwright/test";
 
 export const test = base.extend({
-	cancelledNavigationSourcePaths: [[], { option: true }],
 	reviewEvidence: [
-		async (
-			{
-				page,
-				browser,
-				browserName,
-				reducedMotion,
-				baseURL,
-				cancelledNavigationSourcePaths,
-			},
-			use,
-			testInfo,
-		) => {
+		async ({ page, browser, browserName, reducedMotion }, use, testInfo) => {
 			const errors = [];
-			const completedAssets = new Set();
-			const navigationCancellations = [];
-			page.on("requestfinished", (request) =>
-				completedAssets.add(request.url()),
-			);
 			page.on("pageerror", (error) => errors.push(error.message));
-			page.on("requestfailed", (request) => {
-				const failure = request.failure()?.errorText;
-				const message = `${request.url()}: ${failure}`;
-				const referer = request.headers().referer;
-				const source = referer ? new URL(referer) : null;
-				// A client redirect can cancel the old document's shared assets.
-				// Only the explicit bookmark fixture permits these, and only if
-				// the same asset also finishes loading during this test.
-				if (
-					["Load request cancelled", "cancelled"].includes(failure) &&
-					["stylesheet", "script"].includes(request.resourceType()) &&
-					source?.origin === new URL(baseURL).origin &&
-					new URL(request.url()).origin === source.origin &&
-					cancelledNavigationSourcePaths.includes(source.pathname)
-				) {
-					navigationCancellations.push({
-						url: request.url(),
-						source: referer,
-						message,
-					});
-				} else errors.push(message);
-			});
+			page.on("requestfailed", (request) =>
+				errors.push(`${request.url()}: ${request.failure()?.errorText}`),
+			);
 			page.on("response", (response) => {
 				if (response.status() >= 400)
 					errors.push(`${response.status()} ${response.url()}`);
 			});
 			await use();
-			for (const cancellation of navigationCancellations) {
-				if (!completedAssets.has(cancellation.url))
-					errors.push(cancellation.message);
-			}
 			await testInfo.attach("environment", {
 				body: JSON.stringify(
 					{
@@ -69,7 +30,6 @@ export const test = base.extend({
 						reducedMotion,
 						url: page.url(),
 						pageErrors: errors,
-						navigationCancellations,
 					},
 					null,
 					2,
@@ -85,6 +45,7 @@ export const test = base.extend({
 export { expect };
 
 export async function capture(testInfo, target, name, options = {}) {
+	if (process.env.BARBA_CAPTURE !== "1") return;
 	await testInfo.attach(name, {
 		body: await target.screenshot({ animations: "disabled", ...options }),
 		contentType: "image/png",
@@ -101,4 +62,18 @@ export async function expectNoPageOverflow(page) {
 			),
 		)
 		.toBeLessThanOrEqual(1);
+}
+
+// Exercise shipped CSS without allowing specimen-only styles to hide regressions.
+export async function loadPackage(page, url = "/index.html") {
+	await page.goto(url);
+	await page.locator('link[rel="stylesheet"], style').evaluateAll((els) => {
+		for (const el of els) el.remove();
+	});
+	await page.addStyleTag({
+		content: await readFile(
+			new URL("../../src/packages/css-lib/dist/barbajoe.css", import.meta.url),
+			"utf8",
+		),
+	});
 }

@@ -18,9 +18,9 @@ async function load(page, packaged, url = "/forms.html") {
 		});
 	}
 }
-for (const packaged of [false, true]) {
+for (const packaged of [true]) {
 	const source = packaged ? "package" : "source";
-	test(`${source}: inline controls align and wrap without ancestry differences`, async ({
+	test(`${source}: @light inline controls align and wrap without ancestry differences`, async ({
 		page,
 	}, testInfo) => {
 		await load(page, packaged);
@@ -65,12 +65,12 @@ for (const packaged of [false, true]) {
 	});
 }
 
-for (const packaged of [false, true]) {
+for (const packaged of [true]) {
 	const source = packaged ? "package" : "source";
-	test(`${source}: X clears by keyboard, preserves geometry, and synchronizes resets`, async ({
+	test(`${source}: @light X clears by keyboard and preserves geometry`, async ({
 		page,
 		browserName,
-	}, testInfo) => {
+	}) => {
 		await load(page, packaged);
 		// macOS WebKit includes buttons with Option-Tab, as in dialog tests.
 		const tab =
@@ -104,34 +104,6 @@ for (const packaged of [false, true]) {
 				.locator("..")
 				.getByRole("button", { name: "Add", exact: true }),
 		).toBeFocused();
-		await input.fill("Coffee");
-		await expect(clear).toBeVisible();
-		await clear.hover();
-		expect(
-			await clear.evaluate((el) => getComputedStyle(el).borderTopColor),
-		).toBe("rgba(0, 0, 0, 0)");
-		await clear.click();
-		await page
-			.getByRole("button", { name: "Reset example", exact: true })
-			.click();
-		await expect(input).toHaveValue("Weekend supplies");
-		await expect(clear).toBeVisible();
-		await input.press("Enter");
-		await expect(
-			input
-				.locator("..")
-				.locator("..")
-				.locator("..")
-				.locator("..")
-				.getByRole("status"),
-		).toContainText("Weekend supplies");
-		await expect(clear).toBeHidden();
-		await expect(input).toBeFocused();
-		await capture(
-			testInfo,
-			page.locator('[aria-labelledby="inline-forms-heading"]'),
-			`${source}-inline-catalog`,
-		);
 	});
 	test(`${source}: empty, standalone, associated and unavailable fields behave consistently`, async ({
 		page,

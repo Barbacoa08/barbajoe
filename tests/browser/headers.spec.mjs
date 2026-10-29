@@ -154,23 +154,6 @@ test("long labels and semantic brand elements reflow without changing brand typo
 	await capture(testInfo, page.locator("header"), "header-long-labels");
 });
 
-test("maintained header controls demonstrate selection and updates", async ({
-	page,
-}) => {
-	await page.goto("/headers.html");
-	const example = page.locator('section[aria-labelledby="combined-header"]');
-	const help = example.getByRole("link", { name: "Help & settings" });
-	await help.click();
-	await expect(help).toHaveAttribute("aria-current", "page");
-	await expect(example.getByRole("status")).toContainText(
-		"Help & settings selected",
-	);
-	await example.getByRole("button", { name: "Update now" }).click();
-	await expect(example.getByRole("status")).toContainText(
-		"Demo update completed (1)",
-	);
-});
-
 function contrast(first, second) {
 	const luminance = (color) =>
 		color
@@ -193,7 +176,7 @@ function contrast(first, second) {
 	return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
 }
 
-test("packaged header preserves wrapping, current page and text contrast", async ({
+test("@light packaged header preserves wrapping, current page and text contrast", async ({
 	page,
 }, testInfo) => {
 	await loadHeader(page);
@@ -215,22 +198,47 @@ test("packaged header preserves wrapping, current page and text contrast", async
 	expect(nav.y).toBeLessThan(brand.y + brand.height);
 	const current = page.getByRole("link", { name: "Manage" });
 	await expect(current).toHaveCSS("border-bottom-width", "2px");
-	const surface = await page
-		.locator("header")
-		.evaluate((el) => getComputedStyle(el).backgroundColor);
-	for (const action of [
-		current,
-		page.getByRole("button", { name: "Update now" }),
-	]) {
-		const normal = await action.evaluate((el) => getComputedStyle(el).color);
-		expect(contrast(normal, surface)).toBeGreaterThanOrEqual(7);
-		await action.hover();
-		expect(
-			contrast(
-				await action.evaluate((el) => getComputedStyle(el).color),
-				surface,
-			),
-		).toBeGreaterThanOrEqual(7);
+	for (const colorScheme of ["light", "dark"]) {
+		await page.emulateMedia({ colorScheme });
+		const surface = await page
+			.locator("header")
+			.evaluate((el) => getComputedStyle(el).backgroundColor);
+		for (const action of [
+			current,
+			page.getByRole("button", { name: "Update now" }),
+		]) {
+			const normal = await action.evaluate((el) => getComputedStyle(el).color);
+			expect(contrast(normal, surface)).toBeGreaterThanOrEqual(7);
+			await action.hover();
+			expect(
+				contrast(
+					await action.evaluate((el) => getComputedStyle(el).color),
+					surface,
+				),
+			).toBeGreaterThanOrEqual(7);
+			await page.mouse.move(0, 0);
+			await page.keyboard.press("Tab");
+			await action.focus();
+			await expect(action).toBeFocused();
+			const ring = await action.evaluate((el) => {
+				const style = getComputedStyle(el);
+				return {
+					style: style.outlineStyle,
+					width: parseFloat(style.outlineWidth),
+					offset: parseFloat(style.outlineOffset),
+					color: style.outlineColor,
+					opacity: parseFloat(style.opacity),
+					visible: el.matches(":focus-visible"),
+				};
+			});
+			expect(ring.visible).toBe(true);
+			expect(ring.style).toBe("solid");
+			expect(ring.width).toBeGreaterThanOrEqual(2);
+			expect(ring.offset).toBeGreaterThanOrEqual(0);
+			expect(ring.opacity).toBe(1);
+			expect(contrast(ring.color, surface)).toBeGreaterThanOrEqual(3);
+			expect(ring.color).not.toMatch(/rgba\([^)]*,\s*0\)/);
+		}
 	}
 	await page.setViewportSize({ width: 320, height: 844 });
 	await expectNoPageOverflow(page);

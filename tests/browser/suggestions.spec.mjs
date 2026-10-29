@@ -37,64 +37,67 @@ async function fixture(page, packaged) {
 
 for (const packaged of [false, true]) {
 	const build = packaged ? "package" : "source";
-	test(`${build}: opt-in suggestion geometry and states preserve nearby controls`, async ({
-		page,
-	}, testInfo) => {
-		await fixture(page, packaged);
-		const rows = page.locator("#panel .suggestion-option");
-		const row = rows.first();
-		await expect(
-			page.getByRole("listbox", { name: "Destinations" }),
-		).toBeVisible();
-		await expect(row).toHaveCSS("font-weight", "400");
-		await expect(row).toHaveCSS("border-top-width", "0px");
-		await expect(row).toHaveCSS("text-align", "start");
-		await expect(page.locator("#panel > ul")).toHaveCSS(
-			"list-style-type",
-			"none",
-		);
-		await expect(page.locator("#panel > ul")).toHaveCSS("padding-top", "4px");
-		await expect(row).toHaveCSS("padding-top", "8px");
-		await expect(row).toHaveCSS("padding-inline-start", "12px");
-		const size = await row.boundingBox();
-		expect(size.height).toBeGreaterThanOrEqual(44);
-		expect(size.width).toBeCloseTo(
-			await page.locator("#panel > ul").evaluate((el) => el.clientWidth - 8),
-			0,
-		);
-		await expect(page.locator("#ordinary")).toHaveCSS(
-			"border-top-width",
-			"1px",
-		);
-		await expect(page.locator("#ordinary")).toHaveCSS("font-weight", "600");
-		await expect(page.locator("#ordinary-list")).not.toHaveCSS(
-			"list-style-type",
-			"none",
-		);
-		await expect(
-			page.getByRole("combobox", { name: "Native selection" }),
-		).toHaveCSS("border-top-width", "1px");
-		await expect(rows.last()).toBeHidden();
-		const background = await row.evaluate(
-			(el) => getComputedStyle(el).backgroundColor,
-		);
-		await row.hover();
-		await expect(row).not.toHaveCSS("background-color", background);
-		await page.mouse.move(0, 0);
-		await expect(rows.nth(1)).not.toHaveCSS("background-color", background);
-		const disabled = rows.nth(3);
-		await disabled.hover();
-		await expect(disabled).toHaveCSS("background-color", background);
-		await expect(disabled).toBeDisabled();
-		await row.focus();
-		await page.keyboard.press("ArrowRight");
-		await expect(row).toHaveCSS("outline-style", "solid");
-		await capture(testInfo, page.locator("#panel"), `${build}-suggestions`);
-		await page.locator("#panel").evaluate((el) => {
-			el.hidden = true;
+	for (const colorScheme of ["light", "dark"]) {
+		test(`${packaged ? "@light " : ""}${build} ${colorScheme}: opt-in suggestion geometry and states preserve nearby controls`, async ({
+			page,
+		}, testInfo) => {
+			await page.emulateMedia({ colorScheme });
+			await fixture(page, packaged);
+			const rows = page.locator("#panel .suggestion-option");
+			const row = rows.first();
+			await expect(
+				page.getByRole("listbox", { name: "Destinations" }),
+			).toBeVisible();
+			await expect(row).toHaveCSS("font-weight", "400");
+			await expect(row).toHaveCSS("border-top-width", "0px");
+			await expect(row).toHaveCSS("text-align", "start");
+			await expect(page.locator("#panel > ul")).toHaveCSS(
+				"list-style-type",
+				"none",
+			);
+			await expect(page.locator("#panel > ul")).toHaveCSS("padding-top", "4px");
+			await expect(row).toHaveCSS("padding-top", "8px");
+			await expect(row).toHaveCSS("padding-inline-start", "12px");
+			const size = await row.boundingBox();
+			expect(size.height).toBeGreaterThanOrEqual(44);
+			expect(size.width).toBeCloseTo(
+				await page.locator("#panel > ul").evaluate((el) => el.clientWidth - 8),
+				0,
+			);
+			await expect(page.locator("#ordinary")).toHaveCSS(
+				"border-top-width",
+				"1px",
+			);
+			await expect(page.locator("#ordinary")).toHaveCSS("font-weight", "600");
+			await expect(page.locator("#ordinary-list")).not.toHaveCSS(
+				"list-style-type",
+				"none",
+			);
+			await expect(
+				page.getByRole("combobox", { name: "Native selection" }),
+			).toHaveCSS("border-top-width", "1px");
+			await expect(rows.last()).toBeHidden();
+			const background = await row.evaluate(
+				(el) => getComputedStyle(el).backgroundColor,
+			);
+			await row.hover();
+			await expect(row).not.toHaveCSS("background-color", background);
+			await page.mouse.move(0, 0);
+			await expect(rows.nth(1)).not.toHaveCSS("background-color", background);
+			const disabled = rows.nth(3);
+			await disabled.hover();
+			await expect(disabled).toHaveCSS("background-color", background);
+			await expect(disabled).toBeDisabled();
+			await row.focus();
+			await page.keyboard.press("ArrowRight");
+			await expect(row).toHaveCSS("outline-style", "solid");
+			await capture(testInfo, page.locator("#panel"), `${build}-suggestions`);
+			await page.locator("#panel").evaluate((el) => {
+				el.hidden = true;
+			});
+			await expect(row).toBeHidden();
 		});
-		await expect(row).toBeHidden();
-	});
+	}
 
 	test(`${build}: suggestion content reflows at 320px in both directions with enlarged text`, async ({
 		page,

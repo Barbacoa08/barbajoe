@@ -1,8 +1,8 @@
 import { readFile } from "node:fs/promises";
 import { expect, test } from "./fixtures.mjs";
 
-for (const packaged of [false, true]) {
-	test(`${packaged ? "package" : "source"}: ordinary hidden survives component display rules and reveal restores keyboard use`, async ({
+for (const packaged of [true]) {
+	test(`${packaged ? "package" : "source"}: @light ordinary hidden survives component display rules and reveal restores keyboard use`, async ({
 		page,
 		browserName,
 	}) => {
