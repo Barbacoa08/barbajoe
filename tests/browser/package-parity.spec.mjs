@@ -12,12 +12,10 @@ test("@once source and package agree on both theme palettes", async ({
 					'<span id="palette-probe" style="color:var(--barba-color-text);background:var(--barba-color-bg)">Palette</span>',
 				),
 			);
-		return page
-			.locator("#palette-probe")
-			.evaluate((el) => ({
-				text: getComputedStyle(el).color,
-				background: getComputedStyle(el).backgroundColor,
-			}));
+		return page.locator("#palette-probe").evaluate((el) => ({
+			text: getComputedStyle(el).color,
+			background: getComputedStyle(el).backgroundColor,
+		}));
 	};
 	const colors = [];
 	for (const colorScheme of ["light", "dark"]) {
