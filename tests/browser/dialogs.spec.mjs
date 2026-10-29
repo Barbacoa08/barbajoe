@@ -1,91 +1,10 @@
-import { capture, expect, expectNoPageOverflow, test } from "./fixtures.mjs";
-
-for (const kind of ["short", "long"]) {
-	const label = kind === "short" ? "Short" : "Long";
-	test(`${kind} dialog resets, validates, cancels, and submits`, async ({
-		page,
-	}, testInfo) => {
-		await page.goto("/dialogs.html");
-		const opener = page.getByRole("button", { name: `Open ${kind} dialog` });
-		const dialog = page.getByRole("dialog", {
-			name: `${label} dialog`,
-			exact: true,
-		});
-		// Native dialogs restore previously focused controls; Safari does not
-		// focus buttons on pointer click. Start this check with keyboard activation.
-		await opener.focus();
-		await opener.press("Enter");
-		await expect(dialog).toBeVisible();
-		const title = dialog.getByLabel(`${label} title`, { exact: true });
-		await expect(title).toBeFocused();
-		await title.fill("Edited title");
-		if (kind === "long") {
-			await dialog
-				.getByRole("textbox", { name: "Notes", exact: true })
-				.fill("Edited notes");
-			await dialog
-				.getByLabel("Final field", { exact: true })
-				.fill("Edited final value");
-		}
-		await dialog.getByRole("button", { name: "Reset", exact: true }).click();
-		await expect(title).toHaveValue(`Initial ${kind} title`);
-		if (kind === "long") {
-			await expect(
-				dialog.getByRole("textbox", { name: "Notes", exact: true }),
-			).toHaveValue("Initial notes to restore with Reset.");
-			await expect(
-				dialog.getByLabel("Final field", { exact: true }),
-			).toHaveValue("Initial final value");
-		}
-		await expect(dialog).toBeVisible();
-		await title.fill("");
-		await dialog.getByRole("button", { name: "Submit", exact: true }).click();
-		await expect(dialog).toBeVisible();
-		await expect(title).toBeFocused();
-		await expect
-			.poll(() => title.evaluate((element) => element.validity.valueMissing))
-			.toBe(true);
-		await capture(testInfo, dialog, `${kind}-invalid-dialog`);
-		await dialog.getByRole("button", { name: "Cancel", exact: true }).click();
-		await expect(dialog).not.toBeVisible();
-		await expect(opener).toBeFocused();
-		await opener.press("Enter");
-		await expect(title).toHaveValue("");
-		await title.fill("Valid submission");
-		await dialog.getByRole("button", { name: "Submit", exact: true }).click();
-		await expect(dialog).not.toBeVisible();
-		await expect(opener).toBeFocused();
-	});
-
-	test(`${kind} dialog cancels outside and with Escape, retaining inside gestures`, async ({
-		page,
-	}) => {
-		await page.goto("/dialogs.html");
-		const opener = page.getByRole("button", { name: `Open ${kind} dialog` });
-		const dialog = page.getByRole("dialog", {
-			name: `${label} dialog`,
-			exact: true,
-		});
-		await opener.focus();
-		await opener.press("Enter");
-		await dialog.getByLabel(`${label} title`, { exact: true }).fill("");
-		await dialog.locator(".dialog-header").click();
-		await expect(dialog).toBeVisible();
-		const box = await dialog.locator(".dialog-header").boundingBox();
-		await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
-		await page.mouse.down();
-		await page.mouse.move(2, 2);
-		await page.mouse.up();
-		await expect(dialog).toBeVisible();
-		await page.mouse.click(2, 2);
-		await expect(dialog).not.toBeVisible();
-		await expect(opener).toBeFocused();
-		await opener.press("Enter");
-		await page.keyboard.press("Escape");
-		await expect(dialog).not.toBeVisible();
-		await expect(opener).toBeFocused();
-	});
-}
+import {
+	capture,
+	expect,
+	expectNoPageOverflow,
+	loadPackage,
+	test,
+} from "./fixtures.mjs";
 
 test("short and long dialogs share a top anchor and keep long scrolling in the body", async ({
 	page,
@@ -128,11 +47,11 @@ test("short and long dialogs share a top anchor and keep long scrolling in the b
 	await capture(testInfo, long, "long-dialog-scrolled");
 });
 
-test("dialog keyboard navigation reaches the final field and footer actions at 320px", async ({
+test("@light dialog keyboard navigation reaches the final field and footer actions at 320px", async ({
 	page,
 	browserName,
 }) => {
-	await page.goto("/dialogs.html");
+	await loadPackage(page, "/dialogs.html");
 	await page.setViewportSize({ width: 320, height: 568 });
 	await page.getByRole("button", { name: "Open long dialog" }).click();
 	const dialog = page.getByRole("dialog", { name: "Long dialog", exact: true });

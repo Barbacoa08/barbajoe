@@ -1,3 +1,4 @@
+import { readFile } from "node:fs/promises";
 import { platform, release } from "node:os";
 import { test as base, expect } from "@playwright/test";
 
@@ -44,6 +45,7 @@ export const test = base.extend({
 export { expect };
 
 export async function capture(testInfo, target, name, options = {}) {
+	if (process.env.BARBA_CAPTURE !== "1") return;
 	await testInfo.attach(name, {
 		body: await target.screenshot({ animations: "disabled", ...options }),
 		contentType: "image/png",
@@ -60,4 +62,18 @@ export async function expectNoPageOverflow(page) {
 			),
 		)
 		.toBeLessThanOrEqual(1);
+}
+
+// Exercise shipped CSS without allowing specimen-only styles to hide regressions.
+export async function loadPackage(page, url = "/index.html") {
+	await page.goto(url);
+	await page.locator('link[rel="stylesheet"], style').evaluateAll((els) => {
+		for (const el of els) el.remove();
+	});
+	await page.addStyleTag({
+		content: await readFile(
+			new URL("../../src/packages/css-lib/dist/barbajoe.css", import.meta.url),
+			"utf8",
+		),
+	});
 }

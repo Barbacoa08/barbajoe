@@ -1,22 +1,96 @@
-name: Stage CSS release
+name: CI
 
 on:
   push:
-    branches:
-      - main
-    paths:
-      - src/packages/css-lib/package.json
+    branches: [main]
+  pull_request:
+    types: [opened, synchronize, reopened, edited, labeled, unlabeled]
+  workflow_dispatch:
+    inputs:
+      minimum_tier:
+        description: Minimum validation tier (cannot reduce the version-selected tier)
+        type: choice
+        options: [none, light, heavy]
+        default: heavy
 
 permissions:
   contents: read
 
 concurrency:
-  group: css-staged-release
-  cancel-in-progress: false
+  group: ${{ github.event_name == 'push' && 'css-staged-release' || format('ci-{0}', github.run_id) }}
+  # Preserve pending main releases; only superseded PR runs may be replaced.
+  queue: max
 
 jobs:
+  check:
+    # Preserve the repository's required check identity for every tier.
+    name: Lint and build CSS library
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    concurrency:
+      group: validation-${{ github.event.pull_request.number || github.run_id }}
+      cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+    outputs:
+      release: ${{ steps.tier.outputs.release }}
+      before: ${{ steps.tier.outputs.before }}
+      after: ${{ steps.tier.outputs.after }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - name: Install pnpm and Node.js
+        uses: pnpm/setup@fa36a5ef7dcdefc3a7cb25655c122e00cf6e636e # v3.1.2
+        with:
+          runtime: node@24.22.1
+          cache: true
+          install: false
+      - name: Select validation tier
+        id: tier
+        run: node .github/scripts/css-ci-event.mjs
+      - name: Install locked dependencies
+        run: pnpm install --frozen-lockfile --config.lockfile=true
+      - name: Lint CSS library
+        run: pnpm lint
+      - name: Build CSS library and documentation once
+        run: pnpm build:specimen
+      - name: Test release helpers and suite membership
+        if: steps.tier.outputs.tier != 'none'
+        env:
+          BARBA_TEST_USE_EXISTING_BUILD: '1'
+        run: |
+          pnpm test:release
+          mkdir -p .projects/ci
+          pnpm exec playwright test --list --grep @light --reporter=json > .projects/ci/light.json
+          pnpm exec playwright test --list --reporter=json > .projects/ci/heavy.json
+          node .github/scripts/check-browser-inventory.mjs .projects/ci/light.json .projects/ci/heavy.json
+      - name: Install test browsers and system dependencies
+        if: steps.tier.outputs.tier != 'none'
+        run: pnpm exec playwright install --with-deps --only-shell chromium firefox webkit
+      - name: Run selected browser suite
+        id: browser
+        if: steps.tier.outputs.tier != 'none'
+        env:
+          BARBA_TEST_USE_EXISTING_BUILD: '1'
+          CI_TIER: ${{ steps.tier.outputs.tier }}
+        run: |
+          case "$CI_TIER" in
+            light) pnpm test:browser:light ;;
+            heavy) pnpm test:browser:heavy ;;
+            *) exit 1 ;;
+          esac
+      - name: Upload browser report
+        if: ${{ !cancelled() && steps.browser.outcome != 'skipped' && steps.browser.outcome != '' }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: browser-review-${{ steps.tier.outputs.tier }}
+          path: playwright-report/
+          retention-days: 14
+          if-no-files-found: warn
+
   gate:
     name: Check CSS version increase
+    needs: check
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && needs.check.outputs.release == 'true'
     runs-on: ubuntu-latest
     outputs:
       stage: ${{ steps.version.outputs.stage }}
@@ -25,6 +99,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          ref: ${{ needs.check.outputs.after }}
           fetch-depth: 0
       - uses: pnpm/setup@fa36a5ef7dcdefc3a7cb25655c122e00cf6e636e # v3.1.2
         with:
@@ -34,7 +109,7 @@ jobs:
       - name: Compare current, previous, and published versions
         id: version
         env:
-          BEFORE_SHA: ${{ github.event.before }}
+          BEFORE_SHA: ${{ needs.check.outputs.before }}
         run: |
           previous=$(git show "${BEFORE_SHA}:src/packages/css-lib/package.json" | node -e 'let data = ""; process.stdin.on("data", chunk => data += chunk); process.stdin.on("end", () => console.log(JSON.parse(data).version))')
           current=$(node -p "require('./src/packages/css-lib/package.json').version")
@@ -43,7 +118,7 @@ jobs:
 
   stage:
     name: Validate and stage CSS package
-    needs: gate
+    needs: [check, gate]
     if: needs.gate.outputs.stage == 'true'
     runs-on: ubuntu-latest
     permissions:
@@ -51,6 +126,8 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ needs.check.outputs.after }}
       - uses: pnpm/setup@fa36a5ef7dcdefc3a7cb25655c122e00cf6e636e # v3.1.2
         with:
           runtime: node@24.22.1
@@ -58,8 +135,8 @@ jobs:
           install: false
       - name: Install locked dependencies
         run: pnpm install --frozen-lockfile --config.lockfile=true
-      - name: Test release helpers and check CSS
-        run: pnpm test:release && pnpm check && pnpm build:specimen
+      - name: Build and inspect validated package
+        run: pnpm build
       - name: Inspect package contents
         env:
           CURRENT_VERSION: ${{ needs.gate.outputs.current }}
@@ -69,13 +146,15 @@ jobs:
 
   remind:
     name: Assign npm approval reminder
-    needs: [gate, stage]
+    needs: [check, gate, stage]
     runs-on: ubuntu-latest
     permissions:
       contents: read
       issues: write
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ needs.check.outputs.after }}
       - uses: pnpm/setup@fa36a5ef7dcdefc3a7cb25655c122e00cf6e636e # v3.1.2
         with:
           runtime: node@24.22.1

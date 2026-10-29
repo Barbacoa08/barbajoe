@@ -27,8 +27,10 @@
 		"css-lib": "pnpm --filter @barbajoe/css-lib",
 		"lint": "biome ci src/packages/css-lib/build.mjs src/packages/css-lib/lib src/packages/css-lib/specimen .github/scripts tests/browser playwright.config.mjs --error-on-warnings",
 		"test:release": "node --test .github/scripts/*.test.mjs",
-		"test:browser": "playwright test",
-		"test:browser:report": "playwright show-report"
+		"test:browser": "pnpm test:browser:heavy",
+		"test:browser:report": "playwright show-report",
+		"test:browser:light": "playwright test --grep @light",
+		"test:browser:heavy": "playwright test"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.6.3",

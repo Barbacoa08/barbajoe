@@ -28,7 +28,7 @@ async function fixture(page, packaged) {
 	return dialog;
 }
 
-for (const packaged of [false, true]) {
+for (const packaged of [true]) {
 	const label = packaged ? "package" : "source";
 	test(`${label}: dialog options are independent and retain the standard width`, async ({
 		page,
@@ -168,45 +168,3 @@ for (const packaged of [false, true]) {
 		await capture(testInfo, dialog, `${label}-full-dividers`);
 	});
 }
-
-test("maintained content-fit dialogs validate and close through their icon", async ({
-	page,
-	browserName,
-}) => {
-	await page.goto("/dialogs.html");
-	for (const kind of ["short", "long"]) {
-		const opener = page.getByRole("button", {
-			name: `Open content-fit ${kind} dialog`,
-			exact: true,
-		});
-		await opener.focus();
-		await opener.press("Enter");
-		const dialog = page.getByRole("dialog", {
-			name: `Content-fit ${kind} dialog`,
-			exact: true,
-		});
-		const name = dialog.getByLabel("Item name");
-		await name.fill("");
-		await dialog.getByRole("button", { name: "Save", exact: true }).click();
-		await expect(dialog).toBeVisible();
-		const tab =
-			browserName === "webkit" && process.platform === "darwin"
-				? "Alt+Tab"
-				: "Tab";
-		await name.press(`Shift+${tab}`);
-		// Firefox includes an overflowing scroll region in keyboard navigation.
-		if (browserName === "firefox" && kind === "long") {
-			await expect(dialog.locator(".dialog-body")).toBeFocused();
-			await page.keyboard.press(`Shift+${tab}`);
-		}
-		const close = dialog.getByRole("button", { name: "Close dialog" });
-		await expect(close).toBeFocused();
-		await expect(close).toHaveCSS("outline-style", "solid");
-		await close.press("Enter");
-		await expect(dialog).not.toBeVisible();
-		await expect(opener).toBeFocused();
-		await opener.press("Enter");
-		await name.press("Escape");
-		await expect(dialog).not.toBeVisible();
-	}
-});

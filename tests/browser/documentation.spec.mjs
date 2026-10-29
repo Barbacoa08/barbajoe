@@ -13,7 +13,7 @@ const topics = [
 	"editor.html",
 ];
 
-test("home links to every topic and keeps full demonstrations on their pages", async ({
+test("@once home links to every topic and keeps full demonstrations on their pages", async ({
 	page,
 }) => {
 	await page.goto("/index.html");
@@ -28,7 +28,7 @@ test("home links to every topic and keeps full demonstrations on their pages", a
 	await expectNoPageOverflow(page);
 });
 
-test("topic navigation works by keyboard without JavaScript", async ({
+test("@once topic navigation works by keyboard without JavaScript", async ({
 	browser,
 }) => {
 	const context = await browser.newContext({
@@ -54,7 +54,7 @@ test("topic navigation works by keyboard without JavaScript", async ({
 	await context.close();
 });
 
-test("old catalog bookmarks preserve sections and queries on load and hash changes", async ({
+test("@once old catalog bookmarks preserve sections and queries on load and hash changes", async ({
 	page,
 }) => {
 	for (const [old, target] of [
@@ -80,7 +80,7 @@ test("old catalog bookmarks preserve sections and queries on load and hash chang
 	await expect(page.locator("main h1")).toBeVisible();
 });
 
-test("every documentation link and fragment resolves in the built site", async ({
+test("@once every documentation link and fragment resolves in the built site", async ({
 	page,
 }) => {
 	for (const file of [
