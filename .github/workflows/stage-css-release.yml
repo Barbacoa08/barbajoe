@@ -1,11 +1,14 @@
 name: Stage CSS release
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - src/packages/css-lib/package.json
+  workflow_call:
+    inputs:
+      before_sha:
+        required: true
+        type: string
+      after_sha:
+        required: true
+        type: string
 
 permissions:
   contents: read
@@ -25,6 +28,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          ref: ${{ inputs.after_sha }}
           fetch-depth: 0
       - uses: pnpm/setup@fa36a5ef7dcdefc3a7cb25655c122e00cf6e636e # v3.1.2
         with:
@@ -34,7 +38,7 @@ jobs:
       - name: Compare current, previous, and published versions
         id: version
         env:
-          BEFORE_SHA: ${{ github.event.before }}
+          BEFORE_SHA: ${{ inputs.before_sha }}
         run: |
           previous=$(git show "${BEFORE_SHA}:src/packages/css-lib/package.json" | node -e 'let data = ""; process.stdin.on("data", chunk => data += chunk); process.stdin.on("end", () => console.log(JSON.parse(data).version))')
           current=$(node -p "require('./src/packages/css-lib/package.json').version")
@@ -51,6 +55,8 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.after_sha }}
       - uses: pnpm/setup@fa36a5ef7dcdefc3a7cb25655c122e00cf6e636e # v3.1.2
         with:
           runtime: node@24.22.1
@@ -58,8 +64,8 @@ jobs:
           install: false
       - name: Install locked dependencies
         run: pnpm install --frozen-lockfile --config.lockfile=true
-      - name: Test release helpers and check CSS
-        run: pnpm test:release && pnpm check && pnpm build:specimen
+      - name: Build and inspect validated package
+        run: pnpm build
       - name: Inspect package contents
         env:
           CURRENT_VERSION: ${{ needs.gate.outputs.current }}
@@ -76,6 +82,8 @@ jobs:
       issues: write
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.after_sha }}
       - uses: pnpm/setup@fa36a5ef7dcdefc3a7cb25655c122e00cf6e636e # v3.1.2
         with:
           runtime: node@24.22.1

@@ -656,33 +656,39 @@ pnpm lint
 
 ### Automated browser review
 
-From the repository root, install the locked development dependencies and the bundled test browsers:
+Install locked dependencies and test browsers from the repository root:
 
 ```sh
 pnpm install --frozen-lockfile
 pnpm exec playwright install chromium firefox webkit
-```
-
-On Linux, add `--with-deps` to the browser installation command to install required system dependencies. Repeat browser installation after updating Playwright.
-
-Run the review and open its report:
-
-```sh
-pnpm test:browser
+pnpm test:browser:light
+pnpm test:browser:heavy
 pnpm test:browser:report
 ```
 
-The review builds the CSS and optimized specimen, serves `.output/specimen` on `127.0.0.1:4173`, runs the tests, and stops its server. Leave that port free; an existing server is rejected so stale output cannot silently pass. No separate development server is needed. Most specimen pages import library source CSS through Parcel; `package-theme.html` imports the freshly generated release bundle. The editor and hidden-state regression checks also exercise both stylesheet builds. The release-helper checks separately validate the packaged Lightning CSS bundle.
+On Linux, add `--with-deps` when installing browsers. Repeat installation after a Playwright update. `pnpm test:browser` is an alias for heavy. For a focused run, use `pnpm exec playwright test header-menus --project=webkit`; add `--headed` to watch it.
 
-Playwright runs Chromium, Firefox, and WebKit at 1280×720 and 390×844 in light and dark schemes. It checks all documentation and demonstration pages and asset loading, page overflow, form reset and inert catalog actions, dialog reset/validation/dismissal/focus, dialog sizing and body scrolling, keyboard reachability, and keyboard table scrolling. Focused header, table and dialog checks also use 320px layouts. Header checks cover content-based wrapping, right alignment, padded targets, current-page markup, disabled actions, semantic brand elements and long labels; a separate check exercises the packaged CSS and header text contrast. Each run captures full-page views, buttons/hover, placeholders, forms, tables, and open-dialog states for human review. These images are evidence, with no stored image baselines or automatic pixel comparisons.
+The commands build the library and documentation once, serve the specimen on `127.0.0.1:4173`, and stop the server afterward. Leave that port free; an existing server is rejected. CI builds first and sets `BARBA_TEST_USE_EXISTING_BUILD=1` to reuse its own output. Do not set that variable locally unless you have just rebuilt the current sources.
 
-`playwright-report/` contains the HTML report, screenshots, environment attachments, and failure traces. `test-results/` contains individual test outputs. Both are ignored by Git and excluded from the npm package. Environment attachments identify the date, commit, browser build/version, OS, actual viewport, scheme, and build type. Test failures produce a nonzero exit code. Reports do not open automatically; the job can finish unattended.
+| CSS version change | Required CI tier |
+| --- | --- |
+| Unchanged | Lint, library build, and documentation build only |
+| Patch increase | Lint/build, release/CI helper tests, and light browser checks |
+| Minor or major increase | Lint/build, release/CI helper tests, and all retained heavy browser checks |
 
-For a focused local run, use `pnpm test:browser --project=webkit-narrow-dark`; add `--headed` to watch it. The same command runs in the **Browser review** GitHub Actions workflow on PRs, pushes to `main`, or manual dispatch. Download its `browser-review-report` artifact, unzip it, then run `pnpm test:browser:report /path/to/unzipped-report` with the directory containing `index.html`. Reports are retained for 14 days. Behavioral failures fail that CI job; configuring it as a required merge check is a separate maintainer choice.
+The **CI** workflow compares PR base/head versions across the complete PR, not just its last commit. On `main` pushes it compares the event's before/after commits. Invalid or decreasing stable versions fail; update a stale branch against its target. Add `ci:light` or `ci:heavy` labels to request an upward override (heavy wins if both exist). Manual runs compare the selected ref with current `main` and offer a minimum-tier choice, defaulting to heavy. Overrides cannot reduce version-selected coverage. Changing or removing a label recalculates the required tier.
 
-These are Playwright's bundled test browsers, not a guarantee about the current installed Chrome, Firefox, or Safari releases. WebKit is sufficient for automated coverage here but is not branded Safari. Narrow desktop viewports do not test real iOS/Android browser behavior. Runs request reduced motion for repeatable capture, except for the focused disclosure-motion regressions, which enable motion to check source/package animation, fallbacks, and the temporary guard. The general suite does not assess visual animation quality, real 200% browser zoom, or screen-reader usability. Use the manual guidance below for those checks when relevant; actual-device review remains recommended, not required. Disclosure checks exercise both variants in source and packaged CSS, padded summary targets, native controls, keyboard focus, nested content, forced colors, and unbroken-label reflow. Filter checks cover selection summaries, independent groups, collapsed tab order, clear focus, and separate targets at 320px. Enlarged-root-text checks are not actual browser zoom. The 13 release-helper tests are separate from these browser tests.
+The existing required check, **Lint and build CSS library**, reports the selected tier in its summary and includes that tier's browser checks. A failure in any selected step fails the check. A no-bump PR intentionally receives no browser or helper tests unless explicitly elevated; use heavy for test-suite, compiler, or broad workflow changes. Successful validation of a version-increasing push to `main` gates release staging on that same commit. PRs and manual runs never stage a release.
 
-Focus-return checks open dialogs from a focused button using Enter. On macOS, WebKit's default Tab navigation skips buttons, so the footer check uses Option-Tab; no system preferences are changed. These checks exercise keyboard dismissal and restoration, without assuming pointer clicks focus buttons in every browser.
+Light checks the built CSS in Chromium, Firefox, and WebKit: essential button states and customization, header/menu navigation, inline fields and clear actions, chip targets, disclosure operation, dialog reachability, hidden-content helpers, responsive overflow, and representative contrast in both themes. Heavy includes light once, plus documented variants, RTL/enlarged text/forced colors, motion and fallback regressions, targeted source/package parity, all documentation links and legacy bookmarks, and representative demo integration. It does not exhaustively test specimen application state or native form behavior.
+
+There is no blanket browser × width × theme matrix. Tests choose the dimensions relevant to their assertions. `@light` identifies the core subset; `@once` identifies browser-independent documentation checks or explicitly Chromium-specific probes. Unmarked retained tests run in all three engines. Suite-list validation rejects empty suites, duplicates, a missing engine, or light cases absent from heavy. Treat meaningful coverage and measured work as the goal, not a fixed test-count quota.
+
+Target less than one minute for lint/build and light, and less than five minutes for heavy, including setup, builds, tests, and report handling. The CI validation job has a **15-minute hard ceiling**, allowing growth without making that the expected duration. Record hosted timings separately from local timings and queue delays; these targets are not guarantees about runner provisioning.
+
+Failure screenshots and traces, an HTML report, and environment metadata are saved under ignored `playwright-report/` and `test-results/` directories. CI uploads `browser-review-light` or `browser-review-heavy` reports for 14 days. Successful screenshots are opt-in through `BARBA_CAPTURE=1` for selected visual-review cases; these are attachments for human inspection, not automated pixel comparisons. Temporary local investigation data belongs in an ignored directory and must not be committed or included in the package.
+
+These are Playwright's bundled browsers: WebKit is not installed Safari, narrow desktop viewports are not physical mobile devices, enlarged root text is not actual browser zoom, and accessible-name assertions do not establish screen-reader speech. Most tests request reduced motion; dedicated regressions enable animation. Manual review remains relevant for affected visual behavior, real zoom, assistive technology, and device-specific concerns. On macOS, keyboard tests use Option-Tab where WebKit requires it to include buttons; no system preferences are changed.
 
 ### Manual browser review
 
@@ -718,6 +724,6 @@ The package is currently at version `0.5.0`. Change the version only when there 
 
 The npm trusted publisher for `@barbajoe/css-lib` identifies GitHub user `Barbacoa08`, repository `barbajoe`, and workflow `stage-css-release.yml`. It must allow **stage publishing only**, not direct publishing. Keep the npm maintainer account's 2FA enabled and the package's Publishing access set to **Require two-factor authentication and disallow tokens**. The workflow uses OIDC; it needs neither a bypass-2FA npm access token nor an `NPM_AUTH_TOKEN` GitHub secret. Enable GitHub email notifications for issue assignments if you want the staged-release reminder in your inbox.
 
-To release, raise this package's version in a pull request and merge it into `main`. The workflow compares that version with the preceding `main` version and npm's published `latest`; equal, lower, and prerelease versions do not stage. It then installs locked dependencies, tests, builds, checks that the package contains only its expected CSS file and metadata, and stages it on npm. A separate job assigns Joe a GitHub issue only after staging succeeds. The staged version is not installable until a maintainer approves it with npm 2FA.
+To release, raise this package's version in a pull request and merge it into `main`. The workflow compares that version with the preceding `main` version and npm's published `latest`; equal, lower, and prerelease versions do not stage. After the version-selected CI tier succeeds on the same commit, the reusable staging workflow installs locked dependencies, rebuilds the validated package in its fresh checkout, checks that it contains only its expected CSS file and metadata, and stages it on npm. A separate job assigns Joe a GitHub issue only after staging succeeds. The staged version is not installable until a maintainer approves it with npm 2FA.
 
 Review the successful workflow run and sign in to npm. Open [Staged Packages](https://www.npmjs.com/settings/barbajoe/staged-packages), inspect the staged version of `@barbajoe/css-lib`, and approve or reject it with npm 2FA. Close the reminder issue afterward. GitHub email and the issue are reminders; neither can approve the npm release. If staging fails, no approval issue is created. If the reminder job fails after staging succeeded, check npm's staging queue before retrying anything; do not rerun the entire release workflow blindly because npm will reject a duplicate staged version. Create the reminder issue manually if necessary.

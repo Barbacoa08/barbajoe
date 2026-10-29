@@ -2,32 +2,96 @@ name: CI
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
+    types: [opened, synchronize, reopened, edited, labeled, unlabeled]
+  workflow_dispatch:
+    inputs:
+      minimum_tier:
+        description: Minimum validation tier (cannot reduce the version-selected tier)
+        type: choice
+        options: [none, light, heavy]
+        default: heavy
 
 permissions:
   contents: read
 
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   check:
+    # Preserve the repository's required check identity for every tier.
     name: Lint and build CSS library
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+    outputs:
+      release: ${{ steps.tier.outputs.release }}
+      before: ${{ steps.tier.outputs.before }}
+      after: ${{ steps.tier.outputs.after }}
     steps:
-      - uses: actions/checkout@v7.0.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
       - name: Install pnpm and Node.js
-        uses: pnpm/setup@v3.1.2
+        uses: pnpm/setup@fa36a5ef7dcdefc3a7cb25655c122e00cf6e636e # v3.1.2
         with:
           runtime: node@24.22.1
           cache: true
           install: false
-      - name: Install dependencies
+      - name: Select validation tier
+        id: tier
+        run: node .github/scripts/css-ci-event.mjs
+      - name: Install locked dependencies
         run: pnpm install --frozen-lockfile --config.lockfile=true
       - name: Lint CSS library
         run: pnpm lint
-      - name: Test release helpers
-        run: pnpm test:release
-      - name: Build CSS library
-        run: pnpm build
-      - name: Build CSS specimen
+      - name: Build CSS library and documentation once
         run: pnpm build:specimen
+      - name: Test release helpers and suite membership
+        if: steps.tier.outputs.tier != 'none'
+        env:
+          BARBA_TEST_USE_EXISTING_BUILD: '1'
+        run: |
+          pnpm test:release
+          mkdir -p .projects/ci
+          pnpm exec playwright test --list --grep @light --reporter=json > .projects/ci/light.json
+          pnpm exec playwright test --list --reporter=json > .projects/ci/heavy.json
+          node .github/scripts/check-browser-inventory.mjs .projects/ci/light.json .projects/ci/heavy.json
+      - name: Install test browsers and system dependencies
+        if: steps.tier.outputs.tier != 'none'
+        run: pnpm exec playwright install --with-deps chromium firefox webkit
+      - name: Run selected browser suite
+        id: browser
+        if: steps.tier.outputs.tier != 'none'
+        env:
+          BARBA_TEST_USE_EXISTING_BUILD: '1'
+          CI_TIER: ${{ steps.tier.outputs.tier }}
+        run: |
+          case "$CI_TIER" in
+            light) pnpm test:browser:light ;;
+            heavy) pnpm test:browser:heavy ;;
+            *) exit 1 ;;
+          esac
+      - name: Upload browser report
+        if: ${{ !cancelled() && steps.browser.outcome != 'skipped' && steps.browser.outcome != '' }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: browser-review-${{ steps.tier.outputs.tier }}
+          path: playwright-report/
+          retention-days: 14
+          if-no-files-found: warn
+
+  stage:
+    name: Stage validated CSS release
+    needs: check
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && needs.check.outputs.release == 'true'
+    permissions:
+      contents: read
+      id-token: write
+      issues: write
+    uses: ./.github/workflows/stage-css-release.yml
+    with:
+      before_sha: ${{ needs.check.outputs.before }}
+      after_sha: ${{ needs.check.outputs.after }}
