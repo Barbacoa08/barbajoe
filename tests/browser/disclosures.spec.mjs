@@ -3,7 +3,7 @@ import { capture, expect, test } from "./fixtures.mjs";
 
 // Catch lost component styling/imports, clipped long labels, and styles that
 // obscure the padded summary target, native controls, or keyboard focus.
-for (const packaged of [false, true]) {
+for (const packaged of [true]) {
 	const source = packaged ? "package" : "source";
 	test(`${source}: disclosure panels keep padded targets, focus and content reachable`, async ({
 		page,

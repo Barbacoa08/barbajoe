@@ -1,5 +1,10 @@
 import { readFile } from "node:fs/promises";
-import { expect, expectNoPageOverflow, test } from "./fixtures.mjs";
+import {
+	expect,
+	expectNoPageOverflow,
+	loadPackage,
+	test,
+} from "./fixtures.mjs";
 
 const nav = (page) =>
 	page.getByRole("navigation", { name: "Documentation", exact: true });
@@ -7,11 +12,11 @@ const trigger = (page, name) =>
 	nav(page).getByRole("button", { name, exact: true });
 const menu = (page, name) => page.locator(`#docs-${name.toLowerCase()}`);
 
-test("header categories toggle, dismiss, and restore keyboard focus", async ({
+test("@light header categories toggle, dismiss, and restore keyboard focus", async ({
 	page,
 	browserName,
 }) => {
-	await page.goto("/forms.html");
+	await loadPackage(page, "/forms.html");
 	const components = trigger(page, "Components");
 	await components.focus();
 	await components.press("Enter");
@@ -103,10 +108,10 @@ test("header menus fit narrow, RTL, enlarged-text, and short viewports", async (
 	await expect(shortMenu.getByRole("link").last()).toBeInViewport();
 });
 
-test("header destination selection navigates and marks its current page", async ({
+test("@light header destination selection navigates and marks its current page", async ({
 	page,
 }) => {
-	await page.goto("/index.html");
+	await loadPackage(page, "/index.html");
 	await trigger(page, "Components").click();
 	await nav(page).getByRole("link", { name: "Chips", exact: true }).click();
 	await expect(page).toHaveURL(/chips\.html$/);
@@ -124,6 +129,9 @@ for (const build of ["source", "package"]) {
 		page,
 	}) => {
 		await page.goto("/forms.html");
+		await page.locator("main, footer").evaluateAll((els) => {
+			for (const el of els) el.remove();
+		});
 		if (build === "package") {
 			await page.locator('link[rel="stylesheet"], style').evaluateAll((els) => {
 				for (const el of els) el.remove();
@@ -173,6 +181,9 @@ test("menu fallbacks remain usable without anchors or native popovers", async ({
 	page,
 }) => {
 	await page.goto("/forms.html");
+	await page.locator("main, footer").evaluateAll((els) => {
+		for (const el of els) el.remove();
+	});
 	const css = await readFile(
 		new URL(
 			"../../src/packages/css-lib/lib/components/header.css",

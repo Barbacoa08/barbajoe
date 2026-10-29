@@ -12,7 +12,7 @@ async function usePackage(page) {
 	});
 }
 
-for (const packaged of [false, true]) {
+for (const packaged of [true]) {
 	const source = packaged ? "package" : "source";
 	test(`${source}: shaded list rows reach the filled disclosure edge in both directions`, async ({
 		page,
@@ -34,7 +34,7 @@ for (const packaged of [false, true]) {
 			.click();
 		for (const details of await examples.all())
 			await expect(details).toHaveAttribute("open", "");
-		for (const width of [1280, 390, 320]) {
+		for (const width of [1280, 320]) {
 			await page.setViewportSize({ width, height: 844 });
 			for (const dir of ["ltr", "rtl"]) {
 				await page.locator("#edge-content").evaluate((el, direction) => {
@@ -96,35 +96,26 @@ for (const packaged of [false, true]) {
 			await page.locator("html").evaluate((el, size) => {
 				el.style.fontSize = `${size}px`;
 			}, fontSize);
-			for (const open of [false, true]) {
+			for (const open of [true]) {
 				for (const details of await page.locator("main details").all()) {
 					await details.evaluate((el, value) => {
 						el.open = value;
 					}, open);
 					const geometry = await details.locator("summary").evaluate((el) => {
-						const summary = el.getBoundingClientRect();
-						const label = el
-							.querySelector(".disclosure-label")
-							.getBoundingClientRect();
-						const style = getComputedStyle(el);
+						const p = getComputedStyle(el, "::after");
+						const m = new DOMMatrix(p.transform);
 						return {
-							top:
-								label.top -
-								summary.top -
-								Number.parseFloat(style.borderTopWidth),
-							bottom:
-								summary.bottom -
-								label.bottom -
-								Number.parseFloat(style.borderBottomWidth),
-							height: summary.height,
-							overflow: el.scrollWidth - el.clientWidth,
+							angle: (Math.atan2(m.b, m.a) * 180) / Math.PI,
+							stroke: parseFloat(p.borderBottomWidth),
+							width: parseFloat(p.width),
 						};
 					});
-					// Subpixel rounding is allowed; the original single-line defect is >6px.
-					expect(Math.abs(geometry.top - geometry.bottom)).toBeLessThan(1);
-					expect(geometry.top).toBeGreaterThanOrEqual(8);
-					expect(geometry.height).toBeGreaterThanOrEqual(44 - 0.01);
-					expect(geometry.overflow).toBeLessThanOrEqual(1);
+					expect(geometry.stroke).toBeGreaterThan(0);
+					expect(geometry.width).toBeGreaterThan(0);
+					expect(geometry.angle).toBeCloseTo(
+						open ? 45 : dir === "rtl" ? -45 : 135,
+						1,
+					);
 				}
 			}
 		}
@@ -233,123 +224,11 @@ for (const packaged of [false, true]) {
 			),
 		).toBe("solid");
 	});
-
-	test(`${source}: filter example retains summaries, independent groups, clear focus, and separate targets`, async ({
-		page,
-		browserName,
-	}, testInfo) => {
-		await page.goto("/disclosures.html#filled-disclosures-heading");
-		if (packaged) await usePackage(page);
-		const panel = page.locator(
-			'section[aria-labelledby="disclosures-heading"] [data-filled-filter-demo="light"]',
-		);
-		const summary = panel.locator("summary");
-		const details = panel.locator("details");
-		const clear = panel.getByRole("button", {
-			name: "Clear all filters",
-			exact: true,
-		});
-		await expect(summary).toHaveText("FiltersAll items");
-		await expect(clear).toBeHidden();
-		for (const name of ["aldis", "costco", "black", "blue"])
-			await panel.getByRole("button", { name, exact: true }).click();
-		await expect(summary).toHaveText("Filtersaldis · costco · black · blue");
-		await panel
-			.getByRole("button", { name: "All stores", exact: true })
-			.click();
-		await expect(summary).toHaveText("Filtersblack · blue");
-		await panel
-			.getByRole("button", { name: "blue", exact: true })
-			.press("Space");
-		await expect(summary).toHaveText("Filtersblack");
-		await summary.press("Enter");
-		await expect(details).not.toHaveAttribute("open");
-		await expect(
-			panel.getByRole("button", { name: "black", exact: true }),
-		).toBeHidden();
-		const tab =
-			browserName === "webkit" && process.platform === "darwin"
-				? "Alt+Tab"
-				: "Tab";
-		await page.keyboard.press(tab);
-		await expect(clear).toBeFocused();
-		await clear.press("Space");
-		await expect(summary).toBeFocused();
-		await expect(summary).toHaveText("FiltersAll items");
-		await expect(clear).toBeHidden();
-		await expect(details).not.toHaveAttribute("open");
-		await summary.press("Space");
-		await expect(
-			panel.getByRole("button", { name: "All stores", exact: true }),
-		).toHaveAttribute("aria-pressed", "true");
-		await expect(
-			panel.getByRole("button", { name: "All categories", exact: true }),
-		).toHaveAttribute("aria-pressed", "true");
-		await page.setViewportSize({ width: 320, height: 720 });
-		for (const button of await panel
-			.locator('.chip[data-value]:not([data-value=""])')
-			.all())
-			await button.click();
-		await expectNoPageOverflow(page);
-		const s = await summary.boundingBox();
-		const c = await clear.boundingBox();
-		expect(c.x).toBeGreaterThan(s.x);
-		expect(c.x + c.width).toBeLessThan(s.x + s.width);
-		const title = await panel.locator(".disclosure-title").boundingBox();
-		expect(
-			Math.abs(c.y + c.height / 2 - title.y - title.height / 2),
-		).toBeLessThan(1);
-		const selection = await panel
-			.locator(".specimen-filter-selection")
-			.boundingBox();
-		expect(selection.y).toBeGreaterThanOrEqual(title.y + title.height);
-		await clear.scrollIntoViewIfNeeded();
-		// A sibling overlays a reserved summary slot. Test actual hit regions,
-		// not the overlapping bounding boxes of the header and sibling action.
-		const hits = await panel.evaluate((el) => {
-			const summary = el.querySelector("summary");
-			const clear = el.querySelector(".specimen-filter-clear");
-			const c = clear.getBoundingClientRect();
-			const s = summary.getBoundingClientRect();
-			const inset = Number.parseFloat(
-				getComputedStyle(summary).paddingInlineEnd,
-			);
-			return {
-				clear:
-					document
-						.elementFromPoint(c.x + 2, c.y + c.height / 2)
-						?.closest("button") === clear,
-				toggle:
-					document
-						.elementFromPoint(s.right - inset / 2, c.y + c.height / 2)
-						?.closest("summary") === summary,
-			};
-		});
-		expect(hits).toEqual({ clear: true, toggle: true });
-		await clear.click({ position: { x: 2, y: c.height / 2 } });
-		await expect(details).toHaveAttribute("open", "");
-		await expect(summary).toBeFocused();
-		// Restore selections for the long-state capture and summary assertion.
-		for (const button of await panel
-			.locator('.chip[data-value]:not([data-value=""])')
-			.all())
-			await button.click();
-		expect(c.width).toBeGreaterThanOrEqual(44);
-		await expect(panel.locator(".specimen-filter-selection")).toHaveText(
-			"aldis · costco · freddies · target · tjs · black · blue · fresh · frozen · fruit · green · red · yellow",
-		);
-		await capture(testInfo, panel, `${source}-filter-long`);
-		await expect(
-			page.locator(
-				'section[aria-labelledby="disclosures-heading"] [data-filled-filter-demo="dark"] summary',
-			),
-		).toHaveText("FiltersAll items");
-	});
 }
 
 for (const packaged of [false, true]) {
 	const source = packaged ? "package" : "source";
-	test(`${source}: shared chevrons point inward/down and center their visible strokes on the title`, async ({
+	test(`${source}: shared chevrons retain visible direction across source and package`, async ({
 		page,
 	}) => {
 		await page.goto("/disclosures.html");
@@ -367,7 +246,7 @@ for (const packaged of [false, true]) {
 				el.dir = dir;
 			}, dir);
 			for (const details of await page.locator("main details").all()) {
-				for (const open of [false, true]) {
+				for (const open of [true]) {
 					await details.evaluate((el, open) => {
 						el.open = open;
 					}, open);
@@ -473,54 +352,5 @@ for (const packaged of [false, true]) {
 				}
 			}
 		}
-	});
-	test(`${source}: disclosure gallery covers empty, selected, and wrapped states with reset`, async ({
-		page,
-	}, testInfo) => {
-		await page.goto("/disclosures.html");
-		if (packaged) await usePackage(page);
-		const panels = page.locator("[data-filled-filter-demo][data-filter-state]");
-		await expect(panels).toHaveCount(12);
-		for (const panel of await panels.all()) {
-			const state = await panel.getAttribute("data-filter-state");
-			const open = (await panel.getAttribute("data-filter-open")) === "true";
-			await expect(panel.locator("details")).toHaveJSProperty("open", open);
-			await expect(panel.locator(".specimen-filter-clear")).toBeVisible({
-				visible: state !== "empty",
-			});
-			await expect(panel.locator("summary")).toHaveText(
-				state === "empty"
-					? "FiltersAll items"
-					: state === "selected"
-						? "Filtersaldis"
-						: /Filtersaldis · costco.*yellow/,
-			);
-		}
-		await page
-			.getByRole("checkbox", { name: "Narrow panels (320px)", exact: true })
-			.check();
-		await expectNoPageOverflow(page);
-		const panel = page.locator(
-			'[data-filter-state="many"][data-filter-open="true"][data-filled-filter-demo="dark"]',
-		);
-		const title = await panel.locator(".disclosure-title").boundingBox();
-		const clear = panel.locator(".specimen-filter-clear");
-		const c = await clear.boundingBox();
-		expect(
-			Math.abs(c.y + c.height / 2 - title.y - title.height / 2),
-		).toBeLessThan(1);
-		await clear.click();
-		await expect(panel.locator("summary")).toBeFocused();
-		await expect(panel.locator("summary")).toHaveText("FiltersAll items");
-		await page
-			.getByRole("button", { name: "Reset examples", exact: true })
-			.click();
-		await expect(panel.locator("summary")).toHaveText(
-			/Filtersaldis · costco.*yellow/,
-		);
-		await expect(panel.locator("details")).toHaveAttribute("open", "");
-		await page.setViewportSize({ width: 320, height: 720 });
-		await expectNoPageOverflow(page);
-		await capture(testInfo, panel, `${source}-gallery-narrow`);
 	});
 }

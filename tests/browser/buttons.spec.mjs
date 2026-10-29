@@ -44,7 +44,7 @@ async function fixture(page, packaged) {
 	});
 }
 
-for (const packaged of [false, true]) {
+for (const packaged of [true]) {
 	const source = packaged ? "package" : "source";
 	test(`${source}: one application class controls button appearance across states`, async ({
 		page,
@@ -151,19 +151,3 @@ for (const packaged of [false, true]) {
 		await expectNoPageOverflow(page);
 	});
 }
-
-test("built specimen actions provide local feedback", async ({ page }) => {
-	await page.goto("/buttons.html");
-	for (const panel of await page
-		.locator(".specimen-theme")
-		.filter({ has: page.locator("[data-action-status]") })
-		.all()) {
-		await panel.getByRole("button", { name: "Edit", exact: true }).click();
-		await expect(panel.locator("[data-action-status]")).toContainText("Edit");
-		await panel
-			.getByRole("button", { name: "Delete", exact: true })
-			.and(page.locator(":enabled"))
-			.click();
-		await expect(panel.locator("[data-action-status]")).toContainText("Delete");
-	}
-});

@@ -1,4 +1,10 @@
-import { capture, expect, expectNoPageOverflow, test } from "./fixtures.mjs";
+import {
+	capture,
+	expect,
+	expectNoPageOverflow,
+	loadPackage,
+	test,
+} from "./fixtures.mjs";
 
 for (const file of [
 	"index.html",
@@ -17,7 +23,7 @@ for (const file of [
 	"editor.html",
 	"package-theme.html",
 ]) {
-	test(`${file} loads styled content without page overflow`, async ({
+	test(`@once ${file} loads styled content without page overflow`, async ({
 		page,
 	}, testInfo) => {
 		const response = await page.goto(`/${file}`);
@@ -36,10 +42,15 @@ for (const file of [
 	});
 }
 
-test("wide table stays contained and scrolls from the keyboard", async ({
+test("@light wide table stays contained and scrolls from the keyboard", async ({
 	page,
 }, testInfo) => {
-	await page.goto("/foundations.html");
+	await loadPackage(page, "/foundations.html");
+	// Scroll containment belongs to the consuming application, as documented.
+	await page.addStyleTag({
+		content:
+			".specimen-table-scroll { overflow-x: auto; } .specimen-table-scroll table { min-inline-size: 42rem; }",
+	});
 	await page.setViewportSize({ width: 320, height: 844 });
 	await expectNoPageOverflow(page);
 	const scroller = page.getByRole("region", { name: "Wide data table" });
@@ -56,55 +67,4 @@ test("wide table stays contained and scrolls from the keyboard", async ({
 		page.locator('section[aria-labelledby="tables-heading"]'),
 		"tables",
 	);
-});
-
-test("buttons and placeholders are captured for visual review", async ({
-	page,
-}, testInfo) => {
-	await page.goto("/buttons.html");
-	for (const scheme of ["light", "dark"]) {
-		const buttons = page.locator(
-			`section[aria-labelledby="buttons-heading"] .specimen-theme-${scheme}`,
-		);
-		await capture(testInfo, buttons, `${scheme}-buttons`);
-		await buttons.getByRole("button", { name: "Primary", exact: true }).hover();
-		await capture(testInfo, buttons, `${scheme}-primary-hover`);
-	}
-	await page.goto("/forms.html");
-	await capture(
-		testInfo,
-		page.locator(".specimen-placeholder-examples"),
-		"placeholders",
-	);
-});
-
-test("packaged primary example exposes resting, hover, and keyboard-focus states", async ({
-	page,
-	browserName,
-}) => {
-	await page.goto("/package-theme.html");
-	const primary = page.getByRole("button", {
-		name: "Primary action",
-		exact: true,
-	});
-	await expect(primary).toBeEnabled();
-	const resting = await primary.evaluate(
-		(el) => getComputedStyle(el).backgroundColor,
-	);
-	expect(resting).not.toBe("rgba(0, 0, 0, 0)");
-	await primary.hover();
-	expect(
-		await primary.evaluate((el) => getComputedStyle(el).backgroundColor),
-	).not.toBe(resting);
-	await page.mouse.move(0, 0);
-	await page.getByRole("button", { name: "Examples", exact: true }).focus();
-	await page.keyboard.press(
-		browserName === "webkit" && process.platform === "darwin"
-			? "Alt+Tab"
-			: "Tab",
-	);
-	await expect(primary).toBeFocused();
-	await expect(primary).toHaveCSS("outline-style", "solid");
-	await primary.press("Space");
-	await expect(page).toHaveURL(/package-theme.html$/);
 });

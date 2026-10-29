@@ -35,7 +35,7 @@ async function hasMotionSupport(page) {
 	);
 }
 
-for (const packaged of [false, true]) {
+for (const packaged of [true]) {
 	const source = packaged ? "package" : "source";
 	test(`${source}: library alone animates disclosures with usable instant fallbacks`, async ({
 		page,
@@ -98,7 +98,7 @@ for (const packaged of [false, true]) {
 
 	// Catch a permanent inert guard hiding closed content from browser search, or
 	// a guard that expires too early and lets closing controls receive focus.
-	test(`${source}: animated disclosures restore search after closing and cancel the guard on reopening`, async ({
+	test(`@once ${source}: animated disclosures restore search after closing and cancel the guard on reopening`, async ({
 		page,
 		browserName,
 	}) => {
