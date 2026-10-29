@@ -109,7 +109,9 @@ for (const packaged of [false, true]) {
 		);
 		await body.getByLabel("Final field").focus();
 		await expect(body.getByLabel("Final field")).toBeInViewport();
-		expect(await body.evaluate((el) => el.scrollTop)).toBeGreaterThan(0);
+		await expect
+			.poll(() => body.evaluate((el) => el.scrollTop))
+			.toBeGreaterThan(0);
 		expect((await header.boundingBox()).y).toBeCloseTo(before.y, 0);
 		expect((await footer.boundingBox()).y).toBeCloseTo(beforeFooter.y, 0);
 		const outer = await dialog.boundingBox();
@@ -158,7 +160,9 @@ for (const packaged of [false, true]) {
 			expect(f.width).toBeCloseTo(b.width, 0);
 			expect(f.y).toBeCloseTo(b.y + b.height, 0);
 			await body.getByLabel("Last field").focus();
-			expect(await body.evaluate((el) => el.scrollTop)).toBeGreaterThan(0);
+			await expect
+				.poll(() => body.evaluate((el) => el.scrollTop))
+				.toBeGreaterThan(0);
 			expect((await header.boundingBox()).y).toBeCloseTo(h.y, 0);
 			expect((await footer.boundingBox()).y).toBeCloseTo(f.y, 0);
 			expect(

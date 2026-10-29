@@ -70,12 +70,15 @@ test("old catalog bookmarks preserve sections and queries on load and hash chang
 		await page.goto(old);
 		await expect(page).toHaveURL(`http://127.0.0.1:4173/${target}`);
 		await expect(page.locator(`[id="${target.split("#")[1]}"]`)).toHaveCount(1);
+		// The redirected DOM can appear before its styles and modules finish loading.
+		await page.waitForLoadState("load");
 	}
 	await page.goto("/index.html");
 	await page.evaluate(() => {
 		location.hash = "forms-heading";
 	});
 	await expect(page).toHaveURL(/forms\.html#forms-heading$/);
+	await page.waitForLoadState("load");
 	await page.goto("/index.html#%broken");
 	await expect(page.locator("main h1")).toBeVisible();
 });
