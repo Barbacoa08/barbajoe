@@ -1,6 +1,5 @@
 import { execFileSync } from "node:child_process";
 import { existsSync } from "node:fs";
-import { availableParallelism } from "node:os";
 import { defineConfig } from "@playwright/test";
 
 const baseURL = "http://127.0.0.1:4173";
@@ -15,8 +14,8 @@ export default defineConfig({
 	testDir: "./tests/browser",
 	fullyParallel: true,
 	forbidOnly: Boolean(process.env.CI),
-	// Respect the runner CPU budget; local runs remain conservative.
-	workers: process.env.CI ? Math.min(4, availableParallelism()) : 2,
+	// Two workers were faster than four on the measured hosted runner.
+	workers: 2,
 	retries: 0,
 	timeout: 30_000,
 	expect: { timeout: 5_000 },
