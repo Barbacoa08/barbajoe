@@ -13,6 +13,7 @@
 @import "./components/footer.css";
 @import "./components/inline-forms.css";
 @import "./components/chips.css";
+@import "./components/suggestions.css";
 @import "./components/disclosures.css";
 
 @import "./visually-hidden.css";

@@ -49,7 +49,7 @@
 <main id="main-content">
 <h1>Forms and input actions</h1>
 <p class="specimen-page-note">Native form controls, visible labels, inline fields, and input actions.</p>
-<nav aria-label="On this page"><ul class="specimen-contents"><li><a href="#forms-heading">Form elements</a></li><li><a href="#inline-forms-heading">Inline forms and input actions</a></li><li><a href="#compact-controls">Compact controls in context</a></li></ul></nav>
+<nav aria-label="On this page"><ul class="specimen-contents"><li><a href="#forms-heading">Form elements</a></li><li><a href="#inline-forms-heading">Inline forms and input actions</a></li><li><a href="#suggestions-heading">Suggestion panels</a></li><li><a href="#compact-controls">Compact controls in context</a></li></ul></nav>
 <section class="specimen-section" aria-labelledby="forms-heading">
 					<h2 id="forms-heading">Form elements</h2><p><strong>Accessibility:</strong> Prefer native visible associated labels for ordinary controls, connect hints/errors with <code>aria-describedby</code>, and preserve native validation. The <a href="#compact-controls">compact exception</a> requires persistent visible context for each control. <a href="https://www.w3.org/WAI/tutorials/forms/">WAI forms guidance</a>.</p>
 					<form id="catalog-form" data-specimen-no-submit>
@@ -254,6 +254,29 @@
 					</div>
 					<p>See the <a href="./dialogs.html#dialog-heading">dialog examples</a> for the same X button used to close a modal through its cancellation path.</p>
 				</section><p><a href="https://github.com/Barbacoa08/barbajoe/blob/main/src/packages/css-lib/README.md#inline-fields-and-input-actions">Full markup, options, and customization reference</a></p>
+<section class="specimen-section" aria-labelledby="suggestions-heading">
+<h2 id="suggestions-heading">Input suggestion panels</h2>
+<p>This opt-in panel has no visible title. Its listbox has the accessible name “Destinations”. Focus the input to filter, then use ArrowDown or ArrowUp to inspect the active row while focus remains on the input. Type an unmatched value to see the empty result. Disabled rows remain unavailable.</p>
+<div data-suggestion-demo>
+<label for="suggestion-query">Find a destination</label>
+<p id="suggestion-help">Type to filter. Use arrow keys and Enter to choose, or Escape to dismiss.</p>
+<input id="suggestion-query" type="text" role="combobox" aria-autocomplete="list" aria-expanded="true" aria-controls="suggestion-options" aria-describedby="suggestion-help" aria-activedescendant="suggestion-orchard" autocomplete="off" />
+<div class="suggestion-panel">
+<!-- biome-ignore lint/a11y/noNoninteractiveElementToInteractiveRole: The named listbox uses input-held focus through aria-activedescendant. -->
+<ul id="suggestion-options" role="listbox" aria-label="Destinations">
+<li role="presentation"><button type="button" class="suggestion-option" role="option" id="suggestion-orchard" data-value="Orchard" aria-selected="true" tabindex="-1">Orchard</button></li>
+<li role="presentation"><button type="button" class="suggestion-option" role="option" id="suggestion-river" data-value="River walk" aria-selected="false" tabindex="-1">River walk<span class="suggestion-secondary">A quieter route</span></button></li>
+<li role="presentation"><button type="button" class="suggestion-option" role="option" id="suggestion-long" data-value="A long destination name with several words and UnbrokenDestinationNameUnbrokenDestinationNameUnbrokenDestinationName" aria-selected="false" tabindex="-1">A long destination name with several words and UnbrokenDestinationNameUnbrokenDestinationNameUnbrokenDestinationName</button></li>
+<li role="presentation"><button type="button" class="suggestion-option" role="option" id="suggestion-closed" data-value="Closed garden" aria-selected="false" aria-disabled="true" tabindex="-1" disabled>Closed garden</button></li>
+</ul>
+<p class="suggestion-empty" hidden>No destinations available.</p>
+</div>
+<span class="visually-hidden" role="status" aria-atomic="true"></span>
+</div>
+<p>The example keeps the panel in normal flow. Applications own placement, scrolling, open/close state, matching, keyboard and pointer handling, input guards, active-descendant state, and announcements. This page's demonstration JavaScript is not shipped in the package. The component appearance requires only library CSS.</p>
+<p>Use <code>.suggestion-panel &gt; ul[role="listbox"]</code>, presentation list items, and native <code>button.suggestion-option[role="option"]</code> rows. Add <code>.suggestion-secondary</code> for optional supporting text, and a sibling <code>p.suggestion-empty</code> outside the listbox for no results. Keep option buttons at <code>tabindex="-1"</code> when the input owns focus. Supply unique IDs, an accessible listbox name, and synchronized input ARIA state.</p>
+<p><a href="./package-theme.html#packaged-suggestions">Compiled-package example</a> · <a href="https://github.com/Barbacoa08/barbajoe/blob/main/src/packages/css-lib/README.md#input-suggestion-panels">Full markup and ownership reference</a></p>
+</section>
 <section class="specimen-section" aria-labelledby="compact-controls">
 <h2 id="compact-controls">Compact controls in persistent context</h2>
 <p>Keep visible native labels as the default. A compact control may use a concise <code>aria-label</code> when persistent surrounding content makes its purpose visually clear, even after typing or changing the selection. A generic “Categories” title alone does not explain every control. Here, the title and visible instruction together identify the quick-add dropdown and new-category input.</p>
@@ -289,4 +312,5 @@
 </div>
 <script type="module" src="./specimen.js"></script>
 <script type="module" src="./navigation.js"></script>
+<script type="module" src="./suggestions.js"></script>
 </body></html>

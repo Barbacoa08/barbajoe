@@ -4,11 +4,11 @@ One global stylesheet for personal applications. It gives ordinary semantic HTML
 
 ## Contents
 
-- [Installation](#installation-and-import) · [0.5.0 changes](#050-category-navigation) · [0.4.5 changes](#045-compact-chips) · [0.4.4 changes](#044-filled-disclosure-edge) · [0.4.3 changes](#043-disclosure-animation) · [0.4.1 changes](#041-disclosure-update) · [0.4.0 adoption](#040-compatibility-and-adoption)
+- [Installation](#installation-and-import) · [0.6.0 changes](#060-input-suggestions) · [0.5.0 changes](#050-category-navigation) · [0.4.5 changes](#045-compact-chips) · [0.4.4 changes](#044-filled-disclosure-edge) · [0.4.3 changes](#043-disclosure-animation) · [0.4.1 changes](#041-disclosure-update) · [0.4.0 adoption](#040-compatibility-and-adoption)
 - [API quick reference](#api-quick-reference) · [Application responsibilities](#what-the-library-owns)
 - [Shell](#application-shell) · [Header navigation](#header-navigation) · [Tables](#data-tables)
 - [Disclosures](#disclosures) · [Accessible names](#accessible-names-and-descriptions) · [Visually hidden text](#visually-hidden-text)
-- [Buttons](#buttons-forms-and-dialogs) · [Inline fields](#inline-fields-and-input-actions) · [X actions](#shared-closeclearremove-icon-action) · [Chips](#chips) · [Dialogs](#dialogs)
+- [Buttons](#buttons-forms-and-dialogs) · [Input suggestions](#input-suggestion-panels) · [Inline fields](#inline-fields-and-input-actions) · [X actions](#shared-closeclearremove-icon-action) · [Chips](#chips) · [Dialogs](#dialogs)
 - [Working editor](#working-editor) · [Tokens and themes](#tokens-and-accessibility-contract)
 - [Development](#local-development) · [Browser review](#automated-browser-review) · [Release](#releasing-the-css-package)
 
@@ -23,6 +23,7 @@ These are styling hooks, not JavaScript components. Read the linked pattern guid
 | Native buttons; `data-barba-variant="primary\|secondary\|tertiary\|text"`; `data-barba-intent="danger"` | Explicit native type; `disabled` for unavailable actions. Variants change appearance, not submit/reset behavior. | State, events, confirmation, pending/error feedback. Custom classes may override zero-specificity defaults; supply all interaction states. |
 | `data-barba-variant="icon"`, `data-barba-shape="icon"`, optional `data-barba-size="compact"` | Native named button, decorative SVG hidden from AT. Compact is a smaller face within a generous target. | Context-specific name, native disabled/hidden, distinct close/clear/remove behavior and focus transitions. |
 | `.inline-field`, `.input-row`, `.input-action` | Visible associated label for `.inline-field`; row contains input or action group then button. See the [compact naming exception](#compact-controls-in-persistent-context) for `.input-row` in persistent context. **Input-action requires the input and icon button as direct children.** Text/search inputs only. | Value/clear visibility, form ownership, validation, focus before hiding; not a generic textarea or nested-component layout. |
+| `.suggestion-panel`, `.suggestion-option`, `.suggestion-secondary`, `.suggestion-empty` | Panel contains a direct named `ul[role="listbox"]`, presentation list items, and native `button.suggestion-option[role="option"]` rows; `aria-selected="true"` marks the active row. Optional supporting span and empty paragraph. | Input naming/ARIA, matching, disabled guards, keyboard/pointer handling, active descendant, focus, announcements, placement, scrolling, and visibility. [Markup and ownership](#input-suggestion-panels). |
 | `.chip-list`, `.chip`, `.chip-face`, `.chip-removable` | List of chips; informational span/list item; selectable `button.chip[aria-pressed] > .chip-face`; removable container with label span and separate compact icon button. | Selection/removal, disabled state, stable names, and next/previous/fallback focus. Preserve chip-list gaps and outer hit-area clearance; do not clip targets or make informational/removable labels actionable. |
 | `details.disclosure`, `.disclosure--filled`, `.disclosure-label`, `.disclosure-title`, `.disclosure-description`, `.disclosure-content` | Direct summary, label/title and optional description, then content wrapper. Optional `.disclosure--filled` changes appearance; both share native `open` and have no invented disabled state. | Descriptive summary, optional persistence; keep required content visible. Avoid nested interactive summary content. |
 | `dialog`, `.dialog-content-container`, `.dialog-header`, `.dialog-header-actions`, `.dialog-body`, `.dialog-footer` | Direct structured form/container; header/body/footer children. Named native dialog. Optional `data-barba-dialog-spacing="compact"`, `-height="content"`, `-room="extra"`, `-dividers="full"` (all prefixed `data-barba-dialog`). | Open/close, validation, cancel guards, initial/restored focus, fallback browser behavior. Standard width is unchanged. |
@@ -49,6 +50,14 @@ import "@barbajoe/css-lib/dist/barbajoe.css";
 ```
 
 Both paths resolve to the same global stylesheet. The repository tracks the source in `lib/`; npm receives only the generated `dist/barbajoe.css` bundle, the package metadata, and this README.
+
+## 0.6.0 input suggestions
+
+This additive minor release extracts the approved plain row dropdown from Our List into an opt-in suggestion panel. The panel uses existing tokens, regular inherited text, wrapping rows with at least 44px targets at the normal scale, optional secondary text, and an empty-result area. Active rows use `aria-selected="true"`; a 2px system Highlight outline preserves that state in forced colors while focus remains on the input. Existing controls and header navigation retain their contracts.
+
+The package remains CSS-only. Applications own popup placement, scrolling, matching, keyboard and pointer handling, focus, state, and announcements. See [input suggestion panels](#input-suggestion-panels), the [source example](https://lib-staging.barbajoe.tech/forms.html#suggestions-heading), and the [compiled-package example](https://lib-staging.barbajoe.tech/package-theme.html#packaged-suggestions).
+
+Merging the version increase prepares a staged npm release. Version 0.6.0 becomes installable only after maintainer approval with npm 2FA; application adoption is a separate change after publication.
 
 ## 0.5.0 category navigation
 
@@ -433,6 +442,55 @@ This is opt-in: existing `data-barba-variant="text"` icon buttons retain their t
 
 Give each button a context-specific accessible name: **“Clear item name”** for a field, **“Close dialog”** for a modal, or **“Remove Produce”** for a chip selection. Prefer a concise `aria-label` for new icon-only examples; a `.visually-hidden` text label remains a supported alternative and needs no automatic migration. Use one naming source. The SVG has `aria-hidden="true" focusable="false"`; the optional `title` provides an extra pointer hint and does not replace an accessible name. Keep visible button wording within the name when present; see [accessible naming guidance](#accessible-names-and-descriptions). The shared icon communicates a visual convention, not shared behavior: clear empties one field, while dialog close uses the same cancellation/request-close path as Cancel and Escape, including application cancellation guards. Use a separately labeled danger action for deletion. Avoid unlabeled X glyphs, clickable spans, or `type="reset"` as a field-clear shortcut.
 
+### Input suggestion panels
+
+Use this opt-in pattern for the plain rows associated with an input. It is distinct from header navigation and native `select`: it supplies appearance, not a combobox implementation. The panel has no mandatory visible heading. Name the listbox with `aria-label` or an appropriate `aria-labelledby` reference, and give the input its own persistent label.
+
+```html
+<label for="destination">Find a destination</label>
+<input id="destination" type="text" role="combobox" autocomplete="off"
+  aria-autocomplete="list" aria-expanded="true" aria-controls="destinations"
+  aria-activedescendant="destination-orchard" />
+<div class="suggestion-panel">
+  <ul id="destinations" role="listbox" aria-label="Destinations">
+    <li role="presentation">
+      <button type="button" class="suggestion-option" role="option"
+        id="destination-orchard" tabindex="-1" aria-selected="true">Orchard</button>
+    </li>
+    <li role="presentation">
+      <button type="button" class="suggestion-option" role="option"
+        id="destination-river" tabindex="-1" aria-selected="false">River walk
+        <span class="suggestion-secondary">A quieter route</span>
+      </button>
+    </li>
+  </ul>
+  <p class="suggestion-empty" hidden>No destinations available.</p>
+</div>
+<span class="visually-hidden" role="status" aria-atomic="true"></span>
+```
+
+This is an expanded-state markup snapshot. Applications synchronize `aria-expanded`, `aria-controls`, `aria-activedescendant`, `aria-selected`, and `hidden` as results and visibility change. When using input-held focus, keep option buttons at `tabindex="-1"`, maintain unique option IDs, and reference only an existing, available active option. Clear the active descendant when hiding the panel or removing that option. For no results, keep the listbox empty and show the paragraph outside it; status text does not belong inside an option list. An initially empty, persistent status region can announce updates without changing the control's name. Secondary text participates in the option's accessible name unless the application deliberately provides another naming arrangement.
+
+The required structure is `.suggestion-panel > ul[role="listbox"] > li[role="presentation"] > button.suggestion-option[role="option"]`. Use an optional `span.suggestion-secondary` inside a row and `p.suggestion-empty` beside the list. The existing form-only `.helper-text` utility does not supply this muted block treatment. Avoid nesting other interactive controls inside options, and do not combine row hooks with chip, button-variant, or header-menu treatments. Native `disabled` buttons retain the library's disabled appearance and receive no pointer hover/press treatment; applications also exclude them from active selection and activation. `aria-disabled` alone does not disable a native button.
+
+The opaque panel uses surface, border, and medium-radius tokens. Its direct list has `--barba-space-1` inset; rows use `--barba-space-2` block and `--barba-space-3` inline padding, small radii, inherited regular typography, start alignment, and wrapping for unbroken text. Supporting text uses the muted color and small font token; empty text uses space-3 padding. Rows occupy the full list width with a 44px minimum block size. Changing text or spacing tokens requires rechecking targets and reflow.
+
+Enabled hover/press and `aria-selected="true"` use the existing link/surface mixture. Native/library focus feedback remains independent. In forced colors the active option receives `2px solid Highlight` with `outline-offset: -2px`, so it remains distinct while the input retains keyboard focus. Preserve this outline when customizing row styles. Selectors are scoped to the opt-in panel and rows; ordinary lists, buttons, role options, selects, chips, and header dropdowns are unaffected. Consumer classes and styles can override the contract; review specificity and every state when doing so.
+
+**Application ownership:** keep positioning, input anchoring, stacking, open/close state, viewport constraints, and scrolling in the application. The library deliberately adds none. Keep matching/ranking, aliases, exclusion of existing choices, value completion, caret restoration, IME and modifier guards, Arrow/Enter/Escape/Tab handling, pointer behavior, readonly/pending/disabled checks, active-descendant management, accessible names, status timing, and persistence with application code. The source and compiled specimens demonstrate these responsibilities with local-only example JavaScript; that script is excluded from the shipped CSS package.
+
+**Verification:** compare both builds in light/dark schemes, at 320px and wider widths, with long text, right-to-left direction, enlarged text, hidden/disabled states, visible focus, and forced colors. With focus on the input, ArrowDown and ArrowUp must move the active row's visible outline in forced colors. Automated browser emulation and enlarged-root text are distinct from real browser zoom, assistive-technology speech, and physical-device acceptance.
+
+#### Our List adoption after publication
+
+The extraction baseline is [Our List commit 335aa09](https://github.com/Barbacoa08/our-list/commit/335aa09ab9645b780e97d0b870782690d104f891), merged through PR 18. Adopt separately after 0.6.0 is published and installable:
+
+1. Update the exact `@barbajoe/css-lib` dependency pin and lockfile to the published version. A successful stage alone is insufficient.
+2. In `ShortcutInput.svelte`, add `suggestion-panel` to the existing popup, add `suggestion-option` to each native option button, replace `shortcut-option-alias` with `suggestion-secondary`, and replace `shortcut-menu-empty` with `suggestion-empty`. Preserve listbox/option roles, labels, IDs, `aria-selected`, `tabindex`, and handlers. Retain `shortcut-menu` as the application positioning hook if useful.
+3. In `app.css`, remove only the superseded panel background/border/radius declarations, the `.shortcut-menu > ul` presentation reset, the option row presentation/state rules (including their forced-colors outline), `.shortcut-option-alias`, and `.shortcut-menu-empty`. The library supplies those through the new hooks. Keep `.shortcut-input { position: relative; }`, popup `position: absolute`, `inset-inline: 0`, `inset-block-start: 100%`, `z-index: 10`, `max-block-size: min(18rem, 40dvh)`, `overflow-y: auto`, and `overscroll-behavior: contain` as application composition.
+4. Keep token parsing, matching/ranking, canonical and alias resolution, selected-choice exclusion, quoted/new-name handling, duplicate-label resolution, the active-token exception, keyboard/IME logic, pointer selection, focus/caret restoration, ARIA/status logic, pending/readonly/disabled guards, and persistence intact. Update `MAINTENANCE.md` to replace the temporary presentation exception with the public contract and retained placement/scroll ownership.
+5. Rerun Our List's unit tests, actual-component checks, default/cloud builds, PWA checks, and affected visual and input-held-focus forced-colors checks. Review and release that application PR separately.
+
 ### Chips
 
 See the [working light/dark catalog examples](https://lib-staging.barbajoe.tech/chips.html#chips-heading), including few/many chips and the target-boundary inspection toggle. All three types share a short face height of `max(28px, 1.75rem)` (28px at a 16px root) and `.chip-list` supplies an 8px-equivalent gap through `--barba-space-2`. Long labels wrap and grow; never fix their height. Use:
@@ -682,6 +740,8 @@ The existing required check, **Lint and build CSS library**, reports the selecte
 
 Light checks the built CSS in Chromium, Firefox, and WebKit: essential button states and customization, header/menu navigation, inline fields and clear actions, chip targets, disclosure operation, dialog reachability, hidden-content helpers, responsive overflow, and representative contrast in both themes. Heavy includes light once, plus documented variants, RTL/enlarged text/forced colors, motion and fallback regressions, targeted source/package parity, all documentation links and legacy bookmarks, and representative demo integration. It does not exhaustively test specimen application state or native form behavior.
 
+Suggestion-panel checks exercise source and packaged CSS without specimen styles, explicitly select light and dark schemes for row appearance, and cover 320px reflow, RTL, enlarged text, hidden/disabled states, visible focus, input-held keyboard/pointer selection, and the forced-colors active-row outline. Packaged row appearance is included in light; detailed variants and source parity are retained in heavy.
+
 There is no blanket browser × width × theme matrix. Tests choose the dimensions relevant to their assertions. `@light` identifies the core subset; `@once` identifies browser-independent documentation checks or explicitly Chromium-specific probes. Unmarked retained tests run in all three engines. Suite-list validation rejects empty suites, duplicates, a missing engine, or light cases absent from heavy. Treat meaningful coverage and measured work as the goal, not a fixed test-count quota.
 
 Target less than one minute for lint/build and light, and less than five minutes for heavy, including setup, builds, tests, and report handling. CI installs Chromium’s headless shell (the actual test browser) without its unused headed binary and uses two workers (the measured four-worker run was slower on the hosted runner). Main-branch runs queue rather than replace pending releases; superseded PR validation jobs may be cancelled. The CI validation job has a **15-minute hard ceiling**, allowing growth without making that the expected duration. Record hosted timings separately from local timings and queue delays; these targets are not guarantees about runner provisioning.
@@ -720,7 +780,7 @@ For live editing, run `pnpm css-lib dev` from the repository root. Parcel's watc
 
 ## Releasing the CSS package
 
-The package is currently at version `0.5.0`. Change the version only when there is an approved reason to release the CSS library. The staged-release workflow is specific to this package and accepts stable `MAJOR.MINOR.PATCH` versions only.
+The package is currently at version `0.6.0`. Change the version only when there is an approved reason to release the CSS library. The staged-release workflow is specific to this package and accepts stable `MAJOR.MINOR.PATCH` versions only.
 
 The npm trusted publisher for `@barbajoe/css-lib` identifies GitHub user `Barbacoa08`, repository `barbajoe`, and workflow `stage-css-release.yml`. The top-level CI workflow remains in that file because npm validates the calling workflow filename; the staging jobs depend on successful validation. It must allow **stage publishing only**, not direct publishing. Keep the npm maintainer account's 2FA enabled and the package's Publishing access set to **Require two-factor authentication and disallow tokens**. The workflow uses OIDC; it needs neither a bypass-2FA npm access token nor an `NPM_AUTH_TOKEN` GitHub secret. Enable GitHub email notifications for issue assignments if you want the staged-release reminder in your inbox.
 
