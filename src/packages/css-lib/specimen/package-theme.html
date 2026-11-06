@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>Packaged CSS themes · Barbajoe CSS specimen</title><link rel="stylesheet" href="../dist/barbajoe.css" /></head><body><div class="app-shell"><header class="site-header">
+<html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>Packaged CSS themes · Barbajoe CSS specimen</title><link rel="stylesheet" href="../dist/barbajoe.css" /><link rel="stylesheet" href="./motion.css" />
+</head><body><div class="app-shell"><header class="site-header">
 <a class="skip-link" href="#main-content">Skip to main content</a>
 <a class="site-header-brand" href="./index.html">Barbajoe CSS</a>
 <nav aria-label="Documentation" data-documentation-nav>
@@ -50,6 +51,23 @@
 <p class="suggestion-empty" hidden>No destinations available.</p>
 </div>
 <span class="visually-hidden" role="status" aria-atomic="true"></span>
-</div></section><details class="disclosure"><summary><span class="disclosure-label disclosure-title">Native disclosure</span></summary><div class="disclosure-content"><p>Check focus, text, controls, and borders in both system preferences.</p></div></details></main></div><script type="module" src="./navigation.js"></script>
+</div></section><details class="disclosure"><summary><span class="disclosure-label disclosure-title">Native disclosure</span></summary><div class="disclosure-content"><p>Check focus, text, controls, and borders in both system preferences.</p></div></details><section aria-labelledby="packaged-motion"><h2 id="packaged-motion">Packaged motion tokens</h2>
+<article class="specimen-demo" data-motion-demo aria-labelledby="reposition-heading">
+<h3 id="reposition-heading">Repositioning and entry fade</h3>
+<p>Activate a chip to move it to the end, or use the controls. Reordering, focus, and animation mechanics belong to this example, not the library. New entries fade linearly; existing entries settle with the decelerate curve.</p>
+<label><input type="checkbox" /> Use instant comparison</label>
+<p><button type="button" data-motion-move>Move first to end</button> <button type="button" data-motion-add>Add or replay entry</button></p>
+<ul class="chip-list" aria-label="Motion example entries">
+<li><button type="button" class="chip" aria-label="Move Apricot to end"><span class="chip-face">Apricot</span></button></li>
+<li><button type="button" class="chip" aria-label="Move Blueberry to end"><span class="chip-face">Blueberry</span></button></li>
+<li><button type="button" class="chip" aria-label="Move Clementine to end"><span class="chip-face">Clementine</span></button></li>
+<li><button type="button" class="chip" aria-label="Move Dragon fruit to end"><span class="chip-face">Dragon fruit</span></button></li>
+</ul>
+<p role="status" aria-atomic="true"></p>
+<noscript><p>Interactive movement needs specimen JavaScript. All entries remain readable without it.</p></noscript>
+<p><code>--barba-motion-duration-base</code>: movement (300ms); <code>--barba-motion-duration-fast</code>: fade (150ms); <code>--barba-motion-easing-decelerate</code>: non-overshooting cubic-out. Reduced motion always wins over the comparison control.</p>
+</article>
+</section></main></div><script type="module" src="./navigation.js"></script>
+<script type="module" src="./motion.js"></script>
 <script type="module" src="./suggestions.js"></script>
 </body></html>

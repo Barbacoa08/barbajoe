@@ -1,0 +1,4 @@
+/* Specimen-only wrapping; no motion mechanics or library component rules. */
+[data-motion-demo] {
+	overflow-wrap: anywhere;
+}
