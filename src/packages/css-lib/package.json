@@ -41,7 +41,7 @@
 		"build:specimen": "pnpm build && parcel build specimen/accessibility.html specimen/buttons.html specimen/chips.html specimen/dialogs.html specimen/disclosures.html specimen/editor.html specimen/forms.html specimen/foundations.html specimen/getting-started.html specimen/headers.html specimen/index.html specimen/layout-footer.html specimen/layout-header.html specimen/layout-minimal.html specimen/package-theme.html --dist-dir .output/specimen --no-cache"
 	},
 	"devDependencies": {
-		"browserslist": "4.29.4",
+		"browserslist": "4.29.5",
 		"lightningcss": "1.33.0",
 		"parcel": "2.16.4"
 	}
