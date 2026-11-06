@@ -21,6 +21,8 @@
 	--barba-motion-duration-fast: 150ms;
 	--barba-motion-duration-base: 300ms;
 	--barba-motion-duration-decorative: 4s;
+	/* Non-overshooting cubic-out; exact thirds yield 1 - (1 - t)^3. */
+	--barba-motion-easing-decelerate: cubic-bezier(0.333333, 1, 0.666667, 1);
 	--barba-motion-easing-emphasized: cubic-bezier(0, 0.2, 0.5, 3);
 
 	/* Semantic color roles */

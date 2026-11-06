@@ -4,12 +4,12 @@ One global stylesheet for personal applications. It gives ordinary semantic HTML
 
 ## Contents
 
-- [Installation](#installation-and-import) · [0.6.0 changes](#060-input-suggestions) · [0.5.0 changes](#050-category-navigation) · [0.4.5 changes](#045-compact-chips) · [0.4.4 changes](#044-filled-disclosure-edge) · [0.4.3 changes](#043-disclosure-animation) · [0.4.1 changes](#041-disclosure-update) · [0.4.0 adoption](#040-compatibility-and-adoption)
+- [Installation](#installation-and-import) · [0.7.0 changes](#070-reusable-motion) · [0.6.0 changes](#060-input-suggestions) · [0.5.0 changes](#050-category-navigation) · [0.4.5 changes](#045-compact-chips) · [0.4.4 changes](#044-filled-disclosure-edge) · [0.4.3 changes](#043-disclosure-animation) · [0.4.1 changes](#041-disclosure-update) · [0.4.0 adoption](#040-compatibility-and-adoption)
 - [API quick reference](#api-quick-reference) · [Application responsibilities](#what-the-library-owns)
 - [Shell](#application-shell) · [Header navigation](#header-navigation) · [Tables](#data-tables)
 - [Disclosures](#disclosures) · [Accessible names](#accessible-names-and-descriptions) · [Visually hidden text](#visually-hidden-text)
 - [Buttons](#buttons-forms-and-dialogs) · [Input suggestions](#input-suggestion-panels) · [Inline fields](#inline-fields-and-input-actions) · [X actions](#shared-closeclearremove-icon-action) · [Chips](#chips) · [Dialogs](#dialogs)
-- [Working editor](#working-editor) · [Tokens and themes](#tokens-and-accessibility-contract)
+- [Working editor](#working-editor) · [Tokens and themes](#tokens-and-accessibility-contract) · [Motion](#motion-timing-and-easing)
 - [Development](#local-development) · [Browser review](#automated-browser-review) · [Release](#releasing-the-css-package)
 
 ## API quick reference
@@ -31,7 +31,7 @@ These are styling hooks, not JavaScript components. Read the linked pattern guid
 | Native `hidden` | Ordinary hidden values suppress layout and keyboard access, including invalid values. `hidden="until-found"` stays browser-managed. | Remove the attribute / set `hidden=false` to reveal; do not write `hidden="false"`. Hidden is not disabled: form submission and scripts remain active. |
 | Semantic HTML defaults; `.helper-text`, `.text-gradient`, `.scaleup-on-hover` | Forms/labels, tables, typography; helper text is scoped to forms. Decorative classes are optional; `.scaleup-on-hover.disabled` suppresses scaling, and legacy `li.disabled > a/span` supplies disabled appearance only. | Associate help via `aria-describedby`; table captions/header relationships and overflow are app-owned. Do not rely on hover/motion/color alone. |
 
-Customize with public `--barba-color-*`, `--barba-font-size-{sm,base,lg,xl}`, `--barba-space-{1,2,3,4,6,8}`, `--barba-radius-{sm,md}`, `--barba-shadow-raised`, `--barba-motion-duration-{fast,base,decorative}`, and `--barba-motion-easing-emphasized`. Private `--_barba-*` and compiler-generated `--lightningcss-*` properties are implementation details. Recheck contrast, target sizes, focus, and reflow after overrides. See [the theme contract](#tokens-and-accessibility-contract).
+Customize with public `--barba-color-*`, `--barba-font-size-{sm,base,lg,xl}`, `--barba-space-{1,2,3,4,6,8}`, `--barba-radius-{sm,md}`, `--barba-shadow-raised`, `--barba-motion-duration-{fast,base,decorative}`, and `--barba-motion-easing-{decelerate,emphasized}`. Private `--_barba-*` and compiler-generated `--lightningcss-*` properties are implementation details. Recheck contrast, target sizes, focus, and reflow after overrides. See [the theme contract](#tokens-and-accessibility-contract).
 
 Ordinary `hidden` deliberately wins over component display styles through one shared rule. It is distinct from `.visually-hidden`, which keeps text available to assistive technology. See [MDN hidden semantics](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/hidden).
 
@@ -50,6 +50,14 @@ import "@barbajoe/css-lib/dist/barbajoe.css";
 ```
 
 Both paths resolve to the same global stylesheet. The repository tracks the source in `lib/`; npm receives only the generated `dist/barbajoe.css` bundle, the package metadata, and this README.
+
+## 0.7.0 reusable motion
+
+This additive minor release introduces `--barba-motion-easing-decelerate` for smooth, non-overshooting repositioning. Reuse the existing base and fast durations for movement and entry fading. Existing tokens, component behavior, CSS imports, and package contents remain compatible; adding the token does not animate chips automatically. No JavaScript runtime or framework dependency is added.
+
+See [motion timing and easing](#motion-timing-and-easing), the [source specimen](https://lib-staging.barbajoe.tech/foundations.html#reposition-heading), and the [compiled-package specimen](https://lib-staging.barbajoe.tech/package-theme.html#packaged-motion). These examples demonstrate application-owned mechanics and reduced-motion handling. Unmerged changes are available locally or in the PR deploy preview; production updates after merge.
+
+Merging the version increase prepares a staged 0.7.0 npm release after CI. It becomes installable only after maintainer approval with npm 2FA. Consumer adoption is a separate update after publication; 0.6.0 does not provide the new easing token.
 
 ## 0.6.0 input suggestions
 
@@ -610,6 +618,83 @@ An `aria-disabled="true"` link receives disabled appearance and ignores pointer 
 
 The [maintained editor](https://lib-staging.barbajoe.tech/editor.html) composes Name, Notes, informational/selectable/removable chips, close, and Delete/Cancel/Save. Toggle read-only and long content to exercise disabled controls, wrapping and scrolling. It uses the existing stacked labels; no new compact-label API is implied. `specimen/editor.css` contains only application-like layout, and `editor.js` owns synthetic draft/save/cancel/delete state and focus restoration. Neither ships in npm. Applications must add their own persistence, permissions, pending/error handling, and deletion safeguards.
 
+## Motion timing and easing
+
+Motion tokens describe presentation settings; they do not reorder elements, animate chips, restore focus, or scroll content. Those behaviors, selection state, Svelte directives, and animation cancellation remain application-owned. No chip-specific duration aliases or framework helpers are exported.
+
+| Public token | Default | Role |
+| --- | --- | --- |
+| `--barba-motion-duration-fast` | `150ms` (may compile to `.15s`) | Short feedback and entry fade |
+| `--barba-motion-duration-base` | `300ms` (may compile to `.3s`) | Repositioning and ordinary transitions |
+| `--barba-motion-duration-decorative` | `4s` | Optional decorative effects |
+| `--barba-motion-easing-decelerate` | `cubic-bezier(0.333333, 1, 0.666667, 1)` | Smooth repositioning without overshoot |
+| `--barba-motion-easing-emphasized` | `cubic-bezier(0, 0.2, 0.5, 3)` | Existing expressive scale effect; overshoots |
+
+The decelerate curve approximates `cubicOut`, `1 - (1 - t)^3`, within one millionth over normalized progress. With exact one-third/two-thirds x control points, the curves are identical; the token rounds to six decimals. This preserves the accepted 300ms cubic-out movement from [Our List PR #39](https://github.com/Barbacoa08/our-list/pull/39). The existing emphasized curve extends beyond the destination and is inappropriate for ordinary repositioning. Entry fading uses the fast duration and `linear`, matching the accepted fade; it does not use the movement curve.
+
+For a CSS transition, opt in on your own selector and gate it on motion preference:
+
+```css
+@media (prefers-reduced-motion: no-preference) {
+  .application-moving-element {
+    transition: transform var(--barba-motion-duration-base)
+      var(--barba-motion-easing-decelerate);
+  }
+  .application-entering-element {
+    transition: opacity var(--barba-motion-duration-fast) linear;
+  }
+}
+```
+
+The application must supply the transform/opacity states. Tokens retain their values under reduced motion; there is no global reset. Each consumer must disable nonessential movement **and** fading, keep content immediately visible, and cancel in-flight animations when the preference switches to reduce. The [focused specimen](https://lib-staging.barbajoe.tech/foundations.html#reposition-heading) offers an instant comparison that cannot override system reduction. Its Web Animations/FLIP code is specimen-only and is absent from npm.
+
+### Consuming from Svelte or another JavaScript animation API
+
+[Svelte animation](https://svelte.dev/docs/svelte/svelte-animate) and [transition](https://svelte.dev/docs/svelte/svelte-transition) options need a numeric duration in **milliseconds** and an easing **function**. CSS custom-property strings cannot be passed directly. CSS transitions and Web Animations can consume the curve as a CSS string; Svelte needs an application-side conversion.
+
+A realistic adapter reads `getComputedStyle(pickerElement)` after mount and stylesheet loading, so scoped overrides apply. Parse both `ms` and `s`, including zero, and validate values. Do not use bare `parseFloat` on a time: `.3s` would become 0.3 milliseconds. Re-read settings when application overrides change. Avoid DOM reads during SSR, and start conservatively with zero-duration motion until client preferences are known.
+
+For easing, parse the computed `cubic-bezier(x1, y1, x2, y2)` and give its four numeric control points to an application-owned, tested cubic-bezier evaluator. It must solve **x(parameter) = elapsed progress**, then evaluate y(parameter); substituting elapsed progress directly for the parameter is wrong for arbitrary overrides. Support your documented override formats, and reject or deliberately disable motion for unsupported values. The following complete, intentionally limited adapter supports numeric s/ms durations and cubic-bezier curves; it is illustrative application code, **not a library export**:
+
+```js
+function motionSettings(element, reduceMotion) {
+  const style = getComputedStyle(element);
+  const read = (name) => style.getPropertyValue(`--barba-motion-${name}`).trim();
+  const time = (value) => {
+    const match = /^(\d+(?:\.\d+)?|\.\d+)(ms|s)$/.exec(value);
+    if (!match) throw new Error(`Unsupported motion time: ${value}`);
+    return Number(match[1]) * (match[2] === "s" ? 1000 : 1);
+  };
+  const match = /^cubic-bezier\(([^)]+)\)$/.exec(read("easing-decelerate"));
+  const points = match?.[1].split(",").map((part) =>
+    part.trim() === "" ? NaN : Number(part));
+  if (!points || points.length !== 4 || !points.every(Number.isFinite) ||
+      points[0] < 0 || points[0] > 1 || points[2] < 0 || points[2] > 1) {
+    throw new Error("Unsupported decelerate easing override");
+  }
+  const [x1, y1, x2, y2] = points;
+  const coordinate = (t, a, b) =>
+    3 * (1 - t) ** 2 * t * a + 3 * (1 - t) * t ** 2 * b + t ** 3;
+  const easing = (progress) => {
+    if (progress <= 0) return 0;
+    if (progress >= 1) return 1;
+    let low = 0, high = 1;
+    for (let i = 0; i < 30; i++) {
+      const middle = (low + high) / 2;
+      if (coordinate(middle, x1, x2) < progress) low = middle;
+      else high = middle;
+    }
+    return coordinate((low + high) / 2, y1, y2);
+  };
+  return {
+    move: { duration: reduceMotion ? 0 : time(read("duration-base")), easing },
+    enter: { duration: reduceMotion ? 0 : time(read("duration-fast")), easing: (t) => t },
+  };
+}
+```
+
+Use the returned `move` object for `animate:flip` and `enter` for `in:fade`. Keep these objects reactive to the current `matchMedia("(prefers-reduced-motion: reduce)")` value; subscribe on mount, clean up on unmount, and settle/cancel existing effects when reduction is enabled. Catch invalid settings at the application boundary and use an intentional instant fallback. This sample rejects `calc()` times, easing keywords, and `linear()` curves; those remain valid CSS overrides but require a more capable JS adapter. It does not install Svelte lifecycle or focus handling. Preserve keyed identity, sensible DOM order, focus restoration, and focused-chip visibility in the application, including during interruption and rapid changes.
+
 ## Tokens and accessibility contract
 
 All public tokens use the `--barba-` prefix. The semantic color roles are:
@@ -780,7 +865,7 @@ For live editing, run `pnpm css-lib dev` from the repository root. Parcel's watc
 
 ## Releasing the CSS package
 
-The package is currently at version `0.6.0`. Change the version only when there is an approved reason to release the CSS library. The staged-release workflow is specific to this package and accepts stable `MAJOR.MINOR.PATCH` versions only.
+The package is currently at version `0.7.0`. Change the version only when there is an approved reason to release the CSS library. The staged-release workflow is specific to this package and accepts stable `MAJOR.MINOR.PATCH` versions only.
 
 The npm trusted publisher for `@barbajoe/css-lib` identifies GitHub user `Barbacoa08`, repository `barbajoe`, and workflow `stage-css-release.yml`. The top-level CI workflow remains in that file because npm validates the calling workflow filename; the staging jobs depend on successful validation. It must allow **stage publishing only**, not direct publishing. Keep the npm maintainer account's 2FA enabled and the package's Publishing access set to **Require two-factor authentication and disallow tokens**. The workflow uses OIDC; it needs neither a bypass-2FA npm access token nor an `NPM_AUTH_TOKEN` GitHub secret. Enable GitHub email notifications for issue assignments if you want the staged-release reminder in your inbox.
 
