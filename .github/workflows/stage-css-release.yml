@@ -41,7 +41,7 @@ jobs:
       - name: Install pnpm and Node.js
         uses: pnpm/setup@fa36a5ef7dcdefc3a7cb25655c122e00cf6e636e # v3.1.2
         with:
-          runtime: node@24.22.2
+          runtime: node@26.13.0
           cache: true
           install: false
       - name: Select validation tier
@@ -103,7 +103,7 @@ jobs:
           fetch-depth: 0
       - uses: pnpm/setup@fa36a5ef7dcdefc3a7cb25655c122e00cf6e636e # v3.1.2
         with:
-          runtime: node@24.22.2
+          runtime: node@26.13.0
           cache: false
           install: false
       - name: Compare current, previous, and published versions
@@ -130,7 +130,7 @@ jobs:
           ref: ${{ needs.check.outputs.after }}
       - uses: pnpm/setup@fa36a5ef7dcdefc3a7cb25655c122e00cf6e636e # v3.1.2
         with:
-          runtime: node@24.22.2
+          runtime: node@26.13.0
           cache: false
           install: false
       - name: Install locked dependencies
@@ -157,7 +157,7 @@ jobs:
           ref: ${{ needs.check.outputs.after }}
       - uses: pnpm/setup@fa36a5ef7dcdefc3a7cb25655c122e00cf6e636e # v3.1.2
         with:
-          runtime: node@24.22.2
+          runtime: node@26.13.0
           cache: false
           install: false
       - name: Create or reuse version reminder
